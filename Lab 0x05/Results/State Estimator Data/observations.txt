@@ -1,0 +1,71 @@
+Going straight at 100 mm/s:
+
+    Target distance was 100 mm
+    - Left position was 103 mm
+    - Right position was 104 mm
+    - Observed position was ~110 mm
+    -----------------------------------------------------------------------------
+    Target distance was 500 mm
+    - Left position was 503 mm
+    - Right position was 504 mm
+    - Observed position was ~513 mm
+    -----------------------------------------------------------------------------
+    Target distance was 500 mm
+    - Left position was 503 mm
+    - Right position was 504 mm
+    - Center position was 501 mm
+    - Observed position was ~513 mm
+    - heading was ~0.00 rad
+    - X position was ~0.00 mm
+    - Y position was ~0.00 mm
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Going straight at 200 mm/s:
+    
+    Target distance was 1000 mm
+    - Left position was 1001.963 mm
+    - Right position was 1001.608 mm
+    - Center position was 1001.786 mm
+    - Observed position was ~1025 mm
+    - heading was ~0 rad
+    - X position was ~999.4849 mm (SCALING = 1/14.578334)
+    - Y position was ~0.00643 mm (SCALING = 1/14.578334)
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Going around circle at 200 mm/s:
+    
+    Target distance was 1 rev
+    - Measured heading was ~6.33 rad (FROM IMU)
+    - Observed position was ~6.81 rad
+    - THREE RUNS RESULTED IN 90 DEGREE INCREASE IN OBSERVED HEADING
+    -----------------------------------------------------------------------------
+    Target distance was 1 rev (done twice)
+    First loop:
+    - Measured heading was ~6.298 rad (FROM IMU)
+    - Observed position was ~1 rev plus 45degs
+    - s_center = 2139.61 mm
+    - X-position was 2081.46 mm
+    - Y-position was 214.41 mm
+    Second loop:
+    - Measured heading was ~6.287 rad (FROM IMU)
+    - Observed position was ~1 rev plus 40degs
+    - s_center = 1958.456 mm
+    - X-position was 1921.13.456 mm
+    - Y-position was 181.07 mm
+    - TWO RUNS RESULTED IN 85 DEGREE INCREASE IN OBSERVED HEADING
+    -----------------------------------------------------------------------------
+    Target distance was 1 rev (done twice)
+    First loop:
+    - Measured heading was ~6.303041 rad (FROM IMU)
+    - Observed position was ~1 rev plus 30 degs
+    - s_center = 1943.576 mm
+    - X-position was 4.234994 mm
+    - Y-position was 6.482326 mm
+    Second loop:
+    - Measured heading was ~6.291931 rad (FROM IMU)
+    - Observed position was ~1 rev plus 40degs
+    - s_center = 1965.489 mm
+    - X-position was 5.855748 mm
+    - Y-position was -3.459866 mm
+    - TWO RUNS RESULTED IN 65 DEGREE INCREASE IN OBSERVED HEADING
+    -----------------------------------------------------------------------------

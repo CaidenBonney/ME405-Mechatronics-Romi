@@ -1,0 +1,27 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2025.11.22 01:25:44 =~=~=~=~=~=~=~=~=~=~=~=
+float>
+Oberserved center position share Share<float>
+Oberserved yaw share Share<float>
+Oberserved yawrate share Share<float>
+Oberserved X position share Share<float>
+Oberserved Y position share Share<float>
+time queue   Queue<uint32> Max Full 0/250
+time queue   Queue<uint32> Max Full 0/250
+left position queue Queue<float> Max Full 0/250
+right position queue Queue<float> Max Full 0/250
+left velocity queue Queue<float> Max Full 0/250
+right velocity queue Queue<float> Max Full 0/250
+Battery - %:0.924299, V:7.85919
+
+Traceback (most recent call last):
+  File "main.py", line 262, in <module>
+  File "main.py", line 232, in <module>
+  File "cotask.py", line 152, in schedule
+  File "Observer.py", line 95, in run
+  File "IMU.py", line 215, in get_heading
+  File "IMU.py", line 212, in get_imu_heading
+  File "IMU.py", line 105, in _read_reg
+OSError: [Errno 5] EIO
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> 
