@@ -1,0 +1,26 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2025.10.28 15:34:50 =~=~=~=~=~=~=~=~=~=~=~=
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
+Test Data Transfer Complete
+lt,rt,lp,rp,lv,rv
+lt,rt,lp,rp,lv,rv
