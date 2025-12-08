@@ -57,8 +57,8 @@ class PathDirector:
         self.CLC.disable()
         self.IMU = IMU_obj
         self.uart = UART(5, 115200)
-        self.bumped = False  
-            
+        self.bumped = False
+
         # Create bumper callbacks for all pins
         def bmp_callback_handler(pin: Pin):
             def bumper_callback(line):
@@ -388,4 +388,3 @@ class PathDirector:
                 r_speed_s.put(PathDirector.v_ref + v_adjust)
 
             yield self.state
-

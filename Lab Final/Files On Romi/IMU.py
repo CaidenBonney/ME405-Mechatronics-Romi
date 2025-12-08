@@ -9,9 +9,9 @@ from math import pi
 class IMU(Sensor):
     "Y AXIS IS HEADING DIRECTION, X AXIS IS RIGHT SIDE"
 
-    DEV_ADDR = 0x28  
+    DEV_ADDR = 0x28
     default_mode_set = 5
-    
+
     Kp = 0.05  # Proportional gain
     Ki = 0.05  # Integral gain
     Kd = 0.00  # Derivative gain

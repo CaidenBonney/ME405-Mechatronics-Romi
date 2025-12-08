@@ -115,8 +115,6 @@ class Observer:
             v = (self.l_encoder.velocity + self.r_encoder.velocity) / 2
 
             v_avg_rol_queue.push(v)
-            
-            
 
             v_avg = (
                 v_avg_rol_queue.average()

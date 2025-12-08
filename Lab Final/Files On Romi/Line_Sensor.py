@@ -41,7 +41,7 @@ class LineSensor(Sensor):
             raise ValueError("Line sensor array is empty.")
 
         self.update_dt()
-        
+
         for i, sensor in enumerate(self.list_IR_Sensors):
             self.buffer[i] = sensor.get_data()
 
@@ -53,7 +53,7 @@ class LineSensor(Sensor):
             pos = self.list_IR_Sensors[i].location
             sum_val += val
             sum_pos_val += pos * val
-            
+
         # print(self.buffer)
 
         return sum_pos_val / sum_val

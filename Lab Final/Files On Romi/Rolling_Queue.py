@@ -10,7 +10,7 @@ class RollingQueue:
     def push(self, value):
         if value == 0:
             return
-        
+
         if self.count < self.size:
             # Still filling the buffer
             self.buf[self.index] = value
