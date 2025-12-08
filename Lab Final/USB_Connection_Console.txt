@@ -1,0 +1,722 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2025.12.04 13:16:32 =~=~=~=~=~=~=~=~=~=~=~=
+Starting Calibration Segment
+Found Line Sensor calibration data, skipping calibration
+Line Sensor Calibration Complete
+Found IMU calibration data, skipping calibration
+IMU Calibration Complete
+Starting Waiting Segment
+
+TASK                  PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+User Input Task        10     100.0     705     0.154     0.156     3.443    35.115
+Observer Task           4      20.0    3525     6.177    12.864     3.522    75.003
+Path Director Task      3      30.0    2350     0.141     0.147     5.562   128.778
+Left Motor Cont Task    2      20.0    3525     0.725     0.973     9.442   173.998
+Right Motor Cont Task   2      20.0    3525     0.711     0.960    10.112   175.730
+Data Transfer Task      1      20.0    3525     0.056     0.058    11.165   229.221
+Garbage Collect Task    0       0.0    4739     5.250     5.624 35470.383 70492.797
+
+left flag share Share<uint8>
+right flag share Share<uint8>
+left speed share Share<float>
+right speed share Share<float>
+data transfer share Share<uint8>
+test complete share Share<uint8>
+white calibration share Share<uint8>
+black calibration share Share<uint8>
+new segment share Share<uint8>
+segment start share Share<uint8>
+Oberserved left position share Share<float>
+Oberserved right position share Share<float>
+Oberserved center position share Share<float>
+Oberserved yaw share Share<float>
+Oberserved yawrate share Share<float>
+Oberserved X position share Share<float>
+Oberserved Y position share Share<float>
+time queue   Queue<uint32> Max Full 0/250
+time queue   Queue<uint32> Max Full 0/250
+left position queue Queue<float> Max Full 0/250
+right position queue Queue<float> Max Full 0/250
+left velocity queue Queue<float> Max Full 0/250
+right velocity queue Queue<float> Max Full 0/250
+Battery - %:0.8847352, V:7.509657
+
+Traceback (most recent call last):
+  File "main.py", line 271, in <module>
+  File "main.py", line 241, in <module>
+  File "cotask.py", line 142, in schedule
+KeyboardInterrupt: 
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> 
+>>> 
+MPY: sync filesystems
+MPY: soft reboot
+Starting Calibration Segment
+Found Line Sensor calibration data, skipping calibration
+Line Sensor Calibration Complete
+Found IMU calibration data, skipping calibration
+IMU Calibration Complete
+Starting Waiting Segment
+.
+Fixed Forward Distance Segment
+Starting Waiting Segment
+
+TASK                  PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+User Input Task        10     100.0     123     0.210     7.482     2.119    35.504
+Observer Task           4      20.0     617     6.779    12.860     3.207    75.393
+Path Director Task      3      30.0     411     0.335    10.185     6.740   129.278
+Left Motor Cont Task    2      20.0     617     1.526     2.291    10.871   174.548
+Right Motor Cont Task   2      20.0     617     1.519     2.279    12.310   176.280
+Data Transfer Task      1      20.0     616     0.057     0.060    16.112   230.221
+Garbage Collect Task    0       0.0     612     5.271     5.627  6017.865 12330.959
+
+left flag share Share<uint8>
+right flag share Share<uint8>
+left speed share Share<float>
+right speed share Share<float>
+data transfer share Share<uint8>
+test complete share Share<uint8>
+white calibration share Share<uint8>
+black calibration share Share<uint8>
+new segment share Share<uint8>
+segment start share Share<uint8>
+Oberserved left position share Share<float>
+Oberserved right position share Share<float>
+Oberserved center position share Share<float>
+Oberserved yaw share Share<float>
+Oberserved yawrate share Share<float>
+Oberserved X position share Share<float>
+Oberserved Y position share Share<float>
+time queue   Queue<uint32> Max Full 0/250
+time queue   Queue<uint32> Max Full 0/250
+left position queue Queue<float> Max Full 0/250
+right position queue Queue<float> Max Full 0/250
+left velocity queue Queue<float> Max Full 0/250
+right velocity queue Queue<float> Max Full 0/250
+Battery - %:0.8838006, V:7.50701
+
+Traceback (most recent call last):
+  File "main.py", line 271, in <module>
+  File "main.py", line 241, in <module>
+  File "cotask.py", line 142, in schedule
+KeyboardInterrupt: 
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> 
+>>> 
+MPY: sync filesystems
+MPY: soft reboot
+Starting Calibration Segment
+Found Line Sensor calibration data, skipping calibration
+Line Sensor Calibration Complete
+Found IMU calibration data, skipping calibration
+IMU Calibration Complete
+Starting Waiting Segment
+
+TASK                  PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+User Input Task        10     100.0     168     0.154     0.158     3.418    27.550
+Observer Task           4      20.0     841     6.150    12.269     3.506    87.410
+Path Director Task      3      30.0     561     0.140     0.147     5.804   126.871
+Left Motor Cont Task    2      20.0     841     0.796     1.023    10.004   172.181
+Right Motor Cont Task   2      20.0     841     0.786     1.025    10.848   174.099
+Data Transfer Task      1      20.0     841     0.056     0.058    12.730   234.172
+Garbage Collect Task    0       0.0    1134     5.266     5.345  8513.320 16836.801
+
+left flag share Share<uint8>
+right flag share Share<uint8>
+left speed share Share<float>
+right speed share Share<float>
+data transfer share Share<uint8>
+test complete share Share<uint8>
+white calibration share Share<uint8>
+black calibration share Share<uint8>
+new segment share Share<uint8>
+segment start share Share<uint8>
+Oberserved left position share Share<float>
+Oberserved right position share Share<float>
+Oberserved center position share Share<float>
+Oberserved yaw share Share<float>
+Oberserved yawrate share Share<float>
+Oberserved X position share Share<float>
+Oberserved Y position share Share<float>
+time queue   Queue<uint32> Max Full 0/250
+time queue   Queue<uint32> Max Full 0/250
+left position queue Queue<float> Max Full 0/250
+right position queue Queue<float> Max Full 0/250
+left velocity queue Queue<float> Max Full 0/250
+right velocity queue Queue<float> Max Full 0/250
+Battery - %:0.8510903, V:7.226324
+
+Traceback (most recent call last):
+  File "main.py", line 271, in <module>
+  File "main.py", line 241, in <module>
+  File "cotask.py", line 155, in schedule
+KeyboardInterrupt: 
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> 
+>>> 
+MPY: sync filesystems
+MPY: soft reboot
+Starting Calibration Segment
+Found Line Sensor calibration data, skipping calibration
+Line Sensor Calibration Complete
+Found IMU calibration data, skipping calibration
+IMU Calibration Complete
+Starting Waiting Segment
+
+TASK                  PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+User Input Task        10     100.0      26     0.144     0.158     3.948    27.386
+Observer Task           4      20.0     131     5.668    12.282     5.485    87.247
+Path Director Task      3      30.0      87     0.136     0.145     8.810   126.813
+Left Motor Cont Task    2      20.0     131     0.797     1.022    15.953   172.122
+Right Motor Cont Task   2      20.0     131     0.789     1.023    16.954   174.040
+Data Transfer Task      1      20.0     131     0.056     0.058    23.337   233.903
+Garbage Collect Task    0       0.0     173     5.210     5.345  1449.886  2633.453
+
+left flag share Share<uint8>
+right flag share Share<uint8>
+left speed share Share<float>
+right speed share Share<float>
+data transfer share Share<uint8>
+test complete share Share<uint8>
+white calibration share Share<uint8>
+black calibration share Share<uint8>
+new segment share Share<uint8>
+segment start share Share<uint8>
+Oberserved left position share Share<float>
+Oberserved right position share Share<float>
+Oberserved center position share Share<float>
+Oberserved yaw share Share<float>
+Oberserved yawrate share Share<float>
+Oberserved X position share Share<float>
+Oberserved Y position share Share<float>
+time queue   Queue<uint32> Max Full 0/250
+time queue   Queue<uint32> Max Full 0/250
+left position queue Queue<float> Max Full 0/250
+right position queue Queue<float> Max Full 0/250
+left velocity queue Queue<float> Max Full 0/250
+right velocity queue Queue<float> Max Full 0/250
+Battery - %:0.8482866, V:7.207788
+
+Traceback (most recent call last):
+  File "main.py", line 271, in <module>
+  File "main.py", line 241, in <module>
+  File "cotask.py", line 155, in schedule
+KeyboardInterrupt: 
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> 
+>>> 
+MPY: sync filesystems
+MPY: soft reboot
+Starting Calibration Segment
+Found Line Sensor calibration data, skipping calibration
+Line Sensor Calibration Complete
+Found IMU calibration data, skipping calibration
+IMU Calibration Complete
+Starting Waiting Segment
+.
+Fixed Forward Distance Segment
+Starting Waiting Segment
+
+TASK                  PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+User Input Task        10     100.0     156     0.502    54.387     3.089    27.438
+Observer Task           4      20.0     782     6.422    12.280     3.859    87.298
+Path Director Task      3      30.0     521     0.291     9.653     6.834   126.790
+Left Motor Cont Task    2      20.0     782     1.372     2.502    11.085   172.100
+Right Motor Cont Task   2      20.0     782     1.367     2.509    12.505   174.018
+Data Transfer Task      1      20.0     782     0.057     0.061    16.352   234.084
+Garbage Collect Task    0       0.0     858     5.290     5.532  7664.200 15656.503
+
+left flag share Share<uint8>
+right flag share Share<uint8>
+left speed share Share<float>
+right speed share Share<float>
+data transfer share Share<uint8>
+test complete share Share<uint8>
+white calibration share Share<uint8>
+black calibration share Share<uint8>
+new segment share Share<uint8>
+segment start share Share<uint8>
+Oberserved left position share Share<float>
+Oberserved right position share Share<float>
+Oberserved center position share Share<float>
+Oberserved yaw share Share<float>
+Oberserved yawrate share Share<float>
+Oberserved X position share Share<float>
+Oberserved Y position share Share<float>
+time queue   Queue<uint32> Max Full 0/250
+time queue   Queue<uint32> Max Full 0/250
+left position queue Queue<float> Max Full 0/250
+right position queue Queue<float> Max Full 0/250
+left velocity queue Queue<float> Max Full 0/250
+right velocity queue Queue<float> Max Full 0/250
+Battery - %:0.8454829, V:7.186604
+
+Traceback (most recent call last):
+  File "main.py", line 271, in <module>
+  File "main.py", line 241, in <module>
+  File "cotask.py", line 155, in schedule
+KeyboardInterrupt: 
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> 
+>>> 
+MPY: sync filesystems
+MPY: soft reboot
+Traceback (most recent call last):
+  File "main.py", line 15, in <module>
+  File "User_Input.py", line 7, in <module>
+  File "Path_Director.py", line 1, in <module>
+ImportError: no module named 'pyparsing'
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> 
+>>> 
+MPY: sync filesystems
+MPY: soft reboot
+Starting Calibration Segment
+Found Line Sensor calibration data, skipping calibration
+Line Sensor Calibration Complete
+Found IMU calibration data, skipping calibration
+IMU Calibration Complete
+Starting Waiting Segment
+.
+.
+c
+Starting Waiting Segment
+
+TASK                  PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+User Input Task        10     100.0     156     0.943    67.949     2.718    28.827
+Observer Task           4      20.0     781     5.861    13.647     4.200    88.684
+Path Director Task      3      30.0     521     0.388     2.974     6.405   128.180
+Left Motor Cont Task    2      20.0     781     0.801     1.554    11.109   174.236
+Right Motor Cont Task   2      20.0     781     0.783     1.530    11.997   176.243
+Data Transfer Task      1      20.0     781     0.056     0.058    14.574   253.495
+Garbage Collect Task    0       0.0    1036     5.325     5.685  7896.278 15630.014
+
+left flag share Share<uint8>
+right flag share Share<uint8>
+left speed share Share<float>
+right speed share Share<float>
+data transfer share Share<uint8>
+test complete share Share<uint8>
+white calibration share Share<uint8>
+black calibration share Share<uint8>
+new segment share Share<uint8>
+segment start share Share<uint8>
+Oberserved left position share Share<float>
+Oberserved right position share Share<float>
+Oberserved center position share Share<float>
+Oberserved yaw share Share<float>
+Oberserved yawrate share Share<float>
+Oberserved X position share Share<float>
+Oberserved Y position share Share<float>
+time queue   Queue<uint32> Max Full 0/250
+time queue   Queue<uint32> Max Full 0/250
+left position queue Queue<float> Max Full 0/250
+right position queue Queue<float> Max Full 0/250
+left velocity queue Queue<float> Max Full 0/250
+right velocity queue Queue<float> Max Full 0/250
+Battery - %:0.8308412, V:7.067445
+
+Traceback (most recent call last):
+  File "main.py", line 271, in <module>
+  File "main.py", line 241, in <module>
+  File "cotask.py", line 155, in schedule
+KeyboardInterrupt: 
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> 
+>>> 
+MPY: sync filesystems
+MPY: soft reboot
+Starting Calibration Segment
+Found Line Sensor calibration data, skipping calibration
+Line Sensor Calibration Complete
+Found IMU calibration data, skipping calibration
+IMU Calibration Complete
+Starting Waiting Segment
+.
+
+TASK                  PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+User Input Task        10     100.0     133     0.716    74.933     3.352    28.890
+Observer Task           4      20.0     668     6.215    13.508     4.295    88.749
+Path Director Task      3      30.0     445     0.409     0.576     6.859   128.178
+Left Motor Cont Task    2      20.0     668     0.806     1.054    11.786   174.239
+Right Motor Cont Task   2      20.0     668     0.787     1.032    12.671   176.248
+Data Transfer Task      1      20.0     668     0.056     0.058    15.333   253.594
+Garbage Collect Task    0       0.0     853     5.323     5.519  6650.575 13375.243
+
+left flag share Share<uint8>
+right flag share Share<uint8>
+left speed share Share<float>
+right speed share Share<float>
+data transfer share Share<uint8>
+test complete share Share<uint8>
+white calibration share Share<uint8>
+black calibration share Share<uint8>
+new segment share Share<uint8>
+segment start share Share<uint8>
+Oberserved left position share Share<float>
+Oberserved right position share Share<float>
+Oberserved center position share Share<float>
+Oberserved yaw share Share<float>
+Oberserved yawrate share Share<float>
+Oberserved X position share Share<float>
+Oberserved Y position share Share<float>
+time queue   Queue<uint32> Max Full 0/250
+time queue   Queue<uint32> Max Full 0/250
+left position queue Queue<float> Max Full 0/250
+right position queue Queue<float> Max Full 0/250
+left velocity queue Queue<float> Max Full 0/250
+right velocity queue Queue<float> Max Full 0/250
+Battery - %:0.8255452, V:7.00919
+
+Traceback (most recent call last):
+  File "main.py", line 271, in <module>
+  File "main.py", line 241, in <module>
+  File "cotask.py", line 152, in schedule
+  File "Observer.py", line 121, in run
+KeyboardInterrupt: 
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> 
+MPY: sync filesystems
+MPY: soft reboot
+Starting Calibration Segment
+Found Line Sensor calibration data, skipping calibration
+Line Sensor Calibration Complete
+Found IMU calibration data, skipping calibration
+IMU Calibration Complete
+Starting Waiting Segment
+.
+
+TASK                  PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+User Input Task        10     100.0      80     0.627    38.118     3.986    29.002
+Observer Task           4      20.0     402     5.873    12.983     4.664    88.861
+Path Director Task      3      30.0     268     0.351     0.574     7.085   128.309
+Left Motor Cont Task    2      20.0     402     0.805     1.019    12.240   174.364
+Right Motor Cont Task   2      20.0     402     0.787     1.032    13.112   176.372
+Data Transfer Task      1      20.0     402     0.056     0.058    16.221   253.707
+Garbage Collect Task    0       0.0     532     5.314     5.525  4125.561  8056.882
+
+left flag share Share<uint8>
+right flag share Share<uint8>
+left speed share Share<float>
+right speed share Share<float>
+data transfer share Share<uint8>
+test complete share Share<uint8>
+white calibration share Share<uint8>
+black calibration share Share<uint8>
+new segment share Share<uint8>
+segment start share Share<uint8>
+Oberserved left position share Share<float>
+Oberserved right position share Share<float>
+Oberserved center position share Share<float>
+Oberserved yaw share Share<float>
+Oberserved yawrate share Share<float>
+Oberserved X position share Share<float>
+Oberserved Y position share Share<float>
+time queue   Queue<uint32> Max Full 0/250
+time queue   Queue<uint32> Max Full 0/250
+left position queue Queue<float> Max Full 0/250
+right position queue Queue<float> Max Full 0/250
+left velocity queue Queue<float> Max Full 0/250
+right velocity queue Queue<float> Max Full 0/250
+Battery - %:0.8233644, V:6.99595
+
+Traceback (most recent call last):
+  File "main.py", line 271, in <module>
+  File "main.py", line 241, in <module>
+  File "cotask.py", line 155, in schedule
+KeyboardInterrupt: 
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> 
+>>> 
+MPY: sync filesystems
+MPY: soft reboot
+Starting Calibration Segment
+Found Line Sensor calibration data, skipping calibration
+Line Sensor Calibration Complete
+Found IMU calibration data, skipping calibration
+IMU Calibration Complete
+Starting Waiting Segment
+.
+.
+.
+.
+
+TASK                  PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+User Input Task        10     100.0     103     5.163   467.030    12.435   369.924
+Observer Task           4      20.0     514     5.989    13.068    21.099   471.206
+Path Director Task      3      30.0     343     0.353     0.575    33.201   712.628
+Left Motor Cont Task    2      20.0     514     0.817     1.055    48.985   768.356
+Right Motor Cont Task   2      20.0     514     0.812     6.694    49.922   770.145
+Data Transfer Task      1      20.0     514     0.056     0.059    69.710  1012.285
+Garbage Collect Task    0       0.0     602     5.317     5.647  5033.191 10294.928
+
+left flag share Share<uint8>
+right flag share Share<uint8>
+left speed share Share<float>
+right speed share Share<float>
+data transfer share Share<uint8>
+test complete share Share<uint8>
+white calibration share Share<uint8>
+black calibration share Share<uint8>
+new segment share Share<uint8>
+segment start share Share<uint8>
+Oberserved left position share Share<float>
+Oberserved right position share Share<float>
+Oberserved center position share Share<float>
+Oberserved yaw share Share<float>
+Oberserved yawrate share Share<float>
+Oberserved X position share Share<float>
+Oberserved Y position share Share<float>
+time queue   Queue<uint32> Max Full 0/250
+time queue   Queue<uint32> Max Full 0/250
+left position queue Queue<float> Max Full 0/250
+right position queue Queue<float> Max Full 0/250
+left velocity queue Queue<float> Max Full 0/250
+right velocity queue Queue<float> Max Full 0/250
+Battery - %:0.8214953, V:6.972118
+
+Traceback (most recent call last):
+  File "main.py", line 271, in <module>
+  File "main.py", line 241, in <module>
+  File "cotask.py", line 142, in schedule
+KeyboardInterrupt: 
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> 
+>>> 
+MPY: sync filesystems
+MPY: soft reboot
+Starting Calibration Segment
+Found Line Sensor calibration data, skipping calibration
+Line Sensor Calibration Complete
+Found IMU calibration data, skipping calibration
+IMU Calibration Complete
+Starting Waiting Segment
+.
+3
+8
+8
+9
+0
+2
+3
+4
+5
+8
+9
+8
+.
+3
+.
+Starting Line Following Segment
+.
+.
+Starting Line Following Segment
+.
+Starting Calibration Segment
+Starting Waiting Segment
+.
+Starting Line Following Segment
+.
+.
+Starting Line Following B4 Fork Segment
+Starting Force Right Fork Segment
+Starting Line Following 2 Diamond Segment
+.
+Record Heading Segment
+.
+.
+Starting Calibration Segment
+Starting Waiting Segment
+.
+Starting Line Following Segment
+.
+Starting Waiting Segment
+.
+Record Heading Segment
+.
+Starting Line Following Segment
+.
+.
+.
+.
+.
+.
+
+TASK                  PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+User Input Task        10     100.0    1541     2.746  1378.264     9.793  1282.108
+Observer Task           4      20.0    7708     6.759    14.122    15.959  1387.607
+Path Director Task      3      30.0    5138     0.929    10.322    27.776  2229.746
+Left Motor Cont Task    2      20.0    7707     0.826     6.493    43.863  2368.506
+Right Motor Cont Task   2      20.0    7707     0.804     6.729    44.877  2369.344
+Data Transfer Task      1      20.0    7707     0.057     0.061    67.518  3214.946
+Garbage Collect Task    0       0.0    8560     5.220     5.648 78053.773 154151.578
+
+left flag share Share<uint8>
+right flag share Share<uint8>
+left speed share Share<float>
+right speed share Share<float>
+data transfer share Share<uint8>
+test complete share Share<uint8>
+white calibration share Share<uint8>
+black calibration share Share<uint8>
+new segment share Share<uint8>
+segment start share Share<uint8>
+Oberserved left position share Share<float>
+Oberserved right position share Share<float>
+Oberserved center position share Share<float>
+Oberserved yaw share Share<float>
+Oberserved yawrate share Share<float>
+Oberserved X position share Share<float>
+Oberserved Y position share Share<float>
+time queue   Queue<uint32> Max Full 0/250
+time queue   Queue<uint32> Max Full 0/250
+left position queue Queue<float> Max Full 0/250
+right position queue Queue<float> Max Full 0/250
+left velocity queue Queue<float> Max Full 0/250
+right velocity queue Queue<float> Max Full 0/250
+Battery - %:0.800623, V:6.805296
+
+Traceback (most recent call last):
+  File "main.py", line 271, in <module>
+  File "main.py", line 241, in <module>
+  File "cotask.py", line 152, in schedule
+  File "Motor_Controller.py", line 118, in run
+KeyboardInterrupt: 
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> .1[K[K
+>>> 
+MPY: sync filesystems
+MPY: soft reboot
+0
+1
+Starting Calibration Segment
+Found Line Sensor calibration data, skipping calibration
+Line Sensor Calibration Complete
+Found IMU calibration data, skipping calibration
+IMU Calibration Complete
+1
+0
+Starting Waiting Segment
+.
+2
+2
+Starting Line Following Segment
+.
+1
+1
+Starting Calibration Segment
+1
+0
+Starting Waiting Segment
+.
+3
+3
+.
+0
+0
+Starting Waiting Segment
+.
+2
+2
+Starting Line Following Segment
+.
+1
+1
+Starting Calibration Segment
+1
+0
+Starting Waiting Segment
+.
+1
+1
+Starting Calibration Segment
+1
+0
+Starting Waiting Segment
+.
+4
+4
+Record Heading Segment
+.
+0
+0
+Starting Waiting Segment
+.
+4
+4
+Record Heading Segment
+.
+3
+3
+.
+0
+0
+Starting Waiting Segment
+.
+.
+3
+3
+
+TASK                  PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+User Input Task        10     100.0    2314     0.752   155.719     8.784   340.582
+Observer Task           4      20.0   11574     5.727   370.914   448.263 11276.379
+Path Director Task      3      30.0    7716     0.809    10.968   743.220 17980.066
+Left Motor Cont Task    2      20.0   11211     0.821     6.721   913.254 19022.820
+Right Motor Cont Task   2      20.0   11210     0.807     8.301   913.685 19023.645
+Data Transfer Task      1      20.0   10437     0.057     0.061    12.294   449.071
+Garbage Collect Task    0       0.0   15046     5.370     6.023 106531.664 208754.641
+
+left flag share Share<uint8>
+right flag share Share<uint8>
+left speed share Share<float>
+right speed share Share<float>
+data transfer share Share<uint8>
+test complete share Share<uint8>
+white calibration share Share<uint8>
+black calibration share Share<uint8>
+new segment share Share<uint8>
+segment start share Share<uint8>
+Oberserved left position share Share<float>
+Oberserved right position share Share<float>
+Oberserved center position share Share<float>
+Oberserved yaw share Share<float>
+Oberserved yawrate share Share<float>
+Oberserved X position share Share<float>
+Oberserved Y position share Share<float>
+time queue   Queue<uint32> Max Full 0/250
+time queue   Queue<uint32> Max Full 0/250
+left position queue Queue<float> Max Full 0/250
+right position queue Queue<float> Max Full 0/250
+left velocity queue Queue<float> Max Full 0/250
+right velocity queue Queue<float> Max Full 0/250
+Battery - %:0.7971963, V:6.765576
+
+Traceback (most recent call last):
+  File "main.py", line 271, in <module>
+  File "main.py", line 241, in <module>
+  File "cotask.py", line 142, in schedule
+KeyboardInterrupt: 
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> .0[K[K
+MPY: sync filesystems
+MPY: soft reboot
+Starting Calibration Segment
+Found Line Sensor calibration data, skipping calibration
+Line Sensor Calibration Complete
+Found IMU calibration data, skipping calibration
+IMU Calibration Complete
+Starting Waiting Segment
+.
+Fixed Forward Distance Segment
+Starting Waiting Segment
