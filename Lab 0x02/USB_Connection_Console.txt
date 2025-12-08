@@ -1,0 +1,39 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2025.10.22 22:51:27 =~=~=~=~=~=~=~=~=~=~=~=
+
+TASK                        PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+User Input Task              10      50.0    4234     0.130     3.382     2.347   130.233
+Left Motor Controller Task    2      20.0   10586     0.399     1.298     2.347   157.317
+Right Motor Controller Task   2      20.0   10586     0.407    90.443     2.452   157.770
+Data Transfer Task            1      20.0   10586     0.159    22.119     2.892   291.111
+Garbage Collection Task       0       0.0   41404     3.488   115.834 105934.086 211722.031
+
+left flag share Share<uint8>
+right flag share Share<uint8>
+left speed share Share<float>
+right speed share Share<float>
+data transfer share Share<uint8>
+test complete share Share<uint8>
+time queue   Queue<uint32> Max Full 0/1000
+time queue   Queue<uint32> Max Full 0/1000
+left position queue Queue<int32> Max Full 0/1000
+right position queue Queue<int32> Max Full 0/1000
+left velocity queue Queue<int32> Max Full 0/1000
+right velocity queue Queue<int32> Max Full 0/1000
+Task User Input Task            : not traced
+
+Task Left Motor Controller Task : not traced
+
+Task Right Motor Controller Task: not traced
+
+Task Data Transfer Task         : not traced
+
+Task Garbage Collection Task    : not traced
+
+Traceback (most recent call last):
+  File "main.py", line 148, in <module>
+  File "main.py", line 125, in <module>
+  File "cotask.py", line 142, in schedule
+KeyboardInterrupt: 
+MicroPython v1.22.0-preview.296.g3b56b206a.dirty on 2023-12-19; NUCLEO-L476RG with STM32L476RG
+Type "help()" for more information.
+>>> 
