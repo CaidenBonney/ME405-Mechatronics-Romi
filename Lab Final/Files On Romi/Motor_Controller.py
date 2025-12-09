@@ -8,23 +8,7 @@ from Closed_Loop_Control import ClosedLoopControl
 
 
 class MotorController:
-    @classmethod
-    def set_gain(cls, K="motor_Kp", value=0.0):
-        """Multiply a class-level gain by the given factor."""
-        if not hasattr(cls, K):
-            raise AttributeError(f"'{K}' is not a defined gain on {cls.__name__}")
-        setattr(cls, K, value)
-
     time_start = None
-
-    # Motor Gains
-    motor_Kp = 0.10  #                           Proportional gain
-    motor_Ki = 2.00  #                           Integral gain
-    motor_Kd = 0  #                              Derivative gain
-    motor_Kw = 1.00  #                           Windup gain
-    motor_Kff = 0.10  #                          Feed forward gain
-    motor_PWM_startl = 1  #                      Feed forward gain at start regardless of reference speed Calced: 2.49
-    motor_PWM_startr = 1  #                      Feed forward gain at start regardless of reference speed Calced: -2.17
 
     def __init__(self, motor: Motor, encoder: Encoder, battery: Battery, side: bool, duration: int = 0) -> None:
         self.motor = motor
@@ -44,24 +28,14 @@ class MotorController:
         self.CLC = ClosedLoopControl(
             sensor=self.encoder,
             max_min=100,
-            Kp=MotorController.motor_Kp,
-            Ki=MotorController.motor_Ki,
-            Kd=MotorController.motor_Kd,
-            Kw=MotorController.motor_Kw,
-            Kff=MotorController.motor_Kff,
-            PWM_start=MotorController.motor_PWM_startr if self.side else MotorController.motor_PWM_startl,
+            Kp=Encoder.Kp,
+            Ki=Encoder.Ki,
+            Kd=Encoder.Kd,
+            Kw=Encoder.Kw,
+            Kff=Encoder.Kff,
+            PWM_start=Encoder.PWM_startr if self.side else Encoder.PWM_startl,
             battery=battery,
         )
-
-    def zero(self):
-        self.encoder.zero()
-        self.CLC.reset()
-
-    def test_complete(self, test_complete_s):
-        self.done = True
-        test_complete_s.put(1)
-        self.motor.set_effort(0)
-        self.zero()
 
     def run(
         self,
@@ -88,28 +62,38 @@ class MotorController:
             vel_q,
         ) = shares
 
+        def test_complete():
+            self.done = True
+            test_complete_s.put(1)
+            data_transfer_s.put(0)
+            # self.motor.set_effort(0)
+
         self.start = ticks_us()
 
         while True:
             if seg_start_s.get():
-                self.zero()
                 seg_start_s.put(seg_start_s.get() - 1)  # decrement seg_start_s because we have two motor controllers
                 self.test_start = ticks_us()
+                test_complete_s.put(0)
                 self.queues_were_full = False
                 self.done = False
+                
+                # self.encoder.reset_timing()
+                # self.CLC.reset()
 
             # All motor control code goes here in the needed states
             if flag_s.get():
                 flag_s.put(0)
                 if speed_s.get() == 0:
                     # Speed is zero so disable the closed loop control
+                    self.CLC.reset()
                     self.CLC.disable()
                     self.motor.set_effort(0)
                 else:
                     # Speed is not zero so enable the closed loop control
-                    if not self.CLC.on:
-                        self.CLC.enable()
+                    self.CLC.enable()
                 self.CLC.set_ref(speed_s.get())
+                # print(f"Speed set to: {speed_s.get()}") # -------------------
 
             # Updating encoders before next loop
             self.encoder.update()
@@ -119,12 +103,12 @@ class MotorController:
                 # change effort by running closed loop control if it is on
                 if self.CLC.on:
                     self.CLC.gain_update(
-                        Kp=MotorController.motor_Kp,
-                        Ki=MotorController.motor_Ki,
-                        Kd=MotorController.motor_Kd,
-                        Kw=MotorController.motor_Kw,
-                        Kff=MotorController.motor_Kff,
-                        PWM_start=MotorController.motor_PWM_startr if self.side else MotorController.motor_PWM_startl,
+                        Kp=Encoder.Kp,
+                        Ki=Encoder.Ki,
+                        Kd=Encoder.Kd,
+                        Kw=Encoder.Kw,
+                        Kff=Encoder.Kff,
+                        PWM_start=Encoder.PWM_startr if self.side else Encoder.PWM_startl,
                     )
                     self.motor.set_effort(self.CLC.run())
 
@@ -137,17 +121,17 @@ class MotorController:
                         # if queues are currently full, then set test complete, stop motors and zero encoders
                         if time_q.full() or pos_q.full() or vel_q.full():
                             self.queues_were_full = True
-                            self.test_complete(test_complete_s)
+                            test_complete()
 
                         # if queues are not full and have not been full within the current test, then put data into queues
                         if not self.queues_were_full:
                             time_q.put(ticks_diff(ticks_us(), self.test_start))  #  [us]
                             pos_q.put(self.encoder.position)  #                     [rad]
-                            vel_q.put(self.encoder.velocity)  #                [mm/s]
+                            vel_q.put(self.encoder.velocity)  #                     [mm/s]
                     else:
                         # if time limit is reached, then set test complete, stop motors and zero encoders
-                        self.test_complete(test_complete_s)
+                        test_complete()
             elif not self.done:
                 # if test is not complete, but we are not done then set test to complete
-                self.test_complete(test_complete_s)
+                test_complete()
             yield

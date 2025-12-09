@@ -12,8 +12,9 @@ class IMU(Sensor):
     DEV_ADDR = 0x28
     default_mode_set = 5
 
-    Kp = 0.05  # Proportional gain
-    Ki = 0.05  # Integral gain
+    # Sensor Gains
+    Kp = 0.15  # Proportional gain
+    Ki = 2.00  # Integral gain
     Kd = 0.00  # Derivative gain
 
     # register addresses class
@@ -72,6 +73,7 @@ class IMU(Sensor):
         )
 
     def __init__(self, i2c_object: I2C, reset_pin: Pin):
+        super().__init__()
         self.i2c = i2c_object  # the pyb board is the controller, meaning the IMU is the peripheral
         self.reset_pin = reset_pin
         self._buf = bytearray((0 for _ in range(22)))  # buffer for unpacking. Each element is a byte

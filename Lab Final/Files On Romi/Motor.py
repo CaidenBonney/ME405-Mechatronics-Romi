@@ -31,7 +31,8 @@ class Motor:
 
         if not -100 <= value <= 100:
             raise ValueError("Effort must be between -100 and 100")
-
+        
+        # print(f"{value}")
         # Set the direction based on the sign of the effort
         self.DIR_pin.low() if value >= 0 else self.DIR_pin.high()
 

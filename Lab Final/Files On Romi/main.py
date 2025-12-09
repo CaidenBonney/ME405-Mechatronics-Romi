@@ -16,7 +16,6 @@ from User_Input import UserInput
 from Path_Director import PathDirector
 from Observer import Observer
 from Motor_Controller import MotorController
-from Data_Transfer import DataTransfer
 from Garbage_Collector import GarbageCollector
 
 
@@ -123,7 +122,6 @@ if __name__ == "__main__":
     path_director_obj = PathDirector(Linesensor, IMU_obj, bump_sensors)
     LMC_obj = MotorController(l_motor, l_encoder, Battery_obj, False)  # False = left
     RMC_obj = MotorController(r_motor, r_encoder, Battery_obj, True)  # True = right
-    data_transfer_obj = DataTransfer()
     garbage_collector_obj = GarbageCollector()
 
     ## Create Task objects
@@ -204,15 +202,6 @@ if __name__ == "__main__":
         trace=False,
         shares=(r_flag_s, r_speed_s, data_transfer_s, test_complete_s, seg_start_s, r_time_q, r_pos_q, r_vel_q),
     )
-    task_Data_Transfer = cotask.Task(
-        data_transfer_obj.run,
-        name="Data Transfer Task   ",
-        priority=1,
-        period=20,
-        profile=True,
-        trace=False,
-        shares=(data_transfer_s, test_complete_s, l_time_q, r_time_q, l_pos_q, r_pos_q, l_vel_q, r_vel_q),
-    )
     task_Garbage_Collection = cotask.Task(
         garbage_collector_obj.run,
         name="Garbage Collect Task ",
@@ -228,7 +217,6 @@ if __name__ == "__main__":
     cotask.task_list.append(task_Path_Director)
     cotask.task_list.append(task_LMC)
     cotask.task_list.append(task_RMC)
-    cotask.task_list.append(task_Data_Transfer)
     cotask.task_list.append(task_Garbage_Collection)
 
     # Run the memory garbage collector to ensure memory is as defragmented as
@@ -258,8 +246,6 @@ if __name__ == "__main__":
             # print(task_LMC.get_trace())
             # print("")
             # print(task_RMC.get_trace())
-            # print("")
-            # print(task_Data_Transfer.get_trace())
             # print("")
             # print(task_Garbage_Collection.get_trace())
             # print("")

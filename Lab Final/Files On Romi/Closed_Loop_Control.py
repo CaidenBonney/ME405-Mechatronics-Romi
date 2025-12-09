@@ -46,6 +46,9 @@ class ClosedLoopControl:
         self.derivative = 0  #         Derivative value
 
         self.on = True
+        self.first_run = True
+        self.num_corrections = 75
+        self.total_num_corrections = 200
 
     def reset(self) -> None:
         self.r = 0  #                  Setpoint
@@ -53,6 +56,7 @@ class ClosedLoopControl:
         self.prev_error = 0  #         Previous error
         self.integral = 0  #           Integral value
         self.derivative = 0  #         Derivative value
+        self.first_run = True
 
     def set_ref(self, speed) -> None:
         self.r = speed
@@ -84,19 +88,39 @@ class ClosedLoopControl:
         if not self.on:
             return 0
 
+        if self.num_corrections > 0:
+            self.r_u = self.r * ((self.total_num_corrections - self.num_corrections) / self.total_num_corrections)
+            self.num_corrections -= 1
+        else:
+            self.r_u = self.r
+
         # Get current measured velocity
         self.x_h = self.sensor.get_data()
+        # print("x_h", self.x_h) # -------------------
 
         # Calculate error
         self.prev_error = self.e
-        self.e = self.r - self.x_h
+        self.e = self.r_u - self.x_h
+        # print("e", self.e) # -------------------
 
         # Calculate actuation value
-        if self.Ki:
-            self.integral += self.e * (self.sensor.dt / 1e6)  # convert from uticks to seconds
-        if self.Kd:
-            self.derivative = (self.e - self.prev_error) / (self.sensor.dt / 1e6)  # convert from uticks to seconds
 
+        time_delta = self.sensor.dt / 1e6
+        if self.first_run:
+            time_delta = 0.020
+
+        # print("dt", time_delta) # -------------------
+        if self.Ki:
+            self.integral += self.e * time_delta  # convert from uticks to seconds
+        if self.Kd:
+            self.derivative = (self.e - self.prev_error) / time_delta  # convert from uticks to seconds
+
+        # if self.Ki:
+        #     self.integral += self.e * (self.sensor.dt / 1e6)  # convert from uticks to seconds
+        # if self.Kd:
+        #     self.derivative = (self.e - self.prev_error) / (self.sensor.dt / 1e6)  # convert from uticks to seconds
+
+        # print("intgrl", self.integral) # -------------------
         if self.battery is not None:
             # Dynamically calculate droop gain
             Kdroop = 1 / self.battery.get_cur_perc()
@@ -107,9 +131,10 @@ class ClosedLoopControl:
             (self.Kp * self.e)  #                                               Proportional
             + (self.integral * self.Ki)  #                                      Integral
             + (self.derivative * self.Kd)  #                                    Derivative
-            + ((self.r * self.Kff) + (copysign(1, self.r) * self.PWM_start))  # Feed Forward
+            + ((self.r_u * self.Kff) + (copysign(1, self.r) * self.PWM_start))  # Feed Forward
         )
 
+        # print("a", self.a) # -------------------
         # Saturation
         self.astar = min(self.max_min, max(-self.max_min, self.a))
 

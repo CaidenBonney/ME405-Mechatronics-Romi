@@ -1,12 +1,14 @@
-from math import e
 from pyb import UART, Pin  # pyright: ignore
 from machine import soft_reset  # pyright: ignore
 import task_share
-from Motor_Controller import MotorController
-from Line_Sensor import LineSensor
 from Path_Director import PathDirector
 from os import remove, listdir
 from Battery import Battery
+
+# Import CLC Sensor Classes
+from Encoder import Encoder
+from Line_Sensor import LineSensor
+from IMU import IMU
 
 
 class UserInput:
@@ -21,12 +23,12 @@ class UserInput:
         while self.uart.any():
             self.uart.read()
 
+    # Non-blocking read of raw bytes.filter out CR and LF (\r, \n)
+    # No other whitespace filtering
+    # No lowercase→uppercase conversion
+    # Enqueues only bytes present in self.valid.
+    # Returns: number of bytes pulled this call (including filtered CR/LF).
     def poll(self):
-        """Non-blocking read of raw bytes.filter out CR and LF (\r, \n)
-        No other whitespace filtering
-        No lowercase→uppercase conversion
-        Enqueues only bytes present in self.valid.
-        Returns: number of bytes pulled this call (including filtered CR/LF)."""
 
         while self.uart.any():
             char_in = self.uart.read(1).decode()  # pyright: ignore
@@ -35,14 +37,18 @@ class UserInput:
     def has_cmd(self):
         return bool(self.cmd_queue)
 
+    # Return next command as a 1-char string, or None if none.
     def get_cmd(self):
-        """Return next command as a 1-char string, or None if none."""
         if not self.cmd_queue:
             return None
         return self.cmd_queue.pop(0)
 
+    def change_attribute(self, sens, att_str):
+        value = self.get_next_n_char(5)
+        sens.set_attr(att_str, value)
+
+    # Returns the next n characters as a string and blocks until all n characters are received.
     def get_next_n_char(self, n) -> float:
-        """Returns the next n characters as a string and blocks until all n characters are received."""
         while len(self.cmd_queue) < n:
             self.poll()
         value = ""
@@ -86,6 +92,7 @@ class UserInput:
             set_seg_s,
         ) = shares
         data_transfer_s.put(0)
+        self.uart.write(f"Bluetooth Connection Established\r\n".encode("utf-8"))
         while True:
             if self.button_pin.value() == 0:
                 soft_reset()
@@ -99,6 +106,7 @@ class UserInput:
             # If command is valid do command
             if cmd:
                 print(cmd)
+                self.uart.write(f"{cmd}\r\n".encode("utf-8"))
 
                 # Calibration commands
                 if cmd == "v":
@@ -146,6 +154,12 @@ class UserInput:
                     l_speed_s.put(100)
                     r_speed_s.put(-100)
                     test_complete_s.put(0)
+                elif cmd == "t":
+                    l_flag_s.put(1)
+                    r_flag_s.put(1)
+                    l_speed_s.put(-100)
+                    r_speed_s.put(100)
+                    test_complete_s.put(0)
 
                 # C for Cancel
                 elif cmd == "c":
@@ -156,80 +170,29 @@ class UserInput:
                     test_complete_s.put(1)
                     set_seg_s.put(0)
 
-                # Tests follow
-                elif cmd == "1":
-                    l_flag_s.put(1)
-                    r_flag_s.put(1)
-                    l_speed_s.put(85)
-                    r_speed_s.put(85)
-                    data_transfer_s.put(1)
-                    test_complete_s.put(0)
-                elif cmd == "2":
-                    l_flag_s.put(1)
-                    r_flag_s.put(1)
-                    l_speed_s.put(170)
-                    r_speed_s.put(170)
-                    data_transfer_s.put(1)
-                    test_complete_s.put(0)
-                elif cmd == "3":
-                    l_flag_s.put(1)
-                    r_flag_s.put(1)
-                    l_speed_s.put(255)
-                    r_speed_s.put(255)
-                    data_transfer_s.put(1)
-                    test_complete_s.put(0)
-                elif cmd == "4":
-                    l_flag_s.put(1)
-                    r_flag_s.put(1)
-                    l_speed_s.put(340)
-                    r_speed_s.put(340)
-                    data_transfer_s.put(1)
-                    test_complete_s.put(0)
-                elif cmd == "5":
-                    l_flag_s.put(1)
-                    r_flag_s.put(1)
-                    l_speed_s.put(425)
-                    r_speed_s.put(425)
-                    data_transfer_s.put(1)
-                    test_complete_s.put(0)
-                elif cmd == "6":
-                    l_flag_s.put(1)
-                    r_flag_s.put(1)
-                    l_speed_s.put(510)
-                    r_speed_s.put(510)
-                    data_transfer_s.put(1)
-                    test_complete_s.put(0)
-                elif cmd == "7":
-                    l_flag_s.put(1)
-                    r_flag_s.put(1)
-                    l_speed_s.put(595)
-                    r_speed_s.put(595)
-                    data_transfer_s.put(1)
-                    test_complete_s.put(0)
-                elif cmd == "8":
-                    l_flag_s.put(1)
-                    r_flag_s.put(1)
-                    l_speed_s.put(680)
-                    r_speed_s.put(680)
-                    data_transfer_s.put(1)
-                    test_complete_s.put(0)
-                elif cmd == "9":
-                    l_flag_s.put(1)
-                    r_flag_s.put(1)
-                    l_speed_s.put(765)
-                    r_speed_s.put(765)
-                    data_transfer_s.put(1)
-                    test_complete_s.put(0)
-                elif cmd == "0":
-                    l_flag_s.put(1)
-                    r_flag_s.put(1)
-                    l_speed_s.put(850)
-                    r_speed_s.put(850)
-                    data_transfer_s.put(1)
-                    test_complete_s.put(0)
-
                 elif cmd == ".":
-                    value = int(self.get_next_n_char(1))
+                    self.uart.write(f"Set State (3 chr):".encode("utf-8"))
+                    value = int(self.get_next_n_char(3))
+                    self.uart.write(f"{value}\r\n".encode("utf-8"))
+
+                    func_id = value // 100
+
+                    if func_id >= 1:
+                        PathDirector.next_state = 0
+                        # self.uart.write(f"Next State (3 chr):".encode("utf-8"))
+                        # PathDirector.var_1 = int(self.get_next_n_char(3))
+                        self.uart.write(f"Var1 (5 chr):".encode("utf-8"))
+                        PathDirector.var_1 = self.get_next_n_char(5)
+                        self.uart.write(f"{PathDirector.var_1}\r\n".encode("utf-8"))
+                    if func_id >= 2:
+                        self.uart.write(f"Var2 (5 chr):".encode("utf-8"))
+                        PathDirector.var_2 = self.get_next_n_char(5)
+                        self.uart.write(f"{PathDirector.var_2}\r\n".encode("utf-8"))
+                    if func_id >= 3:
+                        self.uart.write(f"Var3 (5 chr):".encode("utf-8"))
+                        PathDirector.var_3 = self.get_next_n_char(5)
+                        self.uart.write(f"{PathDirector.var_3}\r\n".encode("utf-8"))
+
                     set_seg_s.put(value)
 
                 elif cmd == "%":
@@ -245,81 +208,42 @@ class UserInput:
 
                 # Motor gains
                 elif cmd == "p":
-                    value = self.get_next_n_char(5)
-                    MotorController.set_gain("motor_Kp", value)
-                    attribute = MotorController.motor_Kp
-                    print("Kp:", attribute)
-                    self.uart.write(f"p{attribute}\r\n".encode("utf-8"))
-                    self.uart.write(b"Test Data Transfer Complete\r\n")
-                    self.uart.write(b"lt,rt,lp,rp,lv,rv\r\n")
+                    which_CLC = self.get_next_n_char(1)
+                    self.uart.write(f"{which_CLC}\r\n".encode("utf-8"))
+                    if which_CLC == "1":
+                        sens = Encoder
+                    elif which_CLC == "2":
+                        sens = LineSensor
+                    else:
+                        sens = IMU
+                    self.change_attribute(sens, "Kp")
                 elif cmd == "i":
-                    value = self.get_next_n_char(5)
-                    MotorController.set_gain("motor_Ki", value)
-                    attribute = MotorController.motor_Ki
-                    print("Ki:", attribute)
-                    self.uart.write(f"i{attribute}\r\n".encode("utf-8"))
-                    self.uart.write(b"Test Data Transfer Complete\r\n")
-                    self.uart.write(b"lt,rt,lp,rp,lv,rv\r\n")
+                    which_CLC = self.get_next_n_char(1)
+                    if which_CLC == "1":
+                        sens = Encoder
+                    elif which_CLC == "2":
+                        sens = LineSensor
+                    else:
+                        sens = IMU
+                    self.change_attribute(sens, "Ki")
                 elif cmd == "o":
-                    value = self.get_next_n_char(5)
-                    MotorController.set_gain("motor_Kw", value)
-                    attribute = MotorController.motor_Kw
-                    print("Kw:", attribute)
-                    self.uart.write(f"o{attribute}\r\n".encode("utf-8"))
-                    self.uart.write(b"Test Data Transfer Complete\r\n")
-                    self.uart.write(b"lt,rt,lp,rp,lv,rv\r\n")
+                    which_CLC = self.get_next_n_char(1)
+                    if which_CLC == "1":
+                        sens = Encoder
+                    elif which_CLC == "2":
+                        sens = LineSensor
+                    else:
+                        sens = IMU
+                    self.change_attribute(sens, "Kd")
                 elif cmd == "k":
-                    value = self.get_next_n_char(5)
-                    MotorController.set_gain("motor_Kffl", value)
-                    attribute = MotorController.motor_Kff
-                    print("Kffl:", attribute)
-                    self.uart.write(f"k{attribute}\r\n".encode("utf-8"))
-                    self.uart.write(b"Test Data Transfer Complete\r\n")
-                    self.uart.write(b"lt,rt,lp,rp,lv,rv\r\n")
+                    sens = Encoder
+                    self.change_attribute(sens, "Kff")
                 elif cmd == "h":
-                    value = self.get_next_n_char(5)
-                    MotorController.set_gain("motor_PWM_startl", value)
-                    attribute = MotorController.motor_PWM_startl
-                    print("ff_startl:", attribute)
-                    self.uart.write(f"h{attribute}\r\n".encode("utf-8"))
-                    self.uart.write(b"Test Data Transfer Complete\r\n")
-                    self.uart.write(b"lt,rt,lp,rp,lv,rv\r\n")
+                    sens = Encoder
+                    self.change_attribute(sens, "turn_correctionl")
                 elif cmd == "j":
-                    value = self.get_next_n_char(5)
-                    MotorController.set_gain("motor_PWM_startr", value)
-                    attribute = MotorController.motor_PWM_startr
-                    print("ff_startr:", attribute)
-                    self.uart.write(f"j{attribute}\r\n".encode("utf-8"))
-                    self.uart.write(b"Test Data Transfer Complete\r\n")
-                    self.uart.write(b"lt,rt,lp,rp,lv,rv\r\n")
-
-                # Line sensor gains
-                elif cmd == "u":
-                    value = self.get_next_n_char(5)
-                    LineSensor.set_gain("sensor_Kp", value)
-                    attribute = LineSensor.sensor_Kp
-                    print("Kp:", attribute)
-                    self.uart.write(f"u{attribute}\r\n".encode("utf-8"))
-                    self.uart.write(b"Test Data Transfer Complete\r\n")
-                    self.uart.write(b"lt,rt,lp,rp,lv,rv\r\n")
-                # Line sensor gains
-                elif cmd == "y":
-                    value = self.get_next_n_char(5)
-                    LineSensor.set_gain("sensor_Ki", value)
-                    attribute = LineSensor.sensor_Ki
-                    print("Ki:", attribute)
-                    self.uart.write(f"y{attribute}\r\n".encode("utf-8"))
-                    self.uart.write(b"Test Data Transfer Complete\r\n")
-                    self.uart.write(b"lt,rt,lp,rp,lv,rv\r\n")
-                # Line sensor gains
-                elif cmd == "t":
-                    value = self.get_next_n_char(5)
-                    LineSensor.set_gain("sensor_Kd", value)
-                    attribute = LineSensor.sensor_Kd
-                    print("Kd:", attribute)
-                    self.uart.write(f"t{attribute}\r\n".encode("utf-8"))
-                    self.uart.write(b"Test Data Transfer Complete\r\n")
-                    self.uart.write(b"lt,rt,lp,rp,lv,rv\r\n")
+                    sens = Encoder
+                    self.change_attribute(sens, "turn_correctionr")
 
                 elif cmd == "z":
                     value = self.get_next_n_char(5)
@@ -327,6 +251,4 @@ class UserInput:
                     attribute = PathDirector.v_ref
                     print("v_ref:", attribute)
                     self.uart.write(f"z{attribute}\r\n".encode("utf-8"))
-                    self.uart.write(b"Test Data Transfer Complete\r\n")
-                    self.uart.write(b"lt,rt,lp,rp,lv,rv\r\n")
             yield

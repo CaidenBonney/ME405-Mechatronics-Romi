@@ -5,17 +5,10 @@ from os import listdir
 
 
 class LineSensor(Sensor):
-    @classmethod
-    def set_gain(cls, K="sensor_Kp", value=0.0):
-        """Multiply a class-level gain by the given factor."""
-        if not hasattr(cls, K):
-            raise AttributeError(f"'{K}' is not a defined gain on {cls.__name__}")
-        setattr(cls, K, value)
-
     # Sensor Gains
-    sensor_Kp = 0.05  # Proportional gain
-    sensor_Ki = 0.05  # Integral gain
-    sensor_Kd = 0.00  # Derivative gain
+    Kp = 0.05  # Proportional gain
+    Ki = 0.05  # Integral gain
+    Kd = 0.00  # Derivative gain
 
     def __init__(self, list_of_IR_Sensors: list[IRSensor]):
         super().__init__()

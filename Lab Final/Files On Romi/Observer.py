@@ -88,6 +88,8 @@ class Observer:
         v_avg_rol_queue = RollingQueue(3)
         X_dot = 0
         Y_dot = 0
+
+        prev_c = 0
         X = 0
         Y = 0
 
@@ -112,21 +114,26 @@ class Observer:
             y_k = dot(C, x_k)  # D term omitted since zero
 
             # Calculate v based on x_k
-            v = (self.l_encoder.velocity + self.r_encoder.velocity) / 2
+            # v = (self.l_encoder.velocity + self.r_encoder.velocity) / 2
 
-            v_avg_rol_queue.push(v)
+            # v_avg_rol_queue.push(v)
 
-            v_avg = (
-                v_avg_rol_queue.average()
-                if (self.l_motor_pwm_ch.pulse_width_percent() == 0 or self.l_motor_nSLP_pin.value() == 1)
-                and (self.r_motor_pwm_ch.pulse_width_percent() == 0 or self.r_motor_nSLP_pin.value() == 1)
-                else 0
-            )
+            # v_avg = (
+            #     0
+            #     if (self.l_motor_pwm_ch.pulse_width_percent() == 0 or self.l_motor_nSLP_pin.value() == 1)
+            #     and (self.r_motor_pwm_ch.pulse_width_percent() == 0 or self.r_motor_nSLP_pin.value() == 1)
+            #     else v_avg_rol_queue.average()
+            # )
 
-            X_dot = v_avg * cos(ustar[4, 0])
-            Y_dot = v_avg * sin(ustar[4, 0])
-            X += X_dot * self.tstep
-            Y += Y_dot * self.tstep
+            # print(f"v_avg: {v_avg}")
+
+            C_delta = x_k[2, 0] - prev_c
+            prev_c = x_k[2, 0]
+
+            X_delta = C_delta * cos(ustar[4, 0])
+            Y_delta = C_delta * sin(ustar[4, 0])
+            X += X_delta
+            Y += Y_delta
 
             # Update Shares Accordingly
             obsd_lpos_s.put(y_k[0, 0])

@@ -11,6 +11,15 @@ HardwarePinName = Pin
 class Encoder(Sensor):
     """A quadrature encoder decoding interface encapsulated in a Python class"""
 
+    # Motor Gains
+    Kp = 0.05 #                            Proportional gain
+    Ki = 0.05  #                           Integral gain
+    Kd = 0  #                              Derivative gain
+    Kw = 0.10  #                           Windup gain
+    Kff = 0.075  #                         Feed forward gain
+    PWM_startl = 5.5  #                    Feed forward gain at start regardless of reference speed Calced: 2.49
+    PWM_startr = 5.5  #                    Feed forward gain at start regardless of reference speed Calced: -2.17
+
     def __init__(
         self,
         motor: Motor,
