@@ -1,0 +1,231 @@
+\doxysection{task\+\_\+share.\+py}
+\hypertarget{task__share_8py_source}{}\label{task__share_8py_source}\index{Lab Final/Files On Romi/task\_share.py@{Lab Final/Files On Romi/task\_share.py}}
+\mbox{\hyperlink{task__share_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00001}\mbox{\hyperlink{namespacetask__share}{00001}}\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00024}00024\ \textcolor{keyword}{import}\ array}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00025}00025\ \textcolor{keyword}{import}\ gc}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00026}00026\ \textcolor{keyword}{import}\ pyb}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00027}00027\ \textcolor{keyword}{import}\ micropython}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00032}\mbox{\hyperlink{namespacetask__share_a75818e5b662453e3723d0f234c85e519}{00032}}\ share\_list\ =\ []}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00035}\mbox{\hyperlink{namespacetask__share_af5ee68a35f9ce19aef4c4bd4ab7c2679}{00035}}\ type\_code\_strings\ =\ \{}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00036}00036\ \ \ \ \ \textcolor{stringliteral}{"{}b"{}}:\ \textcolor{stringliteral}{"{}int8"{}},}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00037}00037\ \ \ \ \ \textcolor{stringliteral}{"{}B"{}}:\ \textcolor{stringliteral}{"{}uint8"{}},}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00038}00038\ \ \ \ \ \textcolor{stringliteral}{"{}h"{}}:\ \textcolor{stringliteral}{"{}int16"{}},}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00039}00039\ \ \ \ \ \textcolor{stringliteral}{"{}H"{}}:\ \textcolor{stringliteral}{"{}uint16"{}},}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00040}00040\ \ \ \ \ \textcolor{stringliteral}{"{}i"{}}:\ \textcolor{stringliteral}{"{}int(?)"{}},}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00041}00041\ \ \ \ \ \textcolor{stringliteral}{"{}I"{}}:\ \textcolor{stringliteral}{"{}uint(?)"{}},}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00042}00042\ \ \ \ \ \textcolor{stringliteral}{"{}l"{}}:\ \textcolor{stringliteral}{"{}int32"{}},}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00043}00043\ \ \ \ \ \textcolor{stringliteral}{"{}L"{}}:\ \textcolor{stringliteral}{"{}uint32"{}},}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00044}00044\ \ \ \ \ \textcolor{stringliteral}{"{}q"{}}:\ \textcolor{stringliteral}{"{}int64"{}},}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00045}00045\ \ \ \ \ \textcolor{stringliteral}{"{}Q"{}}:\ \textcolor{stringliteral}{"{}uint64"{}},}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00046}00046\ \ \ \ \ \textcolor{stringliteral}{"{}f"{}}:\ \textcolor{stringliteral}{"{}float"{}},}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00047}00047\ \ \ \ \ \textcolor{stringliteral}{"{}d"{}}:\ \textcolor{stringliteral}{"{}double"{}},}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00048}00048\ \}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00054}\mbox{\hyperlink{namespacetask__share_ad6aea1db68be1a10f72039a5ac9e9dd4}{00054}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacetask__share_ad6aea1db68be1a10f72039a5ac9e9dd4}{show\_all}}():}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00055}00055\ \ \ \ \ gen\ =\ (str(item)\ \textcolor{keywordflow}{for}\ item\ \textcolor{keywordflow}{in}\ share\_list)}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00056}00056\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}.join(gen)}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00064}\mbox{\hyperlink{classtask__share_1_1_base_share}{00064}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classtask__share_1_1_base_share}{BaseShare}}:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00066}00066\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00069}\mbox{\hyperlink{classtask__share_1_1_base_share_ad8079b40800179be6c58aaac9abb0e26}{00069}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_base_share_ad8079b40800179be6c58aaac9abb0e26}{\_\_init\_\_}}(self,\ type\_code,\ thread\_protect=True,\ name=None):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00070}\mbox{\hyperlink{classtask__share_1_1_base_share_a0e45276424d1600740942b82f216c649}{00070}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_base_share_a0e45276424d1600740942b82f216c649}{\_type\_code}}\ =\ type\_code}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00071}\mbox{\hyperlink{classtask__share_1_1_base_share_acf1741d88ede8f82b9c5f321a92aaa5e}{00071}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_base_share_acf1741d88ede8f82b9c5f321a92aaa5e}{\_thread\_protect}}\ =\ thread\_protect}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Add\ this\ queue\ to\ the\ global\ share\ and\ queue\ list}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ share\_list.append(self)}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00098}\mbox{\hyperlink{classtask__share_1_1_queue}{00098}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classtask__share_1_1_queue}{Queue}}(\mbox{\hyperlink{classtask__share_1_1_base_share}{BaseShare}}):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00100}00100\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00101}\mbox{\hyperlink{classtask__share_1_1_queue_a6f9d87b116eb16dba0867d3746af9f5f}{00101}}\ \ \ \ \ ser\_num\ =\ 0}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00103}00103\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00128}\mbox{\hyperlink{classtask__share_1_1_queue_a74a2bf942ef1d70302551900c16af635}{00128}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_queue_a74a2bf942ef1d70302551900c16af635}{\_\_init\_\_}}(self,\ type\_code,\ size,\ thread\_protect=False,\ overwrite=False,\ name=None):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00129}00129\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ First\ call\ the\ parent\ class\ initializer}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00130}00130\ \ \ \ \ \ \ \ \ super().\mbox{\hyperlink{classtask__share_1_1_queue_a74a2bf942ef1d70302551900c16af635}{\_\_init\_\_}}(type\_code,\ thread\_protect,\ name)}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00132}\mbox{\hyperlink{classtask__share_1_1_queue_ad256c3ac46d8ad097b921c8d448b1b96}{00132}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_ad256c3ac46d8ad097b921c8d448b1b96}{\_size}}\ =\ size}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00133}\mbox{\hyperlink{classtask__share_1_1_queue_af15a266174233221505d2abf8fef7e95}{00133}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_af15a266174233221505d2abf8fef7e95}{\_overwrite}}\ =\ overwrite}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00134}\mbox{\hyperlink{classtask__share_1_1_queue_a5b343508c95c7cc8ee37992cf7d286ca}{00134}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_a5b343508c95c7cc8ee37992cf7d286ca}{\_name}}\ =\ str(name)\ \textcolor{keywordflow}{if}\ name\ !=\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}Queue"{}}\ +\ str(Queue.ser\_num)}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00135}00135\ \ \ \ \ \ \ \ \ Queue.ser\_num\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00137}00137\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Allocate\ memory\ in\ which\ the\ queue's\ data\ will\ be\ stored}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00138}00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00139}\mbox{\hyperlink{classtask__share_1_1_queue_ad1e2a4a6b081dd65989ce7af29610abe}{00139}}\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_ad1e2a4a6b081dd65989ce7af29610abe}{\_buffer}}\ =\ array.array(type\_code,\ range(size))}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ MemoryError:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_ad1e2a4a6b081dd65989ce7af29610abe}{\_buffer}}\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ ValueError:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_ad1e2a4a6b081dd65989ce7af29610abe}{\_buffer}}\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Initialize\ pointers\ to\ be\ used\ for\ reading\ and\ writing\ data}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_a0d4b70d239eb7244ff3b7e54d4a4981e}{clear}}()}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Since\ we\ may\ have\ allocated\ a\ bunch\ of\ memory,\ call\ the\ garbage}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ collector\ to\ neaten\ up\ what\ memory\ is\ left\ for\ future\ use}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ gc.collect()}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00154}00154\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00172}00172\ \ \ \ \ \textcolor{preprocessor}{@micropython.native}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00173}\mbox{\hyperlink{classtask__share_1_1_queue_a0611b4838abb13731d1d487a8178b883}{00173}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_queue_a0611b4838abb13731d1d487a8178b883}{put}}(self,\ item,\ in\_ISR=False):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00174}00174\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ we're\ in\ an\ ISR\ and\ the\ queue\ is\ full\ and\ we're\ not\ allowed\ to}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00175}00175\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ overwrite\ data,\ we\ have\ to\ give\ up\ and\ exit}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00176}00176\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_a72be18f8267b2977117eedf15ad896c8}{full}}():}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ in\_ISR:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Wait\ (if\ needed)\ until\ there's\ room\ in\ the\ buffer\ for\ the\ data}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_af15a266174233221505d2abf8fef7e95}{\_overwrite}}:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_a72be18f8267b2977117eedf15ad896c8}{full}}():}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00185}00185\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Prevent\ data\ corruption\ by\ blocking\ interrupts\ during\ data\ transfer}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00186}00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_base_share_acf1741d88ede8f82b9c5f321a92aaa5e}{\_thread\_protect}}\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \_irq\_state\ =\ pyb.disable\_irq()}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00189}00189\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Write\ the\ data\ and\ advance\ the\ counts\ and\ pointers}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00190}00190\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_ad1e2a4a6b081dd65989ce7af29610abe}{\_buffer}}[self.\mbox{\hyperlink{classtask__share_1_1_queue_addb876a457d389d6110a1667c05c4ae3}{\_wr\_idx}}]\ =\ item}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00191}00191\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_addb876a457d389d6110a1667c05c4ae3}{\_wr\_idx}}\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_addb876a457d389d6110a1667c05c4ae3}{\_wr\_idx}}\ >=\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ad256c3ac46d8ad097b921c8d448b1b96}{\_size}}:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00193}\mbox{\hyperlink{classtask__share_1_1_queue_addb876a457d389d6110a1667c05c4ae3}{00193}}\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_addb876a457d389d6110a1667c05c4ae3}{\_wr\_idx}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00194}00194\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00195}00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}\ >=\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ad256c3ac46d8ad097b921c8d448b1b96}{\_size}}:\ \ \textcolor{comment}{\#\ Can't\ be\ fuller\ than\ full}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00196}\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{00196}}\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}\ =\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ad256c3ac46d8ad097b921c8d448b1b96}{\_size}}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00197}\mbox{\hyperlink{classtask__share_1_1_queue_a6b3d9887cdd99611f3288c7983581dfd}{00197}}\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}\ >\ self.\mbox{\hyperlink{classtask__share_1_1_queue_a6b3d9887cdd99611f3288c7983581dfd}{\_max\_full}}:\ \ \textcolor{comment}{\#\ Record\ maximum\ fillage}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_a6b3d9887cdd99611f3288c7983581dfd}{\_max\_full}}\ =\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00200}00200\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00201}00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_base_share_acf1741d88ede8f82b9c5f321a92aaa5e}{\_thread\_protect}}\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(\_irq\_state)}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00203}00203\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00204}00204\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00221}00221\ \ \ \ \ \textcolor{preprocessor}{@micropython.native}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00222}\mbox{\hyperlink{classtask__share_1_1_queue_a6fec4a9775651c30a4c6de357eb701fc}{00222}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_queue_a6fec4a9775651c30a4c6de357eb701fc}{get}}(self,\ in\_ISR=False):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00223}00223\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Wait\ until\ there's\ something\ in\ the\ queue\ to\ be\ returned}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00224}00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_afee296230d2346df88ffb4b2b22208f3}{empty}}():}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00226}00226\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00227}00227\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Prevent\ data\ corruption\ by\ blocking\ interrupts\ during\ data\ transfer}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00228}00228\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_base_share_acf1741d88ede8f82b9c5f321a92aaa5e}{\_thread\_protect}}\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ irq\_state\ =\ pyb.disable\_irq()}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00230}00230\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00231}00231\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Get\ the\ item\ to\ be\ returned\ from\ the\ queue}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00232}00232\ \ \ \ \ \ \ \ \ to\_return\ =\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ad1e2a4a6b081dd65989ce7af29610abe}{\_buffer}}[self.\mbox{\hyperlink{classtask__share_1_1_queue_a846a649a41a37dc094cad4c28ec9170f}{\_rd\_idx}}]}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00233}00233\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00234}00234\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Move\ the\ read\ pointer\ and\ adjust\ the\ number\ of\ items\ in\ the\ queue}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00235}00235\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_a846a649a41a37dc094cad4c28ec9170f}{\_rd\_idx}}\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00236}00236\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_a846a649a41a37dc094cad4c28ec9170f}{\_rd\_idx}}\ >=\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ad256c3ac46d8ad097b921c8d448b1b96}{\_size}}:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00237}\mbox{\hyperlink{classtask__share_1_1_queue_a846a649a41a37dc094cad4c28ec9170f}{00237}}\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_a846a649a41a37dc094cad4c28ec9170f}{\_rd\_idx}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00238}00238\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}\ -\/=\ 1}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00239}00239\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}\ <\ 0:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00241}00241\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00242}00242\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00243}00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_base_share_acf1741d88ede8f82b9c5f321a92aaa5e}{\_thread\_protect}}\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(irq\_state)}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00245}00245\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00246}00246\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ to\_return}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00247}00247\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00248}00248\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00253}00253\ \ \ \ \ \textcolor{preprocessor}{@micropython.native}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00254}\mbox{\hyperlink{classtask__share_1_1_queue_ac9552672266377c23011552e9df15a63}{00254}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_queue_ac9552672266377c23011552e9df15a63}{any}}(self):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00255}00255\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}\ >\ 0}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00256}00256\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00257}00257\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00262}00262\ \ \ \ \ \textcolor{preprocessor}{@micropython.native}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00263}\mbox{\hyperlink{classtask__share_1_1_queue_afee296230d2346df88ffb4b2b22208f3}{00263}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_queue_afee296230d2346df88ffb4b2b22208f3}{empty}}(self):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00264}00264\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}\ <=\ 0}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00266}00266\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00271}00271\ \ \ \ \ \textcolor{preprocessor}{@micropython.native}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00272}\mbox{\hyperlink{classtask__share_1_1_queue_a72be18f8267b2977117eedf15ad896c8}{00272}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_queue_a72be18f8267b2977117eedf15ad896c8}{full}}(self):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00273}00273\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}\ >=\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ad256c3ac46d8ad097b921c8d448b1b96}{\_size}}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00274}00274\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00275}00275\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00280}00280\ \ \ \ \ \textcolor{preprocessor}{@micropython.native}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00281}\mbox{\hyperlink{classtask__share_1_1_queue_aef595fc4133d297e2b63014c47ac5f27}{00281}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_queue_aef595fc4133d297e2b63014c47ac5f27}{num\_in}}(self):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00282}00282\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00283}00283\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00284}00284\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00285}\mbox{\hyperlink{classtask__share_1_1_queue_a0d4b70d239eb7244ff3b7e54d4a4981e}{00285}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_queue_a0d4b70d239eb7244ff3b7e54d4a4981e}{clear}}(self):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00286}00286\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_a846a649a41a37dc094cad4c28ec9170f}{\_rd\_idx}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00287}00287\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_addb876a457d389d6110a1667c05c4ae3}{\_wr\_idx}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00288}00288\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_ab8dd2af644d6f30db1ce798708bbfbf7}{\_num\_items}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00289}00289\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_a6b3d9887cdd99611f3288c7983581dfd}{\_max\_full}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00290}00290\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00291}00291\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00295}\mbox{\hyperlink{classtask__share_1_1_queue_a7b9626a0859625dbcf6d964b8b5c7761}{00295}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_queue_a7b9626a0859625dbcf6d964b8b5c7761}{\_\_repr\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00296}00296\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}\{:<12s\}\ Queue<\{:s\}>\ Max\ Full\ \{:d\}/\{:d\}"{}}.format(}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_queue_a5b343508c95c7cc8ee37992cf7d286ca}{\_name}},\ type\_code\_strings[self.\mbox{\hyperlink{classtask__share_1_1_base_share_a0e45276424d1600740942b82f216c649}{\_type\_code}}],\ self.\mbox{\hyperlink{classtask__share_1_1_queue_a6b3d9887cdd99611f3288c7983581dfd}{\_max\_full}},\ self.\mbox{\hyperlink{classtask__share_1_1_queue_ad256c3ac46d8ad097b921c8d448b1b96}{\_size}}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00298}00298\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00299}00299\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00300}00300\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00301}00301\ \textcolor{comment}{\#\ ============================================================================}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00302}00302\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00303}00303\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00304}00304\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00324}\mbox{\hyperlink{classtask__share_1_1_share}{00324}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classtask__share_1_1_share}{Share}}(\mbox{\hyperlink{classtask__share_1_1_base_share}{BaseShare}}):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00325}00325\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00326}00326\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00327}\mbox{\hyperlink{classtask__share_1_1_share_a2e8df029af46fbfd44ef0c2e7e8c7af6}{00327}}\ \ \ \ \ ser\_num\ =\ 0}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00328}00328\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00329}00329\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00350}\mbox{\hyperlink{classtask__share_1_1_share_ad8263aa134dc9fa17abb7f751240f092}{00350}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_share_ad8263aa134dc9fa17abb7f751240f092}{\_\_init\_\_}}(self,\ type\_code,\ thread\_protect=True,\ name=None):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00351}00351\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ First\ call\ the\ parent\ class\ initializer}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00352}00352\ \ \ \ \ \ \ \ \ super().\mbox{\hyperlink{classtask__share_1_1_share_ad8263aa134dc9fa17abb7f751240f092}{\_\_init\_\_}}(type\_code,\ thread\_protect,\ name)}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00353}00353\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00354}\mbox{\hyperlink{classtask__share_1_1_share_a2f7e0b72d08d27b7ccf92da6ddc127a8}{00354}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_share_a2f7e0b72d08d27b7ccf92da6ddc127a8}{\_buffer}}\ =\ array.array(type\_code,\ [0])}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00355}00355\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00356}\mbox{\hyperlink{classtask__share_1_1_share_acff3918997966ba1e31292398f3ca196}{00356}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_share_acff3918997966ba1e31292398f3ca196}{\_name}}\ =\ str(name)\ \textcolor{keywordflow}{if}\ name\ !=\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}Share"{}}\ +\ str(Share.ser\_num)}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00357}00357\ \ \ \ \ \ \ \ \ Share.ser\_num\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00358}00358\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00359}00359\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00367}00367\ \ \ \ \ \textcolor{preprocessor}{@micropython.native}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00368}\mbox{\hyperlink{classtask__share_1_1_share_a6bca473510fc2d28f5b7a32f242e4e18}{00368}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_share_a6bca473510fc2d28f5b7a32f242e4e18}{put}}(self,\ data,\ in\_ISR=False):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00369}00369\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00370}00370\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Disable\ interrupts\ before\ writing\ the\ data}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00371}00371\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_base_share_acf1741d88ede8f82b9c5f321a92aaa5e}{\_thread\_protect}}\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ irq\_state\ =\ pyb.disable\_irq()}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00373}00373\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00374}00374\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classtask__share_1_1_share_a2f7e0b72d08d27b7ccf92da6ddc127a8}{\_buffer}}[0]\ =\ data}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00375}00375\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00376}00376\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00377}00377\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_base_share_acf1741d88ede8f82b9c5f321a92aaa5e}{\_thread\_protect}}\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(irq\_state)}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00379}00379\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00380}00380\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00386}00386\ \ \ \ \ \textcolor{preprocessor}{@micropython.native}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00387}\mbox{\hyperlink{classtask__share_1_1_share_ae5e4a0e21b274c9a76b80b8bb5eb62d3}{00387}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_share_ae5e4a0e21b274c9a76b80b8bb5eb62d3}{get}}(self,\ in\_ISR=False):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00388}00388\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Disable\ interrupts\ before\ reading\ the\ data}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00389}00389\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_base_share_acf1741d88ede8f82b9c5f321a92aaa5e}{\_thread\_protect}}\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ irq\_state\ =\ pyb.disable\_irq()}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00391}00391\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00392}00392\ \ \ \ \ \ \ \ \ to\_return\ =\ self.\mbox{\hyperlink{classtask__share_1_1_share_a2f7e0b72d08d27b7ccf92da6ddc127a8}{\_buffer}}[0]}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00393}00393\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00394}00394\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts}}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00395}00395\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classtask__share_1_1_base_share_acf1741d88ede8f82b9c5f321a92aaa5e}{\_thread\_protect}}\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(irq\_state)}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00397}00397\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00398}00398\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ to\_return}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00399}00399\ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00400}00400\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00403}\mbox{\hyperlink{classtask__share_1_1_share_ae764d854ffc31037a37f89211128eb98}{00403}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtask__share_1_1_share_ae764d854ffc31037a37f89211128eb98}{\_\_repr\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{task__share_8py_source_l00404}00404\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}\{:<12s\}\ Share<\{:s\}>"{}}.format(self.\mbox{\hyperlink{classtask__share_1_1_share_acff3918997966ba1e31292398f3ca196}{\_name}},\ type\_code\_strings[self.\mbox{\hyperlink{classtask__share_1_1_base_share_a0e45276424d1600740942b82f216c649}{\_type\_code}}])}
+
+\end{DoxyCode}

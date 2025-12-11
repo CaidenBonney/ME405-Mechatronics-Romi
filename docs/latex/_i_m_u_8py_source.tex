@@ -1,0 +1,225 @@
+\doxysection{IMU.\+py}
+\hypertarget{_i_m_u_8py_source}{}\label{_i_m_u_8py_source}\index{Lab Final/Files On Romi/IMU.py@{Lab Final/Files On Romi/IMU.py}}
+\mbox{\hyperlink{_i_m_u_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00001}\mbox{\hyperlink{namespace_i_m_u}{00001}}\ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ I2C,\ Pin,\ delay\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00002}00002\ \textcolor{keyword}{from}\ struct\ \textcolor{keyword}{import}\ calcsize,\ unpack\_from}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00003}00003\ \textcolor{keyword}{from}\ micropython\ \textcolor{keyword}{import}\ const\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00004}00004\ \textcolor{keyword}{from}\ os\ \textcolor{keyword}{import}\ listdir}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00005}00005\ \textcolor{keyword}{from}\ Sensor\ \textcolor{keyword}{import}\ Sensor}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00006}00006\ \textcolor{keyword}{from}\ math\ \textcolor{keyword}{import}\ pi}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00009}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u}{00009}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u}{IMU}}(\mbox{\hyperlink{class_sensor_1_1_sensor}{Sensor}}):}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00011}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae089e5b174b451d66017c2db68651108}{00011}}\ \ \ \ \ DEV\_ADDR\ =\ 0x28}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00012}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a8fcfad6fc4d6485b39ac764a5151403e}{00012}}\ \ \ \ \ default\_mode\_set\ =\ 5}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00014}00014\ \ \ \ \ \textcolor{comment}{\#\ Sensor\ Gains}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00015}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ad824e5de19468403b24749b8746469cd}{00015}}\ \ \ \ \ Kp\ =\ 0.15\ \ \textcolor{comment}{\#\ Proportional\ gain}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00016}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae11b4e8da620740d5cea923939c8bfbb}{00016}}\ \ \ \ \ Ki\ =\ 0.20\ \ \textcolor{comment}{\#\ Integral\ gain}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00017}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a4f8bc59fa581f67bcc31ad161d1b7f10}{00017}}\ \ \ \ \ Kd\ =\ 0.00\ \ \textcolor{comment}{\#\ Derivative\ gain}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00019}00019\ \ \ \ \ \textcolor{comment}{\#\ register\ addresses\ class}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00020}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg}{00020}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg}{reg}}:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ remapping\ axis}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00022}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg_aafcbe6f185f3eb29c5512da9dd9b2ff2}{00022}}\ \ \ \ \ \ \ \ \ AXIS\_REMAP\_CONFIG\ =\ (const(0x41),\ b\textcolor{stringliteral}{"{}<B"{}})\ \ \textcolor{comment}{\#\ value\ =\ 0x21}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00023}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg_aafa98397985e92fc13e3f8fd6815ea1b}{00023}}\ \ \ \ \ \ \ \ \ AXIS\_REMAP\_SIGN\ =\ (const(0x42),\ b\textcolor{stringliteral}{"{}<B"{}})\ \ \textcolor{comment}{\#\ value\ =\ 0x02}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ page\ 51/52\ table}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00026}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg_a848b8f36555629625b135df892ebab1d}{00026}}\ \ \ \ \ \ \ \ \ EUL\_HEADING\ =\ (const(0x1A),\ b\textcolor{stringliteral}{"{}<h"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00027}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg_af9e5f21dcd694733a372ee632b2e6eb0}{00027}}\ \ \ \ \ \ \ \ \ EUL\_DATA\_ALL\ =\ (const(0x1A),\ b\textcolor{stringliteral}{"{}<hhh"{}})\ \ \textcolor{comment}{\#\ heading\ 0x1A/1B,\ roll\ 0x1C/1D,\ pitch\ 0x1E/1F}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ GYRO\_DATA\_X\ =\ (const(0x14),\ b"{}<h"{})}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ GYRO\_DATA\_Y\ =\ (const(0x16),\ b"{}<h"{})}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00031}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg_a0a86e53493a33d29d82410b120455901}{00031}}\ \ \ \ \ \ \ \ \ GYRO\_DATA\_Z\ =\ (const(0x18),\ b\textcolor{stringliteral}{"{}<h"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00032}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg_a4189343651d09bc694eddd674d6935da}{00032}}\ \ \ \ \ \ \ \ \ GYRO\_DATA\_ALL\ =\ (const(0x14),\ b\textcolor{stringliteral}{"{}<hhh"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Settings:}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00035}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg_a726d46b493b6a0e4423176ca5477873e}{00035}}\ \ \ \ \ \ \ \ \ OPR\_MODE\ =\ (const(0x3D),\ b\textcolor{stringliteral}{"{}<B"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00036}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg_a7dee13930e688c2cbb353322efb0282f}{00036}}\ \ \ \ \ \ \ \ \ UNIT\_SEL\ =\ (const(0x3B),\ b\textcolor{stringliteral}{"{}<B"{}})\ \ \textcolor{comment}{\#\ Section\ 3.6\ page\ 30}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ CALIBRATION:\ Section\ 3.10,\ page\ 47}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00039}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg_ade371891c651df0b7990c4e0d2e67cf0}{00039}}\ \ \ \ \ \ \ \ \ CALIB\_STAT\ =\ (const(0x35),\ b\textcolor{stringliteral}{"{}<B"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ OFFSETS\ \&\ RADII:\ Section\ 3.6.4,\ page\ 31}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00042}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg_a26e2371c654e8c0a1ba5becc3c579132}{00042}}\ \ \ \ \ \ \ \ \ calibration\_coefficients\ =\ (}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ (const(0x55),\ b\textcolor{stringliteral}{"{}<h"{}}),\ \ \textcolor{comment}{\#\ ACC\_OFFSET\_X}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ (const(0x57),\ b\textcolor{stringliteral}{"{}<h"{}}),\ \ \textcolor{comment}{\#\ ACC\_OFFSET\_Y}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ (const(0x59),\ b\textcolor{stringliteral}{"{}<h"{}}),\ \ \textcolor{comment}{\#\ ACC\_OFFSET\_Z}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ (const(0x5B),\ b\textcolor{stringliteral}{"{}<h"{}}),\ \ \textcolor{comment}{\#\ MAG\_OFFSET\_X}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ (const(0x5D),\ b\textcolor{stringliteral}{"{}<h"{}}),\ \ \textcolor{comment}{\#\ MAG\_OFFSET\_Y}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ (const(0x5F),\ b\textcolor{stringliteral}{"{}<h"{}}),\ \ \textcolor{comment}{\#\ MAG\_OFFSET\_Z}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ (const(0x61),\ b\textcolor{stringliteral}{"{}<h"{}}),\ \ \textcolor{comment}{\#\ GYR\_OFFSET\_X}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ (const(0x63),\ b\textcolor{stringliteral}{"{}<h"{}}),\ \ \textcolor{comment}{\#\ GYR\_OFFSET\_Y}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ (const(0x65),\ b\textcolor{stringliteral}{"{}<h"{}}),\ \ \textcolor{comment}{\#\ GYR\_OFFSET\_Z}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ (const(0x67),\ b\textcolor{stringliteral}{"{}<h"{}}),\ \ \textcolor{comment}{\#\ ACC\_RADIUS}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ (const(0x69),\ b\textcolor{stringliteral}{"{}<h"{}}),\ \ \textcolor{comment}{\#\ MAG\_RADIUS}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00056}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a4d3c99d26d97ade52feda999b8fc6774}{00056}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a4d3c99d26d97ade52feda999b8fc6774}{\_\_init\_\_}}(self,\ i2c\_object:\ I2C,\ reset\_pin:\ Pin):}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ super().\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a4d3c99d26d97ade52feda999b8fc6774}{\_\_init\_\_}}()}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00058}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a3a2f3227a652d6d58fd5e1c8353e9170}{00058}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a3a2f3227a652d6d58fd5e1c8353e9170}{i2c}}\ =\ i2c\_object\ \ \textcolor{comment}{\#\ the\ pyb\ board\ is\ the\ controller,\ meaning\ the\ IMU\ is\ the\ peripheral}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00059}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae79966f9814767d3b896a9d38d487159}{00059}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae79966f9814767d3b896a9d38d487159}{reset\_pin}}\ =\ reset\_pin}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00060}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a2b54a313dfa2b30267e3ca3b5a125e16}{00060}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a2b54a313dfa2b30267e3ca3b5a125e16}{\_buf}}\ =\ bytearray((0\ \textcolor{keywordflow}{for}\ \_\ \textcolor{keywordflow}{in}\ range(22)))\ \ \textcolor{comment}{\#\ buffer\ for\ unpacking.\ Each\ element\ is\ a\ byte}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00061}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a63014eeda3ed0cc4591b80809e66cf7a}{00061}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a63014eeda3ed0cc4591b80809e66cf7a}{calibrated}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00062}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ababc43f9f8bdf021f155fd0324d48ba5}{00062}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ababc43f9f8bdf021f155fd0324d48ba5}{convert\_reg\_to\_rad}}\ =\ 900}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00063}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae95535b92360c55599b342e84aa71089}{00063}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae95535b92360c55599b342e84aa71089}{prev\_imu\_heading}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00064}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a3e7a28177a9d4a83198f43bdfc05eded}{00064}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a3e7a28177a9d4a83198f43bdfc05eded}{heading}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00065}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abfbd2ee2d2c2fabbcfd47e4b0fb4cfcd}{00065}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abfbd2ee2d2c2fabbcfd47e4b0fb4cfcd}{ar}}\ =\ 2\ *\ pi}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a87f4effea9ff9d9719f6af72c29e4736}{reset}}()}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00068}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a87f4effea9ff9d9719f6af72c29e4736}{00068}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a87f4effea9ff9d9719f6af72c29e4736}{reset}}(self):}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00069}00069\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae79966f9814767d3b896a9d38d487159}{reset\_pin}}.value(0)}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00070}00070\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae79966f9814767d3b896a9d38d487159}{reset\_pin}}.value(1)}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ delay(700)\ \ \textcolor{comment}{\#\ delay(ms)\ to\ allow\ IMU\ to\ reset}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{\_write\_reg}}(IMU.reg.AXIS\_REMAP\_CONFIG,\ \textcolor{stringliteral}{"{}00100001"{}})\ \ \textcolor{comment}{\#\ P3}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{\_write\_reg}}(IMU.reg.AXIS\_REMAP\_SIGN,\ \textcolor{stringliteral}{"{}xxxxxx10"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{\_write\_reg}}(IMU.reg.UNIT\_SEL,\ \textcolor{stringliteral}{"{}xxx1x110"{}})\ \ \textcolor{comment}{\#\ degF,\ rads,\ rad/s,\ m/s\string^2}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00077}00077\ \ \ \ \ \textcolor{comment}{\#\ "{}override"{}\ parent\ class\ method}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00078}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_afa673c8e8d1af1635c95e0b88f97a3df}{00078}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_afa673c8e8d1af1635c95e0b88f97a3df}{get\_data}}(self)\ -\/>\ float:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_aaee0a7c4f9f8350803f0c74f8920ebb5}{get\_heading}}()}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00081}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a23a76edd38d3a81b4ea53b25474aa344}{00081}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a23a76edd38d3a81b4ea53b25474aa344}{\_read\_reg}}(self,\ reg:\ tuple):}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00082}00082\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ determine\ number\ of\ bytes\ from\ reg\ read\ code}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ length\ =\ calcsize(reg[1])}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Create\ a\ memoryview\ object\ of\ the\ right\ size}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ buf\ =\ memoryview(self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a2b54a313dfa2b30267e3ca3b5a125e16}{\_buf}})[:length]}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Read\ the\ the\ I2C\ bytes\ into\ memoryview}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a3a2f3227a652d6d58fd5e1c8353e9170}{i2c}}.mem\_read(buf,\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae089e5b174b451d66017c2db68651108}{DEV\_ADDR}},\ reg[0])}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ unpack\_from(reg[1],\ buf)}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00093}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{00093}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{\_write\_reg}}(self,\ reg:\ tuple,\ input:\ str):}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Writes\ a\ string\ input\ to\ the\ IMU:\ ie\ input\ =\ '01110xxx'}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00095}00095\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ This\ write\ functionality\ can\ work\ on\ 8\ or\ 16\ bits}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ ASSUMED\ THAT\ CONFIGMODE\ IS\ SET\ APPROPRIATELY\ BEFORE\ CALLING\ THIS\ FUNCTION}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ determine\ number\ of\ bytes\ in\ register\ location}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ length\ =\ calcsize(reg[1])}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ length\ >\ 2\ \textcolor{keywordflow}{or}\ len(input)\ //\ 8\ !=\ length:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Write\ to\ register\ is\ not\ the\ correct\ length"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00103}00103\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Create\ and\ mask\ and\ or\ mask}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ and\_mask\ =\ 0b1111\_1111\ \textcolor{keywordflow}{if}\ length\ ==\ 1\ \textcolor{keywordflow}{else}\ 0b1111\_1111\_1111\_1111}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00105}00105\ \ \ \ \ \ \ \ \ or\_mask\ =\ 0b0000\_0000\ \textcolor{keywordflow}{if}\ length\ ==\ 1\ \textcolor{keywordflow}{else}\ 0b0000\_0000\_0000\_0000}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ char\_index\ \textcolor{keywordflow}{in}\ range(len(input)):}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ char\ =\ input[-\/char\_index\ -\/\ 1]}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ char\ ==\ \textcolor{stringliteral}{"{}x"{}}\ \textcolor{keywordflow}{or}\ char\ ==\ \textcolor{stringliteral}{"{}X"{}}:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}\ \ \textcolor{comment}{\#\ and\ mask\ is\ already\ set,\ or\ mask\ is\ already\ cleared}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ char\ ==\ \textcolor{stringliteral}{"{}0"{}}:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ and\_mask\ \&=\ \string~(1\ <<\ (char\_index))\ \ \textcolor{comment}{\#\ clear\ the\ and\ bit}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ char\ ==\ \textcolor{stringliteral}{"{}1"{}}:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ and\_mask\ \&=\ \string~(1\ <<\ (char\_index))\ \ \textcolor{comment}{\#\ clear\ the\ and\ bit}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ or\_mask\ |=\ 1\ <<\ (char\_index)\ \ \textcolor{comment}{\#\ set\ the\ or\ bit}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}mask\ chars\ must\ be\ '0','1','x',\ or\ 'X'"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00118}00118\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a3a2f3227a652d6d58fd5e1c8353e9170}{i2c}}.mem\_write(}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ ((self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a23a76edd38d3a81b4ea53b25474aa344}{\_read\_reg}}(reg)[0]\ \&\ and\_mask)\ |\ or\_mask),}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae089e5b174b451d66017c2db68651108}{DEV\_ADDR}},}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ reg[0],}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ addr\_size=(8\ \textcolor{keywordflow}{if}\ length\ ==\ 1\ \textcolor{keywordflow}{else}\ 16),}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00125}00125\ \ \ \ \ \textcolor{comment}{\#\ A\ method\ to\ change\ the\ operating\ mode\ of\ the\ IMU\ to\ one\ of\ the\ many\ "{}fusion"{}\ modes\ available}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00126}00126\ \ \ \ \ \textcolor{comment}{\#\ from\ the\ BNO055.}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00127}00127\ \ \ \ \ \textcolor{comment}{\#\ operating\ modes\ available:\ (page\ 20),\ fusion\ modes\ available:\ (page\ 21)}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00128}00128\ \ \ \ \ \textcolor{comment}{\#\ [OPR\_MODE]\ address\ =\ 0x3D\ (page\ 70)}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00129}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a1fae52205ccb543d7970d07a84039bf4}{00129}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a1fae52205ccb543d7970d07a84039bf4}{set\_mode}}(self,\ mode:\ int):}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00130}00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ mode\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{\_write\_reg}}(IMU.reg.OPR\_MODE,\ \textcolor{stringliteral}{"{}xxxx0000"{}})\ \ \textcolor{comment}{\#\ 0:\ CONFIGMODE}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00132}00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ mode\ ==\ 1:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{\_write\_reg}}(IMU.reg.OPR\_MODE,\ \textcolor{stringliteral}{"{}xxxx1000"{}})\ \ \textcolor{comment}{\#\ 1:\ IMU}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00134}00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ mode\ ==\ 2:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{\_write\_reg}}(IMU.reg.OPR\_MODE,\ \textcolor{stringliteral}{"{}xxxx1001"{}})\ \ \textcolor{comment}{\#\ 2:\ COMPASS}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00136}00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ mode\ ==\ 3:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{\_write\_reg}}(IMU.reg.OPR\_MODE,\ \textcolor{stringliteral}{"{}xxxx1010"{}})\ \ \textcolor{comment}{\#\ 3:\ M4G}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00138}00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ mode\ ==\ 4:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{\_write\_reg}}(IMU.reg.OPR\_MODE,\ \textcolor{stringliteral}{"{}xxxx1011"{}})\ \ \textcolor{comment}{\#\ 4:\ NDOF\_FMC\_OFF}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ mode\ ==\ 5:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{\_write\_reg}}(IMU.reg.OPR\_MODE,\ \textcolor{stringliteral}{"{}xxxx1100"{}})\ \ \textcolor{comment}{\#\ 5:\ NDOF}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Invalid\ mode"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00145}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a12cc159581e5321d3578d30b00b58545}{00145}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a12cc159581e5321d3578d30b00b58545}{get\_calibration\_status}}(self)\ -\/>\ tuple:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a23a76edd38d3a81b4ea53b25474aa344}{\_read\_reg}}(IMU.reg.CALIB\_STAT)}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00148}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a9776efd9662932ca4bf25020856e1388}{00148}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a9776efd9662932ca4bf25020856e1388}{get\_calibration\_coefficients}}(self)\ -\/>\ tuple:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tuple(self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a23a76edd38d3a81b4ea53b25474aa344}{\_read\_reg}}(coeff\_reg)[0]\ \textcolor{keywordflow}{for}\ coeff\_reg\ \textcolor{keywordflow}{in}\ IMU.reg.calibration\_coefficients)}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00151}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ab61c540c7fb19e614f4849953d3cce9b}{00151}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ab61c540c7fb19e614f4849953d3cce9b}{calibrate}}(self)\ -\/>\ bool:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{"{}IMU\_cal.txt"{}}\ \textcolor{keywordflow}{in}\ listdir():}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ data\ is\ present}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a1fae52205ccb543d7970d07a84039bf4}{set\_mode}}(0)}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Found\ IMU\ calibration\ data,\ skipping\ calibration"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{"{}IMU\_cal.txt"{}},\ \textcolor{stringliteral}{"{}r"{}})\ \textcolor{keyword}{as}\ file:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ entries\ =\ file.readline().strip().split(\textcolor{stringliteral}{"{},"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(entries)\ !=\ 11:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Calibration\ data\ length\ !=\ expected\ length"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ idx,\ coeff\_reg\ \textcolor{keywordflow}{in}\ enumerate(IMU.reg.calibration\_coefficients):}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{\_write\_reg}}(coeff\_reg,\ entries[idx])}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a63014eeda3ed0cc4591b80809e66cf7a}{calibrated}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a1fae52205ccb543d7970d07a84039bf4}{set\_mode}}(IMU.default\_mode\_set)}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00167}00167\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}No\ IMU\ calibration\ data\ found"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a1fae52205ccb543d7970d07a84039bf4}{set\_mode}}(5)\ \ \textcolor{comment}{\#\ set\ to\ NDOF\ mode\ for\ calibration}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ prev\_cal\ =\ cur\_cal\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keywordflow}{not}\ (cur\_cal\ \&\ 0b0011\_0011\ ==\ 0b0011\_0011):\ \ \textcolor{comment}{\#\ only\ check\ GYR\ and\ MAG\ calibration}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ prev\_cal\ !=\ cur\_cal:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}\{cur\_cal:08b\}"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prev\_cal\ =\ cur\_cal}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00176}00176\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cur\_cal\ =\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a12cc159581e5321d3578d30b00b58545}{get\_calibration\_status}}()[0]\ \ \textcolor{comment}{\#\ Update\ cur\_cal\ before\ checking}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ cur\_cal\ \&\ 0b0011\_0011\ ==\ 0b0011\_0011:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a1fae52205ccb543d7970d07a84039bf4}{set\_mode}}(0)}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{"{}IMU\_cal.txt"{}},\ \textcolor{stringliteral}{"{}w"{}})\ \textcolor{keyword}{as}\ f:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ coefs\ =\ \textcolor{stringliteral}{"{},"{}}.join(f\textcolor{stringliteral}{"{}\{s\ \&\ 0xFFFF:016b\}"{}}\ \textcolor{keywordflow}{for}\ s\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a9776efd9662932ca4bf25020856e1388}{get\_calibration\_coefficients}}())}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f.write(f\textcolor{stringliteral}{"{}\{coefs\}\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}\{coefs\}"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}IMU\ Calibration\ Coefficients\ Saved"{}})}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a63014eeda3ed0cc4591b80809e66cf7a}{calibrated}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a1fae52205ccb543d7970d07a84039bf4}{set\_mode}}(IMU.default\_mode\_set)}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ delay(100)\ \ \textcolor{comment}{\#\ delay(ms)\ to\ allow\ IMU\ to\ settle}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00189}00189\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00191}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a6b23b1ea019404b97af99ded7302643a}{00191}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a6b23b1ea019404b97af99ded7302643a}{get\_euler\_angles}}(self)\ -\/>\ tuple[float,\ float,\ float]:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ order:\ head,\ rolled,\ pitched}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00193}00193\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tuple(x\ /\ -\/self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ababc43f9f8bdf021f155fd0324d48ba5}{convert\_reg\_to\_rad}}\ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a23a76edd38d3a81b4ea53b25474aa344}{\_read\_reg}}(IMU.reg.EUL\_DATA\_ALL))}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00195}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a442b3240c60e395e44a7bdb30716d5da}{00195}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a442b3240c60e395e44a7bdb30716d5da}{get\_imu\_heading}}(self)\ -\/>\ float:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00196}00196\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a23a76edd38d3a81b4ea53b25474aa344}{\_read\_reg}}(IMU.reg.EUL\_HEADING)[0]\ /\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ababc43f9f8bdf021f155fd0324d48ba5}{convert\_reg\_to\_rad}}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00198}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_aaee0a7c4f9f8350803f0c74f8920ebb5}{00198}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_aaee0a7c4f9f8350803f0c74f8920ebb5}{get\_heading}}(self)\ -\/>\ float:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00199}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abb2c32908d5ae1392831b46460bda0e6}{00199}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abb2c32908d5ae1392831b46460bda0e6}{delta}}\ =\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a442b3240c60e395e44a7bdb30716d5da}{get\_imu\_heading}}()\ -\/\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae95535b92360c55599b342e84aa71089}{prev\_imu\_heading}}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00200}00200\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae95535b92360c55599b342e84aa71089}{prev\_imu\_heading}}\ =\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a442b3240c60e395e44a7bdb30716d5da}{get\_imu\_heading}}()}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00202}00202\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Overflow}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00203}00203\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abb2c32908d5ae1392831b46460bda0e6}{delta}}\ <\ -\/self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abfbd2ee2d2c2fabbcfd47e4b0fb4cfcd}{ar}}\ /\ 2:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abb2c32908d5ae1392831b46460bda0e6}{delta}}\ +=\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abfbd2ee2d2c2fabbcfd47e4b0fb4cfcd}{ar}}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Underflow}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abb2c32908d5ae1392831b46460bda0e6}{delta}}\ >\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abfbd2ee2d2c2fabbcfd47e4b0fb4cfcd}{ar}}\ /\ 2:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abb2c32908d5ae1392831b46460bda0e6}{delta}}\ -\/=\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abfbd2ee2d2c2fabbcfd47e4b0fb4cfcd}{ar}}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00209}00209\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a3e7a28177a9d4a83198f43bdfc05eded}{heading}}\ +=\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abb2c32908d5ae1392831b46460bda0e6}{delta}}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00210}00210\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00211}00211\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a3e7a28177a9d4a83198f43bdfc05eded}{heading}}}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00213}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_af50a65e3d6ea165f71b7dbb787a4a813}{00213}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_af50a65e3d6ea165f71b7dbb787a4a813}{zero\_heading}}(self):}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00214}00214\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a3e7a28177a9d4a83198f43bdfc05eded}{heading}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00215}00215\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ae95535b92360c55599b342e84aa71089}{prev\_imu\_heading}}\ =\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a442b3240c60e395e44a7bdb30716d5da}{get\_imu\_heading}}()}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00216}00216\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_abb2c32908d5ae1392831b46460bda0e6}{delta}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00218}\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_af328315b50e7ec6bbb8abf8a4b615a9a}{00218}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_af328315b50e7ec6bbb8abf8a4b615a9a}{get\_yaw\_rate}}(self)\ -\/>\ float:}
+\DoxyCodeLine{\Hypertarget{_i_m_u_8py_source_l00219}00219\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a23a76edd38d3a81b4ea53b25474aa344}{\_read\_reg}}(IMU.reg.GYRO\_DATA\_Z)[0]\ /\ self.\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ababc43f9f8bdf021f155fd0324d48ba5}{convert\_reg\_to\_rad}}}
+
+\end{DoxyCode}

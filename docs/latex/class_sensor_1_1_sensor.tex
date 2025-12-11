@@ -1,0 +1,182 @@
+\doxysection{Sensor.\+Sensor Class Reference}
+\hypertarget{class_sensor_1_1_sensor}{}\label{class_sensor_1_1_sensor}\index{Sensor.Sensor@{Sensor.Sensor}}
+Inheritance diagram for Sensor.\+Sensor\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.761006cm]{class_sensor_1_1_sensor}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sensor_1_1_sensor_abdd7ecd205bec477ec349a8221a86fc9}{set\+\_\+attr}} (cls, K="{}Kp"{}, value=0.\+0)
+\item 
+None \mbox{\hyperlink{class_sensor_1_1_sensor_ac7ffe148df7b257f7551f29dd392481e}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self)
+\item 
+float \mbox{\hyperlink{class_sensor_1_1_sensor_add8d874d2c517212fec197b36d089c31}{get\+\_\+data}} (self)
+\item 
+None \mbox{\hyperlink{class_sensor_1_1_sensor_a49cdbda3f5a9c633664e069b976be896}{update\+\_\+dt}} (self)
+\item 
+None \mbox{\hyperlink{class_sensor_1_1_sensor_affeced0c1599dffadd293a9823ede43e}{reset\+\_\+timing}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_sensor_1_1_sensor_a6e6d3fb512659ab212a323467c6e0b91}{dt}} = 0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sensor_1_1_sensor_a9a4bdc6db10214eed5348959dc973d69}{\+\_\+prev\+\_\+t}} = ticks\+\_\+us()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_sensor_8py_source_l00008}{8}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_sensor_1_1_sensor_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_sensor_1_1_sensor_ac7ffe148df7b257f7551f29dd392481e}\index{Sensor.Sensor@{Sensor.Sensor}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!Sensor.Sensor@{Sensor.Sensor}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_sensor_1_1_sensor_ac7ffe148df7b257f7551f29dd392481e} 
+ None Sensor.\+Sensor.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sensor_8py_source_l00018}{18}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self)\ -\/>\ None: }
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ self.\_prev\_t\ =\ ticks\_us() }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ self.dt\ =\ 0 }
+\DoxyCodeLine{00021\  }
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_sensor_1_1_sensor_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_sensor_1_1_sensor_add8d874d2c517212fec197b36d089c31}\index{Sensor.Sensor@{Sensor.Sensor}!get\_data@{get\_data}}
+\index{get\_data@{get\_data}!Sensor.Sensor@{Sensor.Sensor}}
+\doxysubsubsection{\texorpdfstring{get\_data()}{get\_data()}}
+{\footnotesize\ttfamily \label{class_sensor_1_1_sensor_add8d874d2c517212fec197b36d089c31} 
+ float Sensor.\+Sensor.\+get\+\_\+data (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Reimplemented in \mbox{\hyperlink{class_encoder_1_1_encoder_adbf9d1c5ade7dd439d00c60d238c5aad}{Encoder.\+Encoder}}, \mbox{\hyperlink{class_i_m_u_1_1_i_m_u_afa673c8e8d1af1635c95e0b88f97a3df}{IMU.\+IMU}}, \mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_ad3604ecf3fb0560153ec026d1f595c55}{IR\+\_\+\+Sensor.\+IRSensor}}, and \mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a75fb34eb1397286364663b408ef23c89}{Line\+\_\+\+Sensor.\+Line\+Sensor}}.
+
+
+
+Definition at line \mbox{\hyperlink{_sensor_8py_source_l00023}{23}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{def\ }get\_data(self)\ -\/>\ float: }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ NotImplementedError(\textcolor{stringliteral}{"{}Sensor\ subclasses\ must\ implement\ get\_data()."{}}) }
+\DoxyCodeLine{00025\  }
+
+\end{DoxyCode}
+\Hypertarget{class_sensor_1_1_sensor_affeced0c1599dffadd293a9823ede43e}\index{Sensor.Sensor@{Sensor.Sensor}!reset\_timing@{reset\_timing}}
+\index{reset\_timing@{reset\_timing}!Sensor.Sensor@{Sensor.Sensor}}
+\doxysubsubsection{\texorpdfstring{reset\_timing()}{reset\_timing()}}
+{\footnotesize\ttfamily \label{class_sensor_1_1_sensor_affeced0c1599dffadd293a9823ede43e} 
+ None Sensor.\+Sensor.\+reset\+\_\+timing (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sensor_8py_source_l00033}{33}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{def\ }reset\_timing(self)\ -\/>\ None: }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ self.\_prev\_t\ =\ ticks\_us() }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ self.dt\ =\ 0 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_sensor_8py_source_l00019}{\+\_\+prev\+\_\+t}}, and \mbox{\hyperlink{_sensor_8py_source_l00020}{dt}}.
+
+\Hypertarget{class_sensor_1_1_sensor_abdd7ecd205bec477ec349a8221a86fc9}\index{Sensor.Sensor@{Sensor.Sensor}!set\_attr@{set\_attr}}
+\index{set\_attr@{set\_attr}!Sensor.Sensor@{Sensor.Sensor}}
+\doxysubsubsection{\texorpdfstring{set\_attr()}{set\_attr()}}
+{\footnotesize\ttfamily \label{class_sensor_1_1_sensor_abdd7ecd205bec477ec349a8221a86fc9} 
+Sensor.\+Sensor.\+set\+\_\+attr (\begin{DoxyParamCaption}\item[{}]{cls}{, }\item[{}]{K}{ = {\ttfamily "{}Kp"{}}, }\item[{}]{value}{ = {\ttfamily 0.0}}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sensor_8py_source_l00011}{11}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{def\ }set\_attr(cls,\ K="{}Kp"{},\ value=0.0): }
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ hasattr(cls,\ K): }
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ AttributeError(f\textcolor{stringliteral}{"{}'\{K\}'\ is\ not\ a\ defined\ gain\ on\ \{cls.\_\_name\_\_\}"{}}) }
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ setattr(cls,\ K,\ value) }
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ print(K,\ value) }
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ uart.write(f\textcolor{stringliteral}{"{}\{K\}\{value\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00017\  }
+
+\end{DoxyCode}
+\Hypertarget{class_sensor_1_1_sensor_a49cdbda3f5a9c633664e069b976be896}\index{Sensor.Sensor@{Sensor.Sensor}!update\_dt@{update\_dt}}
+\index{update\_dt@{update\_dt}!Sensor.Sensor@{Sensor.Sensor}}
+\doxysubsubsection{\texorpdfstring{update\_dt()}{update\_dt()}}
+{\footnotesize\ttfamily \label{class_sensor_1_1_sensor_a49cdbda3f5a9c633664e069b976be896} 
+ None Sensor.\+Sensor.\+update\+\_\+dt (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_sensor_8py_source_l00027}{27}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{def\ }update\_dt(self)\ -\/>\ None: }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ now\ =\ ticks\_us() }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ self.dt\ =\ ticks\_diff(now,\ self.\_prev\_t) }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ self.\_prev\_t\ =\ now }
+\DoxyCodeLine{00031\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_sensor_8py_source_l00019}{\+\_\+prev\+\_\+t}}, and \mbox{\hyperlink{_sensor_8py_source_l00020}{dt}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_sensor_1_1_sensor_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_sensor_1_1_sensor_a9a4bdc6db10214eed5348959dc973d69}\index{Sensor.Sensor@{Sensor.Sensor}!\_prev\_t@{\_prev\_t}}
+\index{\_prev\_t@{\_prev\_t}!Sensor.Sensor@{Sensor.Sensor}}
+\doxysubsubsection{\texorpdfstring{\_prev\_t}{\_prev\_t}}
+{\footnotesize\ttfamily \label{class_sensor_1_1_sensor_a9a4bdc6db10214eed5348959dc973d69} 
+Sensor.\+Sensor.\+\_\+prev\+\_\+t = ticks\+\_\+us()\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_sensor_8py_source_l00019}{19}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
+
+\Hypertarget{class_sensor_1_1_sensor_a6e6d3fb512659ab212a323467c6e0b91}\index{Sensor.Sensor@{Sensor.Sensor}!dt@{dt}}
+\index{dt@{dt}!Sensor.Sensor@{Sensor.Sensor}}
+\doxysubsubsection{\texorpdfstring{dt}{dt}}
+{\footnotesize\ttfamily \label{class_sensor_1_1_sensor_a6e6d3fb512659ab212a323467c6e0b91} 
+int Sensor.\+Sensor.\+dt = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_sensor_8py_source_l00020}{20}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_sensor_8py}{Sensor.\+py}}\end{DoxyCompactItemize}

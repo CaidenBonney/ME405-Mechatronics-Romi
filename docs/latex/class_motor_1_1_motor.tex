@@ -1,0 +1,187 @@
+\doxysection{Motor.\+Motor Class Reference}
+\hypertarget{class_motor_1_1_motor}{}\label{class_motor_1_1_motor}\index{Motor.Motor@{Motor.Motor}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_motor_1_1_motor_aa6bdf6efc1bca5b775473a43dd2eabf1}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{class_motor_1_1_motor_aa607f1a9f2a0165124537af8eea39348}{PWM\+\_\+pin}}, \mbox{\hyperlink{class_motor_1_1_motor_ad65e31a3a55f417d1b165b9c6d20af2a}{DIR\+\_\+pin}}, \mbox{\hyperlink{class_motor_1_1_motor_a8db169519cda9dd417625f3a7fbd9f7e}{n\+SLP\+\_\+pin}}, Timer tim, int PWM\+\_\+ch\+\_\+num)
+\item 
+\mbox{\hyperlink{class_motor_1_1_motor_aab5e27f0b78b7adb47a417958dd04ddb}{set\+\_\+effort}} (self, float value)
+\item 
+\mbox{\hyperlink{class_motor_1_1_motor_a9dd93a3dedf447781a501c90cf853139}{enable}} (self)
+\item 
+\mbox{\hyperlink{class_motor_1_1_motor_abd3d4107db4e3a2737529b42ab65d684}{disable}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_motor_1_1_motor_a8db169519cda9dd417625f3a7fbd9f7e}{n\+SLP\+\_\+pin}} = Pin(n\+SLP\+\_\+pin, mode=Pin.\+OUT\+\_\+\+PP)
+\item 
+\mbox{\hyperlink{class_motor_1_1_motor_aa607f1a9f2a0165124537af8eea39348}{PWM\+\_\+pin}} = Pin(PWM\+\_\+pin, mode=Pin.\+ANALOG)
+\item 
+\mbox{\hyperlink{class_motor_1_1_motor_ad65e31a3a55f417d1b165b9c6d20af2a}{DIR\+\_\+pin}} = Pin(DIR\+\_\+pin, mode=Pin.\+OUT\+\_\+\+PP)
+\item 
+\mbox{\hyperlink{class_motor_1_1_motor_ac2fc73b7acebc74097bc77942c7c2318}{PWM\+\_\+ch}} = tim.\+channel(PWM\+\_\+ch\+\_\+num, pin=self.\+PWM\+\_\+pin, mode=Timer.\+PWM)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_motor_8py_source_l00007}{7}} of file \mbox{\hyperlink{_motor_8py_source}{Motor.\+py}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_motor_1_1_motor_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_motor_1_1_motor_aa6bdf6efc1bca5b775473a43dd2eabf1}\index{Motor.Motor@{Motor.Motor}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!Motor.Motor@{Motor.Motor}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_motor_1_1_motor_aa6bdf6efc1bca5b775473a43dd2eabf1} 
+Motor.\+Motor.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{PWM\+\_\+pin}{, }\item[{}]{DIR\+\_\+pin}{, }\item[{}]{n\+SLP\+\_\+pin}{, }\item[{Timer}]{tim}{, }\item[{int}]{PWM\+\_\+ch\+\_\+num}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_motor_8py_source_l00010}{10}} of file \mbox{\hyperlink{_motor_8py_source}{Motor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ PWM\_pin,\ DIR\_pin,\ nSLP\_pin,\ tim:\ Timer,\ PWM\_ch\_num:\ int): }
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ self.nSLP\_pin\ =\ Pin(nSLP\_pin,\ mode=Pin.OUT\_PP) }
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ self.PWM\_pin\ =\ Pin(PWM\_pin,\ mode=Pin.ANALOG) }
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ self.DIR\_pin\ =\ Pin(DIR\_pin,\ mode=Pin.OUT\_PP) }
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ self.PWM\_ch\ =\ tim.channel(PWM\_ch\_num,\ pin=self.PWM\_pin,\ mode=Timer.PWM) }
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.PWM\_ch\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}: }
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Invalid\ PWM\ channel\ number\ for\ the\ given\ timer"{}}) }
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ self.disable()\ \ \textcolor{comment}{\#\ Start\ with\ motor\ disabled }}
+\DoxyCodeLine{00018\  }
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_motor_1_1_motor_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_motor_1_1_motor_abd3d4107db4e3a2737529b42ab65d684}\index{Motor.Motor@{Motor.Motor}!disable@{disable}}
+\index{disable@{disable}!Motor.Motor@{Motor.Motor}}
+\doxysubsubsection{\texorpdfstring{disable()}{disable()}}
+{\footnotesize\ttfamily \label{class_motor_1_1_motor_abd3d4107db4e3a2737529b42ab65d684} 
+Motor.\+Motor.\+disable (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_motor_8py_source_l00039}{39}} of file \mbox{\hyperlink{_motor_8py_source}{Motor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{def\ }disable(self): }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ self.nSLP\_pin.low() }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ self.PWM\_pin.low() }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_motor_8py_source_l00011}{n\+SLP\+\_\+pin}}, and \mbox{\hyperlink{_motor_8py_source_l00012}{PWM\+\_\+pin}}.
+
+\Hypertarget{class_motor_1_1_motor_a9dd93a3dedf447781a501c90cf853139}\index{Motor.Motor@{Motor.Motor}!enable@{enable}}
+\index{enable@{enable}!Motor.Motor@{Motor.Motor}}
+\doxysubsubsection{\texorpdfstring{enable()}{enable()}}
+{\footnotesize\ttfamily \label{class_motor_1_1_motor_a9dd93a3dedf447781a501c90cf853139} 
+Motor.\+Motor.\+enable (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_motor_8py_source_l00034}{34}} of file \mbox{\hyperlink{_motor_8py_source}{Motor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{def\ }enable(self): }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ self.nSLP\_pin.high() }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ self.PWM\_pin.low() }
+\DoxyCodeLine{00037\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_motor_8py_source_l00011}{n\+SLP\+\_\+pin}}, and \mbox{\hyperlink{_motor_8py_source_l00012}{PWM\+\_\+pin}}.
+
+\Hypertarget{class_motor_1_1_motor_aab5e27f0b78b7adb47a417958dd04ddb}\index{Motor.Motor@{Motor.Motor}!set\_effort@{set\_effort}}
+\index{set\_effort@{set\_effort}!Motor.Motor@{Motor.Motor}}
+\doxysubsubsection{\texorpdfstring{set\_effort()}{set\_effort()}}
+{\footnotesize\ttfamily \label{class_motor_1_1_motor_aab5e27f0b78b7adb47a417958dd04ddb} 
+Motor.\+Motor.\+set\+\_\+effort (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{float}]{value}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_motor_8py_source_l00021}{21}} of file \mbox{\hyperlink{_motor_8py_source}{Motor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{def\ }set\_effort(self,\ value:\ float): }
+\DoxyCodeLine{00022\  }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ -\/100\ <=\ value\ <=\ 100: }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Effort\ must\ be\ between\ -\/100\ and\ 100"{}}) }
+\DoxyCodeLine{00025\  }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(f"{}\{value\}"{}) }}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Set\ the\ direction\ based\ on\ the\ sign\ of\ the\ effort }}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ self.DIR\_pin.low()\ \textcolor{keywordflow}{if}\ value\ >=\ 0\ \textcolor{keywordflow}{else}\ self.DIR\_pin.high() }
+\DoxyCodeLine{00029\  }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Set\ the\ PWM\ duty\ cycle\ to\ the\ absolute\ value\ of\ the\ effort }}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ self.PWM\_ch.pulse\_width\_percent(abs(value)) }
+\DoxyCodeLine{00032\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_motor_8py_source_l00013}{DIR\+\_\+pin}}, and \mbox{\hyperlink{_motor_8py_source_l00014}{PWM\+\_\+ch}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_motor_1_1_motor_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_motor_1_1_motor_ad65e31a3a55f417d1b165b9c6d20af2a}\index{Motor.Motor@{Motor.Motor}!DIR\_pin@{DIR\_pin}}
+\index{DIR\_pin@{DIR\_pin}!Motor.Motor@{Motor.Motor}}
+\doxysubsubsection{\texorpdfstring{DIR\_pin}{DIR\_pin}}
+{\footnotesize\ttfamily \label{class_motor_1_1_motor_ad65e31a3a55f417d1b165b9c6d20af2a} 
+Motor.\+Motor.\+DIR\+\_\+pin = Pin(DIR\+\_\+pin, mode=Pin.\+OUT\+\_\+\+PP)}
+
+
+
+Definition at line \mbox{\hyperlink{_motor_8py_source_l00013}{13}} of file \mbox{\hyperlink{_motor_8py_source}{Motor.\+py}}.
+
+\Hypertarget{class_motor_1_1_motor_a8db169519cda9dd417625f3a7fbd9f7e}\index{Motor.Motor@{Motor.Motor}!nSLP\_pin@{nSLP\_pin}}
+\index{nSLP\_pin@{nSLP\_pin}!Motor.Motor@{Motor.Motor}}
+\doxysubsubsection{\texorpdfstring{nSLP\_pin}{nSLP\_pin}}
+{\footnotesize\ttfamily \label{class_motor_1_1_motor_a8db169519cda9dd417625f3a7fbd9f7e} 
+Motor.\+Motor.\+n\+SLP\+\_\+pin = Pin(n\+SLP\+\_\+pin, mode=Pin.\+OUT\+\_\+\+PP)}
+
+
+
+Definition at line \mbox{\hyperlink{_motor_8py_source_l00011}{11}} of file \mbox{\hyperlink{_motor_8py_source}{Motor.\+py}}.
+
+\Hypertarget{class_motor_1_1_motor_ac2fc73b7acebc74097bc77942c7c2318}\index{Motor.Motor@{Motor.Motor}!PWM\_ch@{PWM\_ch}}
+\index{PWM\_ch@{PWM\_ch}!Motor.Motor@{Motor.Motor}}
+\doxysubsubsection{\texorpdfstring{PWM\_ch}{PWM\_ch}}
+{\footnotesize\ttfamily \label{class_motor_1_1_motor_ac2fc73b7acebc74097bc77942c7c2318} 
+Motor.\+Motor.\+PWM\+\_\+ch = tim.\+channel(PWM\+\_\+ch\+\_\+num, pin=self.\+PWM\+\_\+pin, mode=Timer.\+PWM)}
+
+
+
+Definition at line \mbox{\hyperlink{_motor_8py_source_l00014}{14}} of file \mbox{\hyperlink{_motor_8py_source}{Motor.\+py}}.
+
+\Hypertarget{class_motor_1_1_motor_aa607f1a9f2a0165124537af8eea39348}\index{Motor.Motor@{Motor.Motor}!PWM\_pin@{PWM\_pin}}
+\index{PWM\_pin@{PWM\_pin}!Motor.Motor@{Motor.Motor}}
+\doxysubsubsection{\texorpdfstring{PWM\_pin}{PWM\_pin}}
+{\footnotesize\ttfamily \label{class_motor_1_1_motor_aa607f1a9f2a0165124537af8eea39348} 
+Motor.\+Motor.\+PWM\+\_\+pin = Pin(PWM\+\_\+pin, mode=Pin.\+ANALOG)}
+
+
+
+Definition at line \mbox{\hyperlink{_motor_8py_source_l00012}{12}} of file \mbox{\hyperlink{_motor_8py_source}{Motor.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_motor_8py}{Motor.\+py}}\end{DoxyCompactItemize}

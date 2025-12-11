@@ -1,0 +1,644 @@
+\doxysection{Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control Class Reference}
+\hypertarget{class_closed___loop___control_1_1_closed_loop_control}{}\label{class_closed___loop___control_1_1_closed_loop_control}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+
+
+A class implementing a closed-\/loop control algorithm.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_aa89aca6d34821d9829a583a49173e1f3}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_ac3b27a7a6f30b5c0f36fd4dfd8743326}{sensor}}, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_abb8512f3b3f49b5fc309bb60200f9e7a}{max\+\_\+min}}=100, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a406e8e11787e9934d388532642da8090}{Kp}}=0, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_af48234a52ccabdbcd66677a5910a867b}{Ki}}=0, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a42b5b0355b09e8d751050ab403506fc0}{Kd}}=0, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_af0626545ac77094f36c753ca6ceba206}{Kw}}=0, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a0dbdffad84c06801b52a1f6bdf12958c}{Kff}}=0, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a78d8eb6ca8c73a1fb550c4385cf0336c}{PWM\+\_\+start}}=0, \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_ab6ae3f050641b67f2541decb8fbb6c6f}{battery}}=None)
+\begin{DoxyCompactList}\small\item\em Constructor for the closed-\/loop controller. \end{DoxyCompactList}\item 
+None \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_afa1f942294a85e304bf8d73279a80e02}{reset}} (self)
+\begin{DoxyCompactList}\small\item\em Reset the controller. \end{DoxyCompactList}\item 
+None \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_aebb3d324c6fade3ecffb58764d6f52fb}{set\+\_\+ref}} (self, speed)
+\begin{DoxyCompactList}\small\item\em Set the controller reference (setpoint). \end{DoxyCompactList}\item 
+None \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a2058e62e1b3f8f85b526ed66463d5ba4}{disable}} (self)
+\begin{DoxyCompactList}\small\item\em Disable the controller (output will remain zero). \end{DoxyCompactList}\item 
+None \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a1035044a2b4ce0d9a0f43168c22548d6}{enable}} (self)
+\begin{DoxyCompactList}\small\item\em Enable the controller. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a95aa8ea640bd1a855a21b43d69f888fd}{gain\+\_\+update}} (self, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a406e8e11787e9934d388532642da8090}{Kp}}=0, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_af48234a52ccabdbcd66677a5910a867b}{Ki}}=0, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a42b5b0355b09e8d751050ab403506fc0}{Kd}}=0, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_af0626545ac77094f36c753ca6ceba206}{Kw}}=0, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a0dbdffad84c06801b52a1f6bdf12958c}{Kff}}=0, float \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a78d8eb6ca8c73a1fb550c4385cf0336c}{PWM\+\_\+start}}=0)
+\begin{DoxyCompactList}\small\item\em Update controller gains. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a53878544c99ca0962748a1b88101db3c}{run}} (self)
+\begin{DoxyCompactList}\small\item\em Run one iteration of the closed-\/loop control law. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_ac3b27a7a6f30b5c0f36fd4dfd8743326}{sensor}} = sensor
+\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_abb8512f3b3f49b5fc309bb60200f9e7a}{max\+\_\+min}} = max\+\_\+min
+\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_ab6ae3f050641b67f2541decb8fbb6c6f}{battery}} = battery
+\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a406e8e11787e9934d388532642da8090}{Kp}} = Kp
+\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_af48234a52ccabdbcd66677a5910a867b}{Ki}} = Ki
+\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a42b5b0355b09e8d751050ab403506fc0}{Kd}} = Kd
+\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_af0626545ac77094f36c753ca6ceba206}{Kw}} = Kw
+\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a0dbdffad84c06801b52a1f6bdf12958c}{Kff}} = Kff
+\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a78d8eb6ca8c73a1fb550c4385cf0336c}{PWM\+\_\+start}} = PWM\+\_\+start
+\item 
+int \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a8a44db904cf3b50763c7fc4a6567b81d}{r}} = 0
+\item 
+int \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a81954c460645556024a030752fb24b46}{x\+\_\+h}} = 0
+\item 
+int \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_aa8718d9fb4b9f82854489870ed42210d}{a}} = 0
+\item 
+int \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a49a491ae59a2f2a0bb6f15e494c2c4b0}{astar}} = 0
+\item 
+int \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_ae462ea541c0cc1d4ed89b7cb432b5659}{e}} = 0
+\item 
+int \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a14465388d3a7ee676ad952b546404d02}{prev\+\_\+error}} = 0
+\item 
+int \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a0972ef4544f2b33df947cb58f6becf22}{integral}} = 0
+\item 
+int \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a875c3110a261d5de5b56d0dc6ad75611}{derivative}} = 0
+\item 
+bool \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a99e44b4eb13279f22fbca8846893a8e2}{on}} = True
+\item 
+bool \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a798df1d3fe2d0dd0f3dea5332c770750}{first\+\_\+run}} = True
+\item 
+int \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a67e8a8eb7ac7be688a0526d3b12cf2c1}{num\+\_\+corrections}} = 75
+\item 
+int \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_af54ef54bb55c9f33fd834fee799c96ff}{total\+\_\+num\+\_\+corrections}} = 200
+\item 
+int \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_aa36df9588b05e7a51c950cabb6726f7c}{r\+\_\+u}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class implementing a closed-\/loop control algorithm. 
+
+This class computes an actuation signal using proportional, integral, derivative, feed-\/forward, and anti-\/windup terms. It also supports reference ramping and battery droop compensation. 
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00024}{24}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_aa89aca6d34821d9829a583a49173e1f3}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_aa89aca6d34821d9829a583a49173e1f3} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{sensor}{, }\item[{float }]{max\+\_\+min}{ = {\ttfamily 100}, }\item[{float }]{Kp}{ = {\ttfamily 0}, }\item[{float }]{Ki}{ = {\ttfamily 0}, }\item[{float }]{Kd}{ = {\ttfamily 0}, }\item[{float }]{Kw}{ = {\ttfamily 0}, }\item[{float }]{Kff}{ = {\ttfamily 0}, }\item[{float }]{PWM\+\_\+start}{ = {\ttfamily 0}, }\item[{}]{battery}{ = {\ttfamily None}}\end{DoxyParamCaption})}
+
+
+
+Constructor for the closed-\/loop controller. 
+
+Initializes controller gains, limits, state variables, reference, and soft-\/start parameters.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensor} & An object providing measurement data via {\ttfamily get\+\_\+data()} and a timing attribute {\ttfamily dt} in microseconds. \\
+\hline
+{\em max\+\_\+min} & Maximum absolute actuation output (saturation limit) \\
+\hline
+{\em Kp} & Proportional gain \\
+\hline
+{\em Ki} & Integral gain \\
+\hline
+{\em Kd} & Derivative gain \\
+\hline
+{\em Kw} & Anti-\/windup gain \\
+\hline
+{\em Kff} & Feed-\/forward gain \\
+\hline
+{\em PWM\+\_\+start} & Small offset to ensure motor startup torque \\
+\hline
+{\em battery} & Optional battery object providing {\ttfamily get\+\_\+cur\+\_\+perc()} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00041}{41}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \ \ \ \ ): }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ self.sensor\ =\ sensor }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ self.max\_min\ =\ max\_min }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ self.battery\ =\ battery }
+\DoxyCodeLine{00056\  }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Gains }}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ self.Kp\ =\ Kp }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ self.Ki\ =\ Ki }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ self.Kd\ =\ Kd }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ self.Kw\ =\ Kw }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ self.Kff\ =\ Kff }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ self.PWM\_start\ =\ PWM\_start }
+\DoxyCodeLine{00064\  }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Inputs\ \&\ Outputs }}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ self.r\ =\ 0\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reference\ /\ setpoint }}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ self.x\_h\ =\ 0\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Measured\ value }}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ self.a\ =\ 0\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Raw\ actuation\ value }}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ self.astar\ =\ 0\ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Saturated\ actuation\ value }}
+\DoxyCodeLine{00070\  }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Internal\ controller\ states }}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ self.e\ =\ 0\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Error }}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ self.prev\_error\ =\ 0\ \ \ \textcolor{comment}{\#\ Previous\ cycle\ error }}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ self.integral\ =\ 0\ \ \ \ \ \textcolor{comment}{\#\ Integral\ accumulator }}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ self.derivative\ =\ 0\ \ \ \textcolor{comment}{\#\ Derivative\ term }}
+\DoxyCodeLine{00076\  }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Soft-\/start\ ramping }}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ self.on\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ self.first\_run\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ self.num\_corrections\ =\ 75 }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ self.total\_num\_corrections\ =\ 200 }
+\DoxyCodeLine{00082\  }
+
+\end{DoxyCode}
+
+
+\label{doc-func-members}
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a2058e62e1b3f8f85b526ed66463d5ba4}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!disable@{disable}}
+\index{disable@{disable}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{disable()}{disable()}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a2058e62e1b3f8f85b526ed66463d5ba4} 
+ None Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+disable (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Disable the controller (output will remain zero). 
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00102}{102}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{def\ }disable(self)\ -\/>\ None: }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ self.on\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00104\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_closed___loop___control_8py_source_l00078}{on}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a1035044a2b4ce0d9a0f43168c22548d6}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!enable@{enable}}
+\index{enable@{enable}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{enable()}{enable()}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a1035044a2b4ce0d9a0f43168c22548d6} 
+ None Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+enable (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Enable the controller. 
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00106}{106}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{def\ }enable(self)\ -\/>\ None: }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ self.on\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00108\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_closed___loop___control_8py_source_l00078}{on}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a95aa8ea640bd1a855a21b43d69f888fd}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!gain\_update@{gain\_update}}
+\index{gain\_update@{gain\_update}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{gain\_update()}{gain\_update()}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a95aa8ea640bd1a855a21b43d69f888fd} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+gain\+\_\+update (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{float }]{Kp}{ = {\ttfamily 0}, }\item[{float }]{Ki}{ = {\ttfamily 0}, }\item[{float }]{Kd}{ = {\ttfamily 0}, }\item[{float }]{Kw}{ = {\ttfamily 0}, }\item[{float }]{Kff}{ = {\ttfamily 0}, }\item[{float }]{PWM\+\_\+start}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+
+
+Update controller gains. 
+
+Allows runtime tuning of control gains and feed-\/forward.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Kp} & Proportional gain \\
+\hline
+{\em Ki} & Integral gain \\
+\hline
+{\em Kd} & Derivative gain \\
+\hline
+{\em Kw} & Anti-\/windup gain \\
+\hline
+{\em Kff} & Feed-\/forward gain \\
+\hline
+{\em PWM\+\_\+start} & Startup offset for motor \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00119}{119}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00127\ \ \ \ \ ): }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ self.Kp\ =\ Kp }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ self.Ki\ =\ Ki }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ self.Kd\ =\ Kd }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ self.Kw\ =\ Kw }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ self.Kff\ =\ Kff }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ self.PWM\_start\ =\ PWM\_start }
+\DoxyCodeLine{00134\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_closed___loop___control_8py_source_l00060}{Kd}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00062}{Kff}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00059}{Ki}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00058}{Kp}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00061}{Kw}}, and \mbox{\hyperlink{_closed___loop___control_8py_source_l00063}{PWM\+\_\+start}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_afa1f942294a85e304bf8d73279a80e02}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!reset@{reset}}
+\index{reset@{reset}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_afa1f942294a85e304bf8d73279a80e02} 
+ None Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+reset (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Reset the controller. 
+
+Clears error, derivative, and integral terms; resets soft-\/start ramping. 
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00086}{86}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{def\ }reset(self)\ -\/>\ None: }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ self.r\ =\ 0 }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ self.e\ =\ 0 }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ self.prev\_error\ =\ 0 }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ self.integral\ =\ 0 }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ self.derivative\ =\ 0 }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ self.first\_run\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ self.num\_corrections\ =\ 75 }
+\DoxyCodeLine{00094\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_closed___loop___control_8py_source_l00075}{derivative}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00072}{e}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00079}{first\+\_\+run}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00074}{integral}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00080}{num\+\_\+corrections}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00073}{prev\+\_\+error}}, and \mbox{\hyperlink{_closed___loop___control_8py_source_l00066}{r}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a53878544c99ca0962748a1b88101db3c}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!run@{run}}
+\index{run@{run}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a53878544c99ca0962748a1b88101db3c} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+run (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Run one iteration of the closed-\/loop control law. 
+
+Applies reference ramping, reads sensor data, computes error, and evaluates\+:
+\begin{DoxyItemize}
+\item proportional term
+\item integral term
+\item derivative term
+\item feed-\/forward term
+\item anti-\/windup correction
+\end{DoxyItemize}
+
+\doxylink{namespace_battery}{Battery} droop compensation scales the output gain to maintain performance under voltage sag.
+
+\begin{DoxyReturn}{Returns}
+The saturated actuation command to send to hardware. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00148}{148}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{def\ }run(self): }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.on: }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0 }
+\DoxyCodeLine{00151\  }
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Soft-\/start\ reference\ ramping }}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.num\_corrections\ >\ 0: }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ self.r\_u\ =\ self.r\ *\ ((self.total\_num\_corrections\ -\/\ self.num\_corrections) }
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /\ self.total\_num\_corrections) }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ self.num\_corrections\ -\/=\ 1 }
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ self.r\_u\ =\ self.r }
+\DoxyCodeLine{00159\  }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Get\ current\ measured\ value }}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ self.x\_h\ =\ self.sensor.get\_data() }
+\DoxyCodeLine{00162\  }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Error\ update }}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ self.prev\_error\ =\ self.e }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ self.e\ =\ self.r\_u\ -\/\ self.x\_h }
+\DoxyCodeLine{00166\  }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Compute\ timing\ delta\ in\ seconds }}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ time\_delta\ =\ self.sensor.dt\ /\ 1e6 }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.first\_run: }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ time\_delta\ =\ 0.020\ \ \ \textcolor{comment}{\#\ Approx.\ first-\/cycle\ assumption }}
+\DoxyCodeLine{00171\  }
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Integral\ and\ derivative\ updates }}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.Ki: }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ self.integral\ +=\ self.e\ *\ time\_delta }
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.Kd: }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ self.derivative\ =\ (self.e\ -\/\ self.prev\_error)\ /\ time\_delta }
+\DoxyCodeLine{00177\  }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Battery\ droop\ compensation }}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.battery\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}: }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ Kdroop\ =\ 1\ /\ self.battery.get\_cur\_perc() }
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ Kdroop\ =\ 1 }
+\DoxyCodeLine{00183\  }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Controller\ output }}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ self.a\ =\ Kdroop\ *\ ( }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ (self.Kp\ *\ self.e)\ + }
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ (self.integral\ *\ self.Ki)\ + }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ (self.derivative\ *\ self.Kd)\ + }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ ((self.r\_u\ *\ self.Kff)\ +\ copysign(1,\ self.r)\ *\ self.PWM\_start) }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ ) }
+\DoxyCodeLine{00191\  }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Saturation }}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ self.astar\ =\ min(self.max\_min,\ max(-\/self.max\_min,\ self.a)) }
+\DoxyCodeLine{00194\  }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Anti-\/windup\ correction }}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.Kw: }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ self.integral\ -\/=\ (self.a\ -\/\ self.astar)\ *\ self.Kw }
+\DoxyCodeLine{00198\  }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.astar }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_closed___loop___control_8py_source_l00080}{num\+\_\+corrections}}, and \mbox{\hyperlink{_closed___loop___control_8py_source_l00078}{on}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_aebb3d324c6fade3ecffb58764d6f52fb}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!set\_ref@{set\_ref}}
+\index{set\_ref@{set\_ref}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{set\_ref()}{set\_ref()}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_aebb3d324c6fade3ecffb58764d6f52fb} 
+ None Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+set\+\_\+ref (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{speed}{}\end{DoxyParamCaption})}
+
+
+
+Set the controller reference (setpoint). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & The desired reference value. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00098}{98}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{def\ }set\_ref(self,\ speed)\ -\/>\ None: }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ self.r\ =\ speed }
+\DoxyCodeLine{00100\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_closed___loop___control_8py_source_l00066}{r}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_aa8718d9fb4b9f82854489870ed42210d}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!a@{a}}
+\index{a@{a}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{a}{a}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_aa8718d9fb4b9f82854489870ed42210d} 
+int Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+a = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00068}{68}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a49a491ae59a2f2a0bb6f15e494c2c4b0}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!astar@{astar}}
+\index{astar@{astar}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{astar}{astar}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a49a491ae59a2f2a0bb6f15e494c2c4b0} 
+int Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+astar = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00069}{69}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_ab6ae3f050641b67f2541decb8fbb6c6f}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!battery@{battery}}
+\index{battery@{battery}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{battery}{battery}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_ab6ae3f050641b67f2541decb8fbb6c6f} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+battery = battery}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00055}{55}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a875c3110a261d5de5b56d0dc6ad75611}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!derivative@{derivative}}
+\index{derivative@{derivative}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{derivative}{derivative}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a875c3110a261d5de5b56d0dc6ad75611} 
+int Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+derivative = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00075}{75}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_ae462ea541c0cc1d4ed89b7cb432b5659}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!e@{e}}
+\index{e@{e}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{e}{e}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_ae462ea541c0cc1d4ed89b7cb432b5659} 
+int Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+e = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00072}{72}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a798df1d3fe2d0dd0f3dea5332c770750}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!first\_run@{first\_run}}
+\index{first\_run@{first\_run}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{first\_run}{first\_run}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a798df1d3fe2d0dd0f3dea5332c770750} 
+bool Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+first\+\_\+run = True}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00079}{79}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a0972ef4544f2b33df947cb58f6becf22}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!integral@{integral}}
+\index{integral@{integral}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{integral}{integral}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a0972ef4544f2b33df947cb58f6becf22} 
+int Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+integral = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00074}{74}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a42b5b0355b09e8d751050ab403506fc0}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!Kd@{Kd}}
+\index{Kd@{Kd}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{Kd}{Kd}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a42b5b0355b09e8d751050ab403506fc0} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+Kd = Kd}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00060}{60}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a0dbdffad84c06801b52a1f6bdf12958c}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!Kff@{Kff}}
+\index{Kff@{Kff}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{Kff}{Kff}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a0dbdffad84c06801b52a1f6bdf12958c} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+Kff = Kff}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00062}{62}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_af48234a52ccabdbcd66677a5910a867b}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!Ki@{Ki}}
+\index{Ki@{Ki}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{Ki}{Ki}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_af48234a52ccabdbcd66677a5910a867b} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+Ki = Ki}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00059}{59}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a406e8e11787e9934d388532642da8090}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!Kp@{Kp}}
+\index{Kp@{Kp}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{Kp}{Kp}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a406e8e11787e9934d388532642da8090} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+Kp = Kp}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00058}{58}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_af0626545ac77094f36c753ca6ceba206}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!Kw@{Kw}}
+\index{Kw@{Kw}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{Kw}{Kw}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_af0626545ac77094f36c753ca6ceba206} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+Kw = Kw}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00061}{61}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_abb8512f3b3f49b5fc309bb60200f9e7a}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!max\_min@{max\_min}}
+\index{max\_min@{max\_min}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{max\_min}{max\_min}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_abb8512f3b3f49b5fc309bb60200f9e7a} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+max\+\_\+min = max\+\_\+min}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00054}{54}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a67e8a8eb7ac7be688a0526d3b12cf2c1}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!num\_corrections@{num\_corrections}}
+\index{num\_corrections@{num\_corrections}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{num\_corrections}{num\_corrections}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a67e8a8eb7ac7be688a0526d3b12cf2c1} 
+int Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+num\+\_\+corrections = 75}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00080}{80}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a99e44b4eb13279f22fbca8846893a8e2}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!on@{on}}
+\index{on@{on}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{on}{on}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a99e44b4eb13279f22fbca8846893a8e2} 
+bool Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+on = True}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00078}{78}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a14465388d3a7ee676ad952b546404d02}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!prev\_error@{prev\_error}}
+\index{prev\_error@{prev\_error}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{prev\_error}{prev\_error}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a14465388d3a7ee676ad952b546404d02} 
+int Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+prev\+\_\+error = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00073}{73}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a78d8eb6ca8c73a1fb550c4385cf0336c}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!PWM\_start@{PWM\_start}}
+\index{PWM\_start@{PWM\_start}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{PWM\_start}{PWM\_start}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a78d8eb6ca8c73a1fb550c4385cf0336c} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+PWM\+\_\+start = PWM\+\_\+start}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00063}{63}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a8a44db904cf3b50763c7fc4a6567b81d}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!r@{r}}
+\index{r@{r}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{r}{r}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a8a44db904cf3b50763c7fc4a6567b81d} 
+int Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+r = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00066}{66}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_aa36df9588b05e7a51c950cabb6726f7c}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!r\_u@{r\_u}}
+\index{r\_u@{r\_u}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{r\_u}{r\_u}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_aa36df9588b05e7a51c950cabb6726f7c} 
+int Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+r\+\_\+u}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ self.r\ *\ ((self.total\_num\_corrections\ -\/\ self.num\_corrections)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /\ self.total\_num\_corrections)}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00154}{154}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_ac3b27a7a6f30b5c0f36fd4dfd8743326}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!sensor@{sensor}}
+\index{sensor@{sensor}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{sensor}{sensor}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_ac3b27a7a6f30b5c0f36fd4dfd8743326} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+sensor = sensor}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00053}{53}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_af54ef54bb55c9f33fd834fee799c96ff}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!total\_num\_corrections@{total\_num\_corrections}}
+\index{total\_num\_corrections@{total\_num\_corrections}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{total\_num\_corrections}{total\_num\_corrections}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_af54ef54bb55c9f33fd834fee799c96ff} 
+int Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+total\+\_\+num\+\_\+corrections = 200}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00081}{81}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a81954c460645556024a030752fb24b46}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!x\_h@{x\_h}}
+\index{x\_h@{x\_h}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{x\_h}{x\_h}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_a81954c460645556024a030752fb24b46} 
+int Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+x\+\_\+h = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00067}{67}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_closed___loop___control_8py}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}\end{DoxyCompactItemize}
