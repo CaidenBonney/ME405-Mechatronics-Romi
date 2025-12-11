@@ -1,11 +1,9 @@
 from pyb import Pin, ADC  # pyright: ignore
 from Sensor import Sensor
 
-HardwarePinName = Pin
-
 
 class IRSensor(Sensor):
-    def __init__(self, id: int, ADC_pin: HardwarePinName):
+    def __init__(self, id: int, ADC_pin):
         super().__init__()
         # Sensor number from 1 to 13. ASSUMES 13 IS RIGHT MOST SENSOR
         self.id = id
@@ -16,9 +14,8 @@ class IRSensor(Sensor):
         self.white = 0
         self.black = 1
 
-    # "override" parent class method
+    # Return the current infrared sensor reading with zeroing applied.
     def get_data(self) -> float:
-        """Return the current infrared sensor reading with zeroing applied."""
         return (self.ADC.read() - self.white) / (self.black - self.white)
 
     def read(self):

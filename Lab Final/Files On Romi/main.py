@@ -1,4 +1,4 @@
-from pyb import Pin, Timer, ADC, I2C, UART, ExtInt  # pyright: ignore
+from pyb import Pin, Timer, ADC, I2C, UART  # pyright: ignore
 import cotask
 import task_share
 from gc import collect
@@ -10,14 +10,6 @@ from Battery import Battery
 from Line_Sensor import LineSensor
 from IR_Sensor import IRSensor
 from IMU import IMU
-
-# Task object imports
-from User_Input import UserInput
-from Path_Director import PathDirector
-from Observer import Observer
-from Motor_Controller import MotorController
-from Garbage_Collector import GarbageCollector
-
 
 if __name__ == "__main__":
 
@@ -96,7 +88,7 @@ if __name__ == "__main__":
     test_complete_s = task_share.Share("B", thread_protect=True, name="test complete share")
     cal_white_s = task_share.Share("B", thread_protect=True, name="white calibration share")
     cal_black_s = task_share.Share("B", thread_protect=True, name="black calibration share")
-    set_seg_s = task_share.Share("B", thread_protect=True, name="new segment share")
+    set_seg_s = task_share.Share("H", thread_protect=True, name="new segment share")
     seg_start_s = task_share.Share("B", thread_protect=True, name="segment start share")
     obsd_lpos_s = task_share.Share("f", thread_protect=False, name="Oberserved left position share")
     obsd_rpos_s = task_share.Share("f", thread_protect=False, name="Oberserved right position share")
@@ -108,15 +100,24 @@ if __name__ == "__main__":
 
     # Queue creation here
     # All queues have overwrite=True because if the data is being overwritten because the queue is full, we can see with discontinuous data
-    l_time_q = task_share.Queue("L", 250, thread_protect=False, overwrite=True, name="time queue")
-    r_time_q = task_share.Queue("L", 250, thread_protect=False, overwrite=True, name="time queue")
-    l_pos_q = task_share.Queue("f", 250, thread_protect=False, overwrite=True, name="left position queue")
-    r_pos_q = task_share.Queue("f", 250, thread_protect=False, overwrite=True, name="right position queue")
-    l_vel_q = task_share.Queue("f", 250, thread_protect=False, overwrite=True, name="left velocity queue")
-    r_vel_q = task_share.Queue("f", 250, thread_protect=False, overwrite=True, name="right velocity queue")
+    l_time_q = task_share.Queue("L", 1, thread_protect=False, overwrite=True, name="time queue")
+    r_time_q = task_share.Queue("L", 1, thread_protect=False, overwrite=True, name="time queue")
+    l_pos_q = task_share.Queue("f", 1, thread_protect=False, overwrite=True, name="left position queue")
+    r_pos_q = task_share.Queue("f", 1, thread_protect=False, overwrite=True, name="right position queue")
+    l_vel_q = task_share.Queue("f", 1, thread_protect=False, overwrite=True, name="left velocity queue")
+    r_vel_q = task_share.Queue("f", 1, thread_protect=False, overwrite=True, name="right velocity queue")
     list_of_queues = [l_time_q, r_time_q, l_pos_q, r_pos_q, l_vel_q, r_vel_q]
 
     ## Create objects of each task for the Task objects
+    # Collect garbage data for defragmentation before large imports and object creation
+    collect()
+    # Task object imports
+    from User_Input import UserInput
+    from Path_Director import PathDirector
+    from Observer import Observer
+    from Motor_Controller import MotorController
+    from Garbage_Collector import GarbageCollector
+    
     user_input_obj = UserInput(button_pin, Battery_obj)
     observer_obj = Observer(IMU_obj, l_encoder, r_encoder, Battery_obj)
     path_director_obj = PathDirector(Linesensor, IMU_obj, bump_sensors)
@@ -228,6 +229,12 @@ if __name__ == "__main__":
         try:
             cotask.task_list.pri_sched()
         except BaseException as e:
+            uart = UART(5, 115200)
+            if isinstance(e, OSError):
+                print(f"OSError: {e}")
+                uart.write(f"OSError: {e}\r\n".encode("utf-8"))
+                break
+
             LMC_obj.motor.set_effort(0)
             RMC_obj.motor.set_effort(0)
 
@@ -252,6 +259,5 @@ if __name__ == "__main__":
 
             print(f"Battery - %:{Battery_obj.get_cur_perc()}, V:{Battery_obj.get_cur_volt()}\n")
 
-            uart = UART(5, 115200)
             uart.write(f"Error: {type(e)} - {e}\r\n".encode("utf-8"))
             raise e

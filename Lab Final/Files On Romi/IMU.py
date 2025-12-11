@@ -7,14 +7,13 @@ from math import pi
 
 
 class IMU(Sensor):
-    "Y AXIS IS HEADING DIRECTION, X AXIS IS RIGHT SIDE"
 
     DEV_ADDR = 0x28
     default_mode_set = 5
 
     # Sensor Gains
     Kp = 0.15  # Proportional gain
-    Ki = 2.00  # Integral gain
+    Ki = 0.20  # Integral gain
     Kd = 0.00  # Derivative gain
 
     # register addresses class
@@ -27,8 +26,8 @@ class IMU(Sensor):
         EUL_HEADING = (const(0x1A), b"<h")
         EUL_DATA_ALL = (const(0x1A), b"<hhh")  # heading 0x1A/1B, roll 0x1C/1D, pitch 0x1E/1F
 
-        GYRO_DATA_X = (const(0x14), b"<h")
-        GYRO_DATA_Y = (const(0x16), b"<h")
+        # GYRO_DATA_X = (const(0x14), b"<h")
+        # GYRO_DATA_Y = (const(0x16), b"<h")
         GYRO_DATA_Z = (const(0x18), b"<h")
         GYRO_DATA_ALL = (const(0x14), b"<hhh")
 
@@ -39,37 +38,19 @@ class IMU(Sensor):
         # CALIBRATION: Section 3.10, page 47
         CALIB_STAT = (const(0x35), b"<B")
 
-        # OFFSETS: Section 3.6.4, page 31
-        ACC_OFFSET_X = (const(0x55), b"<h")
-        ACC_OFFSET_Y = (const(0x57), b"<h")
-        ACC_OFFSET_Z = (const(0x59), b"<h")
-        MAG_OFFSET_X = (const(0x5B), b"<h")
-        MAG_OFFSET_Y = (const(0x5D), b"<h")
-        MAG_OFFSET_Z = (const(0x5F), b"<h")
-        GYR_OFFSET_X = (const(0x61), b"<h")
-        GYR_OFFSET_Y = (const(0x63), b"<h")
-        GYR_OFFSET_Z = (const(0x65), b"<h")
-
-        # RADII: Section 3.6.5, page 31
-        ACC_RADIUS = (const(0x67), b"<h")
-        MAG_RADIUS = (const(0x69), b"<h")
-
-        # Troubleshooting
-        SYS_ERR = (const(0x3A), b"<B")
-        SYS_STATUS = (const(0x39), b"<B")
-
+        # OFFSETS & RADII: Section 3.6.4, page 31
         calibration_coefficients = (
-            ACC_OFFSET_X,
-            ACC_OFFSET_Y,
-            ACC_OFFSET_Z,
-            MAG_OFFSET_X,
-            MAG_OFFSET_Y,
-            MAG_OFFSET_Z,
-            GYR_OFFSET_X,
-            GYR_OFFSET_Y,
-            GYR_OFFSET_Z,
-            ACC_RADIUS,
-            MAG_RADIUS,
+            (const(0x55), b"<h"),  # ACC_OFFSET_X
+            (const(0x57), b"<h"),  # ACC_OFFSET_Y
+            (const(0x59), b"<h"),  # ACC_OFFSET_Z
+            (const(0x5B), b"<h"),  # MAG_OFFSET_X
+            (const(0x5D), b"<h"),  # MAG_OFFSET_Y
+            (const(0x5F), b"<h"),  # MAG_OFFSET_Z
+            (const(0x61), b"<h"),  # GYR_OFFSET_X
+            (const(0x63), b"<h"),  # GYR_OFFSET_Y
+            (const(0x65), b"<h"),  # GYR_OFFSET_Z
+            (const(0x67), b"<h"),  # ACC_RADIUS
+            (const(0x69), b"<h"),  # MAG_RADIUS
         )
 
     def __init__(self, i2c_object: I2C, reset_pin: Pin):
@@ -124,7 +105,7 @@ class IMU(Sensor):
         or_mask = 0b0000_0000 if length == 1 else 0b0000_0000_0000_0000
         for char_index in range(len(input)):
             char = input[-char_index - 1]
-            if char == "x" or char == "X" or char == "-":
+            if char == "x" or char == "X":
                 continue  # and mask is already set, or mask is already cleared
             elif char == "0":
                 and_mask &= ~(1 << (char_index))  # clear the and bit
@@ -132,7 +113,7 @@ class IMU(Sensor):
                 and_mask &= ~(1 << (char_index))  # clear the and bit
                 or_mask |= 1 << (char_index)  # set the or bit
             else:
-                raise ValueError("mask chars must be '0','1','x', 'X', or '-'")
+                raise ValueError("mask chars must be '0','1','x', or 'X'")
 
         self.i2c.mem_write(
             ((self._read_reg(reg)[0] & and_mask) | or_mask),
@@ -141,11 +122,11 @@ class IMU(Sensor):
             addr_size=(8 if length == 1 else 16),
         )
 
+    # A method to change the operating mode of the IMU to one of the many "fusion" modes available
+    # from the BNO055.
+    # operating modes available: (page 20), fusion modes available: (page 21)
+    # [OPR_MODE] address = 0x3D (page 70)
     def set_mode(self, mode: int):
-        # A method to change the operating mode of the IMU to one of the many "fusion" modes available
-        # from the BNO055.
-        # operating modes available: (page 20), fusion modes available: (page 21)
-        # [OPR_MODE] address = 0x3D (page 70)
         if mode == 0:
             self._write_reg(IMU.reg.OPR_MODE, "xxxx0000")  # 0: CONFIGMODE
         elif mode == 1:
@@ -175,7 +156,7 @@ class IMU(Sensor):
             with open("IMU_cal.txt", "r") as file:
                 entries = file.readline().strip().split(",")
                 if len(entries) != 11:
-                    raise ValueError("Calibration data length does not match expected length")
+                    raise ValueError("Calibration data length != expected length")
 
                 for idx, coeff_reg in enumerate(IMU.reg.calibration_coefficients):
                     self._write_reg(coeff_reg, entries[idx])
@@ -233,9 +214,6 @@ class IMU(Sensor):
         self.heading = 0
         self.prev_imu_heading = self.get_imu_heading()
         self.delta = 0
-
-    def get_angular_velocities(self):
-        return tuple(x / self.convert_reg_to_rad for x in self._read_reg(IMU.reg.GYRO_DATA_ALL))
 
     def get_yaw_rate(self) -> float:
         return self._read_reg(IMU.reg.GYRO_DATA_Z)[0] / self.convert_reg_to_rad

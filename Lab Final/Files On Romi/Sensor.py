@@ -3,17 +3,18 @@ from pyb import UART  # pyright: ignore
 
 uart = UART(5, 115200)
 
+
 # Base class for sensors that exposes a common interface.
 class Sensor:
+    # Multiply a class-level gain by the given factor.
     @classmethod
     def set_attr(cls, K="Kp", value=0.0):
-        """Multiply a class-level gain by the given factor."""
         if not hasattr(cls, K):
             raise AttributeError(f"'{K}' is not a defined gain on {cls.__name__}")
         setattr(cls, K, value)
         print(K, value)
         uart.write(f"{K}{value}\r\n".encode("utf-8"))
-    
+
     def __init__(self) -> None:
         self._prev_t = ticks_us()
         self.dt = 0

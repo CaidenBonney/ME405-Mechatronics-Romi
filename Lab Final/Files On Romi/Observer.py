@@ -1,19 +1,8 @@
-import ulab  # pyright: ignore
-
-array, zeros, dot, cos, sin = ulab.numpy.array, ulab.numpy.zeros, ulab.numpy.dot, ulab.numpy.cos, ulab.numpy.sin
+from ulab import numpy as np  # pyright: ignore
 from Romi_Props import RomiProps
-import task_share
-from IMU import IMU
-from Encoder import Encoder
-from Battery import Battery
-from Rolling_Queue import RollingQueue
-
-# only for printing to bluetooth
-from pyb import UART  # pyright: ignore
-
 
 class Observer:
-    def __init__(self, IMU: IMU, l_encoder: Encoder, r_encoder: Encoder, battery: Battery):
+    def __init__(self, IMU, l_encoder, r_encoder, battery):
         self.IMU = IMU
         self.tstep = 0.020  # must assume constant timestep for observer to function
 
@@ -24,21 +13,12 @@ class Observer:
         self.r_motor_pwm_ch = self.r_encoder.motor.PWM_ch
         self.r_motor_nSLP_pin = self.r_encoder.motor.nSLP_pin
         self.battery = battery
-
+        
+        # only for printing to bluetooth
+        from pyb import UART  # pyright: ignore
         self.uart = UART(5, 115200)
 
-    def run(
-        self,
-        shares: tuple[
-            task_share.Share,  # obsd_lpos_s
-            task_share.Share,  # obsd_rpos_s
-            task_share.Share,  # obsd_cpos_s
-            task_share.Share,  # obsd_yaw_s
-            task_share.Share,  # obsd_yawrate_s
-            task_share.Share,  # obsd_X_s
-            task_share.Share,  # obsd_Y_s
-        ],
-    ):
+    def run(self, shares):
         # Seperating the shares
         (
             obsd_lpos_s,
@@ -49,9 +29,11 @@ class Observer:
             obsd_X_s,
             obsd_Y_s,
         ) = shares
-
+        
+        
+        
         # Making A_D, B_D, and C matrices
-        A_D = array(
+        A_D = np.array(
             [
                 [0.0012, 0.0012, 0.0140, 0.0000],
                 [0.0012, 0.0012, 0.0140, 0.0000],
@@ -60,7 +42,7 @@ class Observer:
             ]
         )
 
-        B_D = array(
+        B_D = np.array(
             [
                 [0.0506, 0.0436, -0.0070, -0.0070, -0.0000, -2.0241],
                 [0.0436, 0.0506, -0.0070, -0.0070, 0.0000, 2.0241],
@@ -69,7 +51,7 @@ class Observer:
             ]
         )
 
-        C = array(
+        C = np.array(
             [
                 [0.0000, 0.0000, 1.0000, -70.5000],
                 [0.0000, 0.0000, 1.0000, 70.5000],
@@ -79,19 +61,11 @@ class Observer:
         )
 
         # Preallocate state and input vectors
-        x_k = zeros((4, 1))
-        ustar = zeros((6, 1))  #  # real-time input vector and real-time output vector concatenated
-        y_k = zeros((4, 1))  # calculated output vector
-
-        # Additional variables
-        v = 0
-        v_avg_rol_queue = RollingQueue(3)
-        X_dot = 0
-        Y_dot = 0
+        x_k = np.zeros((4, 1))
+        ustar = np.zeros((6, 1))  #  # real-time input vector and real-time output vector concatenated
+        y_k = np.zeros((4, 1))  # calculated output vector
 
         prev_c = 0
-        X = 0
-        Y = 0
 
         # zero heading
         self.IMU.zero_heading()
@@ -99,6 +73,10 @@ class Observer:
         # Update encoders based on current IMU heading (which is zeroed)
         self.l_encoder.position = -RomiProps.wdiv2 * self.IMU.get_heading()
         self.r_encoder.position = RomiProps.wdiv2 * self.IMU.get_heading()
+
+        # set coordinate system
+        obsd_X_s.put(100)
+        obsd_Y_s.put(800)
 
         while True:
             # Update real-time data
@@ -111,29 +89,14 @@ class Observer:
 
             # Perform observer update
             # y_k calculated before next x_k update
-            y_k = dot(C, x_k)  # D term omitted since zero
+            y_k = np.dot(C, x_k)  # D term omitted since zero
 
-            # Calculate v based on x_k
-            # v = (self.l_encoder.velocity + self.r_encoder.velocity) / 2
-
-            # v_avg_rol_queue.push(v)
-
-            # v_avg = (
-            #     0
-            #     if (self.l_motor_pwm_ch.pulse_width_percent() == 0 or self.l_motor_nSLP_pin.value() == 1)
-            #     and (self.r_motor_pwm_ch.pulse_width_percent() == 0 or self.r_motor_nSLP_pin.value() == 1)
-            #     else v_avg_rol_queue.average()
-            # )
-
-            # print(f"v_avg: {v_avg}")
-
+            # Calculate C_delta
             C_delta = x_k[2, 0] - prev_c
             prev_c = x_k[2, 0]
 
-            X_delta = C_delta * cos(ustar[4, 0])
-            Y_delta = C_delta * sin(ustar[4, 0])
-            X += X_delta
-            Y += Y_delta
+            X_delta = C_delta * np.cos(ustar[4, 0])
+            Y_delta = C_delta * np.sin(ustar[4, 0])
 
             # Update Shares Accordingly
             obsd_lpos_s.put(y_k[0, 0])
@@ -141,11 +104,11 @@ class Observer:
             obsd_cpos_s.put(x_k[2, 0])
             obsd_yaw_s.put(y_k[2, 0])
             obsd_yawrate_s.put(y_k[3, 0])
-            obsd_X_s.put(X)
-            obsd_Y_s.put(Y)
+            obsd_X_s.put(obsd_X_s.get() + X_delta)
+            obsd_Y_s.put(obsd_Y_s.get() + Y_delta)
 
             # Update x_k to be used in next iteration
-            x_k = dot(A_D, x_k) + dot(B_D, ustar)
+            x_k = np.dot(A_D, x_k) + np.dot(B_D, ustar)
             yield 0
 
 

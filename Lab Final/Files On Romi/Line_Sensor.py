@@ -1,5 +1,4 @@
 from Sensor import Sensor
-from IR_Sensor import IRSensor
 from array import array
 from os import listdir
 
@@ -10,7 +9,7 @@ class LineSensor(Sensor):
     Ki = 0.05  # Integral gain
     Kd = 0.00  # Derivative gain
 
-    def __init__(self, list_of_IR_Sensors: list[IRSensor]):
+    def __init__(self, list_of_IR_Sensors):
         super().__init__()
         self.list_IR_Sensors = list_of_IR_Sensors
         self.cal_white = False
@@ -26,9 +25,8 @@ class LineSensor(Sensor):
         else:
             raise ValueError("Line sensor array is empty.")
 
-    # "override" parent class method
+    # Return the centroid position computed from the IR sensor array.
     def get_data(self) -> float:
-        """Return the centroid position computed from the IR sensor array."""
         # If no sensors, data can't be gotten
         if not self.list_IR_Sensors:
             raise ValueError("Line sensor array is empty.")
@@ -57,9 +55,9 @@ class LineSensor(Sensor):
             print("Found Line Sensor calibration data, skipping calibration")
             with open("IR_cal.txt", "r") as file:
                 # Read data from file, strip special characters, split on commas, assign
-                # to variables. Similar to HW 0x00 using file.readline()
-                white_data = array("H", map(int, file.readline().strip().split(",")))  # H is uint16
-                black_data = array("H", map(int, file.readline().strip().split(",")))  # H is uint16
+                # to variables.
+                white_data = array("H", map(int, file.readline().strip().split(",")))  # uint16
+                black_data = array("H", map(int, file.readline().strip().split(",")))  # uint16
 
                 if len(white_data) != len(black_data) or len(white_data) != len(self.list_IR_Sensors):
                     raise ValueError("Line Sensor Calibration data length does not match number of IR sensors.")
@@ -73,7 +71,6 @@ class LineSensor(Sensor):
             return True
         else:
             # Calibration data is not present
-            # important note: the black reading is already offset by white reading, meaning the order is important.
             if self.cal_white == True and self.cal_white_complete == False:
                 for sensor in self.list_IR_Sensors:
                     sensor.read()

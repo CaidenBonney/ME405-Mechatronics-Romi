@@ -1,16 +1,12 @@
-from pyb import Pin  # pyright: ignore
-from Motor import Motor
 from Encoder import Encoder
-from Battery import Battery
 from time import ticks_us, ticks_diff  # pyright: ignore
-import task_share
 from Closed_Loop_Control import ClosedLoopControl
 
 
 class MotorController:
     time_start = None
 
-    def __init__(self, motor: Motor, encoder: Encoder, battery: Battery, side: bool, duration: int = 0) -> None:
+    def __init__(self, motor, encoder, battery, side: bool, duration: int = 0):
         self.motor = motor
         self.encoder = encoder
         self.side = side  # False = left, True = right
@@ -37,19 +33,7 @@ class MotorController:
             battery=battery,
         )
 
-    def run(
-        self,
-        shares: tuple[
-            task_share.Share,  # flag_s
-            task_share.Share,  # speed_s
-            task_share.Share,  # data_transfer_s
-            task_share.Share,  # test_complete_s
-            task_share.Share,  # seg_start_s
-            task_share.Queue,  # time_q
-            task_share.Queue,  # pos_q
-            task_share.Queue,  # vel_q
-        ],
-    ):
+    def run(self, shares):
         # Seperating the shares
         (
             flag_s,
@@ -77,9 +61,6 @@ class MotorController:
                 test_complete_s.put(0)
                 self.queues_were_full = False
                 self.done = False
-                
-                # self.encoder.reset_timing()
-                # self.CLC.reset()
 
             # All motor control code goes here in the needed states
             if flag_s.get():
@@ -93,7 +74,6 @@ class MotorController:
                     # Speed is not zero so enable the closed loop control
                     self.CLC.enable()
                 self.CLC.set_ref(speed_s.get())
-                # print(f"Speed set to: {speed_s.get()}") # -------------------
 
             # Updating encoders before next loop
             self.encoder.update()
