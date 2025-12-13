@@ -1,0 +1,149 @@
+\doxysection{Interface\+\_\+w\+\_\+\+Romi Namespace Reference}
+\hypertarget{namespace_interface__w___romi}{}\label{namespace_interface__w___romi}\index{Interface\_w\_Romi@{Interface\_w\_Romi}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \mbox{\hyperlink{namespace_interface__w___romi_aee3002798624099d160b01f9e4ba7a27}{main}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespace_interface__w___romi_a0eac3063fb49eef5432bad86404cf1d6}{RESULTS\+\_\+\+DIR}} = Path(\+\_\+\+\_\+file\+\_\+\+\_\+).resolve().parent / "{}Results"{}
+\item 
+str \mbox{\hyperlink{namespace_interface__w___romi_a9c3f1a412dde7a48808d31603fdb36cb}{DEFAULT\+\_\+\+PORT}} = "{}/dev/cu.\+mecha16"{}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{namespace_interface__w___romi_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_interface__w___romi_aee3002798624099d160b01f9e4ba7a27}\index{Interface\_w\_Romi@{Interface\_w\_Romi}!main@{main}}
+\index{main@{main}!Interface\_w\_Romi@{Interface\_w\_Romi}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{namespace_interface__w___romi_aee3002798624099d160b01f9e4ba7a27} 
+ None Interface\+\_\+w\+\_\+\+Romi.\+main (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_interface__w___romi_8py_source_l00011}{11}} of file \mbox{\hyperlink{_interface__w___romi_8py_source}{Interface\+\_\+w\+\_\+\+Romi.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00011\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacemain}{main}}()\ -\/>\ None:}
+\DoxyCodeLine{00012\ \ \ \ \ RESULTS\_DIR.mkdir(parents=\textcolor{keyword}{True},\ exist\_ok=\textcolor{keyword}{True})}
+\DoxyCodeLine{00013\ \ \ \ \ log\_num\ =\ 0}
+\DoxyCodeLine{00014\ \ \ \ \ line\ =\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00015\ \ \ \ \ port\ =\ sys.argv[1]\ \textcolor{keywordflow}{if}\ len(sys.argv)\ >\ 1\ \textcolor{keywordflow}{else}\ DEFAULT\_PORT}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Opening\ \{port\}\ …\ (Ctrl-\/C\ or\ 'q'+Enter\ to\ quit)"{}})}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{with}\ Serial(port,\ 115200,\ timeout=0.1)\ \textcolor{keyword}{as}\ ser:}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Opening\ Bluetooth\ connection"{}})}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ sleep(0.5)}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Flushing\ Bluetooth\ buffer"{}})}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ser.in\_waiting:}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ ser.read()}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Waiting\ for\ data..."{}})}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keywordflow}{not}\ ser.in\_waiting:}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ sleep(0.05)}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}:}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ test\_num\ =\ input(\textcolor{stringliteral}{"{}What\ test\ would\ you\ like\ to\ run?\ Options\ are\ 0-\/9.\(\backslash\)nPress\ q\ to\ Quit.\(\backslash\)n"{}})}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ test\_num.lower()\ ==\ \textcolor{stringliteral}{"{}q"{}}:}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}p"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{"{}i"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{"{}o"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{"{}k"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{"{}l"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{"{}h"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{"{}j"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ):}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(test\_num[1:])\ !=\ 5:}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(test\_num[1:])\ >\ 5:}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Input\ too\ long,\ truncating\ to\ 5\ characters"{}})}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ test\_num\ =\ test\_num[:6]}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Input\ too\ short,\ padding\ with\ zeros"{}})}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ test\_num\ =\ test\_num[0]\ +\ test\_num[1:].rjust(5,\ \textcolor{stringliteral}{"{}0"{}})}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Sending\ \{test\_num\}"{}})}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ser.write(test\_num.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ num\_line\_skipped\ =\ 0}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ser.in\_waiting:}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line\ =\ ser.readline().decode(\textcolor{stringliteral}{"{}utf-\/8"{}},\ \textcolor{stringliteral}{"{}ignore"{}}).strip()}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{"{}Test\ Data\ Transfer\ Complete"{}}\ \textcolor{keywordflow}{in}\ line:}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Invalid\ data\ line\ skipped:\ \{line\}"{}})}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ num\_line\_skipped\ +=\ 1}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ num\_line\_skipped\ <\ 2:}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keywordflow}{not}\ ser.in\_waiting:}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sleep(0.05)}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ser.write(test\_num.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ log\_path\ =\ RESULTS\_DIR\ /\ f\textcolor{stringliteral}{"{}log\{test\_num\}.csv"{}}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ log\_path.open(\textcolor{stringliteral}{"{}w"{}},\ newline=\textcolor{stringliteral}{"{}"{}})\ \textcolor{keyword}{as}\ csv\_file:}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writer\ =\ csv.writer(csv\_file)}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ header\ =\ ser.readline().decode(\textcolor{stringliteral}{"{}utf-\/8"{}},\ \textcolor{stringliteral}{"{}ignore"{}}).strip().split(\textcolor{stringliteral}{"{},"{}})}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(header)\ !=\ 6:}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Unexpected\ header:\ \{header\}"{}})}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writer.writerow(header)}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}:}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ser.in\_waiting:}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line\ =\ ser.readline().decode(\textcolor{stringliteral}{"{}utf-\/8"{}},\ \textcolor{stringliteral}{"{}ignore"{}}).strip()}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{"{}Test\ Data\ Transfer\ Complete"{}}\ \textcolor{keywordflow}{in}\ line:}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parts\ =\ line.split(\textcolor{stringliteral}{"{},"{}})}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(parts)\ !=\ 6:}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Invalid\ data\ line\ skipped:\ \{line\}"{}})}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writer.writerow([float(val)\ \textcolor{keywordflow}{for}\ val\ \textcolor{keywordflow}{in}\ parts])}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ ValueError:}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Non-\/numeric\ data\ skipped:\ \{line\}"{}})}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Test\ \{test\_num\}\ data\ collection\ complete"{}})}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}CSV\ saved\ to\ \{log\_path.name\}"{}})}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ log\_num\ +=\ 1}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ KeyboardInterrupt:}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Keyboard\ interrupted"{}})}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ser.write(b\textcolor{stringliteral}{"{}c"{}})}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ ser.write(b\textcolor{stringliteral}{"{}c"{}})}
+\DoxyCodeLine{00099\ \ \ \ \ print(\textcolor{stringliteral}{"{}Bluetooth\ connection\ closed"{}})}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ }
+
+\end{DoxyCode}
+
+
+\label{doc-var-members}
+\Hypertarget{namespace_interface__w___romi_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespace_interface__w___romi_a9c3f1a412dde7a48808d31603fdb36cb}\index{Interface\_w\_Romi@{Interface\_w\_Romi}!DEFAULT\_PORT@{DEFAULT\_PORT}}
+\index{DEFAULT\_PORT@{DEFAULT\_PORT}!Interface\_w\_Romi@{Interface\_w\_Romi}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_PORT}{DEFAULT\_PORT}}
+{\footnotesize\ttfamily \label{namespace_interface__w___romi_a9c3f1a412dde7a48808d31603fdb36cb} 
+str Interface\+\_\+w\+\_\+\+Romi.\+DEFAULT\+\_\+\+PORT = "{}/dev/cu.\+mecha16"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_interface__w___romi_8py_source_l00008}{8}} of file \mbox{\hyperlink{_interface__w___romi_8py_source}{Interface\+\_\+w\+\_\+\+Romi.\+py}}.
+
+\Hypertarget{namespace_interface__w___romi_a0eac3063fb49eef5432bad86404cf1d6}\index{Interface\_w\_Romi@{Interface\_w\_Romi}!RESULTS\_DIR@{RESULTS\_DIR}}
+\index{RESULTS\_DIR@{RESULTS\_DIR}!Interface\_w\_Romi@{Interface\_w\_Romi}}
+\doxysubsubsection{\texorpdfstring{RESULTS\_DIR}{RESULTS\_DIR}}
+{\footnotesize\ttfamily \label{namespace_interface__w___romi_a0eac3063fb49eef5432bad86404cf1d6} 
+str Interface\+\_\+w\+\_\+\+Romi.\+RESULTS\+\_\+\+DIR = Path(\+\_\+\+\_\+file\+\_\+\+\_\+).resolve().parent / "{}Results"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_interface__w___romi_8py_source_l00007}{7}} of file \mbox{\hyperlink{_interface__w___romi_8py_source}{Interface\+\_\+w\+\_\+\+Romi.\+py}}.
+

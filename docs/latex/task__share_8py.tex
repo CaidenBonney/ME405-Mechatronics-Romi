@@ -1,0 +1,99 @@
+\doxysection{Lab Final/\+Files On Romi/task\+\_\+share.py File Reference}
+\hypertarget{task__share_8py}{}\label{task__share_8py}\index{Lab Final/Files On Romi/task\_share.py@{Lab Final/Files On Romi/task\_share.py}}
+
+
+This file contains classes which allow tasks to share data without the risk of data corruption by interrupts.  
+
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classtask__share_1_1_base_share}{task\+\_\+share.\+Base\+Share}}
+\begin{DoxyCompactList}\small\item\em Base class for queues and shares which exchange data between tasks. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classtask__share_1_1_queue}{task\+\_\+share.\+Queue}}
+\begin{DoxyCompactList}\small\item\em A queue which is used to transfer data from one task to another. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classtask__share_1_1_share}{task\+\_\+share.\+Share}}
+\begin{DoxyCompactList}\small\item\em An item which holds data to be shared between tasks. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{task__share_8py_ad6aea1db68be1a10f72039a5ac9e9dd4}{task\+\_\+share.\+show\+\_\+all}} ()
+\begin{DoxyCompactList}\small\item\em Create a string holding a diagnostic printout showing the status of each queue and share in the system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \mbox{\hyperlink{task__share_8py_a75818e5b662453e3723d0f234c85e519}{task\+\_\+share.\+share\+\_\+list}} = \mbox{[}$\,$\mbox{]}
+\begin{DoxyCompactList}\small\item\em This is a system-\/wide list of all the queues and shared variables. \end{DoxyCompactList}\item 
+\Hypertarget{task__share_8py_af5ee68a35f9ce19aef4c4bd4ab7c2679}\label{task__share_8py_af5ee68a35f9ce19aef4c4bd4ab7c2679} 
+dict {\bfseries task\+\_\+share.\+type\+\_\+code\+\_\+strings}
+\begin{DoxyCompactList}\small\item\em This dictionary allows readable printouts of queue and share data types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains classes which allow tasks to share data without the risk of data corruption by interrupts. 
+
+\begin{DoxyAuthor}{Author}
+JR Ridgely 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2017-\/Jan-\/01 JRR Approximate date of creation of file 
+
+2021-\/Dec-\/18 JRR Docstrings changed to work without Doxy\+Py\+Py 
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+This program is copyright (c) 2017-\/2023 by JR Ridgely and released under the GNU Public License, version 3.\+0.
+\end{DoxyCopyright}
+It is intended for educational use only, but its use is not limited thereto. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "{}\+AS IS"{} AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+
+Definition in file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{task__share_8py_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{task__share_8py_ad6aea1db68be1a10f72039a5ac9e9dd4}\index{task\_share.py@{task\_share.py}!show\_all@{show\_all}}
+\index{show\_all@{show\_all}!task\_share.py@{task\_share.py}}
+\doxysubsubsection{\texorpdfstring{show\_all()}{show\_all()}}
+{\footnotesize\ttfamily \label{task__share_8py_ad6aea1db68be1a10f72039a5ac9e9dd4} 
+task\+\_\+share.\+show\+\_\+all (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Create a string holding a diagnostic printout showing the status of each queue and share in the system. 
+
+\begin{DoxyReturn}{Returns}
+A string containing information about each queue and share 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{task__share_8py_source_l00054}{54}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054\ \textcolor{keyword}{def\ }show\_all():}
+\DoxyCodeLine{00055\ \ \ \ \ gen\ =\ (str(item)\ \textcolor{keywordflow}{for}\ item\ \textcolor{keywordflow}{in}\ share\_list)}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}.join(gen)}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ }
+
+\end{DoxyCode}
+
+
+\label{doc-var-members}
+\Hypertarget{task__share_8py_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{task__share_8py_a75818e5b662453e3723d0f234c85e519}\index{task\_share.py@{task\_share.py}!share\_list@{share\_list}}
+\index{share\_list@{share\_list}!task\_share.py@{task\_share.py}}
+\doxysubsubsection{\texorpdfstring{share\_list}{share\_list}}
+{\footnotesize\ttfamily \label{task__share_8py_a75818e5b662453e3723d0f234c85e519} 
+list task\+\_\+share.\+share\+\_\+list = \mbox{[}$\,$\mbox{]}}
+
+
+
+This is a system-\/wide list of all the queues and shared variables. 
+
+It is used to create diagnostic printouts. 
+
+Definition at line \mbox{\hyperlink{task__share_8py_source_l00032}{32}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
+

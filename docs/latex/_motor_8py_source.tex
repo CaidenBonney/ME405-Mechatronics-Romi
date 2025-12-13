@@ -1,0 +1,47 @@
+\doxysection{Motor.\+py}
+\hypertarget{_motor_8py_source}{}\label{_motor_8py_source}\index{Lab Final/Files On Romi/Motor.py@{Lab Final/Files On Romi/Motor.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00001}00001\ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ Pin,\ Timer\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00004}00004\ \textcolor{comment}{\#\ A\ motor\ driver\ interface\ encapsulated\ in\ a\ Python\ class.\ Works\ with}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00005}00005\ \textcolor{comment}{\#\ motor\ drivers\ using\ separate\ PWM\ and\ direction\ inputs\ such\ as\ the\ DRV8838}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00006}00006\ \textcolor{comment}{\#\ drivers\ present\ on\ the\ Romi\ chassis\ from\ Pololu.}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00007}\mbox{\hyperlink{class_motor_1_1_motor}{00007}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_motor_1_1_motor}{Motor}}:}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00009}00009\ \ \ \ \ \textcolor{comment}{\#\ Initializes\ a\ Motor\ object}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00010}00010\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ PWM\_pin,\ DIR\_pin,\ nSLP\_pin,\ tim:\ Timer,\ PWM\_ch\_num:\ int):}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00011}00011\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_motor_1_1_motor_a8db169519cda9dd417625f3a7fbd9f7e}{nSLP\_pin}}\ =\ Pin(nSLP\_pin,\ mode=Pin.OUT\_PP)}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00012}00012\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_motor_1_1_motor_aa607f1a9f2a0165124537af8eea39348}{PWM\_pin}}\ =\ Pin(PWM\_pin,\ mode=Pin.ANALOG)}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00013}00013\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_motor_1_1_motor_ad65e31a3a55f417d1b165b9c6d20af2a}{DIR\_pin}}\ =\ Pin(DIR\_pin,\ mode=Pin.OUT\_PP)}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_motor_1_1_motor_ac2fc73b7acebc74097bc77942c7c2318}{PWM\_ch}}\ =\ tim.channel(PWM\_ch\_num,\ pin=self.\mbox{\hyperlink{class_motor_1_1_motor_aa607f1a9f2a0165124537af8eea39348}{PWM\_pin}},\ mode=Timer.PWM)}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00015}00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_motor_1_1_motor_ac2fc73b7acebc74097bc77942c7c2318}{PWM\_ch}}\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Invalid\ PWM\ channel\ number\ for\ the\ given\ timer"{}})}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_motor_1_1_motor_abd3d4107db4e3a2737529b42ab65d684}{disable}}()\ \ \textcolor{comment}{\#\ Start\ with\ motor\ disabled}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00019}00019\ \ \ \ \ \textcolor{comment}{\#\ Sets\ the\ present\ effort\ requested\ from\ the\ motor\ based\ on\ an\ input\ value}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00020}00020\ \ \ \ \ \textcolor{comment}{\#\ between\ -\/100\ and\ 100}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00021}00021\ \ \ \ \ \textcolor{keyword}{def\ }set\_effort(self,\ value:\ float):}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ -\/100\ <=\ value\ <=\ 100:}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Effort\ must\ be\ between\ -\/100\ and\ 100"{}})}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(f"{}\{value\}"{})}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Set\ the\ direction\ based\ on\ the\ sign\ of\ the\ effort}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_motor_1_1_motor_ad65e31a3a55f417d1b165b9c6d20af2a}{DIR\_pin}}.low()\ \textcolor{keywordflow}{if}\ value\ >=\ 0\ \textcolor{keywordflow}{else}\ self.\mbox{\hyperlink{class_motor_1_1_motor_ad65e31a3a55f417d1b165b9c6d20af2a}{DIR\_pin}}.high()}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Set\ the\ PWM\ duty\ cycle\ to\ the\ absolute\ value\ of\ the\ effort}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_motor_1_1_motor_ac2fc73b7acebc74097bc77942c7c2318}{PWM\_ch}}.pulse\_width\_percent(abs(value))}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00033}00033\ \ \ \ \ \textcolor{comment}{\#\ Enables\ the\ motor\ driver\ by\ taking\ it\ out\ of\ sleep\ mode\ into\ brake\ mode}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00034}00034\ \ \ \ \ \textcolor{keyword}{def\ }enable(self):}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_motor_1_1_motor_a8db169519cda9dd417625f3a7fbd9f7e}{nSLP\_pin}}.high()}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_motor_1_1_motor_aa607f1a9f2a0165124537af8eea39348}{PWM\_pin}}.low()}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00038}00038\ \ \ \ \ \textcolor{comment}{\#\ Disables\ the\ motor\ driver\ by\ taking\ it\ into\ sleep\ mode}}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00039}00039\ \ \ \ \ \textcolor{keyword}{def\ }disable(self):}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_motor_1_1_motor_a8db169519cda9dd417625f3a7fbd9f7e}{nSLP\_pin}}.low()}
+\DoxyCodeLine{\Hypertarget{_motor_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_motor_1_1_motor_aa607f1a9f2a0165124537af8eea39348}{PWM\_pin}}.low()}
+
+\end{DoxyCode}

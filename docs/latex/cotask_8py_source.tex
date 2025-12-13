@@ -1,0 +1,248 @@
+\doxysection{cotask.\+py}
+\hypertarget{cotask_8py_source}{}\label{cotask_8py_source}\index{Lab Final/Files On Romi/cotask.py@{Lab Final/Files On Romi/cotask.py}}
+\mbox{\hyperlink{cotask_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00030}00030\ \textcolor{keyword}{import}\ gc\ \ \textcolor{comment}{\#\ Memory\ allocation\ garbage\ collector}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00031}00031\ \textcolor{keyword}{import}\ utime\ \ \textcolor{comment}{\#\ Micropython\ version\ of\ time\ library}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00032}00032\ \textcolor{keyword}{import}\ micropython\ \ \textcolor{comment}{\#\ This\ shuts\ up\ incorrect\ warnings}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00066}\mbox{\hyperlink{classcotask_1_1_task}{00066}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcotask_1_1_task}{Task}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00068}00068\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00088}\mbox{\hyperlink{classcotask_1_1_task_a2fe3b73c0ccc2cd20a89694e336291f5}{00088}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_a2fe3b73c0ccc2cd20a89694e336291f5}{\_\_init\_\_}}(self,\ run\_fun,\ name="{}NoName"{},\ priority=0,\ period=None,\ profile=False,\ trace=False,\ shares=()):}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ The\ function\ which\ is\ run\ to\ implement\ this\ task's\ code.\ Since\ it}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00090}00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ is\ a\ generator,\ we\ "{}run"{}\ it\ here,\ which\ doesn't\ actually\ run\ it\ but}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ gets\ it\ going\ as\ a\ generator\ which\ is\ ready\ to\ yield\ values}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00092}00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ shares:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a3d158e6e4971c204449c07f72e67a186}{\_run\_gen}}\ =\ run\_fun(shares)}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a3d158e6e4971c204449c07f72e67a186}{\_run\_gen}}\ =\ run\_fun()}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00097}00097\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00098}\mbox{\hyperlink{classcotask_1_1_task_ab54e069dd0b4f0a2f8e7f00c94998a10}{00098}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_ab54e069dd0b4f0a2f8e7f00c94998a10}{name}}\ =\ name}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00102}\mbox{\hyperlink{classcotask_1_1_task_aeced93c7b7d23e33de9693d278aef88b}{00102}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_aeced93c7b7d23e33de9693d278aef88b}{priority}}\ =\ int(priority)}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00109}00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ period\ !=\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_afc5c88f112f516002f67118a0ee82f44}{period}}\ =\ int(period\ *\ 1000)}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_aa443e9f35f5dee489023afb5d5b9d091}{\_next\_run}}\ =\ utime.ticks\_us()\ +\ self.\mbox{\hyperlink{classcotask_1_1_task_afc5c88f112f516002f67118a0ee82f44}{period}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00112}00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_afc5c88f112f516002f67118a0ee82f44}{period}}\ =\ period}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_aa443e9f35f5dee489023afb5d5b9d091}{\_next\_run}}\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Flag\ which\ causes\ the\ task\ to\ be\ profiled,\ in\ which\ the\ execution}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00117}00117\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ time\ of\ the\ @c\ run()\ method\ is\ measured\ and\ basic\ statistics\ kept.}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00118}00118\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a0d0e9249bbce322f63ad1d2004069fac}{\_prof}}\ =\ profile}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00119}00119\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a0fd4093dcd01cd1d05ace187956340cf}{reset\_profile}}()}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00121}00121\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ The\ previous\ state\ in\ which\ the\ task\ last\ ran.\ It\ is\ used\ to\ watch}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ for\ and\ track\ state\ transitions.}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a05a6180fe3ba22a1d1e36fe1cc34cd16}{\_prev\_state}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00125}00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ transition\ tracing\ has\ been\ enabled,\ create\ an\ empty\ list\ in}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00126}00126\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ which\ to\ store\ transition\ (time,\ to-\/state)\ stamps}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00127}00127\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a12647eaf44c1e5c9e6083e0ce77bcb3f}{\_trace}}\ =\ trace}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00128}00128\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_acaeeb90a6096f7d1e6458648dc84f6b7}{\_tr\_data}}\ =\ []}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00129}00129\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a99c833294c7426f5f5b753f382d9f88d}{\_prev\_time}}\ =\ utime.ticks\_us()}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00131}00131\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00133}\mbox{\hyperlink{classcotask_1_1_task_ad309fae1890bffafa75e9fdb33fae600}{00133}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_ad309fae1890bffafa75e9fdb33fae600}{go\_flag}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00135}00135\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00141}\mbox{\hyperlink{classcotask_1_1_task_af60def0ed4a1bc5fec32f3cf8b8a90c8}{00141}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_af60def0ed4a1bc5fec32f3cf8b8a90c8}{schedule}}(self)\ -\/>\ bool:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classcotask_1_1_task_a6102bc35d7cb1ce292abc85d4ddc23e1}{ready}}():}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ the\ go\ flag\ for\ the\ next\ run}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_ad309fae1890bffafa75e9fdb33fae600}{go\_flag}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling,\ save\ the\ start\ time}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classcotask_1_1_task_a0d0e9249bbce322f63ad1d2004069fac}{\_prof}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stime\ =\ utime.ticks\_us()}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Run\ the\ method\ belonging\ to\ the\ state\ which\ should\ be\ run\ next}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ curr\_state\ =\ next(self.\mbox{\hyperlink{classcotask_1_1_task_a3d158e6e4971c204449c07f72e67a186}{\_run\_gen}})}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling\ or\ tracing,\ save\ timing\ data}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classcotask_1_1_task_a0d0e9249bbce322f63ad1d2004069fac}{\_prof}}\ \textcolor{keywordflow}{or}\ self.\mbox{\hyperlink{classcotask_1_1_task_a12647eaf44c1e5c9e6083e0ce77bcb3f}{\_trace}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ etime\ =\ utime.ticks\_us()}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling,\ save\ timing\ data}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classcotask_1_1_task_a0d0e9249bbce322f63ad1d2004069fac}{\_prof}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_ae190f013ce9955c05841c20f2d46e9ac}{\_runs}}\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ runt\ =\ utime.ticks\_diff(etime,\ stime)}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classcotask_1_1_task_ae190f013ce9955c05841c20f2d46e9ac}{\_runs}}\ >\ 2:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_ac93a114add603ab2bb498c995fd64ecd}{\_run\_sum}}\ +=\ runt}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ runt\ >\ self.\mbox{\hyperlink{classcotask_1_1_task_a5549bd87387fee6088efba87766a6fa7}{\_slowest}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a5549bd87387fee6088efba87766a6fa7}{\_slowest}}\ =\ runt}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ transition\ logic\ tracing\ is\ on,\ record\ a\ transition;\ if\ not,}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ ignore\ the\ state.\ If\ out\ of\ memory,\ switch\ tracing\ off\ and}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ run\ the\ memory\ allocation\ garbage\ collector}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classcotask_1_1_task_a12647eaf44c1e5c9e6083e0ce77bcb3f}{\_trace}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ curr\_state\ !=\ self.\mbox{\hyperlink{classcotask_1_1_task_a05a6180fe3ba22a1d1e36fe1cc34cd16}{\_prev\_state}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_acaeeb90a6096f7d1e6458648dc84f6b7}{\_tr\_data}}.append((utime.ticks\_diff(etime,\ self.\mbox{\hyperlink{classcotask_1_1_task_a99c833294c7426f5f5b753f382d9f88d}{\_prev\_time}}),\ curr\_state))}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ MemoryError:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a12647eaf44c1e5c9e6083e0ce77bcb3f}{\_trace}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gc.collect()}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a05a6180fe3ba22a1d1e36fe1cc34cd16}{\_prev\_state}}\ =\ curr\_state}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a99c833294c7426f5f5b753f382d9f88d}{\_prev\_time}}\ =\ etime}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00183}00183\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00186}00186\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00191}00191\ \ \ \ \ \textcolor{preprocessor}{@micropython.native}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00192}\mbox{\hyperlink{classcotask_1_1_task_a6102bc35d7cb1ce292abc85d4ddc23e1}{00192}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_a6102bc35d7cb1ce292abc85d4ddc23e1}{ready}}(self)\ -\/>\ bool:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00193}00193\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ this\ task\ uses\ a\ timer,\ check\ if\ it's\ time\ to\ run\ run()\ again.\ If}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00194}00194\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ so,\ set\ go\ flag\ and\ set\ the\ timer\ to\ go\ off\ at\ the\ next\ run\ time}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00195}00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classcotask_1_1_task_afc5c88f112f516002f67118a0ee82f44}{period}}\ !=\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ late\ =\ utime.ticks\_diff(utime.ticks\_us(),\ self.\mbox{\hyperlink{classcotask_1_1_task_aa443e9f35f5dee489023afb5d5b9d091}{\_next\_run}})}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ late\ >\ 0:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_ad309fae1890bffafa75e9fdb33fae600}{go\_flag}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_aa443e9f35f5dee489023afb5d5b9d091}{\_next\_run}}\ =\ utime.ticks\_diff(self.\mbox{\hyperlink{classcotask_1_1_task_afc5c88f112f516002f67118a0ee82f44}{period}},\ -\/self.\mbox{\hyperlink{classcotask_1_1_task_aa443e9f35f5dee489023afb5d5b9d091}{\_next\_run}})}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ keeping\ a\ latency\ profile,\ record\ the\ data}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classcotask_1_1_task_a0d0e9249bbce322f63ad1d2004069fac}{\_prof}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a10930f344a7f5615b2fd996aa95e39aa}{\_late\_sum}}\ +=\ late}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ late\ >\ self.\mbox{\hyperlink{classcotask_1_1_task_a9b281cae547cbe63219a13ec6f032cb9}{\_latest}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a9b281cae547cbe63219a13ec6f032cb9}{\_latest}}\ =\ late}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00207}00207\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ the\ task\ doesn't\ use\ a\ timer,\ we\ rely\ on\ go\_flag\ to\ signal\ ready}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{classcotask_1_1_task_ad309fae1890bffafa75e9fdb33fae600}{go\_flag}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00210}00210\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00214}\mbox{\hyperlink{classcotask_1_1_task_a0fcee5beb8b2fed77e5125c58ba35c26}{00214}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_a0fcee5beb8b2fed77e5125c58ba35c26}{set\_period}}(self,\ new\_period):}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00215}00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ new\_period\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_afc5c88f112f516002f67118a0ee82f44}{period}}\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00217}00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_afc5c88f112f516002f67118a0ee82f44}{period}}\ =\ int(new\_period)\ *\ 1000}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00220}00220\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00222}\mbox{\hyperlink{classcotask_1_1_task_a0fd4093dcd01cd1d05ace187956340cf}{00222}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_a0fd4093dcd01cd1d05ace187956340cf}{reset\_profile}}(self):}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00223}00223\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_ae190f013ce9955c05841c20f2d46e9ac}{\_runs}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00224}00224\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_ac93a114add603ab2bb498c995fd64ecd}{\_run\_sum}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00225}00225\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a5549bd87387fee6088efba87766a6fa7}{\_slowest}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00226}00226\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a10930f344a7f5615b2fd996aa95e39aa}{\_late\_sum}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00227}00227\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_a9b281cae547cbe63219a13ec6f032cb9}{\_latest}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00228}00228\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00229}00229\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00233}\mbox{\hyperlink{classcotask_1_1_task_a51c5df87e0e707f9e3c02d9765fcbee1}{00233}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_a51c5df87e0e707f9e3c02d9765fcbee1}{get\_trace}}(self):}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00234}00234\ \ \ \ \ \ \ \ \ tr\_str\ =\ \textcolor{stringliteral}{"{}Task\ "{}}\ +\ self.\mbox{\hyperlink{classcotask_1_1_task_ab54e069dd0b4f0a2f8e7f00c94998a10}{name}}\ +\ \textcolor{stringliteral}{"{}:"{}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00235}00235\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classcotask_1_1_task_a12647eaf44c1e5c9e6083e0ce77bcb3f}{\_trace}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ last\_state\ =\ 0}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ total\_time\ =\ 0.0}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ item\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classcotask_1_1_task_acaeeb90a6096f7d1e6458648dc84f6b7}{\_tr\_data}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_time\ +=\ item[0]\ /\ 1000000.0}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\{:\ 12.6f\}:\ \{:\ 2d\}\ -\/>\ \{:d\}\(\backslash\)n"{}}.format(total\_time,\ last\_state,\ item[1])}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ last\_state\ =\ item[1]}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00243}00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\ not\ traced"{}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00245}00245\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tr\_str}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00247}00247\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00250}\mbox{\hyperlink{classcotask_1_1_task_a8066da53e82716dc9f0495b28a89b781}{00250}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_a8066da53e82716dc9f0495b28a89b781}{go}}(self):}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00251}00251\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_ad309fae1890bffafa75e9fdb33fae600}{go\_flag}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00252}00252\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00253}00253\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00257}\mbox{\hyperlink{classcotask_1_1_task_a2023e255766db032de255fd65c0b1943}{00257}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_a2023e255766db032de255fd65c0b1943}{\_\_repr\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00258}00258\ \ \ \ \ \ \ \ \ rst\ =\ f\textcolor{stringliteral}{"{}\{self.name:<16s\}\{self.priority:\ 4d\}"{}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00259}00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{(self.period\ /\ 1000.0):\ 10.1f\}"{}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00261}00261\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ TypeError:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ -\/"{}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00263}00263\ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{self.\_runs:\ 8d\}"{}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00264}00264\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00265}00265\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classcotask_1_1_task_a0d0e9249bbce322f63ad1d2004069fac}{\_prof}}\ \textcolor{keywordflow}{and}\ self.\mbox{\hyperlink{classcotask_1_1_task_ae190f013ce9955c05841c20f2d46e9ac}{\_runs}}\ >\ 0:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ avg\_dur\ =\ (self.\mbox{\hyperlink{classcotask_1_1_task_ac93a114add603ab2bb498c995fd64ecd}{\_run\_sum}}\ /\ self.\mbox{\hyperlink{classcotask_1_1_task_ae190f013ce9955c05841c20f2d46e9ac}{\_runs}})\ /\ 1000.0}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ avg\_late\ =\ (self.\mbox{\hyperlink{classcotask_1_1_task_a10930f344a7f5615b2fd996aa95e39aa}{\_late\_sum}}\ /\ self.\mbox{\hyperlink{classcotask_1_1_task_ae190f013ce9955c05841c20f2d46e9ac}{\_runs}})\ /\ 1000.0}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{avg\_dur:\ 10.3f\}\{(self.\_slowest\ /\ 1000.0):\ 10.3f\}"{}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classcotask_1_1_task_afc5c88f112f516002f67118a0ee82f44}{period}}\ !=\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{avg\_late:\ 10.3f\}\{(self.\_latest\ /\ 1000.0):\ 10.3f\}"{}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00271}00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ rst}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00272}00272\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00273}00273\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00274}00274\ \textcolor{comment}{\#\ =============================================================================}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00277}00277\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00288}\mbox{\hyperlink{classcotask_1_1_task_list}{00288}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcotask_1_1_task_list}{TaskList}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00289}00289\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00290}00290\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00292}\mbox{\hyperlink{classcotask_1_1_task_list_aad6d72c01326f1c869492c5643f2a42e}{00292}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_list_aad6d72c01326f1c869492c5643f2a42e}{\_\_init\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00293}00293\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00294}00294\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00298}\mbox{\hyperlink{classcotask_1_1_task_list_a724ac8246e4b4bf4493d5fce02a8307e}{00298}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_list_a724ac8246e4b4bf4493d5fce02a8307e}{pri\_list}}\ =\ []}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00299}00299\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00300}00300\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00304}\mbox{\hyperlink{classcotask_1_1_task_list_ab6aaf44123a285f4355919a5a8229c39}{00304}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_list_ab6aaf44123a285f4355919a5a8229c39}{append}}(self,\ task):}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00305}00305\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ See\ if\ there's\ a\ tasklist\ with\ the\ given\ priority\ in\ the\ main\ list}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00306}00306\ \ \ \ \ \ \ \ \ new\_pri\ =\ task.priority}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00307}00307\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ pri\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classcotask_1_1_task_list_a724ac8246e4b4bf4493d5fce02a8307e}{pri\_list}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ a\ tasklist\ with\ this\ priority\ exists,\ add\ this\ task\ to\ it.}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ pri[0]\ ==\ new\_pri:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pri.append(task)}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00312}00312\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00313}00313\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ the\ priority\ isn't\ in\ the\ list,\ this\ else\ clause\ starts\ a\ new}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00314}00314\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ priority\ list\ with\ this\ task\ as\ first\ one.\ A\ priority\ list\ has\ the}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00315}00315\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ priority\ as\ element\ 0,\ an\ index\ into\ the\ list\ of\ tasks\ (used\ for}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00316}00316\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ round-\/robin\ scheduling\ those\ tasks)\ as\ the\ second\ item,\ and\ tasks}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00317}00317\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ after\ those}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00318}00318\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00319}00319\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_list_a724ac8246e4b4bf4493d5fce02a8307e}{pri\_list}}.\mbox{\hyperlink{classcotask_1_1_task_list_ab6aaf44123a285f4355919a5a8229c39}{append}}([new\_pri,\ 2,\ task])}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00320}00320\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00321}00321\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Make\ sure\ the\ main\ list\ (of\ lists\ at\ each\ priority)\ is\ sorted}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00322}00322\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classcotask_1_1_task_list_a724ac8246e4b4bf4493d5fce02a8307e}{pri\_list}}.sort(key=\textcolor{keyword}{lambda}\ pri:\ pri[0],\ reverse=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00323}00323\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00324}00324\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00333}00333\ \ \ \ \ \textcolor{preprocessor}{@micropython.native}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00334}\mbox{\hyperlink{classcotask_1_1_task_list_aa048a6b12954d03b8fbf78dff7ace907}{00334}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_list_aa048a6b12954d03b8fbf78dff7ace907}{rr\_sched}}(self):}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00335}00335\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ For\ each\ priority\ level,\ run\ all\ tasks\ at\ that\ level}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00336}00336\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ pri\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classcotask_1_1_task_list_a724ac8246e4b4bf4493d5fce02a8307e}{pri\_list}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ task\ \textcolor{keywordflow}{in}\ pri[2:]:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ task.schedule()}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00339}00339\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00340}00340\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00345}00345\ \ \ \ \ \textcolor{preprocessor}{@micropython.native}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00346}\mbox{\hyperlink{classcotask_1_1_task_list_a53819d1e25955560b7cb06bd21715966}{00346}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_list_a53819d1e25955560b7cb06bd21715966}{pri\_sched}}(self):}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00347}00347\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Go\ down\ the\ list\ of\ priorities,\ beginning\ with\ the\ highest}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00348}00348\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ pri\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classcotask_1_1_task_list_a724ac8246e4b4bf4493d5fce02a8307e}{pri\_list}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Within\ each\ priority\ list,\ run\ tasks\ in\ round-\/robin\ order}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Each\ priority\ list\ is\ [priority,\ index,\ task,\ task,\ ...]\ where}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ index\ is\ the\ index\ of\ the\ next\ task\ in\ the\ list\ to\ be\ run}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ tries\ =\ 2}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ length\ =\ len(pri)}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ tries\ <\ length:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ran\ =\ pri[pri[1]].schedule()}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tries\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pri[1]\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ pri[1]\ >=\ length:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pri[1]\ =\ 2}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ran:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00362}00362\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00363}00363\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00364}\mbox{\hyperlink{classcotask_1_1_task_list_a425ca90daaae28550bf1b3aa2da018ab}{00364}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classcotask_1_1_task_list_a425ca90daaae28550bf1b3aa2da018ab}{\_\_repr\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00365}00365\ \ \ \ \ \ \ \ \ ret\_str\ =\ \textcolor{stringliteral}{"{}TASK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PRI\ \ \ \ PERIOD\ \ \ \ RUNS\ \ \ AVG\ DUR\ \ \ MAX\ "{}}\ \textcolor{stringliteral}{"{}DUR\ \ AVG\ LATE\ \ MAX\ LATE\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00366}00366\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ pri\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classcotask_1_1_task_list_a724ac8246e4b4bf4493d5fce02a8307e}{pri\_list}}:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ task\ \textcolor{keywordflow}{in}\ pri[2:]:}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ret\_str\ +=\ str(task)\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00369}00369\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00370}00370\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ret\_str}
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00371}00371\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00372}00372\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00373}00373\ }
+\DoxyCodeLine{\Hypertarget{cotask_8py_source_l00375}00375\ task\_list\ =\ \mbox{\hyperlink{classcotask_1_1_task_list}{TaskList}}()}
+
+\end{DoxyCode}

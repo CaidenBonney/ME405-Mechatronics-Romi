@@ -1,0 +1,611 @@
+\doxysection{Path\+\_\+\+Director.\+py}
+\hypertarget{_path___director_8py_source}{}\label{_path___director_8py_source}\index{Lab Final/Files On Romi/Path\_Director.py@{Lab Final/Files On Romi/Path\_Director.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00001}00001\ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ UART,\ Pin,\ ExtInt\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00002}00002\ \textcolor{keyword}{from}\ time\ \textcolor{keyword}{import}\ ticks\_diff,\ ticks\_us\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00003}00003\ \textcolor{keyword}{from}\ math\ \textcolor{keyword}{import}\ pi,\ atan2}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00005}00005\ \textcolor{keyword}{from}\ Romi\_Props\ \textcolor{keyword}{import}\ RomiProps}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00006}00006\ \textcolor{keyword}{from}\ Closed\_Loop\_Control\ \textcolor{keyword}{import}\ ClosedLoopControl}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00007}00007\ \textcolor{keyword}{from}\ Line\_Sensor\ \textcolor{keyword}{import}\ LineSensor}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00008}00008\ \textcolor{keyword}{from}\ IMU\ \textcolor{keyword}{import}\ IMU}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00010}00010\ \textcolor{keyword}{from}\ Path\_Director\_vars\ \textcolor{keyword}{import}\ PD\_vars}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00013}\mbox{\hyperlink{class_path___director_1_1_path_director}{00013}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_path___director_1_1_path_director}{PathDirector}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00014}00014\ \ \ \ \ \textcolor{comment}{\#\ Multiply\ a\ class-\/level\ gain\ by\ the\ given\ factor.}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00015}00015\ \ \ \ \ \textcolor{preprocessor}{@classmethod}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00016}00016\ \ \ \ \ \textcolor{keyword}{def\ }set\_attr(cls,\ K="{}v\_ref"{},\ value=0.0):}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ hasattr(cls,\ K):}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ AttributeError(f\textcolor{stringliteral}{"{}'\{K\}'\ is\ not\ a\ defined\ gain\ on\ \{cls.\_\_name\_\_\}"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ setattr(cls,\ K,\ value)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00021}00021\ \ \ \ \ WAIT\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00022}00022\ \ \ \ \ CALIBRATE\ =\ 1}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00023}00023\ \ \ \ \ FOLLOW\_LINE\ =\ 2}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00024}00024\ \ \ \ \ FIXED\_FORWARD\ =\ 3}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00025}00025\ \ \ \ \ RECORD\_HEADING\ =\ 4}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00027}00027\ \ \ \ \ ST\_B4\_FOLLOW\_LINE\ =\ 5}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00028}00028\ \ \ \ \ FOLLOW\_LINE\_B4\_FORK\ =\ 6}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00029}00029\ \ \ \ \ FORCE\_RIGHT\_FORK\ =\ 7}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00030}00030\ \ \ \ \ LINE\_FOLLOW\_2\_DIAMOND\ =\ 8}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00031}00031\ \ \ \ \ DIAMOND\_2\_CP1\ =\ 9}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00032}00032\ \ \ \ \ TURN\_2\_CP2\ =\ 10}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00033}00033\ \ \ \ \ GO\_2\_LINE\_B4\_CP2\ =\ 11}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00034}00034\ \ \ \ \ LINE\_2\_CP2\ =\ 12}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00035}00035\ \ \ \ \ LINE\_B4\_CP3\ =\ 13}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00036}00036\ \ \ \ \ TURN\_2\_LINE\_B4\_CP3\ =\ 14}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00037}00037\ \ \ \ \ GO\_2\_LINE\_B4\_CP3\ =\ 15}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00038}00038\ \ \ \ \ TURN\_2\_CP3\ =\ 16}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00039}00039\ \ \ \ \ LINE\_2\_CP3\ =\ 17}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00040}00040\ \ \ \ \ GO\_2\_LINE\_B4\_CP4\ =\ 18}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00041}00041\ \ \ \ \ LINE\_2\_CP4\ =\ 19}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00042}00042\ \ \ \ \ TURN\_4\_GARAGE\ =\ 20}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00043}00043\ \ \ \ \ MOVE\_IN\_GARAGE\ =\ 21}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00044}00044\ \ \ \ \ TURN\_2\_GARAGE\_EXIT\ =\ 22}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00045}00045\ \ \ \ \ GO\_2\_GARAGE\_EXIT\ =\ 23}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00047}00047\ \ \ \ \ FOLLOW\_LINE\_2\_CP3\ =\ 24}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00049}00049\ \ \ \ \ \textcolor{comment}{\#\ function\ states:\ Third\ digit\ is\ the\ number\ of\ inputs\ required}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00050}00050\ \ \ \ \ \textcolor{comment}{\#\ One\ Input:\ 100-\/199}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00051}00051\ \ \ \ \ FOLLOW\_LINE\_4\_TIME\ =\ 101\ \ \textcolor{comment}{\#\ \ \ \ var1\ =\ durration\ [us]}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00052}00052\ \ \ \ \ \textcolor{comment}{\#\ Two\ Inputs:\ 200-\/299}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00053}00053\ \ \ \ \ TURN\_2\_POINT\ =\ 202\ \ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ var1\ =\ X,\ \ \ \ \ \ var2\ =\ Y}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00054}00054\ \ \ \ \ \textcolor{comment}{\#\ Three\ Inputs:\ 300-\/399}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00055}00055\ \ \ \ \ \textcolor{comment}{\#\ Four\ Inputs:\ 400-\/499}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00056}00056\ \ \ \ \ GO\_2\_POINT\ =\ 401\ \ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ \ \ var1\ =\ X,\ \ \ \ \ \ var2\ =\ Y,\ \ \ \ \ \ var3\ =\ Skip\_x,\ \ \ \ \ \ var4\ =\ Skip\_y}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00057}00057\ \ \ \ \ FOLLOW\_LINE\_2\_POINT\ =\ 402\ \ \textcolor{comment}{\#\ \ \ var1\ =\ X,\ \ \ \ \ \ var2\ =\ Y,\ \ \ \ \ \ var3\ =\ Skip\_x,\ \ \ \ \ \ var4\ =\ Skip\_y}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00059}00059\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ line\_sensor:\ LineSensor,\ IMU\_obj:\ IMU,\ bump\_sensors:\ tuple):}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ =\ PathDirector.CALIBRATE\ \ \textcolor{comment}{\#\ this\ is\ overwritten\ on\ first\ run}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a7dbcd4ad7c482c7443606c4b80b4c32e}{seg\_start\_time}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a30e92d2b75a4f921f99faaf9c0a6078a}{line\_sensor}}\ =\ line\_sensor}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00065}00065\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}\ =\ \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control}{ClosedLoopControl}}(}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ sensor=self.\mbox{\hyperlink{class_path___director_1_1_path_director_a30e92d2b75a4f921f99faaf9c0a6078a}{line\_sensor}},}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ max\_min=12,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ Kp=LineSensor.Kp,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ Ki=LineSensor.Ki,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ Kd=LineSensor.Kd,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a703b2dfeed34143247dfca2a8844d821}{IMU}}\ =\ IMU\_obj}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a130dbef9fb020bf22f7016b309091a42}{Heading\_CLC}}\ =\ \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control}{ClosedLoopControl}}(}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ sensor=self.\mbox{\hyperlink{class_path___director_1_1_path_director_a703b2dfeed34143247dfca2a8844d821}{IMU}},}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ max\_min=12,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ Kp=IMU.Kp,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ Ki=IMU.Ki,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ Kd=IMU.Kd,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}\ =\ UART(5,\ 115200)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00082}00082\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aec298fc912140a4408eec2162e9e52d5}{bumped}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Create\ bumper\ callbacks\ for\ all\ pins}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{keyword}{def\ }bmp\_callback\_handler(pin:\ Pin):}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{def\ }bumper\_callback(line):}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ pin.value()\ !=\ 0:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aec298fc912140a4408eec2162e9e52d5}{bumped}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ bumper\_callback}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00092}00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ bump\_sensor\ \textcolor{keywordflow}{in}\ bump\_sensors:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ ExtInt(bump\_sensor,\ ExtInt.IRQ\_FALLING,\ Pin.PULL\_UP,\ bmp\_callback\_handler(bump\_sensor))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00095}00095\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Extra\ variables\ used\ for\ fixed\ distance}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aaf279a0333f4cd40a90ace5ed3b03860}{distance}}\ =\ 0\ \ \textcolor{comment}{\#\ mm}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00097}00097\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aaf6be9922f61ece54421a37091476c10}{end\_point}}\ =\ 0\ \ \textcolor{comment}{\#\ mm}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00099}00099\ \ \ \ \ \textcolor{keyword}{def\ }run(}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ self,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00101}00101\ \ \ \ \ \ \ \ \ shares,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00102}00102\ \ \ \ \ ):}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00103}00103\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Seperating\ the\ shares}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ data\_transfer\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ white\_cal\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ black\_cal\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_lpos\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_rpos\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_cpos\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yaw\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yawrate\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ )\ =\ shares}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ \textcolor{keyword}{def\ }set\_state(new\_state:\ int):}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ =\ new\_state}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s.put(new\_state)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ tell\ motors\ previous\ segment\ is\ complete}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00132}00132\ \ \ \ \ \ \ \ \ set\_state(PathDirector.CALIBRATE)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00134}00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aec298fc912140a4408eec2162e9e52d5}{bumped}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aec298fc912140a4408eec2162e9e52d5}{bumped}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.WAIT)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}.gain\_update(}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Kp=LineSensor.Kp,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Ki=LineSensor.Ki,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Kd=LineSensor.Kd,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a130dbef9fb020bf22f7016b309091a42}{Heading\_CLC}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a130dbef9fb020bf22f7016b309091a42}{Heading\_CLC}}.gain\_update(}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Kp=IMU.Kp,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Ki=IMU.Ki,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Kd=IMU.Kd,}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ set\_seg\_s.get()\ !=\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(set\_seg\_s.get())}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.WAIT:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(0)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(0)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Waiting\ Segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Waiting\ Segment}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}curr\ state:\ \{self.state\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}L:\ \{obsd\_lpos\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}R:\ \{obsd\_rpos\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}C:\ \{obsd\_cpos\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}H:\ \{obsd\_yaw\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}X:\ \{obsd\_X\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}Y:\ \{obsd\_Y\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00176}00176\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.CALIBRATE:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ Segment}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Calibration\ Segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ white\_cal\_s.get()\ ==\ 1:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a30e92d2b75a4f921f99faaf9c0a6078a}{line\_sensor}}.cal\_white\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ white\_cal\_s.put(0)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ black\_cal\_s.get()\ ==\ 1:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a30e92d2b75a4f921f99faaf9c0a6078a}{line\_sensor}}.cal\_black\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ black\_cal\_s.put(0)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a30e92d2b75a4f921f99faaf9c0a6078a}{line\_sensor}}.calibrated\ \textcolor{keywordflow}{and}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a30e92d2b75a4f921f99faaf9c0a6078a}{line\_sensor}}.calibrate():}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Line\ Sensor\ Calibration\ Complete"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}.reset()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a703b2dfeed34143247dfca2a8844d821}{IMU}}.calibrated\ \textcolor{keywordflow}{and}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a703b2dfeed34143247dfca2a8844d821}{IMU}}.calibrate():}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}IMU\ Calibration\ Complete"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a30e92d2b75a4f921f99faaf9c0a6078a}{line\_sensor}}.calibrated\ \textcolor{keywordflow}{and}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a703b2dfeed34143247dfca2a8844d821}{IMU}}.calibrated:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ both\ calibrations\ complete}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ return\ back\ to\ waiting\ state}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.WAIT)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.FOLLOW\_LINE:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Line\ Following\ Segment}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:\ \ \textcolor{comment}{\#\ ran\ once\ per\ segment}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Line\ Following\ Segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00214}00214\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Linesensor\ CLC\ centroid\ reference}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}.set\_ref(0)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00223}00223\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ yaw\_rate\ =\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}.run()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\_adjust\ =\ yaw\_rate\ *\ RomiProps.wdiv2}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref\ -\/\ v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref\ +\ v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00230}00230\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.FIXED\_FORWARD:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Fixed\ Forward\ Distance\ Segment}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:\ \ \textcolor{comment}{\#\ ran\ once\ per\ segment}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Fixed\ Forward\ Distance\ Segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00239}00239\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aaf279a0333f4cd40a90ace5ed3b03860}{distance}}\ =\ 1000\ \ \textcolor{comment}{\#\ mm}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aaf6be9922f61ece54421a37091476c10}{end\_point}}\ =\ obsd\_cpos\_s.get()\ +\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aaf279a0333f4cd40a90ace5ed3b03860}{distance}}\ \ \textcolor{comment}{\#\ mm}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00242}00242\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obsd\_cpos\_s.get()\ >=\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aaf6be9922f61ece54421a37091476c10}{end\_point}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}L:\ \{obsd\_lpos\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}R:\ \{obsd\_rpos\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}C:\ \{obsd\_cpos\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}H:\ \{obsd\_yaw\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}X:\ \{obsd\_X\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}Y:\ \{obsd\_Y\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.WAIT)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.RECORD\_HEADING:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Record\ Heading\ Segment}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Record\ Heading\ Segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}obsd\_heading:\ \{obsd\_yaw\_s.get()\},\ heading:\ \{self.IMU.heading\},\ IMU\_heading:\ \{self.IMU.get\_imu\_heading()\}\(\backslash\)r\(\backslash\)n"{}}.encode(}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}utf-\/8"{}}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Start\ of\ Functions\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \#}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00272}00272\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.TURN\_2\_POINT:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Turn\ towards\ specified\ point}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ var1\ =\ X,\ var2\ =\ Y,\ var3\ =\ set\ to\ "{}target\ heading"{}}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Turn\ 2\ Point\ Segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00281}00281\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dX\ =\ PD\_vars.var\_1\ -\/\ obsd\_X\_s.get()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ PD\_vars.var\_2\ -\/\ obsd\_Y\_s.get()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00284}00284\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ atan2(dY,\ dX)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ diff\ =\ ((PD\_vars.var\_3\ -\/\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a703b2dfeed34143247dfca2a8844d821}{IMU}}.heading\ +\ pi)\ \%\ (2\ *\ pi))\ -\/\ pi}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a130dbef9fb020bf22f7016b309091a42}{Heading\_CLC}}.reset()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a130dbef9fb020bf22f7016b309091a42}{Heading\_CLC}}.set\_ref(self.\mbox{\hyperlink{class_path___director_1_1_path_director_a703b2dfeed34143247dfca2a8844d821}{IMU}}.heading\ +\ diff)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00289}00289\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ diff\ =\ ((PD\_vars.var\_3\ -\/\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a703b2dfeed34143247dfca2a8844d821}{IMU}}.heading\ +\ pi)\ \%\ (2\ *\ pi))\ -\/\ pi}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ abs(diff)\ <=\ 3\ /\ 180\ *\ pi:\ \ \textcolor{comment}{\#\ 3\ deg\ tolerance}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PD\_vars.next\_state)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ yaw\_rate\ =\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a130dbef9fb020bf22f7016b309091a42}{Heading\_CLC}}.run()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\_adjust\ =\ yaw\_rate\ *\ RomiProps.wdiv2}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(-\/v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00300}00300\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.GO\_2\_POINT:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Using\ current\ heading\ and\ position,\ move\ to\ another\ point}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ var1\ =\ X,\ var2\ =\ Y,}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ var3\ =\ "{}boolean\ for\ X\ tolerance"{}:\ True\ =\ ignore\ X\ tolerance}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ var4\ =\ "{}boolean\ for\ Y\ tolerance"{}:\ True\ =\ ignore\ Y\ tolerance}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:\ \ \textcolor{comment}{\#\ ran\ once\ per\ segment}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Go\ 2\ Point\ Segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00317}00317\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a130dbef9fb020bf22f7016b309091a42}{Heading\_CLC}}.reset()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00319}00319\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dX\ =\ PD\_vars.var\_1\ -\/\ obsd\_X\_s.get()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ PD\_vars.var\_2\ -\/\ obsd\_Y\_s.get()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00322}00322\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (PD\_vars.var\_3\ \textcolor{keywordflow}{or}\ abs(dX)\ <=\ 25)\ \textcolor{keywordflow}{and}\ (PD\_vars.var\_4\ \textcolor{keywordflow}{or}\ abs(dY)\ <=\ 25):}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}\{obsd\_X\_s.get()\},\{obsd\_Y\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ self.uart.write(f"{}\{PD\_vars.var\_3\},\{PD\_vars.var\_4\}\(\backslash\)r\(\backslash\)n"{}.encode("{}utf-\/8"{}))}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PD\_vars.next\_state)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ target\_angle\ =\ atan2(dY,\ dX)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ diff\ =\ ((target\_angle\ -\/\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a703b2dfeed34143247dfca2a8844d821}{IMU}}.heading\ +\ pi)\ \%\ (2\ *\ pi))\ -\/\ pi}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a130dbef9fb020bf22f7016b309091a42}{Heading\_CLC}}.set\_ref(self.\mbox{\hyperlink{class_path___director_1_1_path_director_a703b2dfeed34143247dfca2a8844d821}{IMU}}.heading\ +\ diff)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00331}00331\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00332}00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ yaw\_rate\ =\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a130dbef9fb020bf22f7016b309091a42}{Heading\_CLC}}.run()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00333}00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\_adjust\ =\ yaw\_rate\ *\ RomiProps.wdiv2}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00334}00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref\ -\/\ v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref\ +\ v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00338}00338\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.FOLLOW\_LINE\_4\_TIME:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Force\ Right\ Fork\ Segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a7dbcd4ad7c482c7443606c4b80b4c32e}{seg\_start\_time}}\ =\ ticks\_us()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00346}00346\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00352}00352\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ticks\_diff(ticks\_us(),\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a7dbcd4ad7c482c7443606c4b80b4c32e}{seg\_start\_time}})\ >=\ PD\_vars.var\_1:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PD\_vars.next\_state)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ yaw\_rate\ =\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}.run()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\_adjust\ =\ yaw\_rate\ *\ RomiProps.wdiv2}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref\ -\/\ v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref\ +\ v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00362}00362\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.FOLLOW\_LINE\_2\_POINT:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Force\ Right\ Fork\ Segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00369}00369\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00375}00375\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dX\ =\ PD\_vars.var\_1\ -\/\ obsd\_X\_s.get()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ PD\_vars.var\_2\ -\/\ obsd\_Y\_s.get()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00378}00378\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (PD\_vars.var\_3\ \textcolor{keywordflow}{or}\ abs(dX)\ <=\ 25)\ \textcolor{keywordflow}{and}\ (PD\_vars.var\_4\ \textcolor{keywordflow}{or}\ abs(dY)\ <=\ 25):}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PD\_vars.next\_state)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ yaw\_rate\ =\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}.run()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\_adjust\ =\ yaw\_rate\ *\ RomiProps.wdiv2}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref\ -\/\ v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref\ +\ v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ End\ of\ Functions\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \#}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00389}00389\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Start\ of\ Path\ for\ final\ course\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \#}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00391}00391\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.ST\_B4\_FOLLOW\_LINE:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Straight\ before\ following\ line\ segment}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Straight\ before\ following\ line\ segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00398}00398\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00404}00404\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aaf279a0333f4cd40a90ace5ed3b03860}{distance}}\ =\ 50\ \ \textcolor{comment}{\#\ mm}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00406}00406\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obsd\_cpos\_s.get()\ >=\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aaf279a0333f4cd40a90ace5ed3b03860}{distance}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FOLLOW\_LINE\_B4\_FORK)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00409}00409\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.FOLLOW\_LINE\_B4\_FORK:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Line\ Following\ Segment}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00412}00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00416}00416\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ FOLLOW\_LINE\_B4\_FORK\ Segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00417}00417\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Linesensor\ CLC\ centroid\ reference}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}.reset()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}.set\_ref(0)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00421}00421\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00427}00427\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obsd\_X\_s.get()\ >=\ 725:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FORCE\_RIGHT\_FORK)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ yaw\_rate\ =\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}.run()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\_adjust\ =\ yaw\_rate\ *\ RomiProps.wdiv2}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00434}00434\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref\ -\/\ v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref\ +\ v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00437}00437\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.FORCE\_RIGHT\_FORK:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Force\ Right\ Fork}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Force\ Right\ Fork\ Segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a7dbcd4ad7c482c7443606c4b80b4c32e}{seg\_start\_time}}\ =\ ticks\_us()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00446}00446\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00449}00449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref\ +\ 150)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00450}00450\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00451}00451\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00452}00452\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00453}00453\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ticks\_diff(ticks\_us(),\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a7dbcd4ad7c482c7443606c4b80b4c32e}{seg\_start\_time}})\ >=\ 500\_000:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.LINE\_FOLLOW\_2\_DIAMOND)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00455}00455\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.LINE\_FOLLOW\_2\_DIAMOND:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Line\ Follow\ to\ Diamond}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a78d8a595eb92b096a182ae3d3fbaa8dd}{segment\_set}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00460}00460\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00461}00461\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Line\ Following\ 2\ Diamond\ Segment"{}})}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00463}00463\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Linesensor\ CLC\ centroid\ reference}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}.reset()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}.set\_ref(0)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00467}00467\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00470}00470\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00471}00471\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00473}00473\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (obsd\_X\_s.get()\ >=\ 900\ \textcolor{keywordflow}{and}\ obsd\_Y\_s.get()\ <=\ 600)\ \textcolor{keywordflow}{or}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_a703b2dfeed34143247dfca2a8844d821}{IMU}}.heading\ <=\ -\/pi\ /\ 2\ +\ 0.1:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}X\_LF2D:\ \{obsd\_X\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}Y\_LF2D:\ \{obsd\_Y\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af641f141eaa7b77e44604f38b9e3fbc3}{uart}}.write(f\textcolor{stringliteral}{"{}H\_LF2D:\ \{obsd\_yaw\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00478}00478\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.DIAMOND\_2\_CP1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00479}00479\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ yaw\_rate\ =\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_aa1becd4e09212e138cf283373e9350f7}{Line\_CLC}}.run()}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\_adjust\ =\ yaw\_rate\ *\ RomiProps.wdiv2}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00482}00482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref\ -\/\ v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00484}00484\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref\ +\ v\_adjust)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00486}00486\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00487}00487\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.DIAMOND\_2\_CP1:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00488}00488\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 950}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00489}00489\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 425}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.TURN\_2\_CP2}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00494}00494\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.TURN\_2\_CP2:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 1300}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 675}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.TURN\_2\_POINT)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.GO\_2\_LINE\_B4\_CP2}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00500}00500\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.GO\_2\_LINE\_B4\_CP2:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00502}00502\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s.put(950)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s.put(425)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 1300}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 675}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00509}00509\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.LINE\_2\_CP2}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00510}00510\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.LINE\_2\_CP2:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 800\_000}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FOLLOW\_LINE\_4\_TIME)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ -\/\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~-\/\ Choose\ to\ Skip\ CUP\ or\ not\ -\/\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~\string~-\/}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00515}00515\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.FOLLOW\_LINE\_2\_CP3\ \ \textcolor{comment}{\#\ Skip\ CUP}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ PD\_vars.next\_state\ =\ PathDirector.LINE\_B4\_CP3\ \ \#\ Don't\ Skip\ CUP}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00517}00517\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.FOLLOW\_LINE\_2\_CP3:\ \ \textcolor{comment}{\#\ Skip\ CUP}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s.put(1400)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s.put(800)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 1500}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 100}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FOLLOW\_LINE\_2\_POINT)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.WAIT}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00527}00527\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ PD\_vars.next\_state\ =\ PathDirector.GO\_2\_LINE\_B4\_CP4\ \ \#\ End\ Skip\ CUP}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00528}00528\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00529}00529\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.LINE\_B4\_CP3:\ \textcolor{comment}{\#\ Don't\ Skip\ CUP}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s.put(1400)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00531}00531\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s.put(800)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 400\_000}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00533}00533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FOLLOW\_LINE\_4\_TIME)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00534}00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.TURN\_2\_LINE\_B4\_CP3}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00535}00535\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.TURN\_2\_LINE\_B4\_CP3:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 1500}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 100}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.TURN\_2\_POINT)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.GO\_2\_LINE\_B4\_CP3}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00541}00541\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.GO\_2\_LINE\_B4\_CP3:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 1500}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 100}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00546}00546\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00548}00548\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.TURN\_2\_CP3}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00549}00549\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00550}00550\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.TURN\_2\_CP3:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00551}00551\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 1050}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00552}00552\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 100}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00553}00553\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.TURN\_2\_POINT)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00554}00554\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.LINE\_2\_CP3}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00555}00555\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00556}00556\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.LINE\_2\_CP3:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00557}00557\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 600\_000}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00558}00558\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FOLLOW\_LINE\_4\_TIME)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00559}00559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.WAIT\ \ \textcolor{comment}{\#\ End\ Don't\ Skip\ CUP}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00560}00560\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00561}00561\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.GO\_2\_LINE\_B4\_CP4:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00562}00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 1050}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00563}00563\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 100}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00565}00565\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00566}00566\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ PD\_vars.next\_state\ =\ PathDirector.LINE\_2\_CP4}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00568}00568\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.WAIT}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00569}00569\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00570}00570\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}\ ==\ PathDirector.LINE\_2\_CP4:}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 800\_000}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00572}00572\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FOLLOW\_LINE\_4\_TIME)}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00573}00573\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.WAIT}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00574}00574\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00575}00575\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ End\ of\ Path\ for\ final\ course\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \#}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00576}00576\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{yield}\ self.\mbox{\hyperlink{class_path___director_1_1_path_director_af481d0928617cc17206886b62041c869}{state}}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00577}00577\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00578}00578\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00579}00579\ \textcolor{comment}{\#\ TURN\_ANGLE\ =\ 101\ \ \#\ \ \ \ \ \ \ \ \ \ \ \ var1\ =\ angle,\ \ var2\ =\ -\/-\/-\/-\/-\/,\ var3\ =\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00580}00580\ \textcolor{comment}{\#\ elif\ self.state\ ==\ PathDirector.TURN\_ANGLE:}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00581}00581\ \textcolor{comment}{\#\ \ \ \ \ \#\ Turn\ In\ Place\ Segment}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00582}00582\ \textcolor{comment}{\#\ \ \ \ \ \#\ var1\ =\ angle\ [deg],\ var2\ =\ -\/-\/-\/-\/,\ var3\ =\ -\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00583}00583\ \textcolor{comment}{\#\ \ \ \ \ if\ not\ self.segment\_set:\ \ \#\ ran\ once\ per\ segment}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00584}00584\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ self.segment\_set\ =\ True}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00585}00585\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00586}00586\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00587}00587\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ seg\_start\_s.put(2)}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00588}00588\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ print("{}Turn\ Angle\ Segment"{})}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00589}00589\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00590}00590\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \#\ degrees\ to\ rads}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00591}00591\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ PD\_vars.var\_1\ *\ pi\ /\ 180\ \ \#\ radians\ to\ turn}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00592}00592\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ self.IMU.heading\ +\ PD\_vars.var\_1\ \ \#\ new\ desired\ heading}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00593}00593\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00594}00594\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \#\ Set\ IMU\ heading}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00595}00595\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ self.Heading\_CLC.set\_ref(PD\_vars.var\_2)}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00596}00596\ }
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00597}00597\ \textcolor{comment}{\#\ \ \ \ \ if\ abs(self.IMU.heading\ -\/\ PD\_vars.var\_2)\ <=\ 3\ /\ 180\ *\ pi:\ \ \#\ 3\ deg\ tolerance}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00598}00598\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ set\_state(PD\_vars.next\_state)}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00599}00599\ \textcolor{comment}{\#\ \ \ \ \ else:}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00600}00600\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ yaw\_rate\ =\ self.Heading\_CLC.run()}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00601}00601\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ v\_adjust\ =\ yaw\_rate\ *\ RomiProps.wdiv2}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00602}00602\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00603}00603\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref\ -\/\ v\_adjust)}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00604}00604\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}}
+\DoxyCodeLine{\Hypertarget{_path___director_8py_source_l00605}00605\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref\ +\ v\_adjust)}}
+
+\end{DoxyCode}

@@ -1,0 +1,36 @@
+\doxysection{Lab Final/\+Files On Romi/\+Closed\+\_\+\+Loop\+\_\+\+Control.py File Reference}
+\hypertarget{_closed___loop___control_8py}{}\label{_closed___loop___control_8py}\index{Lab Final/Files On Romi/Closed\_Loop\_Control.py@{Lab Final/Files On Romi/Closed\_Loop\_Control.py}}
+
+
+This file implements a generic closed-\/loop controller used for motor or mechanism speed/position control on the Romi robot.  
+
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control}{Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control}}
+\begin{DoxyCompactList}\small\item\em A class implementing a closed-\/loop control algorithm. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file implements a generic closed-\/loop controller used for motor or mechanism speed/position control on the Romi robot. 
+
+It supports P, PI, PD, PID, feed-\/forward, anti-\/windup, battery droop compensation, and soft-\/start reference ramping.
+
+The controller takes in a sensor object (providing {\ttfamily get\+\_\+data()} and {\ttfamily dt}), and optionally a battery object for dynamic gain adjustment under voltage droop conditions.
+
+\begin{DoxyAuthor}{Author}
+Antonio Ventimiglia 
+
+Caiden Bonney 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2025-\/Dec-\/11 
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+GPLv3 
+\end{DoxyCopyright}
+
+
+Definition in file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+

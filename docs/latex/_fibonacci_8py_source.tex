@@ -1,0 +1,122 @@
+\doxysection{Fibonacci.\+py}
+\hypertarget{_fibonacci_8py_source}{}\label{_fibonacci_8py_source}\index{Homework/Caiden\textquotesingle{}s Homework/Homework 0x01 -\/ Practicing with Generators/Fibonacci.py@{Homework/Caiden\textquotesingle{}s Homework/Homework 0x01 -\/ Practicing with Generators/Fibonacci.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00001}00001\ \textcolor{keyword}{import}\ time,\ sys}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00004}00004\ \textcolor{comment}{\#\ Part\ 1\ -\/\ Fibonacci\ sequence\ generator}}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00005}00005\ \textcolor{keyword}{def\ }fibonacci(n):}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00006}00006\ \ \ \ \ \textcolor{keywordflow}{if}\ type(n)\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ int:}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00007}00007\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ TypeError(f\textcolor{stringliteral}{"{}Input,\ \{n\}\ (\{type(n)\}),\ input\ must\ be\ \{type(0)\}."{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00008}00008\ \ \ \ \ \textcolor{keywordflow}{if}\ n\ <\ 0:}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00009}00009\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(f\textcolor{stringliteral}{"{}Input,\ \{n\},\ must\ be\ a\ positive\ integer."{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00011}00011\ \ \ \ \ a,\ b\ =\ 0,\ 1}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00012}00012\ \ \ \ \ \textcolor{keywordflow}{for}\ \_\ \textcolor{keywordflow}{in}\ range(n):}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00013}00013\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{yield}\ a}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ a,\ b\ =\ b,\ a\ +\ b}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00017}00017\ \textcolor{comment}{\#\ Part\ 2\ Testing\ the\ Fibonacci\ generator}}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00018}00018\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00019}00019\ \ \ \ \ print(\textcolor{stringliteral}{"{}Testing\ Type\ Error\ with\ string\ input:"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00020}00020\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ next(fibonacci(\textcolor{stringliteral}{"{}10"{}}))}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{except}\ TypeError\ \textcolor{keyword}{as}\ te:}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}TypeError:\ \{te\}\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00025}00025\ \ \ \ \ print(\textcolor{stringliteral}{"{}Testing\ Type\ Error\ with\ float\ input:"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00026}00026\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ next(fibonacci(1.0))}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{except}\ TypeError\ \textcolor{keyword}{as}\ te:}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}TypeError:\ \{te\}\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00031}00031\ \ \ \ \ print(\textcolor{stringliteral}{"{}Testing\ Value\ Error\ with\ negative\ input:"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00032}00032\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ next(fibonacci(-\/5))}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00034}00034\ \ \ \ \ \textcolor{keywordflow}{except}\ ValueError\ \textcolor{keyword}{as}\ ve:}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}ValueError:\ \{ve\}\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00037}00037\ \ \ \ \ \textcolor{comment}{\#\ Testing\ the\ generator\ with\ valid\ inputs}}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00038}00038\ \ \ \ \ print(\textcolor{stringliteral}{"{}Fibonacci\ sequence\ for\ 0\ terms:"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{for}\ num\ \textcolor{keywordflow}{in}\ fibonacci(0):}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ print(num)}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00041}00041\ \ \ \ \ print()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00043}00043\ \ \ \ \ print(\textcolor{stringliteral}{"{}Fibonacci\ sequence\ for\ 1\ term:"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00044}00044\ \ \ \ \ \textcolor{keywordflow}{for}\ num\ \textcolor{keywordflow}{in}\ fibonacci(1):}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ print(num)}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00046}00046\ \ \ \ \ print()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00048}00048\ \ \ \ \ print(\textcolor{stringliteral}{"{}Fibonacci\ sequence\ for\ 10\ terms:"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00049}00049\ \ \ \ \ \textcolor{keywordflow}{for}\ num\ \textcolor{keywordflow}{in}\ fibonacci(10):}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ print(num)}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00051}00051\ \ \ \ \ print()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00053}00053\ \ \ \ \ \textcolor{comment}{\#\ Set\ limit\ to\ handle\ large\ integers\ for\ part\ 3's\ commented\ print\ statements\ (Exact\ needed:\ 20790)}}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00054}00054\ \ \ \ \ sys.set\_int\_max\_str\_digits(21000)}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00056}00056\ \ \ \ \ \textcolor{comment}{\#\ Part\ 3\ -\/\ Add\ every\ third\ number\ in\ the\ Fibonacci\ sequence}}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00057}00057\ \ \ \ \ print(\textcolor{stringliteral}{"{}Sum\ of\ every\ third\ Fibonacci\ number\ for\ 100\ terms:"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00058}00058\ \ \ \ \ time\_start\ =\ time.perf\_counter\_ns()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00059}00059\ \ \ \ \ sum\_every\_third\_100\ =\ int(0)}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00060}00060\ \ \ \ \ \textcolor{keywordflow}{for}\ num\ \textcolor{keywordflow}{in}\ fibonacci(100):}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ num\ \%\ 3\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ sum\_every\_third\_100\ +=\ num}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00063}00063\ \ \ \ \ time\_end\ =\ time.perf\_counter\_ns()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00064}00064\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Sum:\ \{sum\_every\_third\_100\}"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00065}00065\ \ \ \ \ time\_diff\ =\ time\_end\ -\/\ time\_start}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00066}00066\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Elapsed\ time:\ \{time\_diff/1\_000\_000\_000\}\ seconds"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00067}00067\ \ \ \ \ print()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00069}00069\ \ \ \ \ print(\textcolor{stringliteral}{"{}Sum\ of\ every\ third\ Fibonacci\ number\ for\ 100,000\ terms:"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00070}00070\ \ \ \ \ time\_start\ =\ time.perf\_counter\_ns()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00071}00071\ \ \ \ \ sum\_every\_third\ =\ int(0)}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{for}\ num\ \textcolor{keywordflow}{in}\ fibonacci(100\_000):}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ num\ \%\ 3\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ sum\_every\_third\ +=\ num}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00075}00075\ \ \ \ \ time\_end\ =\ time.perf\_counter\_ns()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00076}00076\ \ \ \ \ print(\textcolor{stringliteral}{"{}Sum\ for\ 100,000\ terms\ is\ very\ large.\ Uncomment\ print\ statement\ in\ code\ to\ see\ it."{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00077}00077\ \ \ \ \ \textcolor{comment}{\#\ print(f"{}Sum:\ \{sum\_every\_third\}"{})\ \ \#\ Uncomment\ to\ see\ the\ sum}}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00078}00078\ \ \ \ \ time\_diff\ =\ time\_end\ -\/\ time\_start}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00079}00079\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Elapsed\ time:\ \{time\_diff/1\_000\_000\_000\}\ seconds"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00080}00080\ \ \ \ \ print()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00082}00082\ \ \ \ \ print(\textcolor{stringliteral}{"{}*********************************************"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00083}00083\ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ Part\ 3\ Extra\ Credit\ -\/\ Without\ using\ loops\ \ "{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00084}00084\ \ \ \ \ print(\textcolor{stringliteral}{"{}*********************************************\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00086}00086\ \ \ \ \ \textcolor{comment}{\#\ Extra\ Credit\ -\/\ Add\ every\ third\ number\ in\ the\ Fibonacci\ sequence\ without\ using\ loops}}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00087}00087\ \ \ \ \ print(\textcolor{stringliteral}{"{}Sum\ of\ every\ third\ Fibonacci\ number\ \ for\ 100\ terms\ without\ loops:"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00088}00088\ \ \ \ \ time\_start\ =\ time.perf\_counter\_ns()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00089}00089\ \ \ \ \ sum\_every\_third\_no\_loop\_100\ =\ sum(filter(\textcolor{keyword}{lambda}\ x:\ x\ \%\ 3\ ==\ 0,\ fibonacci(100)))}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00090}00090\ \ \ \ \ time\_end\ =\ time.perf\_counter\_ns()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00091}00091\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Sum:\ \{sum\_every\_third\_no\_loop\_100\}"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00092}00092\ \ \ \ \ time\_diff\ =\ time\_end\ -\/\ time\_start}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00093}00093\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Elapsed\ time:\ \{time\_diff/1\_000\_000\_000\}\ seconds"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00094}00094\ \ \ \ \ print()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00096}00096\ \ \ \ \ \textcolor{comment}{\#\ Extra\ Credit\ -\/\ Add\ every\ third\ number\ in\ the\ Fibonacci\ sequence\ without\ using\ loops}}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00097}00097\ \ \ \ \ print(\textcolor{stringliteral}{"{}Sum\ of\ every\ third\ Fibonacci\ number\ \ for\ 100,000\ terms\ without\ loops:"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00098}00098\ \ \ \ \ time\_start\ =\ time.perf\_counter\_ns()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00099}00099\ \ \ \ \ sum\_every\_third\_no\_loop\ =\ sum(filter(\textcolor{keyword}{lambda}\ x:\ x\ \%\ 3\ ==\ 0,\ fibonacci(100\_000)))}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00100}00100\ \ \ \ \ time\_end\ =\ time.perf\_counter\_ns()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00101}00101\ \ \ \ \ print(\textcolor{stringliteral}{"{}Sum\ for\ 100,000\ terms\ is\ very\ large.\ Uncomment\ print\ statement\ in\ code\ to\ see\ it."{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00102}00102\ \ \ \ \ \textcolor{comment}{\#\ print(f"{}Sum:\ \{sum\_every\_third\_no\_loop\}"{})\ \ \#\ Uncomment\ to\ see\ the\ sum}}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00103}00103\ \ \ \ \ time\_diff\ =\ time\_end\ -\/\ time\_start}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00104}00104\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Elapsed\ time:\ \{time\_diff/1\_000\_000\_000\}\ seconds"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00105}00105\ \ \ \ \ print()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00107}00107\ \ \ \ \ print(\textcolor{stringliteral}{"{}Verifying\ both\ methods\ yield\ the\ same\ result\ for\ 100\ terms:"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00108}00108\ \ \ \ \ print(sum\_every\_third\_100\ ==\ sum\_every\_third\_no\_loop\_100)}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00109}00109\ \ \ \ \ print()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00111}00111\ \ \ \ \ print(\textcolor{stringliteral}{"{}Verifying\ both\ methods\ yield\ the\ same\ result\ for\ 100,000\ terms:"{}})}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00112}00112\ \ \ \ \ print(sum\_every\_third\ ==\ sum\_every\_third\_no\_loop)}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00113}00113\ \ \ \ \ print()}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00115}00115\ \ \ \ \ \textcolor{comment}{\#\ Reset\ to\ default\ max\ str\ digits}}
+\DoxyCodeLine{\Hypertarget{_fibonacci_8py_source_l00116}00116\ \ \ \ \ sys.set\_int\_max\_str\_digits(sys.int\_info.default\_max\_str\_digits)}
+
+\end{DoxyCode}

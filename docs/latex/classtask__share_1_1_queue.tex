@@ -1,0 +1,441 @@
+\doxysection{task\+\_\+share.\+Queue Class Reference}
+\hypertarget{classtask__share_1_1_queue}{}\label{classtask__share_1_1_queue}\index{task\_share.Queue@{task\_share.Queue}}
+
+
+A queue which is used to transfer data from one task to another.  
+
+
+Inheritance diagram for task\+\_\+share.\+Queue\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtask__share_1_1_queue}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtask__share_1_1_queue_a74a2bf942ef1d70302551900c16af635}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, type\+\_\+code, size, thread\+\_\+protect=False, overwrite=False, name=None)
+\begin{DoxyCompactList}\small\item\em Initialize a queue object to carry and buffer data between tasks. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtask__share_1_1_queue_a0611b4838abb13731d1d487a8178b883}{put}} (self, item, in\+\_\+\+ISR=False)
+\begin{DoxyCompactList}\small\item\em Put an item into the queue. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtask__share_1_1_queue_a6fec4a9775651c30a4c6de357eb701fc}{get}} (self, in\+\_\+\+ISR=False)
+\begin{DoxyCompactList}\small\item\em Read an item from the queue. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtask__share_1_1_queue_ac9552672266377c23011552e9df15a63}{any}} (self)
+\begin{DoxyCompactList}\small\item\em Check if there are any items in the queue. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtask__share_1_1_queue_afee296230d2346df88ffb4b2b22208f3}{empty}} (self)
+\begin{DoxyCompactList}\small\item\em Check if the queue is empty. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtask__share_1_1_queue_a72be18f8267b2977117eedf15ad896c8}{full}} (self)
+\begin{DoxyCompactList}\small\item\em Check if the queue is full. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtask__share_1_1_queue_aef595fc4133d297e2b63014c47ac5f27}{num\+\_\+in}} (self)
+\begin{DoxyCompactList}\small\item\em Check how many items are in the queue. \end{DoxyCompactList}\item 
+\Hypertarget{classtask__share_1_1_queue_a0d4b70d239eb7244ff3b7e54d4a4981e}\label{classtask__share_1_1_queue_a0d4b70d239eb7244ff3b7e54d4a4981e} 
+{\bfseries clear} (self)
+\begin{DoxyCompactList}\small\item\em Remove all contents from the queue. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtask__share_1_1_queue_a7b9626a0859625dbcf6d964b8b5c7761}{\+\_\+\+\_\+repr\+\_\+\+\_\+}} (self)
+\begin{DoxyCompactList}\small\item\em This method puts diagnostic information about the queue into a string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classtask__share_1_1_base_share}{task\+\_\+share.\+Base\+Share}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtask__share_1_1_base_share_ad8079b40800179be6c58aaac9abb0e26}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, type\+\_\+code, thread\+\_\+protect=True, name=None)
+\begin{DoxyCompactList}\small\item\em Create a base queue object when called by a child class initializer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classtask__share_1_1_queue_a6f9d87b116eb16dba0867d3746af9f5f}\label{classtask__share_1_1_queue_a6f9d87b116eb16dba0867d3746af9f5f} 
+int {\bfseries ser\+\_\+num} = 0
+\begin{DoxyCompactList}\small\item\em A counter used to give serial numbers to queues for diagnostic use. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A queue which is used to transfer data from one task to another. 
+
+If parameter \textquotesingle{}thread\+\_\+protect\textquotesingle{} is {\ttfamily True} when a queue is created, transfers of data will be protected from corruption in the case that one task might interrupt another due to use in a pre-\/emptive multithreading environment or due to one task being run as an interrupt service routine.
+
+An example of the creation and use of a queue is as follows\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{import}\ task\_share}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ This\ queue\ holds\ unsigned\ short\ (16-\/bit)\ integers}}
+\DoxyCodeLine{my\_queue\ =\ \mbox{\hyperlink{classtask__share_1_1_queue}{task\_share.Queue}}\ (\textcolor{stringliteral}{'H'},\ 100,\ name=\textcolor{stringliteral}{"{}My\ Queue"{}})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ Somewhere\ in\ one\ task,\ put\ data\ into\ the\ queue}}
+\DoxyCodeLine{my\_queue.put\ (some\_data)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#\ In\ another\ task,\ read\ data\ from\ the\ queue}}
+\DoxyCodeLine{something\ =\ my\_queue.get\ ()}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{task__share_8py_source_l00098}{98}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{classtask__share_1_1_queue_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classtask__share_1_1_queue_a74a2bf942ef1d70302551900c16af635}\index{task\_share.Queue@{task\_share.Queue}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!task\_share.Queue@{task\_share.Queue}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classtask__share_1_1_queue_a74a2bf942ef1d70302551900c16af635} 
+task\+\_\+share.\+Queue.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{type\+\_\+code}{, }\item[{}]{size}{, }\item[{}]{thread\+\_\+protect}{ = {\ttfamily False}, }\item[{}]{overwrite}{ = {\ttfamily False}, }\item[{}]{name}{ = {\ttfamily None}}\end{DoxyParamCaption})}
+
+
+
+Initialize a queue object to carry and buffer data between tasks. 
+
+This method sets up a queue by allocating memory for the contents and setting up the components in an empty configuration.
+
+Each queue can only carry data of one particular type which must be chosen from the following list. The data type is specified by a one-\/letter type code which is given as for the Python {\ttfamily array.\+array} type, which can be any of the following\+: 
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{bg=\tableheadbgcolor,font=\bfseries}&\SetCell{bg=\tableheadbgcolor,font=\bfseries}&\SetCell{bg=\tableheadbgcolor,font=\bfseries}\\
+{\bfseries{b}} (signed char)  &{\bfseries{B}} (unsigned char)  &8 bit integers  \\
+{\bfseries{h}} (signed short)  &{\bfseries{H}} (unsigned short)  &16 bit integers  \\
+{\bfseries{i}} (signed int)  &{\bfseries{I}} (unsigned int)  &32 bit integers (probably)  \\
+{\bfseries{l}} (signed long)  &{\bfseries{L}} (unsigned long)  &32 bit integers  \\
+{\bfseries{q}} (signed long long)  &{\bfseries{Q}} (unsigned long long)  &64 bit integers  \\
+{\bfseries{f}} (float)  &{\bfseries{d}} (double-\/precision float)  &\\
+\end{DoxyTable}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em type\+\_\+code} & The type of data items which the queue can hold \\
+\hline
+{\em size} & The maximum number of items which the queue can hold \\
+\hline
+{\em thread\+\_\+protect} & {\ttfamily True} if mutual exclusion protection is used \\
+\hline
+{\em overwrite} & If {\ttfamily True}, oldest data will be overwritten with new data if the queue becomes full \\
+\hline
+{\em name} & A short name for the queue, default {\ttfamily QueueN} where {\ttfamily N} is a serial number for the queue \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{task__share_8py_source_l00128}{128}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ type\_code,\ size,\ thread\_protect=False,\ overwrite=False,\ name=None):}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ First\ call\ the\ parent\ class\ initializer}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ super().\_\_init\_\_(type\_code,\ thread\_protect,\ name)}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ self.\_size\ =\ size}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ self.\_overwrite\ =\ overwrite}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ self.\_name\ =\ str(name)\ \textcolor{keywordflow}{if}\ name\ !=\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}Queue"{}}\ +\ str(Queue.ser\_num)}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ Queue.ser\_num\ +=\ 1}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Allocate\ memory\ in\ which\ the\ queue's\ data\ will\ be\ stored}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_buffer\ =\ array.array(type\_code,\ range(size))}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ MemoryError:}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_buffer\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ ValueError:}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_buffer\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Initialize\ pointers\ to\ be\ used\ for\ reading\ and\ writing\ data}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ self.clear()}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Since\ we\ may\ have\ allocated\ a\ bunch\ of\ memory,\ call\ the\ garbage}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ collector\ to\ neaten\ up\ what\ memory\ is\ left\ for\ future\ use}}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ gc.collect()}
+\DoxyCodeLine{00153\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{task__share_8py_source_l00128}{\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{task__share_8py_source_l00139}{\+\_\+buffer}}, \mbox{\hyperlink{task__share_8py_source_l00134}{\+\_\+name}}, \mbox{\hyperlink{task__share_8py_source_l00133}{\+\_\+overwrite}}, \mbox{\hyperlink{task__share_8py_source_l00132}{\+\_\+size}}, and \mbox{\hyperlink{task__share_8py_source_l00285}{clear()}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classtask__share_1_1_queue_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classtask__share_1_1_queue_a7b9626a0859625dbcf6d964b8b5c7761}\index{task\_share.Queue@{task\_share.Queue}!\_\_repr\_\_@{\_\_repr\_\_}}
+\index{\_\_repr\_\_@{\_\_repr\_\_}!task\_share.Queue@{task\_share.Queue}}
+\doxysubsubsection{\texorpdfstring{\_\_repr\_\_()}{\_\_repr\_\_()}}
+{\footnotesize\ttfamily \label{classtask__share_1_1_queue_a7b9626a0859625dbcf6d964b8b5c7761} 
+task\+\_\+share.\+Queue.\+\_\+\+\_\+repr\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+This method puts diagnostic information about the queue into a string. 
+
+It shows the queue\textquotesingle{}s name and type as well as the maximum number of items and queue size. 
+
+Definition at line \mbox{\hyperlink{task__share_8py_source_l00295}{295}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keyword}{def\ }\_\_repr\_\_(self):}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}\{:<12s\}\ Queue<\{:s\}>\ Max\ Full\ \{:d\}/\{:d\}"{}}.format(}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_name,\ type\_code\_strings[self.\_type\_code],\ self.\_max\_full,\ self.\_size}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \textcolor{comment}{\#\ ============================================================================}}
+\DoxyCodeLine{00302\ }
+\DoxyCodeLine{00303\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{task__share_8py_source_l00197}{\+\_\+max\+\_\+full}}, \mbox{\hyperlink{task__share_8py_source_l00134}{\+\_\+name}}, \mbox{\hyperlink{task__share_8py_source_l00132}{\+\_\+size}}, and \mbox{\hyperlink{task__share_8py_source_l00070}{task\+\_\+share.\+Base\+Share.\+\_\+type\+\_\+code}}.
+
+\Hypertarget{classtask__share_1_1_queue_ac9552672266377c23011552e9df15a63}\index{task\_share.Queue@{task\_share.Queue}!any@{any}}
+\index{any@{any}!task\_share.Queue@{task\_share.Queue}}
+\doxysubsubsection{\texorpdfstring{any()}{any()}}
+{\footnotesize\ttfamily \label{classtask__share_1_1_queue_ac9552672266377c23011552e9df15a63} 
+task\+\_\+share.\+Queue.\+any (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Check if there are any items in the queue. 
+
+Returns {\ttfamily True} if there are any items in the queue and {\ttfamily False} if the queue is empty. \begin{DoxyReturn}{Returns}
+{\ttfamily True} if items are in the queue, {\ttfamily False} if not 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{task__share_8py_source_l00254}{254}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{keyword}{def\ }any(self):}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\_num\_items\ >\ 0}
+\DoxyCodeLine{00256\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{task__share_8py_source_l00196}{\+\_\+num\+\_\+items}}.
+
+\Hypertarget{classtask__share_1_1_queue_afee296230d2346df88ffb4b2b22208f3}\index{task\_share.Queue@{task\_share.Queue}!empty@{empty}}
+\index{empty@{empty}!task\_share.Queue@{task\_share.Queue}}
+\doxysubsubsection{\texorpdfstring{empty()}{empty()}}
+{\footnotesize\ttfamily \label{classtask__share_1_1_queue_afee296230d2346df88ffb4b2b22208f3} 
+task\+\_\+share.\+Queue.\+empty (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Check if the queue is empty. 
+
+Returns {\ttfamily True} if there are no items in the queue and {\ttfamily False} if there are any items therein. \begin{DoxyReturn}{Returns}
+{\ttfamily True} if queue is empty, {\ttfamily False} if it\textquotesingle{}s not empty 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{task__share_8py_source_l00263}{263}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00263\ \ \ \ \ \textcolor{keyword}{def\ }empty(self):}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\_num\_items\ <=\ 0}
+\DoxyCodeLine{00265\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{task__share_8py_source_l00196}{\+\_\+num\+\_\+items}}.
+
+\Hypertarget{classtask__share_1_1_queue_a72be18f8267b2977117eedf15ad896c8}\index{task\_share.Queue@{task\_share.Queue}!full@{full}}
+\index{full@{full}!task\_share.Queue@{task\_share.Queue}}
+\doxysubsubsection{\texorpdfstring{full()}{full()}}
+{\footnotesize\ttfamily \label{classtask__share_1_1_queue_a72be18f8267b2977117eedf15ad896c8} 
+task\+\_\+share.\+Queue.\+full (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Check if the queue is full. 
+
+This method returns {\ttfamily True} if the queue is already full and there is no room for more data without overwriting existing data. \begin{DoxyReturn}{Returns}
+{\ttfamily True} if the queue is full 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{task__share_8py_source_l00272}{272}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00272\ \ \ \ \ \textcolor{keyword}{def\ }full(self):}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\_num\_items\ >=\ self.\_size}
+\DoxyCodeLine{00274\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{task__share_8py_source_l00196}{\+\_\+num\+\_\+items}}, and \mbox{\hyperlink{task__share_8py_source_l00132}{\+\_\+size}}.
+
+\Hypertarget{classtask__share_1_1_queue_a6fec4a9775651c30a4c6de357eb701fc}\index{task\_share.Queue@{task\_share.Queue}!get@{get}}
+\index{get@{get}!task\_share.Queue@{task\_share.Queue}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \label{classtask__share_1_1_queue_a6fec4a9775651c30a4c6de357eb701fc} 
+task\+\_\+share.\+Queue.\+get (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{in\+\_\+\+ISR}{ = {\ttfamily False}}\end{DoxyParamCaption})}
+
+
+
+Read an item from the queue. 
+
+If there isn\textquotesingle{}t anything in there, wait (blocking the calling process) until something becomes available. If non-\/blocking reads are needed, one should call {\ttfamily \doxylink{classtask__share_1_1_queue_ac9552672266377c23011552e9df15a63}{any()}} to check for items before attempting to read from the queue. This is usually done in a low priority task\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{def\ }some\_task\ ():}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{\#\ Setup}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ my\_queue.any\ ():}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ something\ =\ my\_queue.get\ ()}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ do\_something\_with\ (something)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{\#\ More\ loop\ stuff}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{yield}\ 0}
+
+\end{DoxyCode}
+ 
+\begin{DoxyParams}{Parameters}
+{\em in\+\_\+\+ISR} & Set this to {\ttfamily True} if calling from within an ISR \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{task__share_8py_source_l00222}{222}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keyword}{def\ }get(self,\ in\_ISR=False):}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Wait\ until\ there's\ something\ in\ the\ queue\ to\ be\ returned}}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ self.empty():}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Prevent\ data\ corruption\ by\ blocking\ interrupts\ during\ data\ transfer}}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ irq\_state\ =\ pyb.disable\_irq()}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Get\ the\ item\ to\ be\ returned\ from\ the\ queue}}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ to\_return\ =\ self.\_buffer[self.\_rd\_idx]}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Move\ the\ read\ pointer\ and\ adjust\ the\ number\ of\ items\ in\ the\ queue}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ self.\_rd\_idx\ +=\ 1}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_rd\_idx\ >=\ self.\_size:}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_rd\_idx\ =\ 0}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ self.\_num\_items\ -\/=\ 1}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_num\_items\ <\ 0:}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_num\_items\ =\ 0}
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts}}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(irq\_state)}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ to\_return}
+\DoxyCodeLine{00247\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{task__share_8py_source_l00139}{\+\_\+buffer}}, \mbox{\hyperlink{task__share_8py_source_l00196}{\+\_\+num\+\_\+items}}, \mbox{\hyperlink{task__share_8py_source_l00237}{\+\_\+rd\+\_\+idx}}, \mbox{\hyperlink{task__share_8py_source_l00132}{\+\_\+size}}, \mbox{\hyperlink{task__share_8py_source_l00071}{task\+\_\+share.\+Base\+Share.\+\_\+thread\+\_\+protect}}, and \mbox{\hyperlink{task__share_8py_source_l00263}{empty()}}.
+
+\Hypertarget{classtask__share_1_1_queue_aef595fc4133d297e2b63014c47ac5f27}\index{task\_share.Queue@{task\_share.Queue}!num\_in@{num\_in}}
+\index{num\_in@{num\_in}!task\_share.Queue@{task\_share.Queue}}
+\doxysubsubsection{\texorpdfstring{num\_in()}{num\_in()}}
+{\footnotesize\ttfamily \label{classtask__share_1_1_queue_aef595fc4133d297e2b63014c47ac5f27} 
+task\+\_\+share.\+Queue.\+num\+\_\+in (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Check how many items are in the queue. 
+
+This method returns the number of items which are currently in the queue. \begin{DoxyReturn}{Returns}
+The number of items in the queue 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{task__share_8py_source_l00281}{281}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keyword}{def\ }num\_in(self):}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\_num\_items}
+\DoxyCodeLine{00283\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{task__share_8py_source_l00196}{\+\_\+num\+\_\+items}}.
+
+\Hypertarget{classtask__share_1_1_queue_a0611b4838abb13731d1d487a8178b883}\index{task\_share.Queue@{task\_share.Queue}!put@{put}}
+\index{put@{put}!task\_share.Queue@{task\_share.Queue}}
+\doxysubsubsection{\texorpdfstring{put()}{put()}}
+{\footnotesize\ttfamily \label{classtask__share_1_1_queue_a0611b4838abb13731d1d487a8178b883} 
+task\+\_\+share.\+Queue.\+put (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{item}{, }\item[{}]{in\+\_\+\+ISR}{ = {\ttfamily False}}\end{DoxyParamCaption})}
+
+
+
+Put an item into the queue. 
+
+If there isn\textquotesingle{}t room for the item, wait (blocking the calling process) until room becomes available, unless the {\ttfamily overwrite} constructor parameter was set to {\ttfamily True} to allow old data to be clobbered. If non-\/blocking behavior without overwriting is needed, one should call {\ttfamily \doxylink{classtask__share_1_1_queue_a72be18f8267b2977117eedf15ad896c8}{full()}} to ensure that the queue is not full before putting data into it\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{def\ }some\_task\ ():}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{\#\ Setup}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ my\_queue.full\ ():}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ my\_queue.put\ (create\_something\_to\_put\ ())}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{yield}\ 0}
+
+\end{DoxyCode}
+ 
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to be placed into the queue \\
+\hline
+{\em in\+\_\+\+ISR} & Set this to {\ttfamily True} if calling from within an ISR \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{task__share_8py_source_l00173}{173}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keyword}{def\ }put(self,\ item,\ in\_ISR=False):}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ we're\ in\ an\ ISR\ and\ the\ queue\ is\ full\ and\ we're\ not\ allowed\ to}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ overwrite\ data,\ we\ have\ to\ give\ up\ and\ exit}}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.full():}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ in\_ISR:}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Wait\ (if\ needed)\ until\ there's\ room\ in\ the\ buffer\ for\ the\ data}}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\_overwrite:}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ self.full():}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Prevent\ data\ corruption\ by\ blocking\ interrupts\ during\ data\ transfer}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \_irq\_state\ =\ pyb.disable\_irq()}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Write\ the\ data\ and\ advance\ the\ counts\ and\ pointers}}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ self.\_buffer[self.\_wr\_idx]\ =\ item}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ self.\_wr\_idx\ +=\ 1}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_wr\_idx\ >=\ self.\_size:}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_wr\_idx\ =\ 0}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ self.\_num\_items\ +=\ 1}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_num\_items\ >=\ self.\_size:\ \ \textcolor{comment}{\#\ Can't\ be\ fuller\ than\ full}}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_num\_items\ =\ self.\_size}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_num\_items\ >\ self.\_max\_full:\ \ \textcolor{comment}{\#\ Record\ maximum\ fillage}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_max\_full\ =\ self.\_num\_items}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts}}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(\_irq\_state)}
+\DoxyCodeLine{00203\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{task__share_8py_source_l00139}{\+\_\+buffer}}, \mbox{\hyperlink{task__share_8py_source_l00197}{\+\_\+max\+\_\+full}}, \mbox{\hyperlink{task__share_8py_source_l00196}{\+\_\+num\+\_\+items}}, \mbox{\hyperlink{task__share_8py_source_l00133}{\+\_\+overwrite}}, \mbox{\hyperlink{task__share_8py_source_l00132}{\+\_\+size}}, \mbox{\hyperlink{task__share_8py_source_l00071}{task\+\_\+share.\+Base\+Share.\+\_\+thread\+\_\+protect}}, \mbox{\hyperlink{task__share_8py_source_l00193}{\+\_\+wr\+\_\+idx}}, and \mbox{\hyperlink{task__share_8py_source_l00272}{full()}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Lab Final/\+Files On Romi/\mbox{\hyperlink{task__share_8py}{task\+\_\+share.\+py}}\end{DoxyCompactItemize}

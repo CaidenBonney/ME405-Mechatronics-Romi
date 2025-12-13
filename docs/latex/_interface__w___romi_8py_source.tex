@@ -1,0 +1,109 @@
+\doxysection{Interface\+\_\+w\+\_\+\+Romi.\+py}
+\hypertarget{_interface__w___romi_8py_source}{}\label{_interface__w___romi_8py_source}\index{Lab Final/Interface\_w\_Romi.py@{Lab Final/Interface\_w\_Romi.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00001}00001\ \textcolor{keyword}{import}\ csv}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00002}00002\ \textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00003}00003\ \textcolor{keyword}{from}\ pathlib\ \textcolor{keyword}{import}\ Path}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00004}00004\ \textcolor{keyword}{from}\ time\ \textcolor{keyword}{import}\ sleep}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00005}00005\ \textcolor{keyword}{from}\ serial\ \textcolor{keyword}{import}\ Serial}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00007}00007\ RESULTS\_DIR\ =\ Path(\_\_file\_\_).resolve().parent\ /\ \textcolor{stringliteral}{"{}Results"{}}}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00008}00008\ DEFAULT\_PORT\ =\ \textcolor{stringliteral}{"{}/dev/cu.mecha16"{}}}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00011}00011\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacemain}{main}}()\ -\/>\ None:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00012}00012\ \ \ \ \ RESULTS\_DIR.mkdir(parents=\textcolor{keyword}{True},\ exist\_ok=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00013}00013\ \ \ \ \ log\_num\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00014}00014\ \ \ \ \ line\ =\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00015}00015\ \ \ \ \ port\ =\ sys.argv[1]\ \textcolor{keywordflow}{if}\ len(sys.argv)\ >\ 1\ \textcolor{keywordflow}{else}\ DEFAULT\_PORT}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00017}00017\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Opening\ \{port\}\ …\ (Ctrl-\/C\ or\ 'q'+Enter\ to\ quit)"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{with}\ Serial(port,\ 115200,\ timeout=0.1)\ \textcolor{keyword}{as}\ ser:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Opening\ Bluetooth\ connection"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ sleep(0.5)}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Flushing\ Bluetooth\ buffer"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ser.in\_waiting:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ ser.read()}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Waiting\ for\ data..."{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keywordflow}{not}\ ser.in\_waiting:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ sleep(0.05)}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ test\_num\ =\ input(\textcolor{stringliteral}{"{}What\ test\ would\ you\ like\ to\ run?\ Options\ are\ 0-\/9.\(\backslash\)nPress\ q\ to\ Quit.\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ test\_num.lower()\ ==\ \textcolor{stringliteral}{"{}q"{}}:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}p"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{"{}i"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{"{}o"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{"{}k"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{"{}l"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{"{}h"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{"{}j"{}}\ \textcolor{keywordflow}{in}\ test\_num.lower()}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ):}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(test\_num[1:])\ !=\ 5:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(test\_num[1:])\ >\ 5:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Input\ too\ long,\ truncating\ to\ 5\ characters"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ test\_num\ =\ test\_num[:6]}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Input\ too\ short,\ padding\ with\ zeros"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ test\_num\ =\ test\_num[0]\ +\ test\_num[1:].rjust(5,\ \textcolor{stringliteral}{"{}0"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Sending\ \{test\_num\}"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ser.write(test\_num.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ num\_line\_skipped\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ser.in\_waiting:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line\ =\ ser.readline().decode(\textcolor{stringliteral}{"{}utf-\/8"{}},\ \textcolor{stringliteral}{"{}ignore"{}}).strip()}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{"{}Test\ Data\ Transfer\ Complete"{}}\ \textcolor{keywordflow}{in}\ line:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Invalid\ data\ line\ skipped:\ \{line\}"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ num\_line\_skipped\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ num\_line\_skipped\ <\ 2:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keywordflow}{not}\ ser.in\_waiting:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sleep(0.05)}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ser.write(test\_num.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ log\_path\ =\ RESULTS\_DIR\ /\ f\textcolor{stringliteral}{"{}log\{test\_num\}.csv"{}}}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ log\_path.open(\textcolor{stringliteral}{"{}w"{}},\ newline=\textcolor{stringliteral}{"{}"{}})\ \textcolor{keyword}{as}\ csv\_file:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writer\ =\ csv.writer(csv\_file)}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ header\ =\ ser.readline().decode(\textcolor{stringliteral}{"{}utf-\/8"{}},\ \textcolor{stringliteral}{"{}ignore"{}}).strip().split(\textcolor{stringliteral}{"{},"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(header)\ !=\ 6:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Unexpected\ header:\ \{header\}"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writer.writerow(header)}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ser.in\_waiting:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line\ =\ ser.readline().decode(\textcolor{stringliteral}{"{}utf-\/8"{}},\ \textcolor{stringliteral}{"{}ignore"{}}).strip()}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{"{}Test\ Data\ Transfer\ Complete"{}}\ \textcolor{keywordflow}{in}\ line:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parts\ =\ line.split(\textcolor{stringliteral}{"{},"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(parts)\ !=\ 6:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Invalid\ data\ line\ skipped:\ \{line\}"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writer.writerow([float(val)\ \textcolor{keywordflow}{for}\ val\ \textcolor{keywordflow}{in}\ parts])}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ ValueError:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Non-\/numeric\ data\ skipped:\ \{line\}"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Test\ \{test\_num\}\ data\ collection\ complete"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}CSV\ saved\ to\ \{log\_path.name\}"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ log\_num\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ KeyboardInterrupt:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Keyboard\ interrupted"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ser.write(b\textcolor{stringliteral}{"{}c"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ ser.write(b\textcolor{stringliteral}{"{}c"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00099}00099\ \ \ \ \ print(\textcolor{stringliteral}{"{}Bluetooth\ connection\ closed"{}})}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00102}00102\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{_interface__w___romi_8py_source_l00103}00103\ \ \ \ \ \mbox{\hyperlink{namespacemain}{main}}()}
+
+\end{DoxyCode}

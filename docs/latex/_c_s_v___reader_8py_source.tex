@@ -1,0 +1,80 @@
+\doxysection{CSV\+\_\+\+Reader.\+py}
+\hypertarget{_c_s_v___reader_8py_source}{}\label{_c_s_v___reader_8py_source}\index{Homework/Caiden\textquotesingle{}s Homework/Homework 0x00 -\/ Reading CSV Files and Using matplotlib/CSV\_Reader.py@{Homework/Caiden\textquotesingle{}s Homework/Homework 0x00 -\/ Reading CSV Files and Using matplotlib/CSV\_Reader.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00001}00001\ \textcolor{keyword}{from}\ matplotlib\ \textcolor{keyword}{import}\ pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00003}00003\ \textcolor{comment}{\#\ Function\ definition}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00004}00004\ \textcolor{keyword}{def\ }reject(reason,\ linenum,\ line):}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00005}00005\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Line\ \{linenum\}\ rejected\ due\ to\ \{reason\}:\ \{line\}"{}})}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00007}00007\ \textcolor{comment}{\#\ Variable\ initialization}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00008}00008\ file\_name\ =\ \textcolor{stringliteral}{"{}data.csv"{}}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00009}00009\ col\_number\ =\ []}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00010}00010\ column1\ =\ []}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00011}00011\ column2\ =\ []}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00012}00012\ first\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00014}00014\ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00015}00015\ \ \ \ \ \textcolor{comment}{\#\ Open\ the\ file\ in\ read\ mode}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00016}00016\ \ \ \ \ \textcolor{keyword}{with}\ open(file\_name,\ \textcolor{stringliteral}{'r'})\ \textcolor{keyword}{as}\ f:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ content\ =\ [l.strip()\ \textcolor{keywordflow}{for}\ l\ \textcolor{keywordflow}{in}\ f.read().splitlines()]}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{for}\ linenum,\ line\ \textcolor{keywordflow}{in}\ enumerate(content,\ start=1):}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Skip\ empty\ lines}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ line:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ reject(\textcolor{stringliteral}{"{}empty\ line"{}},\ linenum,\ line)}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Skip\ full-\/line\ comments}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ line[0]\ ==\ \textcolor{stringliteral}{'\#'}:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reject(\textcolor{stringliteral}{"{}full-\/line\ comment"{}},\ linenum,\ line)}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Remove\ in-\/line\ comments}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line\_no\_comments\ =\ line.split(\textcolor{stringliteral}{'\#'})[0]}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Split\ lines\ at\ comma\ and\ strip\ whitespace}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ splitline\ =\ [s.strip()\ \textcolor{keywordflow}{for}\ s\ \textcolor{keywordflow}{in}\ line\_no\_comments.split(\textcolor{stringliteral}{','})]}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Line\ only\ valid\ if\ containing\ at\ least\ two\ entries}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(splitline)\ <\ 2:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reject(\textcolor{stringliteral}{"{}not\ enough\ entries"{}},\ linenum,\ line)}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ First\ valid\ line\ is\ header}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ first:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ column1\_header\ =\ splitline[0]}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ column2\_header\ =\ splitline[1]}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Convert\ first\ 2\ entries\ to\ floats\ and\ add\ to\ respective\ columns}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ entry1\ =\ float(splitline[0])}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ entry2\ =\ float(splitline[1])}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ col\_number.append(linenum)\ \#\ line\ number\ also\ added\ for\ debugging\ if\ needed}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ column1.append(entry1)}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ column2.append(entry2)}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ ValueError:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reject(\textcolor{stringliteral}{"{}invalid\ value\ type"{}},\ linenum,\ line)}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00053}00053\ \textcolor{keywordflow}{except}\ FileNotFoundError:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00054}00054\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Error:\ The\ file\ \{file\_name\}\ could\ not\ be\ found."{}})}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00055}00055\ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00056}00056\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Error:\ \{e\}"{}})}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00058}00058\ \textcolor{comment}{\#\ Plot\ data\ if\ available}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00059}00059\ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ (column1\ \textcolor{keywordflow}{and}\ column2):}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00060}00060\ \ \ \ \ print(\textcolor{stringliteral}{"{}No\ valid\ data\ to\ plot."{}})}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00061}00061\ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00062}00062\ \ \ \ \ plt.plot(column1,\ column2,\ label=column2\_header)}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00063}00063\ \ \ \ \ plt.title(f\textcolor{stringliteral}{"{}\{column2\_header\}\ vs.\ \{column1\_header\}"{}})}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00064}00064\ \ \ \ \ plt.xlabel(column1\_header)}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00065}00065\ \ \ \ \ plt.ylabel(column2\_header)}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00066}00066\ \ \ \ \ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00067}00067\ \ \ \ \ \textcolor{comment}{\#\ plt.legend()}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00068}00068\ \ \ \ \ \textcolor{comment}{\#\ plt.grid()}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00070}00070\ \ \ \ \ \textcolor{comment}{\#\ Save\ plot\ as\ image}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00071}00071\ \ \ \ \ \textcolor{comment}{\#\ plt.savefig("{}data.png"{})\ \#\ Comment\ or\ uncomment\ to\ save\ plot\ as\ png}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00073}00073\ \ \ \ \ \textcolor{comment}{\#\ Display\ the\ plot}}
+\DoxyCodeLine{\Hypertarget{_c_s_v___reader_8py_source_l00074}00074\ \ \ \ \ plt.show()}
+
+\end{DoxyCode}

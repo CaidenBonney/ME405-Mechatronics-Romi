@@ -1,0 +1,181 @@
+\chapter{ME405 Mechatronics Romi }
+\hypertarget{index}{}\label{index}\index{ME405 Mechatronics Romi@{ME405 Mechatronics Romi}}
+\hypertarget{index_autotoc_md0}{}\doxysection{\texorpdfstring{Project Overview}{Project Overview}}\label{index_autotoc_md0}
+The Romi project is part of California Polytechnic State University San Luis Obispo\textquotesingle{}s Mechanical Engineering Course ME405 Mechatronics. The project entails the design and implementation of a robotic vehicle named Romi, which is a two-\/wheeled robot constructed from component sourced from Pololu Robotics and Electronics.
+
+Romi’s objective is to traverse a predefined course with speed and precision, using integrated sensor feedback and actuator control. The course is defined by a series of waypoints, and Romi must navigate from one waypoint to the next following the class-\/defined rules. The robot\textquotesingle{}s sensors include a line sensor made from several infrared (IR) sensors, bumps sensors to detect wall collisions, an inertial measurement unit (IMU) to measure orientation with resepct to Earth\textquotesingle{}s magnetic north, and a quadrature encoder to measure the angular displacement of each wheel. Using information from these sensors, a State Observer is constructed to estimate the robot\textquotesingle{}s current state, which importantly includes its current global position and orientation. Utilizing the Observer\textquotesingle{}s estimations, the robot follows a path director and explores the course in order to reach the next waypoint.
+
+\hypertarget{index_autotoc_md1}{}\doxysection{\texorpdfstring{Final Romi Performance}{Final Romi Performance}}\label{index_autotoc_md1}
+HES not GIGA AS FUCK BOI -\/-\/---\hypertarget{index_autotoc_md2}{}\doxysection{\texorpdfstring{Hardware}{Hardware}}\label{index_autotoc_md2}
+\hypertarget{index_autotoc_md3}{}\doxysubsection{\texorpdfstring{Chassis and Boards}{Chassis and Boards}}\label{index_autotoc_md3}
+\hypertarget{index_autotoc_md4}{}\doxysubsubsection{\texorpdfstring{Romi Chassis}{Romi Chassis}}\label{index_autotoc_md4}
+-\/-\/---Words-\/-\/---\hypertarget{index_autotoc_md5}{}\doxysubsubsection{\texorpdfstring{Power Distribution Board}{Power Distribution Board}}\label{index_autotoc_md5}
+-\/-\/---Words-\/-\/---\hypertarget{index_autotoc_md6}{}\doxysubsubsection{\texorpdfstring{Shoe of Brain}{Shoe of Brain}}\label{index_autotoc_md6}
+-\/-\/---Words-\/-\/---\hypertarget{index_autotoc_md7}{}\doxysubsubsection{\texorpdfstring{Nucleo Board}{Nucleo Board}}\label{index_autotoc_md7}
+-\/-\/---Words-\/-\/---\hypertarget{index_autotoc_md8}{}\doxysubsection{\texorpdfstring{Motor}{Motor}}\label{index_autotoc_md8}
+Both wheels are driven by a Texas Instruments DRV8833 low-\/voltage H-\/bridge motor driver. Each motor shaft is equipped with an encoder (discussed below) and coupled to a gearbox that provides a 119.\+7576\+:1 reduction between the motor shaft and the wheel.
+
+
+
+The motors follow the logic table below for its three input pins\+: n\+SLEEP, PH, and EN. n\+SLEEP acts as an on/off switch, PH acts as a direction switch, and EN acts as a drive/brake switch which is manipulated via pulse width modulation (PWM).
+
+\hypertarget{index_autotoc_md9}{}\doxysubsection{\texorpdfstring{Quadrature Incremental Encoder}{Quadrature Incremental Encoder}}\label{index_autotoc_md9}
+Each motor shaft is instrumented with a quadrature incremental encoder that measures the shaft’s angular displacement. These encoders employ two Hall-\/effect sensors that detect changes in the magnetic field produced by rotating permanent magnets. The corresponding magnet geometry and representative encoder waveform are shown below. The encoders used on the Romi utilize the same three pole-\/pair magnet configuration illustrated.
+
+
+
+By capturing the number of encoder ticks that occur across a measured time interval, the average angular velocity each shaft can be calculated. Utilizing this information in conjunction with the motor\textquotesingle{}s gear ratio and wheel radii, the linear velocity of each wheel can be calculated. These linear velocities are used to both close loop control Romi\textquotesingle{}s behavior and to estimate its current state.\hypertarget{index_autotoc_md10}{}\doxysubsection{\texorpdfstring{Line Sensor}{Line Sensor}}\label{index_autotoc_md10}
+In order to follow the 1/2 inch black lines on the course, Romi utilizes Pololu\textquotesingle{}s line sensor composed of 13 infrared (IR) sensors. The line sensor if -\/-\/---\hypertarget{index_autotoc_md11}{}\doxysubsubsection{\texorpdfstring{Mounting}{Mounting}}\label{index_autotoc_md11}
+-\/-\/---Words-\/-\/---\hypertarget{index_autotoc_md12}{}\doxysubsection{\texorpdfstring{IMU}{IMU}}\label{index_autotoc_md12}
+-\/-\/---Words-\/-\/---\hypertarget{index_autotoc_md13}{}\doxysection{\texorpdfstring{Algorithms}{Algorithms}}\label{index_autotoc_md13}
+The following sections describe the algorithms and code architectures utilized to facilitate Romi\textquotesingle{}s complex and intricate behaviors.\hypertarget{index_autotoc_md14}{}\doxysubsection{\texorpdfstring{Multitasking Architecture}{Multitasking Architecture}}\label{index_autotoc_md14}
+To achieve rapid and precise motion control, Romi requires a robust and efficient software architecture capable of executing a wide range of complex behaviors within short time intervals. Romi utilizes a priority-\/based, round-\/robin multitasking framework that enables effective multitasking on its single-\/core microprocessor. The architecture is created in {\ttfamily \doxylink{cotask_8py}{cotask.\+py}} and instantiated in {\ttfamily \doxylink{main_8py_source}{main.\+py}}.
+
+Within this framework, the system is organized into discrete tasks ({\ttfamily \doxylink{classcotask_1_1_task}{cotask.\+Task}}), each characterized by a specified {\ttfamily period} and {\ttfamily priority}. The {\ttfamily period} defines the desired interval, in milliseconds, between successive executions of a task’s {\ttfamily run()} method. In practice, certain computationally intensive algorithms may prevent tasks from executing exactly at their designated periods. Under such circumstances, a task is executed as soon as it becomes the highest-\/priority task awaiting processor time. Consequently, higher-\/priority tasks always preempt lower-\/priority tasks when multiple tasks are ready to run simultaneously. If two tasks of equal priority are queued to run, then, in accordance with round-\/robin scheduling, the task that has been awaiting execution for the longer duration is dispatched first.
+
+As mentioned above, each task has a {\ttfamily run()} method that is responsible for performing its specific behavior. If it is desired to communicate information between tasks, a task can use {\ttfamily \doxylink{task__share_8py}{task\+\_\+share.\+py}\textquotesingle{}s} {\ttfamily \doxylink{classtask__share_1_1_share}{task\+\_\+share.\+Share}} or {\ttfamily \doxylink{classtask__share_1_1_queue}{task\+\_\+share.\+Queue}} objects. These objects are used to transfer data between tasks with protection against data corruption by interrupts, among other features.\hypertarget{index_autotoc_md15}{}\doxysubsubsection{\texorpdfstring{Task Diagram}{Task Diagram}}\label{index_autotoc_md15}
+Below is a diagram of each {\ttfamily \doxylink{classcotask_1_1_task}{cotask.\+Task}} in Romi\textquotesingle{}s system. The {\ttfamily period} and {\ttfamily priority} of each task is specified as well as each {\ttfamily \doxylink{classtask__share_1_1_share}{task\+\_\+share.\+Share}} and {\ttfamily \doxylink{classtask__share_1_1_queue}{task\+\_\+share.\+Queue}} that it uses.
+
+\hypertarget{index_autotoc_md16}{}\doxysubsubsection{\texorpdfstring{User Input}{User Input}}\label{index_autotoc_md16}
+The user input ({\ttfamily \doxylink{_user___input_8py_source}{User\+\_\+\+Input.\+py}}) task is responsible for receiving commands from the user and actualizing them into physical outputs. User input processes the single character commmands from both the USB and Bluetooth interfaces into values that are placed in shares. Those shares then trigger other tasks to perform their respective functions.
+
+\hypertarget{index_autotoc_md17}{}\doxysubsection{\texorpdfstring{Path Director}{Path Director}}\label{index_autotoc_md17}
+With the control tools described above, the remaining requirement for Romi is a structured framework to govern its overall motion. The path director ({\ttfamily \doxylink{_path___director_8py_source}{Path\+\_\+\+Director.\+py}}) fulfills this role by planning and coordinating Romi’s actions throughout the course. Implemented as a state machine, each state corresponds to a distinct behavioral mode, while additional function states provide generalized control capabilities that accept variable inputs. This design enables compact, modular code and facilitates targeted testing of individual behaviors without restarting an entire course run. As the top-\/level supervisory controller, the path director manages all aspects of Romi’s navigation and ensures coherent execution of its course-\/traversal strategy.
+
+\hypertarget{index_autotoc_md18}{}\doxysubsubsection{\texorpdfstring{Motor Controller}{Motor Controller}}\label{index_autotoc_md18}
+The motor controller ({\ttfamily \doxylink{_motor___controller_8py_source}{Motor\+\_\+\+Controller.\+py}}) task is responsible for controlling Romi\textquotesingle{}s motors. The motor controller task has the responsibility of determining what the motor should be doing based off the shares and queues passed into it. Every time it is ran, it runs one iteration of the closed loop control law and then updates the effort requested of the motors.
+
+\hypertarget{index_autotoc_md19}{}\doxysubsection{\texorpdfstring{State Observer}{State Observer}}\label{index_autotoc_md19}
+Using the data from Romi\textquotesingle{}s sensors, the state observer ({\ttfamily \doxylink{_observer_8py_source}{Observer.\+py}}) estimates Romi’s current state such that behavioral decisions can be made based on Romi’s current position and orientation. To obtain state estimation, two approaches were considered\+: the fourth-\/order Runge-\/\+Kutta solver or descretizing Romi’s state space. The Runge-\/\+Kutta method was not chosen since it was determined that the frequency at which it would have to run would impose too significant of a computational load on the Romi\textquotesingle{}s multitasking system. Instead, Romi’s state space was discretized using control theory techniques and Matlab’s {\ttfamily c2d()} functionality. Further elaboration on the discretization process can be found in the Analysis section.
+
+\hypertarget{index_autotoc_md20}{}\doxysubsubsection{\texorpdfstring{Garbage Collector}{Garbage Collector}}\label{index_autotoc_md20}
+The garbage collector ({\ttfamily \doxylink{_garbage___collector_8py_source}{Garbage\+\_\+\+Collector.\+py}}) task is responsible for managing Romi\textquotesingle{}s memory. Upon each iteration of the garbage collector, the task garbage collects and removes any memory that is no longer in use.
+
+\hypertarget{index_autotoc_md21}{}\doxysubsection{\texorpdfstring{Closed Loop Control}{Closed Loop Control}}\label{index_autotoc_md21}
+Romi’s motion accuracy relies heavily on the versatile and robust closed loop controller implemented in {\ttfamily \doxylink{_closed___loop___control_8py}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}. This controller provides a unified framework for regulating motor speed or heading and supports a wide range of classical control features, making it adaptable to all dynamic behaviors required by the robot.\hypertarget{index_autotoc_md22}{}\doxysubsubsection{\texorpdfstring{PID Control\+:}{PID Control\+:}}\label{index_autotoc_md22}
+At its core, the controller computes actuating commands by continually comparing some reference input, $ r $, to the measured output, $ \hat{x} $, provided by any sensor object provided. Each sensor supplies both a measurement and a corresponding time increment ( $ dt $), allowing the controller to compute proportional, integral, and derivative error terms. These components form the basis of standard P, PI, PD, and PID control. In addition to these standard terms, the controller incorporates several enhancements that improve reliability under real-\/world operating conditions\+:\hypertarget{index_autotoc_md23}{}\doxysubsubsection{\texorpdfstring{Feed-\/\+Forward Control\+:}{Feed-\/\+Forward Control\+:}}\label{index_autotoc_md23}
+A feed-\/forward term scales the commanded reference input directly, improving response time and reducing the burden on feedback terms, particularly during rapid accelerations or when executing pre-\/planned maneuvers.\hypertarget{index_autotoc_md24}{}\doxysubsubsection{\texorpdfstring{Anti-\/\+Windup Compensation\+:}{Anti-\/\+Windup Compensation\+:}}\label{index_autotoc_md24}
+When actuator commands saturate—such as when the controller demands more torque than the motors can provide—the integral term can accumulate excessively and degrade stability. The controller mitigates this through an anti-\/windup mechanism that automatically adjusts the integral term whenever saturation occurs, preserving steady-\/state accuracy without overshoot.\hypertarget{index_autotoc_md25}{}\doxysubsubsection{\texorpdfstring{Battery Droop Compensation\+:}{Battery Droop Compensation\+:}}\label{index_autotoc_md25}
+Battery voltage naturally decreases during operation, affecting motor torque and responsiveness. When provided with a battery-\/monitoring object, the controller dynamically adjusts its gains to maintain consistent performance despite changes in supply voltage.\hypertarget{index_autotoc_md26}{}\doxysubsubsection{\texorpdfstring{Soft-\/\+Start Reference Ramping\+:}{Soft-\/\+Start Reference Ramping\+:}}\label{index_autotoc_md26}
+To prevent sudden jerks or torque spikes, the controller gradually ramps its internal reference toward the commanded setpoint. This soft-\/start feature improves mechanical safety, reduces wheel slip, and enhances tracking smoothness during abrupt transitions.\hypertarget{index_autotoc_md27}{}\doxysubsubsection{\texorpdfstring{Output Saturation\+:}{Output Saturation\+:}}\label{index_autotoc_md27}
+After computing all relevant components, the controller generates a preliminary actuator command ( $ a $), applies the appropriate saturation constraints, and thereby produces the final output ( $ a^* $). This finalized command is then returned and utilized within one of three closed-\/loop control modalities\+: velocity CLC, line centroid CLC, or heading CLC.\hypertarget{index_autotoc_md28}{}\doxysubsubsection{\texorpdfstring{Velocity CLC\+:}{Velocity CLC\+:}}\label{index_autotoc_md28}
+As per the code structure, each {\ttfamily \doxylink{_motor_8py_source}{Motor.\+py}} is handled by a {\ttfamily \doxylink{_motor___controller_8py_source}{Motor\+\_\+\+Controller.\+py}} task. Whenever the motor controller requests a motor to move at a given speed, the desired velocity is passed to the velocity CLC. Upon the scheduled execution of the Motor Controller task, the velocity CLC computes the new motor effort to be applied such that the desired velocity is reached/maintained.\hypertarget{index_autotoc_md29}{}\doxysubsubsection{\texorpdfstring{Line Centroid CLC\+:}{Line Centroid CLC\+:}}\label{index_autotoc_md29}
+To enable reliable line following, Romi determines the centroid of the detected black region using the line sensor module ({\ttfamily \doxylink{_line___sensor_8py_source}{Line\+\_\+\+Sensor.\+py}}). Because the control objective is to maintain Romi’s geometric center directly over the course line, the closed-\/loop controller’s reference value is fixed at zero. By supplying the measured centroid to $ \hat{x} $, the line-\/centroid CLC computes the appropriate yaw rate required to realign the robot with the line. This commanded yaw rate is subsequently translated into differential motor actuation, producing the necessary increase and decrease in wheel velocities to achieve accurate line tracking.\hypertarget{index_autotoc_md30}{}\doxysubsubsection{\texorpdfstring{Heading CLC\+:}{Heading CLC\+:}}\label{index_autotoc_md30}
+The heading CLC is designed for use in conjunction with an IMU object ({\ttfamily \doxylink{_i_m_u_8py_source}{IMU.\+py}}). When Romi is required to navigate toward a target that is not located on the black course lines, it must first orient itself toward the desired heading and subsequently maintain that orientation as it moves and undergoes natural drift. The heading CLC computes the yaw rate necessary for Romi to achieve and sustain the specified heading. This commanded yaw rate is then converted into differential motor actuation, providing the appropriate adjustments in wheel velocities to ensure stable and accurate heading control throughout the maneuver.
+
+ -\/-\/---CLOSED LOOP CONTROL DIAGRAM HERE-\/-\/---  \hypertarget{index_autotoc_md31}{}\doxysection{\texorpdfstring{Key Analyses and Validations}{Key Analyses and Validations}}\label{index_autotoc_md31}
+The following sections provide some of the key analyses of Romi’s dynamics and performance characteristics. These analyses are intended to provide a comprehensive understanding of Romi’s behavior and to facilitate the development of future improvements.\hypertarget{index_autotoc_md32}{}\doxysubsection{\texorpdfstring{Closed Loop Control Gain Tuning}{Closed Loop Control Gain Tuning}}\label{index_autotoc_md32}
+The closed-\/loop controller for Romi’s drive motors was developed using an incremental gain-\/tuning process in which controller complexity was expanded stepwise and evaluated experimentally. The tuning sequence progressed through proportional (P), proportional–integral (PI), and proportional–integral–derivative (PID) structures, followed by the integration of feed-\/forward compensation and battery-\/voltage droop correction. All controller gains were adjustable in real time through the host computer interface, and all experimental plots were generated automatically. The following discussion summarizes the left-\/wheel results, with qualitative agreement across both wheels.\hypertarget{index_autotoc_md33}{}\doxysubsubsection{\texorpdfstring{P Controller}{P Controller}}\label{index_autotoc_md33}
+Initial testing began with a purely proportional controller. With a relatively high proportional gain, Romi exhibited pronounced oscillatory “jittering,” characterized by rapid forward–backward motion about the reference value.
+
+
+
+The oscillation resulted from overly aggressive corrective action, causing repeated overshoot of the target velocity. The proportional gain was iteratively reduced until the oscillations were eliminated.
+
+\hypertarget{index_autotoc_md34}{}\doxysubsubsection{\texorpdfstring{PI Controller}{PI Controller}}\label{index_autotoc_md34}
+After stabilizing the proportional controller, an integral term was introduced to eliminate steady-\/state error. The initial integral gain produced a stable response with no overshoot—an indication that the selected gain was likely too small to minimize convergence time.
+
+
+
+The integral gain was gradually increased to identify an upper bound beyond which overshoot became unacceptable.
+
+
+
+A gain between these two extremes was selected through iterative testing, yielding minimal overshoot and improved settling behavior.
+
+\hypertarget{index_autotoc_md35}{}\doxysubsubsection{\texorpdfstring{PID Controller}{PID Controller}}\label{index_autotoc_md35}
+With the PI controller tuned, a derivative term was introduced. The initial derivative gain caused unstable, jitter-\/like oscillations similar to those observed with an overly large proportional gain.
+
+
+
+Significant reductions in derivative gain were attempted\+:
+
+ 
+
+However, due to the presence of high-\/frequency noise in Romi’s sensor data, derivative action consistently amplified this noise and degraded performance. Consequently, derivative control was deemed unsuitable and removed from all further controller configurations.\hypertarget{index_autotoc_md36}{}\doxysubsubsection{\texorpdfstring{PI Controller with Feed-\/\+Forward Compensation}{PI Controller with Feed-\/\+Forward Compensation}}\label{index_autotoc_md36}
+Since PID control was abandoned, the next enhancement involved adding a feed-\/forward term to the existing PI structure. Unlike earlier gains, the feed-\/forward gain K\textsubscript{ff} was computed analytically. Steady-\/state velocity data was used to generate linear curve fits of wheel velocity versus PWM input.
+
+
+
+The slopes of these fits yielded steady-\/state gains, and their inverses provided the appropriate feed-\/forward gains for each motor. The x-\/intercepts of the fits were used to estimate the minimum PWM values needed to initiate motion,PWM\textsubscript{start}, producing the feed-\/forward relations\+:
+
+\[PWM = K_{ff}*v + PWM_{start}
+\]
+
+The feed-\/forward controller was tested with PI control\+:
+
+
+
+Performance with feed-\/forward alone was notably accurate and feed forward tuning was concluded\hypertarget{index_autotoc_md37}{}\doxysubsubsection{\texorpdfstring{PI + Feed-\/\+Forward + Battery Droop Compensation}{PI + Feed-\/\+Forward + Battery Droop Compensation}}\label{index_autotoc_md37}
+Lastly, to improve robustness against battery discharge, a voltage droop compensation term was incorporated. As battery voltage decreases, motor steady-\/state gains diminish, causing unintended reductions in wheel velocity. To counteract this, the commanded PWM was scaled according to\+:
+
+\[PWM_{\text{scaled}} = PWM \left(\frac{V_{\text{full}}}{V_{\text{measured}}}\right)
+\]
+
+This battery-\/droop compensation has minimal influence during most of Romi’s operation, as the supply voltage remains relatively stable throughout the majority of the battery’s useful life. However, as the battery approaches depletion, the scaling factor becomes increasingly significant. Experimental observations indicate that the rate at which Romi attains its commanded velocity remains effectively unchanged despite substantial voltage droop, providing qualitative confirmation of the compensation scheme’s effectiveness.\hypertarget{index_autotoc_md38}{}\doxysubsection{\texorpdfstring{Romi Dynamics}{Romi Dynamics}}\label{index_autotoc_md38}
+To adequately understand how Romi would behave, a dynamic analysis was performed. To define variables, the space in which Romi exists in was defined as seen below
+
+
+
+
+
+The state of Romi was determined to be constituted of of six variables\+: global X position, global Y position, global heading, centroid displacement (like an odometer), angular velocity of the left wheel, and angular velocity of the right wheel. Using this state breakdown, Romi’s dynamics were analyzed using the following equations\+:
+
+
+
+
+
+\hypertarget{index_autotoc_md39}{}\doxysubsection{\texorpdfstring{State Observer}{State Observer}}\label{index_autotoc_md39}
+To implement Romi’s observer in discrete time, the continuous-\/time system model was first defined using the continuous matrices 𝐴, 𝐵, 𝐶, and 𝐷 obtained from the dynamics above. These matrices depend on measured physical parameters such as wheel radius, 𝑟, and track width, {\ttfamily w}. Although nominal values were initially used, subsequent measurements indicated small deviations; therefore, an updated wheel radius value was substituted into all system equations to improve model accuracy.\hypertarget{index_autotoc_md40}{}\doxysubsubsection{\texorpdfstring{Selecting Observer Dynamics and Constructing the Continuous Model}{Selecting Observer Dynamics and Constructing the Continuous Model}}\label{index_autotoc_md40}
+Because the observer is a fourth-\/order system, four desired eigenvalues were required for the observer error dynamics. Two eigenvalues were selected as a complex conjugate pair corresponding to a second-\/order system designed to achieve a target overshoot percentage and settling time. The remaining two eigenvalues were chosen as real poles placed far to the left in the complex plane to ensure rapid decay of the associated modes. This yields a dominant second-\/order estimation response while maintaining full-\/order stability.
+
+Using the classical second-\/order relationships\+:
+
+\[%OS = e^{\left( -\frac{\zeta\pi}{\sqrt{1-\zeta^2}} \right)}, \qquad
+t_s \approx \frac{3}{\zeta\omega_n},
+\]
+
+the desired damping ratio, 𝜁, and natural frequency, 𝜔\textsubscript{n}, were computed from the specified overshoot and settling-\/time requirements. Substituting 𝜁 and 𝜔\textsubscript{n} into the second-\/order characteristic equation,
+
+\[s^2 + 2\zeta\omega_n s + \omega_n^2 = 0,
+\] produced the first two poles for the observer. Two additional poles were then selected at large negative real values (e.\+g., 𝑠 = − 25 s=−25 and 𝑠 = − 30 s=−30), forming the complete fourth-\/order characteristic polynomial\+:
+
+\[(s - p_1)(s - p_2)(s - p_3)(s - p_4) = 0. \tag{1}
+\]
+
+The roots of Equation (1) served as the desired observer poles.
+
+Using MATLAB’s {\ttfamily place()} function, the continuous-\/time observer gain matrix, 𝐿, was computed from the matrices {\ttfamily A} and {\ttfamily C} and the pole locations defined above.\hypertarget{index_autotoc_md41}{}\doxysubsubsection{\texorpdfstring{Computing A\textsubscript{d} and B\textsubscript{d} from the Continuous Model}{Computing A\textsubscript{d} and B\textsubscript{d} from the Continuous Model}}\label{index_autotoc_md41}
+With the continuous-\/time system matrices established, the next step was to obtain the discrete-\/time equivalents required for implementation in Romi’s observer task. The discrete model has the form
+
+\[x[k+1] = A_d x[k] + B_d u[k],
+\]
+
+where the sampling period, Δt, must match the execution period of the observer task in the cooperative scheduler.\hypertarget{index_autotoc_md42}{}\doxysubsubsubsection{\texorpdfstring{Step 1 — Forming the Continuous Augmented System}{Step 1 — Forming the Continuous Augmented System}}\label{index_autotoc_md42}
+Using standard continuous-\/to-\/discrete relationships, the following continuous expressions were first evaluated\+:
+
+\[A_c = A - LC,\qquad
+B_c = \begin{bmatrix} B & L \end{bmatrix},
+\]
+
+which correspond to the continuous-\/time error-\/dynamics model used for observer prediction and correction.\hypertarget{index_autotoc_md43}{}\doxysubsubsubsection{\texorpdfstring{Step 2 — Using MATLAB’s c2d Function}{Step 2 — Using MATLAB’s c2d Function}}\label{index_autotoc_md43}
+These continuous matrices were discretized using MATLAB’s zero-\/order hold conversion\+:
+
+\[(A_d,, B_d) = \mathrm{c2d}(A_c,, B_c,, \Delta t).
+\]
+
+MATLAB returns the discrete-\/time matrices\+: A\textsubscript{d}, the discrete-\/time state-\/transition matrix, and B\textsubscript{d}, the discrete-\/time input matrix corresponding to the augmented input vector
+
+These matrices were then exported and embedded into the Observer class to perform the real-\/time update\+:
+
+\[\hat{x}[k+1] = A_d \hat{x}[k] + B_d u[k].
+\]
+
+The resulting discrete model matches the execution rate of the observer task and ensures that Romi’s estimated pose evolves consistently with the continuous-\/time dynamics.
+
+\hypertarget{index_autotoc_md44}{}\doxysection{\texorpdfstring{Hardware Setup}{Hardware Setup}}\label{index_autotoc_md44}
+If any efforts are made to emulate the Romi setup, the following wiring diagram should be used\+:
+
+
+
+ 

@@ -1,0 +1,174 @@
+\doxysection{test\+\_\+generator.\+Test\+Fibonacci Class Reference}
+\hypertarget{classtest__generator_1_1_test_fibonacci}{}\label{classtest__generator_1_1_test_fibonacci}\index{test\_generator.TestFibonacci@{test\_generator.TestFibonacci}}
+Inheritance diagram for test\+\_\+generator.\+Test\+Fibonacci\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtest__generator_1_1_test_fibonacci}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_a480b9042dd3e16e609f7709133a3eff2}{test\+\_\+fibonaci\+\_\+sequence}} (self)
+\item 
+\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_a5ba8f1fa83fd45358c62bbd3ec74a957}{test\+\_\+fibonaci\+\_\+non\+\_\+integer\+\_\+input}} (self)
+\item 
+\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_ac32e6d261554213df0abdb6a80a5f992}{test\+\_\+fibonaci\+\_\+string\+\_\+integer\+\_\+input}} (self)
+\item 
+\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_ac2d68bf9d0f77e012b037fbfb476c055}{test\+\_\+fibonaci\+\_\+negative\+\_\+or\+\_\+zero}} (self)
+\item 
+\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_a35de9f507f6b436a725976332dea60c5}{test\+\_\+sum\+\_\+every\+\_\+third\+\_\+value}} (self)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{test__generator_8py_source_l00005}{5}} of file \mbox{\hyperlink{test__generator_8py_source}{test\+\_\+generator.\+py}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{classtest__generator_1_1_test_fibonacci_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classtest__generator_1_1_test_fibonacci_ac2d68bf9d0f77e012b037fbfb476c055}\index{test\_generator.TestFibonacci@{test\_generator.TestFibonacci}!test\_fibonaci\_negative\_or\_zero@{test\_fibonaci\_negative\_or\_zero}}
+\index{test\_fibonaci\_negative\_or\_zero@{test\_fibonaci\_negative\_or\_zero}!test\_generator.TestFibonacci@{test\_generator.TestFibonacci}}
+\doxysubsubsection{\texorpdfstring{test\_fibonaci\_negative\_or\_zero()}{test\_fibonaci\_negative\_or\_zero()}}
+{\footnotesize\ttfamily \label{classtest__generator_1_1_test_fibonacci_ac2d68bf9d0f77e012b037fbfb476c055} 
+test\+\_\+generator.\+Test\+Fibonacci.\+test\+\_\+fibonaci\+\_\+negative\+\_\+or\+\_\+zero (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Check for zero or negative input.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{test__generator_8py_source_l00037}{37}} of file \mbox{\hyperlink{test__generator_8py_source}{test\+\_\+generator.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{def\ }test\_fibonaci\_negative\_or\_zero(self):}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Check\ for\ zero\ or\ negative\ input."{}"{}"{}}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(0))}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(-\/10))}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{stringliteral}{"{}0"{}}))}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{stringliteral}{"{}-\/5"{}}))}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ }
+
+\end{DoxyCode}
+\Hypertarget{classtest__generator_1_1_test_fibonacci_a5ba8f1fa83fd45358c62bbd3ec74a957}\index{test\_generator.TestFibonacci@{test\_generator.TestFibonacci}!test\_fibonaci\_non\_integer\_input@{test\_fibonaci\_non\_integer\_input}}
+\index{test\_fibonaci\_non\_integer\_input@{test\_fibonaci\_non\_integer\_input}!test\_generator.TestFibonacci@{test\_generator.TestFibonacci}}
+\doxysubsubsection{\texorpdfstring{test\_fibonaci\_non\_integer\_input()}{test\_fibonaci\_non\_integer\_input()}}
+{\footnotesize\ttfamily \label{classtest__generator_1_1_test_fibonacci_a5ba8f1fa83fd45358c62bbd3ec74a957} 
+test\+\_\+generator.\+Test\+Fibonacci.\+test\+\_\+fibonaci\+\_\+non\+\_\+integer\+\_\+input (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Ensure non-integer input raises the correct exception.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{test__generator_8py_source_l00013}{13}} of file \mbox{\hyperlink{test__generator_8py_source}{test\+\_\+generator.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{def\ }test\_fibonaci\_non\_integer\_input(self):}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Ensure\ non-\/integer\ input\ raises\ the\ correct\ exception."{}"{}"{}}}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(TypeError):}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(3.5))}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{stringliteral}{"{}abc"{}}))}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(TypeError):}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci([1,\ 2,\ 3]))}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(TypeError):}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{keywordtype}{None}))}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{stringliteral}{"{}12.34"{}}))}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{stringliteral}{"{}12abc"{}}))\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{stringliteral}{"{}"{}}))}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(TypeError):}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{keyword}{False}))}
+\DoxyCodeLine{00031\ }
+
+\end{DoxyCode}
+\Hypertarget{classtest__generator_1_1_test_fibonacci_a480b9042dd3e16e609f7709133a3eff2}\index{test\_generator.TestFibonacci@{test\_generator.TestFibonacci}!test\_fibonaci\_sequence@{test\_fibonaci\_sequence}}
+\index{test\_fibonaci\_sequence@{test\_fibonaci\_sequence}!test\_generator.TestFibonacci@{test\_generator.TestFibonacci}}
+\doxysubsubsection{\texorpdfstring{test\_fibonaci\_sequence()}{test\_fibonaci\_sequence()}}
+{\footnotesize\ttfamily \label{classtest__generator_1_1_test_fibonacci_a480b9042dd3e16e609f7709133a3eff2} 
+test\+\_\+generator.\+Test\+Fibonacci.\+test\+\_\+fibonaci\+\_\+sequence (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Check that the Fibonacci generator yields the correct sequence.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{test__generator_8py_source_l00006}{6}} of file \mbox{\hyperlink{test__generator_8py_source}{test\+\_\+generator.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00006\ \ \ \ \ \textcolor{keyword}{def\ }test\_fibonaci\_sequence(self):}
+\DoxyCodeLine{00007\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Check\ that\ the\ Fibonacci\ generator\ yields\ the\ correct\ sequence."{}"{}"{}}}
+\DoxyCodeLine{00008\ \ \ \ \ \ \ \ \ n\ =\ 10}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ expected\ =\ [0,\ 1,\ 1,\ 2,\ 3,\ 5,\ 8,\ 13,\ 21,\ 34]}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ result\ =\ list(fibonaci(n))}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ self.assertEqual(result,\ expected)}
+\DoxyCodeLine{00012\ }
+
+\end{DoxyCode}
+\Hypertarget{classtest__generator_1_1_test_fibonacci_ac32e6d261554213df0abdb6a80a5f992}\index{test\_generator.TestFibonacci@{test\_generator.TestFibonacci}!test\_fibonaci\_string\_integer\_input@{test\_fibonaci\_string\_integer\_input}}
+\index{test\_fibonaci\_string\_integer\_input@{test\_fibonaci\_string\_integer\_input}!test\_generator.TestFibonacci@{test\_generator.TestFibonacci}}
+\doxysubsubsection{\texorpdfstring{test\_fibonaci\_string\_integer\_input()}{test\_fibonaci\_string\_integer\_input()}}
+{\footnotesize\ttfamily \label{classtest__generator_1_1_test_fibonacci_ac32e6d261554213df0abdb6a80a5f992} 
+test\+\_\+generator.\+Test\+Fibonacci.\+test\+\_\+fibonaci\+\_\+string\+\_\+integer\+\_\+input (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Check that string integer input works.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{test__generator_8py_source_l00032}{32}} of file \mbox{\hyperlink{test__generator_8py_source}{test\+\_\+generator.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{def\ }test\_fibonaci\_string\_integer\_input(self):}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Check\ that\ string\ integer\ input\ works."{}"{}"{}}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ result\ =\ list(fibonaci(\textcolor{stringliteral}{"{}5"{}}))}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ self.assertEqual(result,\ [0,\ 1,\ 1,\ 2,\ 3])}
+\DoxyCodeLine{00036\ }
+
+\end{DoxyCode}
+\Hypertarget{classtest__generator_1_1_test_fibonacci_a35de9f507f6b436a725976332dea60c5}\index{test\_generator.TestFibonacci@{test\_generator.TestFibonacci}!test\_sum\_every\_third\_value@{test\_sum\_every\_third\_value}}
+\index{test\_sum\_every\_third\_value@{test\_sum\_every\_third\_value}!test\_generator.TestFibonacci@{test\_generator.TestFibonacci}}
+\doxysubsubsection{\texorpdfstring{test\_sum\_every\_third\_value()}{test\_sum\_every\_third\_value()}}
+{\footnotesize\ttfamily \label{classtest__generator_1_1_test_fibonacci_a35de9f507f6b436a725976332dea60c5} 
+test\+\_\+generator.\+Test\+Fibonacci.\+test\+\_\+sum\+\_\+every\+\_\+third\+\_\+value (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Verify the sum of every third Fibonacci number for small n.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{test__generator_8py_source_l00049}{49}} of file \mbox{\hyperlink{test__generator_8py_source}{test\+\_\+generator.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{def\ }test\_sum\_every\_third\_value(self):}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Verify\ the\ sum\ of\ every\ third\ Fibonacci\ number\ for\ small\ n."{}"{}"{}}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ fib\_length\ =\ 7}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ total\ =\ sum(}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ map(}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{lambda}\ pair:\ pair[1],}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filter(}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{lambda}\ pair:\ (pair[0])\ \%\ 3\ ==\ 0,}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ enumerate(fibonaci(fib\_length))}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Fibonacci\ sequence\ up\ to\ n=7\ →\ [0,1,1,2,3,5,8,13,21,34]}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Every\ 3rd\ value:\ 0\ (index\ 0),\ 2\ (3),\ 8\ (6)}}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ expected\_sum\ =\ 0\ +\ 2\ +\ 8}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ self.assertEqual(total,\ expected\_sum)}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ }
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Homework/\+Antonio\textquotesingle{}s Homework/0x01/test\+\_\+generator.\+py\end{DoxyCompactItemize}

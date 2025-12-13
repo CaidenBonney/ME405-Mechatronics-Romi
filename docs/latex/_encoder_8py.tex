@@ -1,0 +1,39 @@
+\doxysection{Lab Final/\+Files On Romi/\+Encoder.py File Reference}
+\hypertarget{_encoder_8py}{}\label{_encoder_8py}\index{Lab Final/Files On Romi/Encoder.py@{Lab Final/Files On Romi/Encoder.py}}
+
+
+This file implements a quadrature encoder interface for the Romi robot.  
+
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_encoder_1_1_encoder}{Encoder.\+Encoder}}
+\begin{DoxyCompactList}\small\item\em A quadrature encoder class for position and velocity measurement. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file implements a quadrature encoder interface for the Romi robot. 
+
+The encoder uses a hardware timer in {\ttfamily Timer.\+ENC\+\_\+\+AB} mode to measure wheel rotation and compute velocity. The class inherits from {\ttfamily Sensor} so timing and velocity updates integrate cleanly with the controllers.
+
+Features\+:
+\begin{DoxyItemize}
+\item Reads incremental wheel motion from a hardware timer
+\item Converts tick differences into wheel radians
+\item Accumulates total wheel displacement
+\item Computes velocity in mm/s (using {\ttfamily dt} from Sensor)
+\item Supports resetting via {\ttfamily zero()} 
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Authors}
+Antonio Ventimiglia ~\newline
+ Caiden Bonney 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2025-\/Dec-\/11 
+\end{DoxyDate}
+
+
+Definition in file \mbox{\hyperlink{_encoder_8py_source}{Encoder.\+py}}.
+
