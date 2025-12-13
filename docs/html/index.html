@@ -204,7 +204,7 @@ Figure 7: User Input Task Logic Diagram</div></div>
 Path Director</h2>
 <p>With the control tools described above, the remaining requirement for Romi is a structured framework to govern its overall motion. The path director (<code><a class="el" href="_path___director_8py.html" title="High-level state machine for directing the Romi through the course.">Path_Director.py</a></code>) fulfills this role by planning and coordinating Romi’s actions throughout the course. Implemented as a state machine, each state corresponds to a distinct behavioral mode, while additional function states provide generalized control capabilities that accept variable inputs. This design enables compact, modular code and facilitates targeted testing of individual behaviors without restarting an entire course run. As the top-level supervisory controller, the path director manages all aspects of Romi’s navigation and ensures coherent execution of its course-traversal strategy.</p>
 <div class="image">
-<img src="3.png" alt="" width="500"/>
+<img src="Path_Director.png" alt="" width="500"/>
 <div class="caption">
 Figure 8: Path Director Task Logic Diagram</div></div>
 <h3 class="doxsection"><a class="anchor" id="autotoc_md19"></a>

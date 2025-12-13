@@ -109,7 +109,7 @@ The user input (@c User_Input.py) task is responsible for receiving commands fro
 ## Path Director
 With the control tools described above, the remaining requirement for Romi is a structured framework to govern its overall motion. The path director (@c Path_Director.py) fulfills this role by planning and coordinating Romi’s actions throughout the course. Implemented as a state machine, each state corresponds to a distinct behavioral mode, while additional function states provide generalized control capabilities that accept variable inputs. This design enables compact, modular code and facilitates targeted testing of individual behaviors without restarting an entire course run. As the top-level supervisory controller, the path director manages all aspects of Romi’s navigation and ensures coherent execution of its course-traversal strategy.
 
-@image html 3.png "Figure 8: Path Director Task Logic Diagram" width=500
+@image html Path_Director.png "Figure 8: Path Director Task Logic Diagram" width=500
 
 
 ### Motor Controller   
