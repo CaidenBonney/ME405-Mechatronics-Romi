@@ -1,5 +1,8 @@
 \mainpage
 
+# Repository
+https://github.com/caidenbonney/ME405-Mechatronics-Romi
+
 # Project Overview
 The Romi project is part of California Polytechnic State University San Luis Obispo's Mechanical Engineering Course ME405 Mechatronics. The project entails the design and implementation of a robotic vehicle named Romi, which is a two-wheeled robot constructed from component sourced from Pololu Robotics and Electronics.
 
