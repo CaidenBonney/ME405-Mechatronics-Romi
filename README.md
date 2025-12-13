@@ -1,7 +1,5 @@
 California Polytechnic State University San Luis Obispo Mechanical Engineering Course, ME405 Mechatronics. Romi Project. 
 
-This repository holds code used in the ME405 course at Cal Poly.
-
 ## Webpage
 https://caidenbonney.github.io/ME405-Mechatronics-Romi/html/index.html
 
@@ -19,3 +17,8 @@ Core files that run on the Romi live in `Lab Final/Files On Romi/`:
 - `Observer.py`: state observer that fuses sensors to estimate pose.
 - `User_Input.py`: UART/Bluetooth command handler for calibration and tuning.
 - `Battery.py`, `Romi_Props.py`, `Sensor.py`, `Garbage_Collector.py`: support utilities and shared constants.
+
+## Homework Support Files
+Homework exercises built the foundational skills used in this project (task scheduling, closed-loop control, sensor drivers, and sharing data between tasks). You can browse those references here:
+- Antonio's Homework: `Homework/Antonio's Homework/`
+- Caiden's Homework: `Homework/Caiden's Homework/`
