@@ -63,7 +63,7 @@ class PathDirector:
     # One Input: 100-199
     FIXED_FORWARD = 101  #         self.distance = distance [mm]
     TURN_ANGLE = 102  #            var1 = angle,  var2 = -----, var3 = ----
-    FOLLOW_LINE_4_TIME = 103  #    var1 = durration [us]
+    FOLLOW_LINE_4_TIME = 103  #    var1 = duration [us]
     # Two Inputs: 200-299
     # Three Inputs: 300-399
     # Four Inputs: 400-499
@@ -138,7 +138,7 @@ class PathDirector:
     #
     #  @param shares Tuple of task_share queues used for inter-task comms
     def run(self, shares):
-        # Seperating the shares
+        # Separating the shares
         (
             l_flag_s,
             l_speed_s,

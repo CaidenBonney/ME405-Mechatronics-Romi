@@ -57,7 +57,7 @@ class MotorController:
     #  @param shares Tuple of @c task_share variables for flags, speed,
     #                data transfer and test completion signaling
     def run(self, shares):
-        # Seperating the shares
+        # Separating the shares
         (
             flag_s,
             speed_s,
