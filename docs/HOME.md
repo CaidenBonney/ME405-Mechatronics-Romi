@@ -5,13 +5,19 @@ The Romi project is part of California Polytechnic State University San Luis Obi
 
 Romi’s objective is to traverse a predefined course with speed and precision, using integrated sensor feedback and actuator control. The course is defined by a series of waypoints, and Romi must navigate from one waypoint to the next following the class-defined rules. The robot's sensors include a line sensor made from several infrared (IR) sensors, bumps sensors to detect wall collisions, an inertial measurement unit (IMU) to measure orientation with respect to Earth's magnetic north, and quadrature encoders to measure the angular displacement of each wheel. Using information from these sensors, a State Observer is constructed to estimate the robot's current state, which importantly includes its current global position and orientation. Utilizing the Observer's estimations, the robot follows a path director and explores the course in order to reach the next waypoint. 
 
-@image html Romi_isometric.jpeg "Figure XXX: Romi Isometric" width=450
+@image html Romi_isometric.jpeg "Figure 1: Romi Isometric" width=450
 
 # Final Romi Performance
-<video width="640" controls>
-  <source src="../assets/videos/best.mp4" type="video/mp4" />
-  <source src="../assets/videos/best.mov" type="video/quicktime" />
-</video>
+\htmlonly
+<div style="text-align:center;">
+  <video width="700" controls>
+    <source src="../assets/videos/best.mp4" type="video/mp4" />
+    <source src="../assets/videos/best.mov" type="video/quicktime" />
+    Your browser does not support the video tag. You can download the clip
+    <a href="../assets/videos/best.mp4">here</a>.
+  </video>
+</div>
+\endhtmlonly
 
 
 # Hardware
@@ -41,19 +47,19 @@ The Nucleo Board can be purchased directly from https://estore.st.com/en/product
 ## Motor
 Both wheels are driven by a Texas Instruments DRV8833 low-voltage H-bridge motor driver. Each motor shaft is equipped with an encoder (discussed below) and coupled to a gearbox that provides a 119.7576:1 reduction between the motor shaft and the wheel. In code, PWM drive and direction control are wrapped in `Motor.py`, while `Motor_Controller.py` runs a closed-loop controller (`Closed_Loop_Control.py`) using encoder feedback from `Encoder.py` to set motor effort. Higher-level speed commands come from `Path_Director.py`, and hardware timers are configured in `main.py`.
 
-@image html Motors.png "Figure XXX: Texas Instruments DRV8833 Motor Drive with gearbox and Encoder" width=350
+@image html Motors.png "Figure 2: Texas Instruments DRV8833 Motor Drive with gearbox and Encoder" width=350
 
  The motors follow the logic table below for its three input pins: nSLEEP, PH, and EN. nSLEEP acts as an on/off switch, PH acts as a direction switch, and EN acts as a drive/brake switch, which is manipulated via pulse width modulation (PWM).
 
  The motor can be purchased directly from https://www.pololu.com/product/1520.
 
-@image html MotorLogicTable.png "Figure XXX: DRV8833 Motor Logic Table" width=900
+@image html MotorLogicTable.png "Figure 3: DRV8833 Motor Logic Table" width=900
 
 
 ## Quadrature Incremental Encoder
 Each motor shaft is instrumented with a quadrature incremental encoder that measures the shaft’s angular displacement. These encoders employ two Hall-effect sensors that detect changes in the magnetic field produced by rotating permanent magnets. The corresponding magnet geometry and representative encoder waveform are shown below. The encoders used on the Romi utilize the same three-pole-pair magnet configuration illustrated.
 
-@image html Quad_Enc_3PP.png "Figure XXX: Quadrature Output for Encoder with 3 Pole-Pair Magnets" width=450
+@image html Quad_Enc_3PP.png "Figure 4: Quadrature Output for Encoder with 3 Pole-Pair Magnets" width=450
 
 
 By capturing the number of encoder ticks that occur across a measured time interval, the average angular velocity of each shaft can be calculated. Utilizing this information in conjunction with the motor's gear ratio and wheel radii, the linear velocity of each wheel can be calculated. These linear velocities are used to both close loop control Romi's behavior and to estimate its current state. 
@@ -67,13 +73,12 @@ array is aggregated in `Line_Sensor.py`, which normalizes each IR reading (via `
 ### Mounting
 The line sensor is mounted on the underside of the chassis using 3D-printed standoffs. The standoffs set the sensor height so the bump sensors contact obstacles first, protecting the board. Mounting holes were drilled out to fit the hardware available in the lab's donated parts bin. The SolidWorks part model for these standoffs lives in the `Mounting Bracket/` folder. Note that two of these standoffs are required to mount the line sensor.
 
-@image html linesensorbracket.png "Figure XXX: Line sensor standoff bracket" width=350
+@image html linesensorbracket.png "Figure 5: Line sensor standoff bracket" width=350
 
 ## IMU
 Romi uses an Adafruit BNO055 9-DOF absolute orientation sensor for heading and yaw-rate feedback. The breakout board includes an onboard microcontroller that fuses accelerometer, gyroscope, and magnetometer data to provide stable Euler angles without heavy processing on the Nucleo. The BNO055 breakout can be purchased at https://www.adafruit.com/product/2472.
 
 In code, the IMU is driven over I2C in `IMU.py`, which handles initialization, calibration loading/saving, and exposes heading/yaw-rate via `get_heading()` and `get_yaw_rate()`. The heading controller in `Closed_Loop_Control.py` uses these readings inside `Path_Director.py` to align the robot for turns and point-to-point moves, and the `Observer.py` task fuses IMU yaw data with encoder motion to estimate pose.
-
 
 
 
@@ -91,34 +96,34 @@ As mentioned above, each task has a @c run() method that is responsible for perf
 ### Task Diagram
 Below is a diagram of each @c cotask.Task in Romi's system. The @c period and @c priority of each task is specified, as well as each @c task_share.Share and @c task_share.Queue that it uses.
 
-@image html Task_Diagram.png "Figure XXX: Romi's Task Diagram" width=800
+@image html Task_Diagram.png "Figure 6: Romi's Task Diagram" width=800
 
 ### User Input
 The user input (@c User_Input.py) task is responsible for receiving commands from the user and actualizing them into physical outputs. User input processes the single-character commands from both the USB and Bluetooth interfaces into values that are placed in shares. Those shares then trigger other tasks to perform their respective functions.
 
-@image html User_Input.png "Figure XXX: User Input Task Logic Diagram" width=500
+@image html User_Input.png "Figure 7: User Input Task Logic Diagram" width=500
 
 ## Path Director
 With the control tools described above, the remaining requirement for Romi is a structured framework to govern its overall motion. The path director (@c Path_Director.py) fulfills this role by planning and coordinating Romi’s actions throughout the course. Implemented as a state machine, each state corresponds to a distinct behavioral mode, while additional function states provide generalized control capabilities that accept variable inputs. This design enables compact, modular code and facilitates targeted testing of individual behaviors without restarting an entire course run. As the top-level supervisory controller, the path director manages all aspects of Romi’s navigation and ensures coherent execution of its course-traversal strategy.
 
-@image html Path_Director.png "Figure XXX: Path Director Task Logic Diagram" width=500
+@image html Path_Director.png "Figure 8: Path Director Task Logic Diagram" width=500
 
 
 ### Motor Controller   
 The motor controller (@c Motor_Controller.py) task is responsible for controlling Romi's motors. The motor controller task has the responsibility of determining what the motor should be doing based off the shares and queues passed into it. Every time it is ran, it runs one iteration of the closed loop control law and then updates the effort requested of the motors.
 
-@image html Motor_Controller.png "Figure XXX: Motor Controller Task Logic Diagram" width=500
+@image html Motor_Controller.png "Figure 9: Motor Controller Task Logic Diagram" width=500
 
 ## State Observer
 Using the data from Romi's sensors, the state observer (@c Observer.py) estimates Romi’s current state such that behavioral decisions can be made based on Romi’s current position and orientation. To obtain state estimation, two approaches were considered: the fourth-order Runge-Kutta solver or discretizing Romi’s state space. The Runge-Kutta method was not chosen since it was determined that the frequency at which it would have to run would impose too significant of a computational load on Romi's multitasking system. Instead, Romi’s state space was discretized using control theory techniques and Matlab’s @c c2d() functionality. Further elaboration on the discretization process can be found in the Analysis section.
 
-@image html Observer.png "Figure XXX: Observer Task Logic Diagram" width=500
+@image html Observer.png "Figure 10: Observer Task Logic Diagram" width=500
 
 
 ### Garbage Collector
 The garbage collector (@c Garbage_Collector.py) task is responsible for managing Romi's memory. Upon each iteration of the garbage collector, the task garbage collects and removes any memory that is no longer in use.
 
-@image html Garbage_Collector.png "Figure XXX: Garbage Collector Task Logic Diagram" width=500
+@image html Garbage_Collector.png "Figure 11: Garbage Collector Task Logic Diagram" width=500
 
 ## Closed Loop Control
 Romi’s motion accuracy relies heavily on the versatile and robust closed loop controller implemented in @c Closed_Loop_Control.py. This controller provides a unified framework for regulating motor speed or heading and supports a wide range of classical control features, making it adaptable to all dynamic behaviors required by the robot.
@@ -150,16 +155,7 @@ To enable reliable line following, Romi determines the centroid of the detected 
 ### Heading CLC:
 The heading CLC is designed for use in conjunction with an IMU object (@c IMU.py). When Romi is required to navigate toward a target that is not located on the black course lines, it must first orient itself toward the desired heading and subsequently maintain that orientation as it moves and undergoes natural drift. The heading CLC computes the yaw rate necessary for Romi to achieve and sustain the specified heading. This commanded yaw rate is then converted into differential motor actuation, providing the appropriate adjustments in wheel velocities to ensure stable and accurate heading control throughout the maneuver.
 
-
-<div style="text-align:center;">
-  -----CLOSED LOOP CONTROL DIAGRAM HERE-----
-  <img src="" width="1200">
-</div>
-
-
-
-
-
+@image html Closed_Loop_Control.png "Figure 12: Closed Loop Control Diagram" width=500
 
 # Key Analyses and Validations
 The following sections provide some of the key analyses of Romi’s dynamics and performance characteristics. These analyses are intended to provide a comprehensive understanding of Romi’s behavior and to facilitate the development of future improvements.
@@ -170,42 +166,42 @@ The closed-loop controller for Romi’s drive motors was developed using an incr
 ### P Controller
 Initial testing began with a purely proportional controller. With a relatively high proportional gain, Romi exhibited pronounced oscillatory “jittering,” characterized by rapid forward–backward motion about the reference value.
 
-@image html P_jitter.png "Figure XXX: Proportional Controller – Initial High Gain Response" width=1000
+@image html P_jitter.png "Figure 13: Proportional Controller - Initial High Gain Response" width=1000
 
 The oscillation resulted from overly aggressive corrective action, causing repeated overshoot of the target velocity. The proportional gain was iteratively reduced until the oscillations were eliminated.
 
-@image html P_good.png "Figure XXX: Proportional Controller – Tuned Gain Response" width=1000
+@image html P_good.png "Figure 14: Proportional Controller - Tuned Gain Response" width=1000
 
 
 ### PI Controller
 After stabilizing the proportional controller, an integral term was introduced to eliminate steady-state error. The initial integral gain produced a stable response with no overshoot—an indication that the selected gain was likely too small to minimize convergence time.
 
-@image html PI_under.png "Figure XXX: PI Controller – Initial Small Integral Gain" width=1000
+@image html PI_under.png "Figure 15: PI Controller - Initial Small Integral Gain" width=1000
 
 The integral gain was gradually increased to identify an upper bound beyond which overshoot became unacceptable.
 
-@image html PI_over.png "Figure XXX: PI Controller – Excessive Integral Gain" width=1000
+@image html PI_over.png "Figure 16: PI Controller - Excessive Integral Gain" width=1000
 
 A gain between these two extremes was selected through iterative testing, yielding minimal overshoot and improved settling behavior.
 
-@image html PI_good.png "Figure XXX: PI Controller – Tuned Integral Gain" width=1000
+@image html PI_good.png "Figure 17: PI Controller - Tuned Integral Gain" width=1000
 
 ### PID Controller
 With the PI controller tuned, a derivative term was introduced. The initial derivative gain caused unstable, jitter-like oscillations similar to those observed with an overly large proportional gain.
 
-@image html PID_initial.png "Figure XXX: PID Controller – Initial Derivative Gain" width=1000
+@image html PID_initial.png "Figure 18: PID Controller - Initial Derivative Gain" width=1000
 
 Significant reductions in derivative gain were attempted:
 
-@image html PID_reduced1.png "Figure XXX: PID Controller – Reduced Derivative Gain Attempt 1" width=1000
-@image html PID_reduced2.png "Figure XXX: PID Controller – Reduced Derivative Gain Attempt 2" width=1000
+@image html PID_reduced1.png "Figure 19: PID Controller - Reduced Derivative Gain Attempt 1" width=1000
+@image html PID_reduced2.png "Figure 20: PID Controller - Reduced Derivative Gain Attempt 2" width=1000
 
 However, due to the presence of high-frequency noise in Romi’s sensor data, derivative action consistently amplified this noise and degraded performance. Consequently, derivative control was deemed unsuitable and removed from all further controller configurations.
 
 ### PI Controller with Feed-Forward Compensation
 Since PID control was abandoned, the next enhancement involved adding a feed-forward term to the existing PI structure. Unlike earlier gains, the feed-forward gain K<sub>ff</sub> was computed analytically. Steady-state velocity data was used to generate linear curve fits of wheel velocity versus PWM input.
 
-@image html SSvsPWM.png "Figure XXX: Steady-State Wheel Velocities vs. PWM Input" width=500
+@image html SSvsPWM.png "Figure 21: Steady-State Wheel Velocities vs. PWM Input" width=500
 
 The slopes of these fits yielded steady-state gains, and their inverses provided the appropriate feed-forward gains for each motor. The x-intercepts of the fits were used to estimate the minimum PWM values needed to initiate motion,PWM<sub>start</sub>, producing the feed-forward relations:
 
@@ -215,7 +211,7 @@ PWM = K_{ff}*v + PWM_{start}
 
 The feed-forward controller was tested with PI control:
 
-@image html PI_KFF.png "Figure XXX: PI + Feed-Forward Response" width=1000
+@image html PI_KFF.png "Figure 22: PI + Feed-Forward Response" width=1000
 
 Performance with feed-forward alone was notably accurate and feed forward tuning was concluded
 
@@ -232,18 +228,18 @@ This battery-droop compensation has minimal influence during most of Romi’s op
 ## Romi Dynamics
 To adequately understand how Romi would behave, a dynamic analysis was performed. To define variables, the space in which Romi exists in was defined as seen below
 
-@image html Romi_body.jpg "Figure XXX: Coordinate System Definition for Romi Dynamics" width=500
+@image html Romi_body.jpg "Figure 23: Coordinate System Definition for Romi Dynamics" width=500
 
-@image html Romi_global.jpg "Figure XXX: Global Coordinate System" width=500
+@image html Romi_global.jpg "Figure 24: Global Coordinate System" width=500
 
 
 The state of Romi was determined to be constituted of of six variables: global X position, global Y position, global heading, centroid displacement (like an odometer), angular velocity of the left wheel, and angular velocity of the right wheel. Using this state breakdown, Romi’s dynamics were analyzed using the following equations:
 
-@image html State_input_output.jpg "Figure XXX: Romi State Space, Input, and Output Matrices" width=500
+@image html State_input_output.jpg "Figure 25: Romi State Space, Input, and Output Matrices" width=500
 
-@image html xdot.png "Figure XXX: State Derivative Equations" width=500
+@image html xdot.png "Figure 26: State Derivative Equations" width=500
 
-@image html y.png "Figure XXX: Output Equations" width=500
+@image html y.png "Figure 27: Output Equations" width=500
 
 
 ## State Observer   
@@ -325,12 +321,12 @@ These matrices were then exported and embedded into the Observer class to perfor
 
 The resulting discrete model matches the execution rate of the observer task and ensures that Romi’s estimated pose evolves consistently with the continuous-time dynamics.
 
-@image html obs_xuy.png "Figure XXX: Observer State Space, Input, and Output Matrices" width=500
+@image html obs_xuy.png "Figure 28: Observer State Space, Input, and Output Matrices" width=500
 
 
 # Hardware Setup
 If any efforts are made to emulate the Romi setup, the following wiring diagram should be used:
 
-@image html wiring_cn7.png "Figure XXX: Wiring Diagram for Romi's C7 Morpho Headers" width=1000
+@image html wiring_cn7.png "Figure 29: Wiring Diagram for Romi's C7 Morpho Headers" width=1000
 
-@image html wiring_cn10.png "Figure XXX: Wiring Diagram for Romi's C10 Morpho Headers" width=1000
+@image html wiring_cn10.png "Figure 30: Wiring Diagram for Romi's C10 Morpho Headers" width=1000

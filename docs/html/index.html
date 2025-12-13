@@ -108,7 +108,16 @@ Project Overview</h1>
 Figure XXX: Romi Isometric</div></div>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
 Final Romi Performance</h1>
-<p>&lt;video width="640" controls src="../assets/videos/best.mov"&gt; Your browser does not support the video tag. You can download the clip <a href="../assets/videos/best.mov">here</a>. &lt;/video&gt;</p>
+<p> 
+<div style="text-align:center;">
+  <video width="700" controls>
+    <source src="../assets/videos/best.mp4" type="video/mp4" />
+    <source src="../assets/videos/best.mov" type="video/quicktime" />
+    Your browser does not support the video tag. You can download the clip
+    <a href="../assets/videos/best.mp4">here</a>.
+  </video>
+</div>
+</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
 Hardware</h1>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
@@ -246,7 +255,11 @@ Line Centroid CLC:</h3>
 <h3 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
 Heading CLC:</h3>
 <p>The heading CLC is designed for use in conjunction with an IMU object (<code><a class="el" href="_i_m_u_8py.html" title="Driver for the BNO055 IMU on the Romi.">IMU.py</a></code>). When Romi is required to navigate toward a target that is not located on the black course lines, it must first orient itself toward the desired heading and subsequently maintain that orientation as it moves and undergoes natural drift. The heading CLC computes the yaw rate necessary for Romi to achieve and sustain the specified heading. This commanded yaw rate is then converted into differential motor actuation, providing the appropriate adjustments in wheel velocities to ensure stable and accurate heading control throughout the maneuver.</p>
-<div style="text-align:center;"> --&mdash;CLOSED LOOP CONTROL DIAGRAM HERE--&mdash;  </div><h1 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
+<div class="image">
+<img src="Closed_Loop_Control.png" alt="" width="500"/>
+<div class="caption">
+Figure XXX: Closed Loop Control Diagram</div></div>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
 Key Analyses and Validations</h1>
 <p>The following sections provide some of the key analyses of Romi’s dynamics and performance characteristics. These analyses are intended to provide a comprehensive understanding of Romi’s behavior and to facilitate the development of future improvements.</p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
