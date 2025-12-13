@@ -40,7 +40,7 @@ class ClosedLoopControl:
 
         self.on = True
         self.first_run = True
-        self.num_corrections = 75
+        self.num_corrections = 0
         self.total_num_corrections = 200
 
     def reset(self) -> None:
@@ -50,6 +50,8 @@ class ClosedLoopControl:
         self.integral = 0  #           Integral value
         self.derivative = 0  #         Derivative value
         self.first_run = True
+    
+    def reset_num_corrections(self):
         self.num_corrections = 75
 
     def set_ref(self, speed) -> None:

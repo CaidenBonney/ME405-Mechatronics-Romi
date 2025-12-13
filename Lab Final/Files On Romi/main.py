@@ -11,6 +11,8 @@ from Line_Sensor import LineSensor
 from IR_Sensor import IRSensor
 from IMU import IMU
 
+collect()
+
 if __name__ == "__main__":
 
     # Configure default pins
@@ -97,27 +99,26 @@ if __name__ == "__main__":
     obsd_yawrate_s = task_share.Share("f", thread_protect=False, name="Oberserved yawrate share")
     obsd_X_s = task_share.Share("f", thread_protect=False, name="Oberserved X position share")
     obsd_Y_s = task_share.Share("f", thread_protect=False, name="Oberserved Y position share")
-
-    # Queue creation here
-    # All queues have overwrite=True because if the data is being overwritten because the queue is full, we can see with discontinuous data
-    l_time_q = task_share.Queue("L", 1, thread_protect=False, overwrite=True, name="time queue")
-    r_time_q = task_share.Queue("L", 1, thread_protect=False, overwrite=True, name="time queue")
-    l_pos_q = task_share.Queue("f", 1, thread_protect=False, overwrite=True, name="left position queue")
-    r_pos_q = task_share.Queue("f", 1, thread_protect=False, overwrite=True, name="right position queue")
-    l_vel_q = task_share.Queue("f", 1, thread_protect=False, overwrite=True, name="left velocity queue")
-    r_vel_q = task_share.Queue("f", 1, thread_protect=False, overwrite=True, name="right velocity queue")
-    list_of_queues = [l_time_q, r_time_q, l_pos_q, r_pos_q, l_vel_q, r_vel_q]
+    dist_yaw_s = task_share.Share("f", thread_protect=False, name="distance derived yaw share")
 
     ## Create objects of each task for the Task objects
     # Collect garbage data for defragmentation before large imports and object creation
     collect()
+    # from gc import mem_alloc, mem_free
+    # print("Free:", mem_free())
+    # print("Allocated:", mem_alloc())
+
+    from Path_Director import PathDirector
+    collect()
+
     # Task object imports
     from User_Input import UserInput
-    from Path_Director import PathDirector
     from Observer import Observer
     from Motor_Controller import MotorController
     from Garbage_Collector import GarbageCollector
-    
+
+    collect()
+
     user_input_obj = UserInput(button_pin, Battery_obj)
     observer_obj = Observer(IMU_obj, l_encoder, r_encoder, Battery_obj)
     path_director_obj = PathDirector(Linesensor, IMU_obj, bump_sensors)
@@ -156,7 +157,16 @@ if __name__ == "__main__":
         period=20,
         profile=True,
         trace=False,
-        shares=(obsd_lpos_s, obsd_rpos_s, obsd_cpos_s, obsd_yaw_s, obsd_yawrate_s, obsd_X_s, obsd_Y_s),
+        shares=(
+            obsd_lpos_s,
+            obsd_rpos_s,
+            obsd_cpos_s,
+            obsd_yaw_s,
+            obsd_yawrate_s,
+            obsd_X_s,
+            obsd_Y_s,
+            dist_yaw_s,
+        ),
     )
     task_Path_Director = cotask.Task(
         path_director_obj.run,
@@ -183,6 +193,7 @@ if __name__ == "__main__":
             obsd_yawrate_s,
             obsd_X_s,
             obsd_Y_s,
+            dist_yaw_s,
         ),
     )
     task_LMC = cotask.Task(
@@ -192,7 +203,7 @@ if __name__ == "__main__":
         period=20,
         profile=True,
         trace=False,
-        shares=(l_flag_s, l_speed_s, data_transfer_s, test_complete_s, seg_start_s, l_time_q, l_pos_q, l_vel_q),
+        shares=(l_flag_s, l_speed_s, data_transfer_s, test_complete_s, seg_start_s),
     )
     task_RMC = cotask.Task(
         RMC_obj.run,
@@ -201,7 +212,7 @@ if __name__ == "__main__":
         period=20,
         profile=True,
         trace=False,
-        shares=(r_flag_s, r_speed_s, data_transfer_s, test_complete_s, seg_start_s, r_time_q, r_pos_q, r_vel_q),
+        shares=(r_flag_s, r_speed_s, data_transfer_s, test_complete_s, seg_start_s),
     )
     task_Garbage_Collection = cotask.Task(
         garbage_collector_obj.run,
@@ -233,13 +244,12 @@ if __name__ == "__main__":
             if isinstance(e, OSError):
                 print(f"OSError: {e}")
                 uart.write(f"OSError: {e}\r\n".encode("utf-8"))
-                break
+                from machine import soft_reset  # pyright: ignore
+
+                soft_reset()
 
             LMC_obj.motor.set_effort(0)
             RMC_obj.motor.set_effort(0)
-
-            for queue in list_of_queues:
-                queue.clear()
 
             # Print a table of task data and a table of shared information data
             print("\n" + str(cotask.task_list))

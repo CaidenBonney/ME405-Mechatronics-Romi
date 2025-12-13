@@ -1,7 +1,10 @@
 from ulab import numpy as np  # pyright: ignore
 from Romi_Props import RomiProps
+from math import pi
+
 
 class Observer:
+
     def __init__(self, IMU, l_encoder, r_encoder, battery):
         self.IMU = IMU
         self.tstep = 0.020  # must assume constant timestep for observer to function
@@ -13,9 +16,10 @@ class Observer:
         self.r_motor_pwm_ch = self.r_encoder.motor.PWM_ch
         self.r_motor_nSLP_pin = self.r_encoder.motor.nSLP_pin
         self.battery = battery
-        
+
         # only for printing to bluetooth
         from pyb import UART  # pyright: ignore
+
         self.uart = UART(5, 115200)
 
     def run(self, shares):
@@ -28,10 +32,9 @@ class Observer:
             obsd_yawrate_s,
             obsd_X_s,
             obsd_Y_s,
+            dist_yaw_s,
         ) = shares
-        
-        
-        
+
         # Making A_D, B_D, and C matrices
         A_D = np.array(
             [
@@ -68,7 +71,7 @@ class Observer:
         prev_c = 0
 
         # zero heading
-        self.IMU.zero_heading()
+        self.IMU.set_heading(0)
 
         # Update encoders based on current IMU heading (which is zeroed)
         self.l_encoder.position = -RomiProps.wdiv2 * self.IMU.get_heading()
@@ -106,6 +109,9 @@ class Observer:
             obsd_yawrate_s.put(y_k[3, 0])
             obsd_X_s.put(obsd_X_s.get() + X_delta)
             obsd_Y_s.put(obsd_Y_s.get() + Y_delta)
+            dist_yaw_s.put(
+                (self.r_encoder.position - self.l_encoder.position) * RomiProps.wheel_radius / RomiProps.trackwidth
+            )
 
             # Update x_k to be used in next iteration
             x_k = np.dot(A_D, x_k) + np.dot(B_D, ustar)

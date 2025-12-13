@@ -41,9 +41,6 @@ class MotorController:
             data_transfer_s,
             test_complete_s,
             seg_start_s,
-            time_q,
-            pos_q,
-            vel_q,
         ) = shares
 
         def test_complete():
@@ -68,6 +65,7 @@ class MotorController:
                 if speed_s.get() == 0:
                     # Speed is zero so disable the closed loop control
                     self.CLC.reset()
+                    self.CLC.reset_num_corrections()
                     self.CLC.disable()
                     self.motor.set_effort(0)
                 else:
@@ -97,20 +95,21 @@ class MotorController:
 
                     # if no time limit -> always run ; if time limit -> check if less than duration
                     if self.duration <= 0 or ticks_diff(ticks_us(), self.test_start) <= self.duration * 1e6:
+                    #     # if queues are currently full, then set test complete, stop motors and zero encoders
+                    #     if time_q.full() or pos_q.full() or vel_q.full():
+                    #         self.queues_were_full = True
+                    #         test_complete()
 
-                        # if queues are currently full, then set test complete, stop motors and zero encoders
-                        if time_q.full() or pos_q.full() or vel_q.full():
-                            self.queues_were_full = True
-                            test_complete()
-
-                        # if queues are not full and have not been full within the current test, then put data into queues
-                        if not self.queues_were_full:
-                            time_q.put(ticks_diff(ticks_us(), self.test_start))  #  [us]
-                            pos_q.put(self.encoder.position)  #                     [rad]
-                            vel_q.put(self.encoder.velocity)  #                     [mm/s]
+                    #     # if queues are not full and have not been full within the current test, then put data into queues
+                    #     if not self.queues_were_full:
+                    #         time_q.put(ticks_diff(ticks_us(), self.test_start))  #  [us]
+                    #         pos_q.put(self.encoder.position)  #                     [rad]
+                    #         vel_q.put(self.encoder.velocity)  #                     [mm/s]
+                        pass
                     else:
                         # if time limit is reached, then set test complete, stop motors and zero encoders
                         test_complete()
+
             elif not self.done:
                 # if test is not complete, but we are not done then set test to complete
                 test_complete()

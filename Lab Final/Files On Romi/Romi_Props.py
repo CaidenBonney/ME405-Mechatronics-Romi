@@ -11,3 +11,4 @@ class RomiProps:
     counts_per_rev = 12  # ticks / shaft revolution
 
     ticks_to_rads = (2 * pi) / (counts_per_rev * gear_ratio)
+

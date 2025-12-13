@@ -210,8 +210,8 @@ class IMU(Sensor):
 
         return self.heading
 
-    def zero_heading(self):
-        self.heading = 0
+    def set_heading(self, heading: float):
+        self.heading = heading
         self.prev_imu_heading = self.get_imu_heading()
         self.delta = 0
 

@@ -1,62 +1,62 @@
-from pyb import UART, Pin, ExtInt  # pyright: ignore
+from pyb import UART  # pyright: ignore
 from time import ticks_diff, ticks_us  # pyright: ignore
 from math import pi, atan2
 
+from gc import collect
 from Romi_Props import RomiProps
-from Closed_Loop_Control import ClosedLoopControl
-from Line_Sensor import LineSensor
-from IMU import IMU
-
 from Path_Director_vars import PD_vars
 
 
 class PathDirector:
-    # Multiply a class-level gain by the given factor.
-    @classmethod
-    def set_attr(cls, K="v_ref", value=0.0):
-        if not hasattr(cls, K):
-            raise AttributeError(f"'{K}' is not a defined gain on {cls.__name__}")
-        setattr(cls, K, value)
-
     WAIT = 0
     CALIBRATE = 1
     FOLLOW_LINE = 2
     FIXED_FORWARD = 3
-    RECORD_HEADING = 4
 
-    ST_B4_FOLLOW_LINE = 5
-    FOLLOW_LINE_B4_FORK = 6
-    FORCE_RIGHT_FORK = 7
-    LINE_FOLLOW_2_DIAMOND = 8
-    DIAMOND_2_CP1 = 9
-    TURN_2_CP2 = 10
-    GO_2_LINE_B4_CP2 = 11
-    LINE_2_CP2 = 12
-    LINE_B4_CP3 = 13
-    TURN_2_LINE_B4_CP3 = 14
-    GO_2_LINE_B4_CP3 = 15
-    TURN_2_CP3 = 16
-    LINE_2_CP3 = 17
+    ST_B4_FOLLOW_LINE = 4
+    FOLLOW_LINE_B4_FORK = 5
+    FORCE_RIGHT_FORK = 6
+    LINE_FOLLOW_2_DIAMOND = 7
+    DIAMOND_2_CP1 = 8
+    TURN_2_CP2 = 9
+    GO_2_LINE_B4_CP2 = 10
+    LINE_2_CP2 = 11
+    LINE_B4_CP3 = 12
+    TURN_2_LINE_B4_CP3 = 13
+    GO_2_LINE_B4_CP3 = 14
+    TURN_2_CP3 = 15
+    LINE_2_CP3 = 16
+    GO_2_CP3 = 17
     GO_2_LINE_B4_CP4 = 18
-    LINE_2_CP4 = 19
+    FOLLOW_LINE_2_CP4 = 19
     TURN_4_GARAGE = 20
     MOVE_IN_GARAGE = 21
     TURN_2_GARAGE_EXIT = 22
     GO_2_GARAGE_EXIT = 23
-
-    FOLLOW_LINE_2_CP3 = 24
+    FOLLOW_LINE_2_WALL = 24
+    REVERSE_FROM_WALL = 25
+    TURN_2_CUP2 = 26
+    GO_2_CUP2 = 27
+    TURN_2_CP6 = 28
+    GO_2_CP6 = 29
+    FOLLOW_LINE_2_CP6 = 30
 
     # function states: Third digit is the number of inputs required
     # One Input: 100-199
-    FOLLOW_LINE_4_TIME = 101  #    var1 = durration [us]
+    TURN_ANGLE = 101  #            var1 = angle,  var2 = -----, var3 = ----
+    FOLLOW_LINE_4_TIME = 102  #    var1 = durration [us]
     # Two Inputs: 200-299
-    TURN_2_POINT = 202  #          var1 = X,      var2 = Y
     # Three Inputs: 300-399
     # Four Inputs: 400-499
     GO_2_POINT = 401  #            var1 = X,      var2 = Y,      var3 = Skip_x,      var4 = Skip_y
     FOLLOW_LINE_2_POINT = 402  #   var1 = X,      var2 = Y,      var3 = Skip_x,      var4 = Skip_y
 
-    def __init__(self, line_sensor: LineSensor, IMU_obj: IMU, bump_sensors: tuple):
+    def __init__(self, line_sensor, IMU_obj, bump_sensors: tuple):
+        collect()
+        from Closed_Loop_Control import ClosedLoopControl
+        from Line_Sensor import LineSensor
+        from IMU import IMU
+
         self.state = PathDirector.CALIBRATE  # this is overwritten on first run
         self.segment_set = False
         self.seg_start_time = 0
@@ -80,6 +80,12 @@ class PathDirector:
 
         self.uart = UART(5, 115200)
         self.bumped = False
+        self.bump_stop = True
+        self.bump_wall = False
+        self.bumptimer = 0
+
+        collect()
+        from pyb import Pin, ExtInt  # pyright: ignore
 
         # Create bumper callbacks for all pins
         def bmp_callback_handler(pin: Pin):
@@ -93,13 +99,10 @@ class PathDirector:
             ExtInt(bump_sensor, ExtInt.IRQ_FALLING, Pin.PULL_UP, bmp_callback_handler(bump_sensor))
 
         # Extra variables used for fixed distance
-        self.distance = 0  # mm
+        self.distance = 1000  # mm
         self.end_point = 0  # mm
 
-    def run(
-        self,
-        shares,
-    ):
+    def run(self, shares):
         # Seperating the shares
         (
             l_flag_s,
@@ -119,6 +122,7 @@ class PathDirector:
             obsd_yawrate_s,
             obsd_X_s,
             obsd_Y_s,
+            dist_yaw_s,
         ) = shares
 
         def set_state(new_state: int):
@@ -129,26 +133,50 @@ class PathDirector:
             # tell motors previous segment is complete
             test_complete_s.put(1)
 
+        def update_motors_CLC(CLC_obj):
+            v_adjust = CLC_obj.run() * RomiProps.wdiv2
+            l_flag_s.put(1)
+            l_speed_s.put(PD_vars.v_ref - v_adjust)
+            r_flag_s.put(1)
+            r_speed_s.put(PD_vars.v_ref + v_adjust)
+
+        def forward_at_speed(speed: float):
+            l_flag_s.put(1)
+            l_speed_s.put(speed)
+            r_flag_s.put(1)
+            r_speed_s.put(speed)
+
         set_state(PathDirector.CALIBRATE)
 
         while True:
             if self.bumped:
-                self.bumped = False
-                set_state(PathDirector.WAIT)
+                if self.bump_stop:
+                    self.uart.write(f"bumped\r\n".encode("utf-8"))
+                    self.bumped = False
+                    set_state(PathDirector.WAIT)
+                elif self.bump_wall:
+                    self.uart.write(f"wall\r\n".encode("utf-8"))
+                    set_state(PathDirector.REVERSE_FROM_WALL)
+                else:
+                    if self.bumptimer == 0:
+                        self.uart.write(f"bumped\r\n".encode("utf-8"))
+                        self.bumptimer = ticks_us()
+                    forward_at_speed(-100)
+                    if ticks_diff(ticks_us(), self.bumptimer) >= 1000_000:
+                        self.uart.write(f"unbumped\r\n".encode("utf-8"))
+                        forward_at_speed(0)
+                        self.bumptimer = 0
+                        self.bumped = False
 
             if self.Line_CLC:
-                self.Line_CLC.gain_update(
-                    Kp=LineSensor.Kp,
-                    Ki=LineSensor.Ki,
-                    Kd=LineSensor.Kd,
-                )
+                from Line_Sensor import LineSensor
+
+                self.Line_CLC.gain_update(Kp=LineSensor.Kp, Ki=LineSensor.Ki, Kd=LineSensor.Kd)
 
             if self.Heading_CLC:
-                self.Heading_CLC.gain_update(
-                    Kp=IMU.Kp,
-                    Ki=IMU.Ki,
-                    Kd=IMU.Kd,
-                )
+                from IMU import IMU
+
+                self.Heading_CLC.gain_update(Kp=IMU.Kp, Ki=IMU.Ki, Kd=IMU.Kd)
 
             if set_seg_s.get() != self.state:
                 set_state(set_seg_s.get())
@@ -159,14 +187,11 @@ class PathDirector:
                     # set seg_start_s to 2 because we have two motor controllers
                     # that both have to acknowledge the segment start
                     seg_start_s.put(2)
-                    l_flag_s.put(1)
-                    l_speed_s.put(0)
-                    r_flag_s.put(1)
-                    r_speed_s.put(0)
+                    forward_at_speed(0)
 
                     print("Starting Waiting Segment")
                     # Waiting Segment
-                    self.uart.write(f"curr state: {self.state}\r\n".encode("utf-8"))
+                    # self.uart.write(f"curr state: {self.state}\r\n".encode("utf-8"))
                     self.uart.write(f"L: {obsd_lpos_s.get()}\r\n".encode("utf-8"))
                     self.uart.write(f"R: {obsd_rpos_s.get()}\r\n".encode("utf-8"))
                     self.uart.write(f"C: {obsd_cpos_s.get()}\r\n".encode("utf-8"))
@@ -194,6 +219,7 @@ class PathDirector:
                 if not self.line_sensor.calibrated and self.line_sensor.calibrate():
                     print("Line Sensor Calibration Complete")
                     self.Line_CLC.reset()
+                    self.Line_CLC.set_ref(0)
 
                 if not self.IMU.calibrated and self.IMU.calibrate():
                     print("IMU Calibration Complete")
@@ -216,17 +242,9 @@ class PathDirector:
                     self.Line_CLC.set_ref(0)
 
                     # motor settings
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref)
+                    forward_at_speed(PD_vars.v_ref)
 
-                yaw_rate = self.Line_CLC.run()
-                v_adjust = yaw_rate * RomiProps.wdiv2
-                l_flag_s.put(1)
-                l_speed_s.put(PD_vars.v_ref - v_adjust)
-                r_flag_s.put(1)
-                r_speed_s.put(PD_vars.v_ref + v_adjust)
+                update_motors_CLC(self.Line_CLC)
 
             elif self.state == PathDirector.FIXED_FORWARD:
                 # Fixed Forward Distance Segment
@@ -237,14 +255,11 @@ class PathDirector:
                     seg_start_s.put(2)
                     print("Fixed Forward Distance Segment")
 
-                    self.distance = 1000  # mm
+                    # self.distance = 1000  # mm
                     self.end_point = obsd_cpos_s.get() + self.distance  # mm
 
                     # motor settings
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref)
+                    forward_at_speed(PD_vars.v_ref)
 
                 if obsd_cpos_s.get() >= self.end_point:
                     self.uart.write(f"L: {obsd_lpos_s.get()}\r\n".encode("utf-8"))
@@ -253,50 +268,36 @@ class PathDirector:
                     self.uart.write(f"H: {obsd_yaw_s.get()}\r\n".encode("utf-8"))
                     self.uart.write(f"X: {obsd_X_s.get()}\r\n".encode("utf-8"))
                     self.uart.write(f"Y: {obsd_Y_s.get()}\r\n".encode("utf-8"))
-                    set_state(PathDirector.WAIT)
+                    set_state(PD_vars.next_state)
 
-            elif self.state == PathDirector.RECORD_HEADING:
-                # Record Heading Segment
-                if not self.segment_set:
-                    self.segment_set = True
-                    # comms to motors
-                    seg_start_s.put(2)
-                    print("Record Heading Segment")
-
-                self.uart.write(
-                    f"obsd_heading: {obsd_yaw_s.get()}, heading: {self.IMU.heading}, IMU_heading: {self.IMU.get_imu_heading()}\r\n".encode(
-                        "utf-8"
-                    )
-                )
             # -------------------------------------------------------- Start of Functions -------------------------------------------------------- #
-
-            elif self.state == PathDirector.TURN_2_POINT:
-                # Turn towards specified point
-                # var1 = X, var2 = Y, var3 = set to "target heading"
-                if not self.segment_set:
+            elif self.state == PathDirector.TURN_ANGLE:
+                # Turn In Place Segment
+                # var1 = angle [deg], var2 = ----, var3 = ----
+                if not self.segment_set:  # ran once per segment
                     self.segment_set = True
-                    # comms to motors
+                    # set seg_start_s to 2 because we have two motor controllers
+                    # that both have to acknowledge the segment start
                     seg_start_s.put(2)
-                    print("Turn 2 Point Segment")
+                    print("Turn Angle Segment")
 
-                    dX = PD_vars.var_1 - obsd_X_s.get()
-                    dY = PD_vars.var_2 - obsd_Y_s.get()
+                    PD_vars.v_ref = 0
 
-                    PD_vars.var_3 = atan2(dY, dX)
-                    diff = ((PD_vars.var_3 - self.IMU.heading + pi) % (2 * pi)) - pi
-                    self.Heading_CLC.reset()
-                    self.Heading_CLC.set_ref(self.IMU.heading + diff)
+                    # degrees to rads
+                    PD_vars.var_1 = PD_vars.var_1 * pi / 180  # radians to turn
+                    PD_vars.var_2 = self.IMU.heading + PD_vars.var_1  # new desired heading
 
-                diff = ((PD_vars.var_3 - self.IMU.heading + pi) % (2 * pi)) - pi
+                    # Set IMU heading
+                    self.Heading_CLC.set_ref(PD_vars.var_2)
+
+                diff = ((PD_vars.var_1 - self.IMU.heading + pi) % (2 * pi)) - pi
+                self.Heading_CLC.set_ref(self.IMU.heading + diff)
+
                 if abs(diff) <= 3 / 180 * pi:  # 3 deg tolerance
                     set_state(PD_vars.next_state)
+                    PD_vars.v_ref = PD_vars.v_ref_DEFAULT
                 else:
-                    yaw_rate = self.Heading_CLC.run()
-                    v_adjust = yaw_rate * RomiProps.wdiv2
-                    l_flag_s.put(1)
-                    l_speed_s.put(-v_adjust)
-                    r_flag_s.put(1)
-                    r_speed_s.put(v_adjust)
+                    update_motors_CLC(self.Heading_CLC)
 
             elif self.state == PathDirector.GO_2_POINT:
                 # Using current heading and position, move to another point
@@ -310,68 +311,56 @@ class PathDirector:
                     seg_start_s.put(2)
                     print("Go 2 Point Segment")
                     # motor settings
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref)
+                    forward_at_speed(PD_vars.v_ref)
 
                     self.Heading_CLC.reset()
 
                 dX = PD_vars.var_1 - obsd_X_s.get()
                 dY = PD_vars.var_2 - obsd_Y_s.get()
+                target_angle = atan2(dY, dX)
+                diff = ((target_angle - self.IMU.heading + pi) % (2 * pi)) - pi
+                self.Heading_CLC.set_ref(self.IMU.heading + diff)
 
-                if (PD_vars.var_3 or abs(dX) <= 25) and (PD_vars.var_4 or abs(dY) <= 25):
+                if (PD_vars.v_ref == 0 and abs(diff) <= 3 / 180 * pi) or (
+                    (PD_vars.var_3 or abs(dX) <= 25) and (PD_vars.var_4 or abs(dY) <= 25)
+                ):
                     self.uart.write(f"{obsd_X_s.get()},{obsd_Y_s.get()}\r\n".encode("utf-8"))
-                    # self.uart.write(f"{PD_vars.var_3},{PD_vars.var_4}\r\n".encode("utf-8"))
+                    self.uart.write(f"Next State: {PD_vars.next_state}\r\n".encode("utf-8"))
                     set_state(PD_vars.next_state)
+                    PD_vars.v_ref = PD_vars.v_ref_DEFAULT
                 else:
-                    target_angle = atan2(dY, dX)
-                    diff = ((target_angle - self.IMU.heading + pi) % (2 * pi)) - pi
-                    self.Heading_CLC.set_ref(self.IMU.heading + diff)
-
-                    yaw_rate = self.Heading_CLC.run()
-                    v_adjust = yaw_rate * RomiProps.wdiv2
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref - v_adjust)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref + v_adjust)
+                    update_motors_CLC(self.Heading_CLC)
 
             elif self.state == PathDirector.FOLLOW_LINE_4_TIME:
                 if not self.segment_set:
                     # comms to motors
                     self.segment_set = True
                     seg_start_s.put(2)
-                    print("Starting Force Right Fork Segment")
+                    print("Starting Line Follow For Time Segment")
                     self.seg_start_time = ticks_us()
 
                     # motor settings
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref)
+                    forward_at_speed(PD_vars.v_ref)
+
+                    self.Line_CLC.reset()
+                    self.Line_CLC.set_ref(0)
 
                 if ticks_diff(ticks_us(), self.seg_start_time) >= PD_vars.var_1:
                     set_state(PD_vars.next_state)
                 else:
-                    yaw_rate = self.Line_CLC.run()
-                    v_adjust = yaw_rate * RomiProps.wdiv2
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref - v_adjust)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref + v_adjust)
+                    update_motors_CLC(self.Line_CLC)
 
             elif self.state == PathDirector.FOLLOW_LINE_2_POINT:
                 if not self.segment_set:
                     # comms to motors
                     self.segment_set = True
                     seg_start_s.put(2)
-                    print("Starting Force Right Fork Segment")
+                    print("Starting Line Follow To Point Segment")
 
                     # motor settings
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref)
+                    forward_at_speed(PD_vars.v_ref)
+
+                    self.Line_CLC.reset()
 
                 dX = PD_vars.var_1 - obsd_X_s.get()
                 dY = PD_vars.var_2 - obsd_Y_s.get()
@@ -379,12 +368,7 @@ class PathDirector:
                 if (PD_vars.var_3 or abs(dX) <= 25) and (PD_vars.var_4 or abs(dY) <= 25):
                     set_state(PD_vars.next_state)
                 else:
-                    yaw_rate = self.Line_CLC.run()
-                    v_adjust = yaw_rate * RomiProps.wdiv2
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref - v_adjust)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref + v_adjust)
+                    update_motors_CLC(self.Line_CLC)
             # -------------------------------------------------------- End of Functions -------------------------------------------------------- #
 
             # -------------------------------------------------------- Start of Path for final course -------------------------------------------------------- #
@@ -397,10 +381,7 @@ class PathDirector:
                     print("Straight before following line segment")
 
                     # motor settings
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref)
+                    forward_at_speed(PD_vars.v_ref)
 
                     self.distance = 50  # mm
 
@@ -420,20 +401,12 @@ class PathDirector:
                     self.Line_CLC.set_ref(0)
 
                     # motor settings
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref)
+                    forward_at_speed(PD_vars.v_ref)
 
                 if obsd_X_s.get() >= 725:
                     set_state(PathDirector.FORCE_RIGHT_FORK)
                 else:
-                    yaw_rate = self.Line_CLC.run()
-                    v_adjust = yaw_rate * RomiProps.wdiv2
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref - v_adjust)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref + v_adjust)
+                    update_motors_CLC(self.Line_CLC)
 
             elif self.state == PathDirector.FORCE_RIGHT_FORK:
                 # Force Right Fork
@@ -446,7 +419,7 @@ class PathDirector:
 
                     # motor settings
                     l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref + 150)
+                    l_speed_s.put(PD_vars.v_ref * 1.75)
                     r_flag_s.put(1)
                     r_speed_s.put(PD_vars.v_ref)
 
@@ -466,10 +439,7 @@ class PathDirector:
                     self.Line_CLC.set_ref(0)
 
                     # motor settings
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref)
+                    forward_at_speed(PD_vars.v_ref)
 
                 if (obsd_X_s.get() >= 900 and obsd_Y_s.get() <= 600) or self.IMU.heading <= -pi / 2 + 0.1:
                     self.uart.write(f"X_LF2D: {obsd_X_s.get()}\r\n".encode("utf-8"))
@@ -477,32 +447,30 @@ class PathDirector:
                     self.uart.write(f"H_LF2D: {obsd_yaw_s.get()}\r\n".encode("utf-8"))
                     set_state(PathDirector.DIAMOND_2_CP1)
                 else:
-                    yaw_rate = self.Line_CLC.run()
-                    v_adjust = yaw_rate * RomiProps.wdiv2
-                    l_flag_s.put(1)
-                    l_speed_s.put(PD_vars.v_ref - v_adjust)
-                    r_flag_s.put(1)
-                    r_speed_s.put(PD_vars.v_ref + v_adjust)
+                    update_motors_CLC(self.Line_CLC)
 
             elif self.state == PathDirector.DIAMOND_2_CP1:
                 PD_vars.var_1 = 950
-                PD_vars.var_2 = 425
-                PD_vars.var_3 = False
+                PD_vars.var_2 = 450
+                PD_vars.var_3 = True
                 PD_vars.var_4 = False
                 set_state(PathDirector.GO_2_POINT)
                 PD_vars.next_state = PathDirector.TURN_2_CP2
 
             elif self.state == PathDirector.TURN_2_CP2:
                 PD_vars.var_1 = 1300
-                PD_vars.var_2 = 675
-                set_state(PathDirector.TURN_2_POINT)
+                PD_vars.var_2 = 650
+                PD_vars.var_3 = False
+                PD_vars.var_4 = False
+                PD_vars.v_ref = 0
+                set_state(PathDirector.GO_2_POINT)
                 PD_vars.next_state = PathDirector.GO_2_LINE_B4_CP2
 
             elif self.state == PathDirector.GO_2_LINE_B4_CP2:
                 obsd_X_s.put(950)
                 obsd_Y_s.put(425)
                 PD_vars.var_1 = 1300
-                PD_vars.var_2 = 675
+                PD_vars.var_2 = 650
                 PD_vars.var_3 = False
                 PD_vars.var_4 = True
                 set_state(PathDirector.GO_2_POINT)
@@ -511,36 +479,27 @@ class PathDirector:
             elif self.state == PathDirector.LINE_2_CP2:
                 PD_vars.var_1 = 800_000
                 set_state(PathDirector.FOLLOW_LINE_4_TIME)
-                # -~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~- Choose to Skip CUP or not -~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-
-                PD_vars.next_state = PathDirector.FOLLOW_LINE_2_CP3  # Skip CUP
-                # PD_vars.next_state = PathDirector.LINE_B4_CP3  # Don't Skip CUP
+                PD_vars.next_state = PathDirector.LINE_B4_CP3
 
-            elif self.state == PathDirector.FOLLOW_LINE_2_CP3:  # Skip CUP
-                obsd_X_s.put(1400)
-                obsd_Y_s.put(800)
-                PD_vars.var_1 = 1500
-                PD_vars.var_2 = 100
-                PD_vars.var_3 = True
-                PD_vars.var_4 = False
-                set_state(PathDirector.FOLLOW_LINE_2_POINT)
-                PD_vars.next_state = PathDirector.WAIT
-                # PD_vars.next_state = PathDirector.GO_2_LINE_B4_CP4  # End Skip CUP
-
-            elif self.state == PathDirector.LINE_B4_CP3: # Don't Skip CUP
+            elif self.state == PathDirector.LINE_B4_CP3:
                 obsd_X_s.put(1400)
                 obsd_Y_s.put(800)
                 PD_vars.var_1 = 400_000
+                # PD_vars.var_1 = 5500_000
                 set_state(PathDirector.FOLLOW_LINE_4_TIME)
                 PD_vars.next_state = PathDirector.TURN_2_LINE_B4_CP3
 
             elif self.state == PathDirector.TURN_2_LINE_B4_CP3:
-                PD_vars.var_1 = 1500
+                PD_vars.var_1 = 1600
                 PD_vars.var_2 = 100
-                set_state(PathDirector.TURN_2_POINT)
+                PD_vars.var_3 = False
+                PD_vars.var_4 = False
+                PD_vars.v_ref = 0
+                set_state(PathDirector.GO_2_POINT)
                 PD_vars.next_state = PathDirector.GO_2_LINE_B4_CP3
 
             elif self.state == PathDirector.GO_2_LINE_B4_CP3:
-                PD_vars.var_1 = 1500
+                PD_vars.var_1 = 1600
                 PD_vars.var_2 = 100
                 PD_vars.var_3 = True
                 PD_vars.var_4 = False
@@ -548,58 +507,167 @@ class PathDirector:
                 PD_vars.next_state = PathDirector.TURN_2_CP3
 
             elif self.state == PathDirector.TURN_2_CP3:
-                PD_vars.var_1 = 1050
-                PD_vars.var_2 = 100
-                set_state(PathDirector.TURN_2_POINT)
-                PD_vars.next_state = PathDirector.LINE_2_CP3
+                self.uart.write(f"T2C3 X, Y: {obsd_X_s.get()}, {obsd_Y_s.get()}\r\n".encode("utf-8"))
+                self.IMU.set_heading(-pi / 2)
+                PD_vars.var_1 = -180
+                set_state(PathDirector.TURN_ANGLE)
+                PD_vars.next_state = PathDirector.GO_2_LINE_B4_CP4
 
-            elif self.state == PathDirector.LINE_2_CP3:
-                PD_vars.var_1 = 600_000
-                set_state(PathDirector.FOLLOW_LINE_4_TIME)
-                PD_vars.next_state = PathDirector.WAIT  # End Don't Skip CUP
+            # elif self.state == PathDirector.GO_2_CP3:
+            #     self.IMU.set_heading(-pi)
+            #     # obsd_X_s.put(1350)
+            #     # obsd_Y_s.put(100)
+            #     PD_vars.var_1 = 100_000
+            #     set_state(PathDirector.FOLLOW_LINE_4_TIME)
+            #     PD_vars.next_state = PathDirector.GO_2_LINE_B4_CP4
 
             elif self.state == PathDirector.GO_2_LINE_B4_CP4:
-                PD_vars.var_1 = 1050
+                # obsd_X_s.put(1350)
+                # obsd_Y_s.put(100)
+                # self.IMU.set_heading(-pi)
+
+                self.uart.write(f"X, Y: {obsd_X_s.get()}, {obsd_Y_s.get()}\r\n".encode("utf-8"))
+                self.uart.write(f"dist yaw: {dist_yaw_s.get()}\r\n".encode("utf-8"))
+
+                obsd_X_s.put(1600)
+                obsd_Y_s.put(100)
+                self.IMU.set_heading(dist_yaw_s.get())
+                PD_vars.var_1 = 1100
                 PD_vars.var_2 = 100
                 PD_vars.var_3 = False
                 PD_vars.var_4 = True
                 set_state(PathDirector.GO_2_POINT)
-                # PD_vars.next_state = PathDirector.LINE_2_CP4
-                PD_vars.next_state = PathDirector.WAIT
+                PD_vars.next_state = PathDirector.FOLLOW_LINE_2_CP4
 
-            elif self.state == PathDirector.LINE_2_CP4:
-                PD_vars.var_1 = 800_000
+                # self.distance = 400
+                # set_state(PathDirector.FIXED_FORWARD)
+                # PD_vars.next_state = PathDirector.FOLLOW_LINE_2_CP4
+
+            elif self.state == PathDirector.FOLLOW_LINE_2_CP4:
+                self.bump_stop = False
+                PD_vars.var_1 = 900
+                PD_vars.var_2 = 100
+                PD_vars.var_3 = False
+                PD_vars.var_4 = True
+                set_state(PathDirector.FOLLOW_LINE_2_POINT)
+                PD_vars.next_state = PathDirector.TURN_4_GARAGE
+
+                # PD_vars.var_1 = 800_000
+                # set_state(PathDirector.FOLLOW_LINE_4_TIME)
+                # PD_vars.next_state = PathDirector.TURN_4_GARAGE
+
+            elif self.state == PathDirector.TURN_4_GARAGE:
+                obsd_X_s.put(800)
+                obsd_Y_s.put(150)
+                PD_vars.var_1 = -180
+                set_state(PathDirector.TURN_ANGLE)
+                PD_vars.next_state = PathDirector.MOVE_IN_GARAGE
+
+            elif self.state == PathDirector.MOVE_IN_GARAGE:
+                self.uart.write(f"dist, head: {dist_yaw_s.get()}, {self.IMU.heading}\r\n".encode("utf-8"))
+                # self.distance = 625
+                # set_state(PathDirector.FIXED_FORWARD)
+                self.IMU.set_heading(-pi)
+                PD_vars.var_1 = 160
+                PD_vars.var_2 = 150
+                PD_vars.var_3 = False
+                PD_vars.var_4 = True
+                set_state(PathDirector.GO_2_POINT)
+                PD_vars.next_state = PathDirector.TURN_2_GARAGE_EXIT
+
+            elif self.state == PathDirector.TURN_2_GARAGE_EXIT:
+                self.uart.write(f"dist, head: {dist_yaw_s.get()}, {self.IMU.heading}\r\n".encode("utf-8"))
+                PD_vars.var_1 = -260
+                set_state(PathDirector.TURN_ANGLE)
+                PD_vars.next_state = PathDirector.GO_2_GARAGE_EXIT
+
+            elif self.state == PathDirector.GO_2_GARAGE_EXIT:
+                self.bump_wall = True
+                self.uart.write(f"dist, head: {dist_yaw_s.get()}, {self.IMU.heading}\r\n".encode("utf-8"))
+                obsd_X_s.put(175)
+                obsd_Y_s.put(175)
+                self.IMU.set_heading(-3 * pi / 2)
+                PD_vars.var_1 = 100
+                PD_vars.var_2 = 400
+                PD_vars.var_3 = True
+                PD_vars.var_4 = False
+                set_state(PathDirector.GO_2_POINT)
+                PD_vars.next_state = PathDirector.FOLLOW_LINE_2_CP4
+
+            elif self.state == PathDirector.FOLLOW_LINE_2_WALL:
+                # PD_vars.var_1 = 175
+                # PD_vars.var_2 = 1000
+                # PD_vars.var_3 = False
+                # PD_vars.var_4 = True
+                PD_vars.v_ref = 100
+                self.bump_wall = True
+                PD_vars.var_1 = 2_000_000
+                set_state(PathDirector.FOLLOW_LINE_4_TIME)
+                PD_vars.next_state = PathDirector.REVERSE_FROM_WALL  # changed in bumped section
+
+            elif self.state == PathDirector.REVERSE_FROM_WALL:
+                if not self.segment_set:  # ran once per segment
+                    self.segment_set = True
+                    # set seg_start_s to 2 because we have two motor controllers
+                    # that both have to acknowledge the segment start
+                    seg_start_s.put(2)
+                    print("Fixed Reverse Distance Segment")
+
+                    self.bump_wall = False
+                    self.bumped = False
+                    self.IMU.set_heading(-3 * pi / 2)
+                    obsd_X_s.put(100)
+                    obsd_Y_s.put(675)
+
+                    self.distance = -100  # mm
+                    self.end_point = obsd_cpos_s.get() + self.distance  # mm
+
+                    # motor settings
+                    forward_at_speed(-200)
+
+                if obsd_cpos_s.get() <= self.end_point:
+                    self.uart.write(f"reversed\r\n".encode("utf-8"))
+                    set_state(PathDirector.TURN_2_CUP2)
+
+            elif self.state == PathDirector.TURN_2_CUP2:
+                PD_vars.var_1 = 500
+                PD_vars.var_2 = 500
+                PD_vars.var_3 = False
+                PD_vars.var_4 = False
+                PD_vars.v_ref = 0
+                set_state(PathDirector.GO_2_POINT)
+                PD_vars.next_state = PathDirector.GO_2_CUP2
+
+            elif self.state == PathDirector.GO_2_CUP2:
+                self.IMU.set_heading(pi)
+                PD_vars.var_1 = 500
+                PD_vars.var_2 = 500
+                PD_vars.var_3 = False
+                PD_vars.var_4 = True
+                set_state(PathDirector.GO_2_POINT)
+                PD_vars.next_state = PathDirector.TURN_2_CP6
+
+            elif self.state == PathDirector.TURN_2_CP6:
+                PD_vars.var_1 = 100
+                PD_vars.var_2 = 300
+                PD_vars.var_3 = False
+                PD_vars.var_4 = False
+                PD_vars.v_ref = 0
+                set_state(PathDirector.GO_2_POINT)
+                PD_vars.next_state = PathDirector.GO_2_CP6
+
+            elif self.state == PathDirector.GO_2_CP6:
+                PD_vars.var_1 = 100
+                PD_vars.var_2 = 300
+                PD_vars.var_3 = False
+                PD_vars.var_4 = True
+                set_state(PathDirector.GO_2_POINT)
+                PD_vars.next_state = PathDirector.TURN_2_CP6
+
+            elif self.state == PathDirector.FOLLOW_LINE_2_CP6:
+                PD_vars.var_1 = 400_000
                 set_state(PathDirector.FOLLOW_LINE_4_TIME)
                 PD_vars.next_state = PathDirector.WAIT
 
             # -------------------------------------------------------- End of Path for final course -------------------------------------------------------- #
             yield self.state
-
-
-# TURN_ANGLE = 101  #            var1 = angle,  var2 = -----, var3 = ----
-# elif self.state == PathDirector.TURN_ANGLE:
-#     # Turn In Place Segment
-#     # var1 = angle [deg], var2 = ----, var3 = ----
-#     if not self.segment_set:  # ran once per segment
-#         self.segment_set = True
-#         # set seg_start_s to 2 because we have two motor controllers
-#         # that both have to acknowledge the segment start
-#         seg_start_s.put(2)
-#         print("Turn Angle Segment")
-
-#         # degrees to rads
-#         PD_vars.var_1 = PD_vars.var_1 * pi / 180  # radians to turn
-#         PD_vars.var_2 = self.IMU.heading + PD_vars.var_1  # new desired heading
-
-#         # Set IMU heading
-#         self.Heading_CLC.set_ref(PD_vars.var_2)
-
-#     if abs(self.IMU.heading - PD_vars.var_2) <= 3 / 180 * pi:  # 3 deg tolerance
-#         set_state(PD_vars.next_state)
-#     else:
-#         yaw_rate = self.Heading_CLC.run()
-#         v_adjust = yaw_rate * RomiProps.wdiv2
-#         l_flag_s.put(1)
-#         l_speed_s.put(PD_vars.v_ref - v_adjust)
-#         r_flag_s.put(1)
-#         r_speed_s.put(PD_vars.v_ref + v_adjust)
