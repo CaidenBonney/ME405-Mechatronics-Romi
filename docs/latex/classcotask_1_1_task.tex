@@ -8,7 +8,7 @@ Implements multitasking with scheduling and some performance logging.
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classcotask_1_1_task_a2fe3b73c0ccc2cd20a89694e336291f5}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, run\+\_\+fun, \mbox{\hyperlink{classcotask_1_1_task_ab54e069dd0b4f0a2f8e7f00c94998a10}{name}}="{}No\+Name"{}, \mbox{\hyperlink{classcotask_1_1_task_aeced93c7b7d23e33de9693d278aef88b}{priority}}=0, \mbox{\hyperlink{classcotask_1_1_task_afc5c88f112f516002f67118a0ee82f44}{period}}=None, profile=False, trace=False, shares=())
+\mbox{\hyperlink{classcotask_1_1_task_a2fe3b73c0ccc2cd20a89694e336291f5}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, run\+\_\+fun, \mbox{\hyperlink{classcotask_1_1_task_ab54e069dd0b4f0a2f8e7f00c94998a10}{name}}="{}No\+Name"{}, \mbox{\hyperlink{classcotask_1_1_task_aeced93c7b7d23e33de9693d278aef88b}{priority}}=0, period=None, profile=False, trace=False, shares=())
 \begin{DoxyCompactList}\small\item\em Initialize a task object so it may be run by the scheduler. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classcotask_1_1_task_af60def0ed4a1bc5fec32f3cf8b8a90c8}{schedule}} (self)
 \begin{DoxyCompactList}\small\item\em This method is called by the scheduler; it attempts to run this task. \end{DoxyCompactList}\item 
@@ -27,41 +27,15 @@ bool \mbox{\hyperlink{classcotask_1_1_task_a6102bc35d7cb1ce292abc85d4ddc23e1}{re
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classcotask_1_1_task_ab54e069dd0b4f0a2f8e7f00c94998a10}{name}} = name
+\Hypertarget{classcotask_1_1_task_ab54e069dd0b4f0a2f8e7f00c94998a10}\label{classcotask_1_1_task_ab54e069dd0b4f0a2f8e7f00c94998a10} 
+{\bfseries name} = name
 \begin{DoxyCompactList}\small\item\em The name of the task, hopefully a short and descriptive string. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classcotask_1_1_task_aeced93c7b7d23e33de9693d278aef88b}{priority}} = int(priority)
+\Hypertarget{classcotask_1_1_task_aeced93c7b7d23e33de9693d278aef88b}\label{classcotask_1_1_task_aeced93c7b7d23e33de9693d278aef88b} 
+{\bfseries priority} = int(priority)
 \begin{DoxyCompactList}\small\item\em The task\textquotesingle{}s priority, an integer with higher numbers meaning higher priority. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{classcotask_1_1_task_afc5c88f112f516002f67118a0ee82f44}{period}} = int(period \texorpdfstring{$\ast$}{*} 1000)
-\item 
-bool \mbox{\hyperlink{classcotask_1_1_task_ad309fae1890bffafa75e9fdb33fae600}{go\+\_\+flag}} = False
+\Hypertarget{classcotask_1_1_task_ad309fae1890bffafa75e9fdb33fae600}\label{classcotask_1_1_task_ad309fae1890bffafa75e9fdb33fae600} 
+bool {\bfseries go\+\_\+flag} = False
 \begin{DoxyCompactList}\small\item\em Flag which is set true when the task is ready to be run by the scheduler. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Protected Attributes}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\hyperlink{classcotask_1_1_task_a3d158e6e4971c204449c07f72e67a186}{\+\_\+run\+\_\+gen}} = run\+\_\+fun(shares)
-\item 
-\mbox{\hyperlink{classcotask_1_1_task_aa443e9f35f5dee489023afb5d5b9d091}{\+\_\+next\+\_\+run}} = utime.\+ticks\+\_\+us() + self.\+period
-\item 
-\mbox{\hyperlink{classcotask_1_1_task_a0d0e9249bbce322f63ad1d2004069fac}{\+\_\+prof}} = profile
-\item 
-int \mbox{\hyperlink{classcotask_1_1_task_a05a6180fe3ba22a1d1e36fe1cc34cd16}{\+\_\+prev\+\_\+state}} = 0
-\item 
-bool \mbox{\hyperlink{classcotask_1_1_task_a12647eaf44c1e5c9e6083e0ce77bcb3f}{\+\_\+trace}} = trace
-\item 
-list \mbox{\hyperlink{classcotask_1_1_task_acaeeb90a6096f7d1e6458648dc84f6b7}{\+\_\+tr\+\_\+data}} = \mbox{[}$\,$\mbox{]}
-\item 
-\mbox{\hyperlink{classcotask_1_1_task_a99c833294c7426f5f5b753f382d9f88d}{\+\_\+prev\+\_\+time}} = utime.\+ticks\+\_\+us()
-\item 
-int \mbox{\hyperlink{classcotask_1_1_task_a5549bd87387fee6088efba87766a6fa7}{\+\_\+slowest}}
-\item 
-int \mbox{\hyperlink{classcotask_1_1_task_a9b281cae547cbe63219a13ec6f032cb9}{\+\_\+latest}}
-\item 
-int \mbox{\hyperlink{classcotask_1_1_task_ae190f013ce9955c05841c20f2d46e9ac}{\+\_\+runs}} = 0
-\item 
-int \mbox{\hyperlink{classcotask_1_1_task_ac93a114add603ab2bb498c995fd64ecd}{\+\_\+run\+\_\+sum}} = 0
-\item 
-int \mbox{\hyperlink{classcotask_1_1_task_a10930f344a7f5615b2fd996aa95e39aa}{\+\_\+late\+\_\+sum}} = 0
-\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -135,49 +109,53 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00088}{88}} of file \mbox
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ run\_fun,\ name="{}NoName"{},\ priority=0,\ period=None,\ profile=False,\ trace=False,\ shares=()): }
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ The\ function\ which\ is\ run\ to\ implement\ this\ task's\ code.\ Since\ it }}
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ is\ a\ generator,\ we\ "{}run"{}\ it\ here,\ which\ doesn't\ actually\ run\ it\ but }}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ gets\ it\ going\ as\ a\ generator\ which\ is\ ready\ to\ yield\ values }}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ shares: }
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_run\_gen\ =\ run\_fun(shares) }
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_run\_gen\ =\ run\_fun() }
-\DoxyCodeLine{00096\  }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ run\_fun,\ name="{}NoName"{},\ priority=0,\ period=None,\ profile=False,\ trace=False,\ shares=()):}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ The\ function\ which\ is\ run\ to\ implement\ this\ task's\ code.\ Since\ it}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ is\ a\ generator,\ we\ "{}run"{}\ it\ here,\ which\ doesn't\ actually\ run\ it\ but}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ gets\ it\ going\ as\ a\ generator\ which\ is\ ready\ to\ yield\ values}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ shares:}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_run\_gen\ =\ run\_fun(shares)}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_run\_gen\ =\ run\_fun()}
+\DoxyCodeLine{00096\ }
 \DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ self.name\ =\ name }
-\DoxyCodeLine{00099\  }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ self.name\ =\ name}
+\DoxyCodeLine{00099\ }
 \DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ self.priority\ =\ int(priority) }
-\DoxyCodeLine{00103\  }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ self.priority\ =\ int(priority)}
+\DoxyCodeLine{00103\ }
 \DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ period\ !=\ \textcolor{keywordtype}{None}: }
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ int(period\ *\ 1000) }
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_next\_run\ =\ utime.ticks\_us()\ +\ self.period }
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ period }
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_next\_run\ =\ \textcolor{keywordtype}{None} }
-\DoxyCodeLine{00115\  }
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Flag\ which\ causes\ the\ task\ to\ be\ profiled,\ in\ which\ the\ execution }}
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ time\ of\ the\ @c\ run()\ method\ is\ measured\ and\ basic\ statistics\ kept. }}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ self.\_prof\ =\ profile }
-\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ self.reset\_profile() }
-\DoxyCodeLine{00120\  }
-\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ The\ previous\ state\ in\ which\ the\ task\ last\ ran.\ It\ is\ used\ to\ watch }}
-\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ for\ and\ track\ state\ transitions. }}
-\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ self.\_prev\_state\ =\ 0 }
-\DoxyCodeLine{00124\  }
-\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ transition\ tracing\ has\ been\ enabled,\ create\ an\ empty\ list\ in }}
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ which\ to\ store\ transition\ (time,\ to-\/state)\ stamps }}
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ self.\_trace\ =\ trace }
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ self.\_tr\_data\ =\ [] }
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ self.\_prev\_time\ =\ utime.ticks\_us() }
-\DoxyCodeLine{00130\  }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ period\ !=\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ int(period\ *\ 1000)}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_next\_run\ =\ utime.ticks\_us()\ +\ self.period}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ period}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_next\_run\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Flag\ which\ causes\ the\ task\ to\ be\ profiled,\ in\ which\ the\ execution}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ time\ of\ the\ @c\ run()\ method\ is\ measured\ and\ basic\ statistics\ kept.}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ self.\_prof\ =\ profile}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ self.reset\_profile()}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ The\ previous\ state\ in\ which\ the\ task\ last\ ran.\ It\ is\ used\ to\ watch}}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ for\ and\ track\ state\ transitions.}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ self.\_prev\_state\ =\ 0}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ transition\ tracing\ has\ been\ enabled,\ create\ an\ empty\ list\ in}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ which\ to\ store\ transition\ (time,\ to-\/state)\ stamps}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ self.\_trace\ =\ trace}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ self.\_tr\_data\ =\ []}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ self.\_prev\_time\ =\ utime.ticks\_us()}
+\DoxyCodeLine{00130\ }
 \DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{False} }
-\DoxyCodeLine{00134\  }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{00134\ }
 
 \end{DoxyCode}
+
+
+References \mbox{\hyperlink{cotask_8py_source_l00093}{\+\_\+run\+\_\+gen}}.
+
 
 
 \label{doc-func-members}
@@ -202,26 +180,26 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00257}{257}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keyword}{def\ }\_\_repr\_\_(self): }
-\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ rst\ =\ f\textcolor{stringliteral}{"{}\{self.name:<16s\}\{self.priority:\ 4d\}"{}} }
-\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}: }
-\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{(self.period\ /\ 1000.0):\ 10.1f\}"{}} }
-\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ TypeError: }
-\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ -\/"{}} }
-\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{self.\_runs:\ 8d\}"{}} }
-\DoxyCodeLine{00264\  }
-\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof\ \textcolor{keywordflow}{and}\ self.\_runs\ >\ 0: }
-\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ avg\_dur\ =\ (self.\_run\_sum\ /\ self.\_runs)\ /\ 1000.0 }
-\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ avg\_late\ =\ (self.\_late\_sum\ /\ self.\_runs)\ /\ 1000.0 }
-\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{avg\_dur:\ 10.3f\}\{(self.\_slowest\ /\ 1000.0):\ 10.3f\}"{}} }
-\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.period\ !=\ \textcolor{keywordtype}{None}: }
-\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{avg\_late:\ 10.3f\}\{(self.\_latest\ /\ 1000.0):\ 10.3f\}"{}} }
-\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ rst }
-\DoxyCodeLine{00272\  }
-\DoxyCodeLine{00273\  }
-\DoxyCodeLine{00274\ \textcolor{comment}{\#\ ============================================================================= }}
-\DoxyCodeLine{00275\  }
-\DoxyCodeLine{00276\  }
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keyword}{def\ }\_\_repr\_\_(self):}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ rst\ =\ f\textcolor{stringliteral}{"{}\{self.name:<16s\}\{self.priority:\ 4d\}"{}}}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{(self.period\ /\ 1000.0):\ 10.1f\}"{}}}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ TypeError:}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ -\/"{}}}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{self.\_runs:\ 8d\}"{}}}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof\ \textcolor{keywordflow}{and}\ self.\_runs\ >\ 0:}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ avg\_dur\ =\ (self.\_run\_sum\ /\ self.\_runs)\ /\ 1000.0}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ avg\_late\ =\ (self.\_late\_sum\ /\ self.\_runs)\ /\ 1000.0}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{avg\_dur:\ 10.3f\}\{(self.\_slowest\ /\ 1000.0):\ 10.3f\}"{}}}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.period\ !=\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{avg\_late:\ 10.3f\}\{(self.\_latest\ /\ 1000.0):\ 10.3f\}"{}}}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ rst}
+\DoxyCodeLine{00272\ }
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00274\ \textcolor{comment}{\#\ =============================================================================}}
+\DoxyCodeLine{00275\ }
+\DoxyCodeLine{00276\ }
 
 \end{DoxyCode}
 
@@ -247,20 +225,20 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00233}{233}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keyword}{def\ }get\_trace(self): }
-\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ tr\_str\ =\ \textcolor{stringliteral}{"{}Task\ "{}}\ +\ self.name\ +\ \textcolor{stringliteral}{"{}:"{}} }
-\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_trace: }
-\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}} }
-\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ last\_state\ =\ 0 }
-\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ total\_time\ =\ 0.0 }
-\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ item\ \textcolor{keywordflow}{in}\ self.\_tr\_data: }
-\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_time\ +=\ item[0]\ /\ 1000000.0 }
-\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\{:\ 12.6f\}:\ \{:\ 2d\}\ -\/>\ \{:d\}\(\backslash\)n"{}}.format(total\_time,\ last\_state,\ item[1]) }
-\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ last\_state\ =\ item[1] }
-\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
-\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\ not\ traced"{}} }
-\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tr\_str }
-\DoxyCodeLine{00246\  }
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keyword}{def\ }get\_trace(self):}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ tr\_str\ =\ \textcolor{stringliteral}{"{}Task\ "{}}\ +\ self.name\ +\ \textcolor{stringliteral}{"{}:"{}}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_trace:}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ last\_state\ =\ 0}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ total\_time\ =\ 0.0}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ item\ \textcolor{keywordflow}{in}\ self.\_tr\_data:}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_time\ +=\ item[0]\ /\ 1000000.0}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\{:\ 12.6f\}:\ \{:\ 2d\}\ -\/>\ \{:d\}\(\backslash\)n"{}}.format(total\_time,\ last\_state,\ item[1])}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ last\_state\ =\ item[1]}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\ not\ traced"{}}}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tr\_str}
+\DoxyCodeLine{00246\ }
 
 \end{DoxyCode}
 
@@ -283,9 +261,9 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00250}{250}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keyword}{def\ }go(self): }
-\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{True} }
-\DoxyCodeLine{00252\  }
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keyword}{def\ }go(self):}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{00252\ }
 
 \end{DoxyCode}
 
@@ -308,29 +286,29 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00192}{192}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{def\ }ready(self)\ -\/>\ bool: }
-\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ this\ task\ uses\ a\ timer,\ check\ if\ it's\ time\ to\ run\ run()\ again.\ If }}
-\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ so,\ set\ go\ flag\ and\ set\ the\ timer\ to\ go\ off\ at\ the\ next\ run\ time }}
-\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.period\ !=\ \textcolor{keywordtype}{None}: }
-\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ late\ =\ utime.ticks\_diff(utime.ticks\_us(),\ self.\_next\_run) }
-\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ late\ >\ 0: }
-\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{True} }
-\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_next\_run\ =\ utime.ticks\_diff(self.period,\ -\/self.\_next\_run) }
-\DoxyCodeLine{00200\  }
-\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ keeping\ a\ latency\ profile,\ record\ the\ data }}
-\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof: }
-\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_late\_sum\ +=\ late }
-\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ late\ >\ self.\_latest: }
-\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_latest\ =\ late }
-\DoxyCodeLine{00206\  }
-\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ the\ task\ doesn't\ use\ a\ timer,\ we\ rely\ on\ go\_flag\ to\ signal\ ready }}
-\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.go\_flag }
-\DoxyCodeLine{00209\  }
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{def\ }ready(self)\ -\/>\ bool:}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ this\ task\ uses\ a\ timer,\ check\ if\ it's\ time\ to\ run\ run()\ again.\ If}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ so,\ set\ go\ flag\ and\ set\ the\ timer\ to\ go\ off\ at\ the\ next\ run\ time}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.period\ !=\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ late\ =\ utime.ticks\_diff(utime.ticks\_us(),\ self.\_next\_run)}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ late\ >\ 0:}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_next\_run\ =\ utime.ticks\_diff(self.period,\ -\/self.\_next\_run)}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ keeping\ a\ latency\ profile,\ record\ the\ data}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof:}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_late\_sum\ +=\ late}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ late\ >\ self.\_latest:}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_latest\ =\ late}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ the\ task\ doesn't\ use\ a\ timer,\ we\ rely\ on\ go\_flag\ to\ signal\ ready}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.go\_flag}
+\DoxyCodeLine{00209\ }
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{cotask_8py_source_l00226}{\+\_\+late\+\_\+sum}}, \mbox{\hyperlink{cotask_8py_source_l00111}{\+\_\+next\+\_\+run}}, \mbox{\hyperlink{cotask_8py_source_l00118}{\+\_\+prof}}, \mbox{\hyperlink{cotask_8py_source_l00133}{go\+\_\+flag}}, and \mbox{\hyperlink{cotask_8py_source_l00110}{period}}.
+References \mbox{\hyperlink{cotask_8py_source_l00226}{\+\_\+late\+\_\+sum}}, \mbox{\hyperlink{cotask_8py_source_l00204}{\+\_\+latest}}, \mbox{\hyperlink{cotask_8py_source_l00111}{\+\_\+next\+\_\+run}}, \mbox{\hyperlink{cotask_8py_source_l00118}{\+\_\+prof}}, \mbox{\hyperlink{cotask_8py_source_l00133}{go\+\_\+flag}}, and \mbox{\hyperlink{cotask_8py_source_l00110}{period}}.
 
 \Hypertarget{classcotask_1_1_task_a0fd4093dcd01cd1d05ace187956340cf}\index{cotask.Task@{cotask.Task}!reset\_profile@{reset\_profile}}
 \index{reset\_profile@{reset\_profile}!cotask.Task@{cotask.Task}}
@@ -348,15 +326,19 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00222}{222}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keyword}{def\ }reset\_profile(self): }
-\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ self.\_runs\ =\ 0 }
-\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ self.\_run\_sum\ =\ 0 }
-\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ self.\_slowest\ =\ 0 }
-\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ self.\_late\_sum\ =\ 0 }
-\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ self.\_latest\ =\ 0 }
-\DoxyCodeLine{00228\  }
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keyword}{def\ }reset\_profile(self):}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ self.\_runs\ =\ 0}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ self.\_run\_sum\ =\ 0}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ self.\_slowest\ =\ 0}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ self.\_late\_sum\ =\ 0}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ self.\_latest\ =\ 0}
+\DoxyCodeLine{00228\ }
 
 \end{DoxyCode}
+
+
+References \mbox{\hyperlink{cotask_8py_source_l00226}{\+\_\+late\+\_\+sum}}, \mbox{\hyperlink{cotask_8py_source_l00204}{\+\_\+latest}}, \mbox{\hyperlink{cotask_8py_source_l00224}{\+\_\+run\+\_\+sum}}, \mbox{\hyperlink{cotask_8py_source_l00223}{\+\_\+runs}}, and \mbox{\hyperlink{cotask_8py_source_l00164}{\+\_\+slowest}}.
+
 \Hypertarget{classcotask_1_1_task_af60def0ed4a1bc5fec32f3cf8b8a90c8}\index{cotask.Task@{cotask.Task}!schedule@{schedule}}
 \index{schedule@{schedule}!cotask.Task@{cotask.Task}}
 \doxysubsubsection{\texorpdfstring{schedule()}{schedule()}}
@@ -378,56 +360,56 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00141}{141}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{def\ }schedule(self)\ -\/>\ bool: }
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.ready(): }
-\DoxyCodeLine{00143\  }
-\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ the\ go\ flag\ for\ the\ next\ run }}
-\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{False} }
-\DoxyCodeLine{00146\  }
-\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling,\ save\ the\ start\ time }}
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof: }
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stime\ =\ utime.ticks\_us() }
-\DoxyCodeLine{00150\  }
-\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Run\ the\ method\ belonging\ to\ the\ state\ which\ should\ be\ run\ next }}
-\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ curr\_state\ =\ next(self.\_run\_gen) }
-\DoxyCodeLine{00153\  }
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling\ or\ tracing,\ save\ timing\ data }}
-\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof\ \textcolor{keywordflow}{or}\ self.\_trace: }
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ etime\ =\ utime.ticks\_us() }
-\DoxyCodeLine{00157\  }
-\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling,\ save\ timing\ data }}
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof: }
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_runs\ +=\ 1 }
-\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ runt\ =\ utime.ticks\_diff(etime,\ stime) }
-\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_runs\ >\ 2: }
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_run\_sum\ +=\ runt }
-\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ runt\ >\ self.\_slowest: }
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_slowest\ =\ runt }
-\DoxyCodeLine{00166\  }
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ transition\ logic\ tracing\ is\ on,\ record\ a\ transition;\ if\ not, }}
-\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ ignore\ the\ state.\ If\ out\ of\ memory,\ switch\ tracing\ off\ and }}
-\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ run\ the\ memory\ allocation\ garbage\ collector }}
-\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_trace: }
-\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}: }
-\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ curr\_state\ !=\ self.\_prev\_state: }
-\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_tr\_data.append((utime.ticks\_diff(etime,\ self.\_prev\_time),\ curr\_state)) }
-\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ MemoryError: }
-\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_trace\ =\ \textcolor{keyword}{False} }
-\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gc.collect() }
-\DoxyCodeLine{00177\  }
-\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_prev\_state\ =\ curr\_state }
-\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_prev\_time\ =\ etime }
-\DoxyCodeLine{00180\  }
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True} }
-\DoxyCodeLine{00182\  }
-\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
-\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{False} }
-\DoxyCodeLine{00185\  }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{def\ }schedule(self)\ -\/>\ bool:}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.ready():}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ the\ go\ flag\ for\ the\ next\ run}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling,\ save\ the\ start\ time}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof:}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stime\ =\ utime.ticks\_us()}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Run\ the\ method\ belonging\ to\ the\ state\ which\ should\ be\ run\ next}}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ curr\_state\ =\ next(self.\_run\_gen)}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling\ or\ tracing,\ save\ timing\ data}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof\ \textcolor{keywordflow}{or}\ self.\_trace:}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ etime\ =\ utime.ticks\_us()}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling,\ save\ timing\ data}}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof:}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_runs\ +=\ 1}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ runt\ =\ utime.ticks\_diff(etime,\ stime)}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_runs\ >\ 2:}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_run\_sum\ +=\ runt}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ runt\ >\ self.\_slowest:}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_slowest\ =\ runt}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ transition\ logic\ tracing\ is\ on,\ record\ a\ transition;\ if\ not,}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ ignore\ the\ state.\ If\ out\ of\ memory,\ switch\ tracing\ off\ and}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ run\ the\ memory\ allocation\ garbage\ collector}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_trace:}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ curr\_state\ !=\ self.\_prev\_state:}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_tr\_data.append((utime.ticks\_diff(etime,\ self.\_prev\_time),\ curr\_state))}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ MemoryError:}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_trace\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gc.collect()}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_prev\_state\ =\ curr\_state}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_prev\_time\ =\ etime}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True}}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{False}}
+\DoxyCodeLine{00185\ }
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{cotask_8py_source_l00118}{\+\_\+prof}}, \mbox{\hyperlink{cotask_8py_source_l00093}{\+\_\+run\+\_\+gen}}, \mbox{\hyperlink{cotask_8py_source_l00224}{\+\_\+run\+\_\+sum}}, \mbox{\hyperlink{cotask_8py_source_l00223}{\+\_\+runs}}, \mbox{\hyperlink{cotask_8py_source_l00127}{\+\_\+trace}}, \mbox{\hyperlink{cotask_8py_source_l00133}{go\+\_\+flag}}, and \mbox{\hyperlink{cotask_8py_source_l00192}{ready()}}.
+References \mbox{\hyperlink{cotask_8py_source_l00123}{\+\_\+prev\+\_\+state}}, \mbox{\hyperlink{cotask_8py_source_l00129}{\+\_\+prev\+\_\+time}}, \mbox{\hyperlink{cotask_8py_source_l00118}{\+\_\+prof}}, \mbox{\hyperlink{cotask_8py_source_l00093}{\+\_\+run\+\_\+gen}}, \mbox{\hyperlink{cotask_8py_source_l00224}{\+\_\+run\+\_\+sum}}, \mbox{\hyperlink{cotask_8py_source_l00223}{\+\_\+runs}}, \mbox{\hyperlink{cotask_8py_source_l00164}{\+\_\+slowest}}, \mbox{\hyperlink{cotask_8py_source_l00128}{\+\_\+tr\+\_\+data}}, \mbox{\hyperlink{cotask_8py_source_l00127}{\+\_\+trace}}, \mbox{\hyperlink{cotask_8py_source_l00133}{go\+\_\+flag}}, and \mbox{\hyperlink{cotask_8py_source_l00192}{ready()}}.
 
 \Hypertarget{classcotask_1_1_task_a0fcee5beb8b2fed77e5125c58ba35c26}\index{cotask.Task@{cotask.Task}!set\_period@{set\_period}}
 \index{set\_period@{set\_period}!cotask.Task@{cotask.Task}}
@@ -450,194 +432,17 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00214}{214}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keyword}{def\ }set\_period(self,\ new\_period): }
-\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ new\_period\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}: }
-\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ \textcolor{keywordtype}{None} }
-\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
-\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ int(new\_period)\ *\ 1000 }
-\DoxyCodeLine{00219\  }
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keyword}{def\ }set\_period(self,\ new\_period):}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ new\_period\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ int(new\_period)\ *\ 1000}
+\DoxyCodeLine{00219\ }
 
 \end{DoxyCode}
 
 
 References \mbox{\hyperlink{cotask_8py_source_l00110}{period}}.
-
-
-
-\label{doc-variable-members}
-\Hypertarget{classcotask_1_1_task_doc-variable-members}
-\doxysubsection{Member Data Documentation}
-\Hypertarget{classcotask_1_1_task_a10930f344a7f5615b2fd996aa95e39aa}\index{cotask.Task@{cotask.Task}!\_late\_sum@{\_late\_sum}}
-\index{\_late\_sum@{\_late\_sum}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{\_late\_sum}{\_late\_sum}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_a10930f344a7f5615b2fd996aa95e39aa} 
-int cotask.\+Task.\+\_\+late\+\_\+sum = 0\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00226}{226}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_a9b281cae547cbe63219a13ec6f032cb9}\index{cotask.Task@{cotask.Task}!\_latest@{\_latest}}
-\index{\_latest@{\_latest}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{\_latest}{\_latest}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_a9b281cae547cbe63219a13ec6f032cb9} 
-int cotask.\+Task.\+\_\+latest\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00204}{204}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_aa443e9f35f5dee489023afb5d5b9d091}\index{cotask.Task@{cotask.Task}!\_next\_run@{\_next\_run}}
-\index{\_next\_run@{\_next\_run}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{\_next\_run}{\_next\_run}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_aa443e9f35f5dee489023afb5d5b9d091} 
-cotask.\+Task.\+\_\+next\+\_\+run = utime.\+ticks\+\_\+us() + self.\+period\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00111}{111}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_a05a6180fe3ba22a1d1e36fe1cc34cd16}\index{cotask.Task@{cotask.Task}!\_prev\_state@{\_prev\_state}}
-\index{\_prev\_state@{\_prev\_state}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{\_prev\_state}{\_prev\_state}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_a05a6180fe3ba22a1d1e36fe1cc34cd16} 
-int cotask.\+Task.\+\_\+prev\+\_\+state = 0\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00123}{123}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_a99c833294c7426f5f5b753f382d9f88d}\index{cotask.Task@{cotask.Task}!\_prev\_time@{\_prev\_time}}
-\index{\_prev\_time@{\_prev\_time}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{\_prev\_time}{\_prev\_time}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_a99c833294c7426f5f5b753f382d9f88d} 
-cotask.\+Task.\+\_\+prev\+\_\+time = utime.\+ticks\+\_\+us()\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00129}{129}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_a0d0e9249bbce322f63ad1d2004069fac}\index{cotask.Task@{cotask.Task}!\_prof@{\_prof}}
-\index{\_prof@{\_prof}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{\_prof}{\_prof}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_a0d0e9249bbce322f63ad1d2004069fac} 
-cotask.\+Task.\+\_\+prof = profile\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00118}{118}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_a3d158e6e4971c204449c07f72e67a186}\index{cotask.Task@{cotask.Task}!\_run\_gen@{\_run\_gen}}
-\index{\_run\_gen@{\_run\_gen}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{\_run\_gen}{\_run\_gen}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_a3d158e6e4971c204449c07f72e67a186} 
-cotask.\+Task.\+\_\+run\+\_\+gen = run\+\_\+fun(shares)\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00093}{93}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_ac93a114add603ab2bb498c995fd64ecd}\index{cotask.Task@{cotask.Task}!\_run\_sum@{\_run\_sum}}
-\index{\_run\_sum@{\_run\_sum}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{\_run\_sum}{\_run\_sum}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_ac93a114add603ab2bb498c995fd64ecd} 
-int cotask.\+Task.\+\_\+run\+\_\+sum = 0\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00224}{224}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_ae190f013ce9955c05841c20f2d46e9ac}\index{cotask.Task@{cotask.Task}!\_runs@{\_runs}}
-\index{\_runs@{\_runs}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{\_runs}{\_runs}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_ae190f013ce9955c05841c20f2d46e9ac} 
-int cotask.\+Task.\+\_\+runs = 0\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00223}{223}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_a5549bd87387fee6088efba87766a6fa7}\index{cotask.Task@{cotask.Task}!\_slowest@{\_slowest}}
-\index{\_slowest@{\_slowest}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{\_slowest}{\_slowest}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_a5549bd87387fee6088efba87766a6fa7} 
-int cotask.\+Task.\+\_\+slowest\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00164}{164}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_acaeeb90a6096f7d1e6458648dc84f6b7}\index{cotask.Task@{cotask.Task}!\_tr\_data@{\_tr\_data}}
-\index{\_tr\_data@{\_tr\_data}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{\_tr\_data}{\_tr\_data}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_acaeeb90a6096f7d1e6458648dc84f6b7} 
-list cotask.\+Task.\+\_\+tr\+\_\+data = \mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00128}{128}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_a12647eaf44c1e5c9e6083e0ce77bcb3f}\index{cotask.Task@{cotask.Task}!\_trace@{\_trace}}
-\index{\_trace@{\_trace}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{\_trace}{\_trace}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_a12647eaf44c1e5c9e6083e0ce77bcb3f} 
-bool cotask.\+Task.\+\_\+trace = trace\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00127}{127}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_ad309fae1890bffafa75e9fdb33fae600}\index{cotask.Task@{cotask.Task}!go\_flag@{go\_flag}}
-\index{go\_flag@{go\_flag}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{go\_flag}{go\_flag}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_ad309fae1890bffafa75e9fdb33fae600} 
-bool cotask.\+Task.\+go\+\_\+flag = False}
-
-
-
-Flag which is set true when the task is ready to be run by the scheduler. 
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00133}{133}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_ab54e069dd0b4f0a2f8e7f00c94998a10}\index{cotask.Task@{cotask.Task}!name@{name}}
-\index{name@{name}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{name}{name}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_ab54e069dd0b4f0a2f8e7f00c94998a10} 
-cotask.\+Task.\+name = name}
-
-
-
-The name of the task, hopefully a short and descriptive string. 
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00098}{98}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_afc5c88f112f516002f67118a0ee82f44}\index{cotask.Task@{cotask.Task}!period@{period}}
-\index{period@{period}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{period}{period}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_afc5c88f112f516002f67118a0ee82f44} 
-int cotask.\+Task.\+period = int(period \texorpdfstring{$\ast$}{*} 1000)}
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00110}{110}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
-
-\Hypertarget{classcotask_1_1_task_aeced93c7b7d23e33de9693d278aef88b}\index{cotask.Task@{cotask.Task}!priority@{priority}}
-\index{priority@{priority}!cotask.Task@{cotask.Task}}
-\doxysubsubsection{\texorpdfstring{priority}{priority}}
-{\footnotesize\ttfamily \label{classcotask_1_1_task_aeced93c7b7d23e33de9693d278aef88b} 
-cotask.\+Task.\+priority = int(priority)}
-
-
-
-The task\textquotesingle{}s priority, an integer with higher numbers meaning higher priority. 
-
-
-
-Definition at line \mbox{\hyperlink{cotask_8py_source_l00102}{102}} of file \mbox{\hyperlink{cotask_8py_source}{cotask.\+py}}.
 
 
 

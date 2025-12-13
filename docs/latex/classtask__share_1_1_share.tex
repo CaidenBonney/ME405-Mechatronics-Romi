@@ -30,22 +30,9 @@ Inheritance diagram for task\+\_\+share.\+Share\+:\begin{figure}[H]
 \doxysubsubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-int \mbox{\hyperlink{classtask__share_1_1_share_a2e8df029af46fbfd44ef0c2e7e8c7af6}{ser\+\_\+num}} = 0
+\Hypertarget{classtask__share_1_1_share_a2e8df029af46fbfd44ef0c2e7e8c7af6}\label{classtask__share_1_1_share_a2e8df029af46fbfd44ef0c2e7e8c7af6} 
+int {\bfseries ser\+\_\+num} = 0
 \begin{DoxyCompactList}\small\item\em A counter used to give serial numbers to shares for diagnostic use. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Protected Attributes}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\hyperlink{classtask__share_1_1_share_a2f7e0b72d08d27b7ccf92da6ddc127a8}{\+\_\+buffer}} = array.\+array(type\+\_\+code, \mbox{[}0\mbox{]})
-\item 
-str \mbox{\hyperlink{classtask__share_1_1_share_acff3918997966ba1e31292398f3ca196}{\+\_\+name}} = None else "{}Share"{} + str(\mbox{\hyperlink{classtask__share_1_1_share_a2e8df029af46fbfd44ef0c2e7e8c7af6}{Share.\+ser\+\_\+num}})
-\end{DoxyCompactItemize}
-\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classtask__share_1_1_base_share}{task\+\_\+share.\+Base\+Share}}}
-\begin{DoxyCompactItemize}
-\item 
-\mbox{\hyperlink{classtask__share_1_1_base_share_a0e45276424d1600740942b82f216c649}{\+\_\+type\+\_\+code}} = type\+\_\+code
-\item 
-\mbox{\hyperlink{classtask__share_1_1_base_share_acf1741d88ede8f82b9c5f321a92aaa5e}{\+\_\+thread\+\_\+protect}} = thread\+\_\+protect
-\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -115,20 +102,20 @@ Definition at line \mbox{\hyperlink{task__share_8py_source_l00350}{350}} of file
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ type\_code,\ thread\_protect=True,\ name=None): }
-\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ First\ call\ the\ parent\ class\ initializer }}
-\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ super().\_\_init\_\_(type\_code,\ thread\_protect,\ name) }
-\DoxyCodeLine{00353\  }
-\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ self.\_buffer\ =\ array.array(type\_code,\ [0]) }
-\DoxyCodeLine{00355\  }
-\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ self.\_name\ =\ str(name)\ \textcolor{keywordflow}{if}\ name\ !=\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}Share"{}}\ +\ str(Share.ser\_num) }
-\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ Share.ser\_num\ +=\ 1 }
-\DoxyCodeLine{00358\  }
+\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ type\_code,\ thread\_protect=True,\ name=None):}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ First\ call\ the\ parent\ class\ initializer}}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ super().\_\_init\_\_(type\_code,\ thread\_protect,\ name)}
+\DoxyCodeLine{00353\ }
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ self.\_buffer\ =\ array.array(type\_code,\ [0])}
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ self.\_name\ =\ str(name)\ \textcolor{keywordflow}{if}\ name\ !=\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}Share"{}}\ +\ str(Share.ser\_num)}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ Share.ser\_num\ +=\ 1}
+\DoxyCodeLine{00358\ }
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{task__share_8py_source_l00350}{\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
+References \mbox{\hyperlink{task__share_8py_source_l00350}{\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{task__share_8py_source_l00139}{task\+\_\+share.\+Queue.\+\_\+buffer}}, \mbox{\hyperlink{task__share_8py_source_l00354}{\+\_\+buffer}}, \mbox{\hyperlink{task__share_8py_source_l00134}{task\+\_\+share.\+Queue.\+\_\+name}}, and \mbox{\hyperlink{task__share_8py_source_l00356}{\+\_\+name}}.
 
 
 
@@ -151,8 +138,8 @@ Definition at line \mbox{\hyperlink{task__share_8py_source_l00403}{403}} of file
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00403\ \ \ \ \ \textcolor{keyword}{def\ }\_\_repr\_\_(self): }
-\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}\{:<12s\}\ Share<\{:s\}>"{}}.format(self.\_name,\ type\_code\_strings[self.\_type\_code]) }
+\DoxyCodeLine{00403\ \ \ \ \ \textcolor{keyword}{def\ }\_\_repr\_\_(self):}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}\{:<12s\}\ Share<\{:s\}>"{}}.format(self.\_name,\ type\_code\_strings[self.\_type\_code])}
 
 \end{DoxyCode}
 
@@ -180,19 +167,19 @@ Definition at line \mbox{\hyperlink{task__share_8py_source_l00387}{387}} of file
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00387\ \ \ \ \ \textcolor{keyword}{def\ }get(self,\ in\_ISR=False): }
-\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Disable\ interrupts\ before\ reading\ the\ data }}
-\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR: }
-\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ irq\_state\ =\ pyb.disable\_irq() }
-\DoxyCodeLine{00391\  }
-\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ to\_return\ =\ self.\_buffer[0] }
-\DoxyCodeLine{00393\  }
-\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts }}
-\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR: }
-\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(irq\_state) }
-\DoxyCodeLine{00397\  }
-\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ to\_return }
-\DoxyCodeLine{00399\  }
+\DoxyCodeLine{00387\ \ \ \ \ \textcolor{keyword}{def\ }get(self,\ in\_ISR=False):}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Disable\ interrupts\ before\ reading\ the\ data}}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ irq\_state\ =\ pyb.disable\_irq()}
+\DoxyCodeLine{00391\ }
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ to\_return\ =\ self.\_buffer[0]}
+\DoxyCodeLine{00393\ }
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts}}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(irq\_state)}
+\DoxyCodeLine{00397\ }
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ to\_return}
+\DoxyCodeLine{00399\ }
 
 \end{DoxyCode}
 
@@ -222,62 +209,23 @@ Definition at line \mbox{\hyperlink{task__share_8py_source_l00368}{368}} of file
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00368\ \ \ \ \ \textcolor{keyword}{def\ }put(self,\ data,\ in\_ISR=False): }
-\DoxyCodeLine{00369\  }
-\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Disable\ interrupts\ before\ writing\ the\ data }}
-\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR: }
-\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ irq\_state\ =\ pyb.disable\_irq() }
-\DoxyCodeLine{00373\  }
-\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ self.\_buffer[0]\ =\ data }
-\DoxyCodeLine{00375\  }
-\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts }}
-\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR: }
-\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(irq\_state) }
-\DoxyCodeLine{00379\  }
+\DoxyCodeLine{00368\ \ \ \ \ \textcolor{keyword}{def\ }put(self,\ data,\ in\_ISR=False):}
+\DoxyCodeLine{00369\ }
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Disable\ interrupts\ before\ writing\ the\ data}}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ irq\_state\ =\ pyb.disable\_irq()}
+\DoxyCodeLine{00373\ }
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ self.\_buffer[0]\ =\ data}
+\DoxyCodeLine{00375\ }
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts}}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(irq\_state)}
+\DoxyCodeLine{00379\ }
 
 \end{DoxyCode}
 
 
 References \mbox{\hyperlink{task__share_8py_source_l00139}{task\+\_\+share.\+Queue.\+\_\+buffer}}, \mbox{\hyperlink{task__share_8py_source_l00354}{\+\_\+buffer}}, and \mbox{\hyperlink{task__share_8py_source_l00071}{task\+\_\+share.\+Base\+Share.\+\_\+thread\+\_\+protect}}.
-
-
-
-\label{doc-variable-members}
-\Hypertarget{classtask__share_1_1_share_doc-variable-members}
-\doxysubsection{Member Data Documentation}
-\Hypertarget{classtask__share_1_1_share_a2f7e0b72d08d27b7ccf92da6ddc127a8}\index{task\_share.Share@{task\_share.Share}!\_buffer@{\_buffer}}
-\index{\_buffer@{\_buffer}!task\_share.Share@{task\_share.Share}}
-\doxysubsubsection{\texorpdfstring{\_buffer}{\_buffer}}
-{\footnotesize\ttfamily \label{classtask__share_1_1_share_a2f7e0b72d08d27b7ccf92da6ddc127a8} 
-task\+\_\+share.\+Share.\+\_\+buffer = array.\+array(type\+\_\+code, \mbox{[}0\mbox{]})\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{task__share_8py_source_l00354}{354}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
-
-\Hypertarget{classtask__share_1_1_share_acff3918997966ba1e31292398f3ca196}\index{task\_share.Share@{task\_share.Share}!\_name@{\_name}}
-\index{\_name@{\_name}!task\_share.Share@{task\_share.Share}}
-\doxysubsubsection{\texorpdfstring{\_name}{\_name}}
-{\footnotesize\ttfamily \label{classtask__share_1_1_share_acff3918997966ba1e31292398f3ca196} 
-task\+\_\+share.\+Share.\+\_\+name = None else "{}Share"{} + str(\mbox{\hyperlink{classtask__share_1_1_share_a2e8df029af46fbfd44ef0c2e7e8c7af6}{Share.\+ser\+\_\+num}})\hspace{0.3cm}{\ttfamily [protected]}}
-
-
-
-Definition at line \mbox{\hyperlink{task__share_8py_source_l00356}{356}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
-
-\Hypertarget{classtask__share_1_1_share_a2e8df029af46fbfd44ef0c2e7e8c7af6}\index{task\_share.Share@{task\_share.Share}!ser\_num@{ser\_num}}
-\index{ser\_num@{ser\_num}!task\_share.Share@{task\_share.Share}}
-\doxysubsubsection{\texorpdfstring{ser\_num}{ser\_num}}
-{\footnotesize\ttfamily \label{classtask__share_1_1_share_a2e8df029af46fbfd44ef0c2e7e8c7af6} 
-int task\+\_\+share.\+Share.\+ser\+\_\+num = 0\hspace{0.3cm}{\ttfamily [static]}}
-
-
-
-A counter used to give serial numbers to shares for diagnostic use. 
-
-
-
-Definition at line \mbox{\hyperlink{task__share_8py_source_l00327}{327}} of file \mbox{\hyperlink{task__share_8py_source}{task\+\_\+share.\+py}}.
 
 
 

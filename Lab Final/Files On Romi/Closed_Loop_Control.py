@@ -54,7 +54,7 @@ class ClosedLoopControl:
         self.max_min = max_min
         self.battery = battery
 
-        # Gains
+        # @brief Gains
         self.Kp = Kp
         self.Ki = Ki
         self.Kd = Kd

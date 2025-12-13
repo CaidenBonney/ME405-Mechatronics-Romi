@@ -1,8 +1,8 @@
 \doxysection{User\+\_\+\+Input.\+py}
 \hypertarget{_user___input_8py_source}{}\label{_user___input_8py_source}\index{Lab Final/Files On Romi/User\_Input.py@{Lab Final/Files On Romi/User\_Input.py}}
-\mbox{\hyperlink{_user___input_8py}{Go to the documentation of this file.}}
+
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00001}\mbox{\hyperlink{namespace_user___input}{00001}}\ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ UART\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00001}00001\ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ UART\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00002}00002\ \textcolor{keyword}{from}\ machine\ \textcolor{keyword}{import}\ soft\_reset\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00003}00003\ \textcolor{keyword}{from}\ Path\_Director\_vars\ \textcolor{keyword}{import}\ PD\_vars}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00004}00004\ }
@@ -13,12 +13,12 @@
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00009}00009\ }
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00010}00010\ }
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00011}\mbox{\hyperlink{class_user___input_1_1_user_input}{00011}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_user___input_1_1_user_input}{UserInput}}:}
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00012}\mbox{\hyperlink{class_user___input_1_1_user_input_a9c6e62f69d38089c9339e426951ea6f3}{00012}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_user___input_1_1_user_input_a9c6e62f69d38089c9339e426951ea6f3}{\_\_init\_\_}}(self,\ button\_pin,\ battery):}
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00013}\mbox{\hyperlink{class_user___input_1_1_user_input_af8c167833ad18e4a258d73a9b7bbaf90}{00013}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_user___input_1_1_user_input_af8c167833ad18e4a258d73a9b7bbaf90}{cmd\_queue}}\ =\ []}
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00014}\mbox{\hyperlink{class_user___input_1_1_user_input_a611fffc2d8f9bbfe4651a208f7cc7a5f}{00014}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_user___input_1_1_user_input_a611fffc2d8f9bbfe4651a208f7cc7a5f}{uart}}\ =\ UART(5,\ 115200)}
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00015}\mbox{\hyperlink{class_user___input_1_1_user_input_adb757db7c92e317ead7e71ff06cd9cc7}{00015}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_user___input_1_1_user_input_adb757db7c92e317ead7e71ff06cd9cc7}{battery}}\ =\ battery}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00012}00012\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ button\_pin,\ battery):}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00013}00013\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_user___input_1_1_user_input_af8c167833ad18e4a258d73a9b7bbaf90}{cmd\_queue}}\ =\ []}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_user___input_1_1_user_input_a611fffc2d8f9bbfe4651a208f7cc7a5f}{uart}}\ =\ UART(5,\ 115200)}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00015}00015\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_user___input_1_1_user_input_adb757db7c92e317ead7e71ff06cd9cc7}{battery}}\ =\ battery}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00016}00016\ }
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00017}\mbox{\hyperlink{class_user___input_1_1_user_input_a13d53516c362b13c48bd342de759ac9d}{00017}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_user___input_1_1_user_input_a13d53516c362b13c48bd342de759ac9d}{button\_pin}}\ =\ button\_pin}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_user___input_1_1_user_input_a13d53516c362b13c48bd342de759ac9d}{button\_pin}}\ =\ button\_pin}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00018}00018\ }
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Flush\ the\ buffer}}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ self.\mbox{\hyperlink{class_user___input_1_1_user_input_a611fffc2d8f9bbfe4651a208f7cc7a5f}{uart}}.any():}
@@ -29,27 +29,27 @@
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00025}00025\ \ \ \ \ \textcolor{comment}{\#\ No\ lowercase→uppercase\ conversion}}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00026}00026\ \ \ \ \ \textcolor{comment}{\#\ Enqueues\ only\ bytes\ present\ in\ self.valid.}}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00027}00027\ \ \ \ \ \textcolor{comment}{\#\ Returns:\ number\ of\ bytes\ pulled\ this\ call\ (including\ filtered\ CR/LF).}}
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00028}\mbox{\hyperlink{class_user___input_1_1_user_input_a31db03cc321bcc918560ed85e2f17044}{00028}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_user___input_1_1_user_input_a31db03cc321bcc918560ed85e2f17044}{poll}}(self):}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00028}00028\ \ \ \ \ \textcolor{keyword}{def\ }poll(self):}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00029}00029\ }
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ self.\mbox{\hyperlink{class_user___input_1_1_user_input_a611fffc2d8f9bbfe4651a208f7cc7a5f}{uart}}.any():}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ char\_in\ =\ self.\mbox{\hyperlink{class_user___input_1_1_user_input_a611fffc2d8f9bbfe4651a208f7cc7a5f}{uart}}.read(1).decode()\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_user___input_1_1_user_input_af8c167833ad18e4a258d73a9b7bbaf90}{cmd\_queue}}.append(char\_in)}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00033}00033\ }
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00034}\mbox{\hyperlink{class_user___input_1_1_user_input_a9d99dbce44a53a55e62e3bef16707e1e}{00034}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_user___input_1_1_user_input_a9d99dbce44a53a55e62e3bef16707e1e}{has\_cmd}}(self):}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00034}00034\ \ \ \ \ \textcolor{keyword}{def\ }has\_cmd(self):}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ bool(self.\mbox{\hyperlink{class_user___input_1_1_user_input_af8c167833ad18e4a258d73a9b7bbaf90}{cmd\_queue}})}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00036}00036\ }
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00037}00037\ \ \ \ \ \textcolor{comment}{\#\ Return\ next\ command\ as\ a\ 1-\/char\ string,\ or\ None\ if\ none.}}
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00038}\mbox{\hyperlink{class_user___input_1_1_user_input_a1aa1d4182e10ec26429325ff48610dc9}{00038}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_user___input_1_1_user_input_a1aa1d4182e10ec26429325ff48610dc9}{get\_cmd}}(self):}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00038}00038\ \ \ \ \ \textcolor{keyword}{def\ }get\_cmd(self):}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_user___input_1_1_user_input_af8c167833ad18e4a258d73a9b7bbaf90}{cmd\_queue}}:}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{None}}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{class_user___input_1_1_user_input_af8c167833ad18e4a258d73a9b7bbaf90}{cmd\_queue}}.pop(0)}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00042}00042\ }
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00043}\mbox{\hyperlink{class_user___input_1_1_user_input_a0a1ed8d53d45d48ec5d4ac3d649e8e91}{00043}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_user___input_1_1_user_input_a0a1ed8d53d45d48ec5d4ac3d649e8e91}{change\_attribute}}(self,\ sens,\ att\_str):}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00043}00043\ \ \ \ \ \textcolor{keyword}{def\ }change\_attribute(self,\ sens,\ att\_str):}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ value\ =\ self.\mbox{\hyperlink{class_user___input_1_1_user_input_ace85e5744336ac2d8680125487d96fd8}{get\_next\_n\_char}}(5)}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ sens.set\_attr(att\_str,\ value)}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00046}00046\ }
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00047}00047\ \ \ \ \ \textcolor{comment}{\#\ Returns\ the\ next\ n\ characters\ as\ a\ string\ and\ blocks\ until\ all\ n\ characters\ are\ received.}}
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00048}\mbox{\hyperlink{class_user___input_1_1_user_input_ace85e5744336ac2d8680125487d96fd8}{00048}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_user___input_1_1_user_input_ace85e5744336ac2d8680125487d96fd8}{get\_next\_n\_char}}(self,\ n)\ -\/>\ float:}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00048}00048\ \ \ \ \ \textcolor{keyword}{def\ }get\_next\_n\_char(self,\ n)\ -\/>\ float:}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ len(self.\mbox{\hyperlink{class_user___input_1_1_user_input_af8c167833ad18e4a258d73a9b7bbaf90}{cmd\_queue}})\ <\ n:}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_user___input_1_1_user_input_a31db03cc321bcc918560ed85e2f17044}{poll}}()}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00051}00051\ \ \ \ \ \ \ \ \ value\ =\ \textcolor{stringliteral}{"{}"{}}}
@@ -64,10 +64,10 @@
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_user___input_1_1_user_input_a611fffc2d8f9bbfe4651a208f7cc7a5f}{uart}}.write(b\textcolor{stringliteral}{"{}Invalid\ value\ try\ again\(\backslash\)r\(\backslash\)n"{}})}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{class_user___input_1_1_user_input_ace85e5744336ac2d8680125487d96fd8}{get\_next\_n\_char}}(n)}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00062}00062\ }
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00063}\mbox{\hyperlink{class_user___input_1_1_user_input_ad1b152e56a6171c7356e8ba18015875f}{00063}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_user___input_1_1_user_input_ad1b152e56a6171c7356e8ba18015875f}{drain}}(self):}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00063}00063\ \ \ \ \ \textcolor{keyword}{def\ }drain(self):}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_user___input_1_1_user_input_af8c167833ad18e4a258d73a9b7bbaf90}{cmd\_queue}}.clear()}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00065}00065\ }
-\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00066}\mbox{\hyperlink{class_user___input_1_1_user_input_a97bcd47b7b7736e75e857437e5584d01}{00066}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_user___input_1_1_user_input_a97bcd47b7b7736e75e857437e5584d01}{run}}(self,\ shares):}
+\DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00066}00066\ \ \ \ \ \textcolor{keyword}{def\ }run(self,\ shares):}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00067}00067\ \ \ \ \ \ \ \ \ (}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s,}
 \DoxyCodeLine{\Hypertarget{_user___input_8py_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s,}

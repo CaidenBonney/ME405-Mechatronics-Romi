@@ -8,7 +8,7 @@ A class which provides access to Romi\textquotesingle{}s battery voltage.
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_battery_1_1_battery_a6f7235b1db18423f9e6b3d891dd1da15}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, ADC\texorpdfstring{$\vert$}{|}None \mbox{\hyperlink{class_battery_1_1_battery_ad4ff933497b00de54e6041604943dffe}{battery\+\_\+\+ADC}}=None)
+\mbox{\hyperlink{class_battery_1_1_battery_a6f7235b1db18423f9e6b3d891dd1da15}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, ADC\texorpdfstring{$\vert$}{|}None battery\+\_\+\+ADC=None)
 \begin{DoxyCompactList}\small\item\em Create a battery monitor object. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_battery_1_1_battery_ad5ef7cf1e8e9105157a963acded69b21}{get\+\_\+cur\+\_\+perc}} (self)
 \begin{DoxyCompactList}\small\item\em Get the current battery percentage. \end{DoxyCompactList}\item 
@@ -17,11 +17,11 @@ A class which provides access to Romi\textquotesingle{}s battery voltage.
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_battery_1_1_battery_ad4ff933497b00de54e6041604943dffe}{battery\+\_\+\+ADC}} = battery\+\_\+\+ADC
-\item 
-int \mbox{\hyperlink{class_battery_1_1_battery_a32e14b12122e17fb0a227c015590614e}{ADC\+\_\+nom}} = 3210
+\Hypertarget{class_battery_1_1_battery_a32e14b12122e17fb0a227c015590614e}\label{class_battery_1_1_battery_a32e14b12122e17fb0a227c015590614e} 
+int {\bfseries ADC\+\_\+nom} = 3210
 \begin{DoxyCompactList}\small\item\em Nominal ADC reading corresponding to nominal battery voltage. \end{DoxyCompactList}\item 
-float \mbox{\hyperlink{class_battery_1_1_battery_a9bf4f4b1e49e3b893eed68bf653a8dd3}{V\+\_\+nom}} = 8.\+5
+\Hypertarget{class_battery_1_1_battery_a9bf4f4b1e49e3b893eed68bf653a8dd3}\label{class_battery_1_1_battery_a9bf4f4b1e49e3b893eed68bf653a8dd3} 
+float {\bfseries V\+\_\+nom} = 8.\+5
 \begin{DoxyCompactList}\small\item\em Nominal battery voltage corresponding to {\ttfamily ADC\+\_\+nom}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -60,17 +60,21 @@ Definition at line \mbox{\hyperlink{_battery_8py_source_l00031}{31}} of file \mb
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ battery\_ADC:\ ADC\ |\ \textcolor{keywordtype}{None}\ =\ \textcolor{keywordtype}{None}): }
-\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ self.battery\_ADC\ =\ battery\_ADC }
-\DoxyCodeLine{00033\  }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ battery\_ADC:\ ADC\ |\ \textcolor{keywordtype}{None}\ =\ \textcolor{keywordtype}{None}):}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ self.battery\_ADC\ =\ battery\_ADC}
+\DoxyCodeLine{00033\ }
 \DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ self.ADC\_nom\ =\ 3210 }
-\DoxyCodeLine{00036\  }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ self.ADC\_nom\ =\ 3210}
+\DoxyCodeLine{00036\ }
 \DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ self.V\_nom\ =\ 8.5 }
-\DoxyCodeLine{00039\  }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ self.V\_nom\ =\ 8.5}
+\DoxyCodeLine{00039\ }
 
 \end{DoxyCode}
+
+
+References \mbox{\hyperlink{_battery_8py_source_l00032}{battery\+\_\+\+ADC}}.
+
 
 
 \label{doc-func-members}
@@ -97,11 +101,11 @@ Definition at line \mbox{\hyperlink{_battery_8py_source_l00047}{47}} of file \mb
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{def\ }get\_cur\_perc(self): }
-\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.battery\_ADC\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}: }
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Battery\ ADC\ is\ not\ set"{}}) }
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.battery\_ADC.read()\ /\ self.ADC\_nom }
-\DoxyCodeLine{00051\  }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{def\ }get\_cur\_perc(self):}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.battery\_ADC\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Battery\ ADC\ is\ not\ set"{}})}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.battery\_ADC.read()\ /\ self.ADC\_nom}
+\DoxyCodeLine{00051\ }
 
 \end{DoxyCode}
 
@@ -129,58 +133,15 @@ Definition at line \mbox{\hyperlink{_battery_8py_source_l00058}{58}} of file \mb
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{def\ }get\_cur\_volt(self): }
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.battery\_ADC\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}: }
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Battery\ ADC\ is\ not\ set"{}}) }
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.get\_cur\_perc()\ *\ self.V\_nom }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{def\ }get\_cur\_volt(self):}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.battery\_ADC\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Battery\ ADC\ is\ not\ set"{}})}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.get\_cur\_perc()\ *\ self.V\_nom}
 
 \end{DoxyCode}
 
 
 References \mbox{\hyperlink{_battery_8py_source_l00032}{battery\+\_\+\+ADC}}, \mbox{\hyperlink{_battery_8py_source_l00047}{get\+\_\+cur\+\_\+perc()}}, and \mbox{\hyperlink{_battery_8py_source_l00038}{V\+\_\+nom}}.
-
-
-
-\label{doc-variable-members}
-\Hypertarget{class_battery_1_1_battery_doc-variable-members}
-\doxysubsection{Member Data Documentation}
-\Hypertarget{class_battery_1_1_battery_a32e14b12122e17fb0a227c015590614e}\index{Battery.Battery@{Battery.Battery}!ADC\_nom@{ADC\_nom}}
-\index{ADC\_nom@{ADC\_nom}!Battery.Battery@{Battery.Battery}}
-\doxysubsubsection{\texorpdfstring{ADC\_nom}{ADC\_nom}}
-{\footnotesize\ttfamily \label{class_battery_1_1_battery_a32e14b12122e17fb0a227c015590614e} 
-int Battery.\+Battery.\+ADC\+\_\+nom = 3210}
-
-
-
-Nominal ADC reading corresponding to nominal battery voltage. 
-
-
-
-Definition at line \mbox{\hyperlink{_battery_8py_source_l00035}{35}} of file \mbox{\hyperlink{_battery_8py_source}{Battery.\+py}}.
-
-\Hypertarget{class_battery_1_1_battery_ad4ff933497b00de54e6041604943dffe}\index{Battery.Battery@{Battery.Battery}!battery\_ADC@{battery\_ADC}}
-\index{battery\_ADC@{battery\_ADC}!Battery.Battery@{Battery.Battery}}
-\doxysubsubsection{\texorpdfstring{battery\_ADC}{battery\_ADC}}
-{\footnotesize\ttfamily \label{class_battery_1_1_battery_ad4ff933497b00de54e6041604943dffe} 
-Battery.\+Battery.\+battery\+\_\+\+ADC = battery\+\_\+\+ADC}
-
-
-
-Definition at line \mbox{\hyperlink{_battery_8py_source_l00032}{32}} of file \mbox{\hyperlink{_battery_8py_source}{Battery.\+py}}.
-
-\Hypertarget{class_battery_1_1_battery_a9bf4f4b1e49e3b893eed68bf653a8dd3}\index{Battery.Battery@{Battery.Battery}!V\_nom@{V\_nom}}
-\index{V\_nom@{V\_nom}!Battery.Battery@{Battery.Battery}}
-\doxysubsubsection{\texorpdfstring{V\_nom}{V\_nom}}
-{\footnotesize\ttfamily \label{class_battery_1_1_battery_a9bf4f4b1e49e3b893eed68bf653a8dd3} 
-float Battery.\+Battery.\+V\+\_\+nom = 8.\+5}
-
-
-
-Nominal battery voltage corresponding to {\ttfamily ADC\+\_\+nom}. 
-
-
-
-Definition at line \mbox{\hyperlink{_battery_8py_source_l00038}{38}} of file \mbox{\hyperlink{_battery_8py_source}{Battery.\+py}}.
 
 
 

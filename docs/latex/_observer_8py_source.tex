@@ -1,28 +1,28 @@
 \doxysection{Observer.\+py}
 \hypertarget{_observer_8py_source}{}\label{_observer_8py_source}\index{Lab Final/Files On Romi/Observer.py@{Lab Final/Files On Romi/Observer.py}}
-\mbox{\hyperlink{_observer_8py}{Go to the documentation of this file.}}
+
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00001}\mbox{\hyperlink{namespace_observer}{00001}}\ \textcolor{keyword}{from}\ ulab\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00001}00001\ \textcolor{keyword}{from}\ ulab\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
 \DoxyCodeLine{\Hypertarget{_observer_8py_source_l00002}00002\ \textcolor{keyword}{from}\ Romi\_Props\ \textcolor{keyword}{import}\ RomiProps}
 \DoxyCodeLine{\Hypertarget{_observer_8py_source_l00003}00003\ }
 \DoxyCodeLine{\Hypertarget{_observer_8py_source_l00004}\mbox{\hyperlink{class_observer_1_1_observer}{00004}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_observer_1_1_observer}{Observer}}:}
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00005}\mbox{\hyperlink{class_observer_1_1_observer_aebeb17d61a26f311346872d650f7fda3}{00005}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_observer_1_1_observer_aebeb17d61a26f311346872d650f7fda3}{\_\_init\_\_}}(self,\ IMU,\ l\_encoder,\ r\_encoder,\ battery):}
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00006}\mbox{\hyperlink{class_observer_1_1_observer_a24f9fa79dc297875782154f89503afae}{00006}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a24f9fa79dc297875782154f89503afae}{IMU}}\ =\ IMU}
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00007}\mbox{\hyperlink{class_observer_1_1_observer_a74ac873d416a9e7aca86bf9673df4cde}{00007}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a74ac873d416a9e7aca86bf9673df4cde}{tstep}}\ =\ 0.020\ \ \textcolor{comment}{\#\ must\ assume\ constant\ timestep\ for\ observer\ to\ function}}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00005}00005\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ IMU,\ l\_encoder,\ r\_encoder,\ battery):}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00006}00006\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a24f9fa79dc297875782154f89503afae}{IMU}}\ =\ IMU}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00007}00007\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a74ac873d416a9e7aca86bf9673df4cde}{tstep}}\ =\ 0.020\ \ \textcolor{comment}{\#\ must\ assume\ constant\ timestep\ for\ observer\ to\ function}}
 \DoxyCodeLine{\Hypertarget{_observer_8py_source_l00008}00008\ }
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00009}\mbox{\hyperlink{class_observer_1_1_observer_a8a3304327d521edc1a0f62df8e6aeca3}{00009}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a8a3304327d521edc1a0f62df8e6aeca3}{l\_encoder}}\ =\ l\_encoder}
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00010}\mbox{\hyperlink{class_observer_1_1_observer_a1ebca79cb1f3b5c9fc3416fd55c2acc9}{00010}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a1ebca79cb1f3b5c9fc3416fd55c2acc9}{l\_motor\_pwm\_ch}}\ =\ self.\mbox{\hyperlink{class_observer_1_1_observer_a8a3304327d521edc1a0f62df8e6aeca3}{l\_encoder}}.motor.PWM\_ch}
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00011}\mbox{\hyperlink{class_observer_1_1_observer_a257ca0250482a1a206c7ba06ad4bf214}{00011}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a257ca0250482a1a206c7ba06ad4bf214}{l\_motor\_nSLP\_pin}}\ =\ self.\mbox{\hyperlink{class_observer_1_1_observer_a8a3304327d521edc1a0f62df8e6aeca3}{l\_encoder}}.motor.nSLP\_pin}
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00012}\mbox{\hyperlink{class_observer_1_1_observer_a76e724e1d2ef6d7a272341291dce3cee}{00012}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a76e724e1d2ef6d7a272341291dce3cee}{r\_encoder}}\ =\ r\_encoder}
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00013}\mbox{\hyperlink{class_observer_1_1_observer_ac65bf720a7e91b09c21125980491d024}{00013}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_ac65bf720a7e91b09c21125980491d024}{r\_motor\_pwm\_ch}}\ =\ self.\mbox{\hyperlink{class_observer_1_1_observer_a76e724e1d2ef6d7a272341291dce3cee}{r\_encoder}}.motor.PWM\_ch}
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00014}\mbox{\hyperlink{class_observer_1_1_observer_a3c3178c0ba9678cd57435dd37cfe375c}{00014}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a3c3178c0ba9678cd57435dd37cfe375c}{r\_motor\_nSLP\_pin}}\ =\ self.\mbox{\hyperlink{class_observer_1_1_observer_a76e724e1d2ef6d7a272341291dce3cee}{r\_encoder}}.motor.nSLP\_pin}
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00015}\mbox{\hyperlink{class_observer_1_1_observer_a240edbf1367a771df7fa1b568bb75afd}{00015}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a240edbf1367a771df7fa1b568bb75afd}{battery}}\ =\ battery}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00009}00009\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a8a3304327d521edc1a0f62df8e6aeca3}{l\_encoder}}\ =\ l\_encoder}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00010}00010\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a1ebca79cb1f3b5c9fc3416fd55c2acc9}{l\_motor\_pwm\_ch}}\ =\ self.\mbox{\hyperlink{class_observer_1_1_observer_a8a3304327d521edc1a0f62df8e6aeca3}{l\_encoder}}.motor.PWM\_ch}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00011}00011\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a257ca0250482a1a206c7ba06ad4bf214}{l\_motor\_nSLP\_pin}}\ =\ self.\mbox{\hyperlink{class_observer_1_1_observer_a8a3304327d521edc1a0f62df8e6aeca3}{l\_encoder}}.motor.nSLP\_pin}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00012}00012\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a76e724e1d2ef6d7a272341291dce3cee}{r\_encoder}}\ =\ r\_encoder}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00013}00013\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_ac65bf720a7e91b09c21125980491d024}{r\_motor\_pwm\_ch}}\ =\ self.\mbox{\hyperlink{class_observer_1_1_observer_a76e724e1d2ef6d7a272341291dce3cee}{r\_encoder}}.motor.PWM\_ch}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a3c3178c0ba9678cd57435dd37cfe375c}{r\_motor\_nSLP\_pin}}\ =\ self.\mbox{\hyperlink{class_observer_1_1_observer_a76e724e1d2ef6d7a272341291dce3cee}{r\_encoder}}.motor.nSLP\_pin}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00015}00015\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a240edbf1367a771df7fa1b568bb75afd}{battery}}\ =\ battery}
 \DoxyCodeLine{\Hypertarget{_observer_8py_source_l00016}00016\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{_observer_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ only\ for\ printing\ to\ bluetooth}}
 \DoxyCodeLine{\Hypertarget{_observer_8py_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ UART\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00019}\mbox{\hyperlink{class_observer_1_1_observer_a43c8add26beb3023ca4f4be28735f091}{00019}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a43c8add26beb3023ca4f4be28735f091}{uart}}\ =\ UART(5,\ 115200)}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_observer_1_1_observer_a43c8add26beb3023ca4f4be28735f091}{uart}}\ =\ UART(5,\ 115200)}
 \DoxyCodeLine{\Hypertarget{_observer_8py_source_l00020}00020\ }
-\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00021}\mbox{\hyperlink{class_observer_1_1_observer_ac89ce84c3ef1c8b06178a19d184c87bc}{00021}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_observer_1_1_observer_ac89ce84c3ef1c8b06178a19d184c87bc}{run}}(self,\ shares):}
+\DoxyCodeLine{\Hypertarget{_observer_8py_source_l00021}00021\ \ \ \ \ \textcolor{keyword}{def\ }run(self,\ shares):}
 \DoxyCodeLine{\Hypertarget{_observer_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Seperating\ the\ shares}}
 \DoxyCodeLine{\Hypertarget{_observer_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ (}
 \DoxyCodeLine{\Hypertarget{_observer_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_lpos\_s,}

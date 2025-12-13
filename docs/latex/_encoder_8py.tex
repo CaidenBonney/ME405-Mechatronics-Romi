@@ -10,24 +10,19 @@ This file implements a quadrature encoder interface for the Romi robot.
 \item 
 class \mbox{\hyperlink{class_encoder_1_1_encoder}{Encoder.\+Encoder}}
 \begin{DoxyCompactList}\small\item\em A quadrature encoder class for position and velocity measurement. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Namespaces}
-\begin{DoxyCompactItemize}
-\item 
-namespace \mbox{\hyperlink{namespace_encoder}{Encoder}}
-\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
 This file implements a quadrature encoder interface for the Romi robot. 
 
-The encoder uses a hardware timer in {\ttfamily Timer.\+ENC\+\_\+\+AB} mode to measure wheel rotation and compute velocity. The class inherits from {\ttfamily \doxylink{namespace_sensor}{Sensor}} so timing and velocity updates integrate cleanly with the controllers.
+The encoder uses a hardware timer in {\ttfamily Timer.\+ENC\+\_\+\+AB} mode to measure wheel rotation and compute velocity. The class inherits from {\ttfamily Sensor} so timing and velocity updates integrate cleanly with the controllers.
 
 Features\+:
 \begin{DoxyItemize}
 \item Reads incremental wheel motion from a hardware timer
 \item Converts tick differences into wheel radians
 \item Accumulates total wheel displacement
-\item Computes velocity in mm/s (using {\ttfamily dt} from \doxylink{namespace_sensor}{Sensor})
+\item Computes velocity in mm/s (using {\ttfamily dt} from Sensor)
 \item Supports resetting via {\ttfamily zero()} 
 \end{DoxyItemize}
 

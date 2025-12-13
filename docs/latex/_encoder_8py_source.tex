@@ -2,7 +2,7 @@
 \hypertarget{_encoder_8py_source}{}\label{_encoder_8py_source}\index{Lab Final/Files On Romi/Encoder.py@{Lab Final/Files On Romi/Encoder.py}}
 \mbox{\hyperlink{_encoder_8py}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00001}\mbox{\hyperlink{namespace_encoder}{00001}}\ }
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00001}00001\ }
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00018}00018\ }
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00019}00019\ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ Pin,\ Timer\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00020}00020\ \textcolor{keyword}{from}\ Sensor\ \textcolor{keyword}{import}\ Sensor}
@@ -13,32 +13,32 @@
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00029}\mbox{\hyperlink{class_encoder_1_1_encoder}{00029}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_encoder_1_1_encoder}{Encoder}}(\mbox{\hyperlink{class_sensor_1_1_sensor}{Sensor}}):}
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00030}00030\ }
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00031}00031\ \ \ \ \ \textcolor{comment}{\#\ Default\ Gains\ for\ Motor\ Control}}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00032}\mbox{\hyperlink{class_encoder_1_1_encoder_acf49ca39b8a870b86b608ef4ec9f507d}{00032}}\ \ \ \ \ Kp\ =\ 0.05}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00033}\mbox{\hyperlink{class_encoder_1_1_encoder_a42c8fb766db0956d4cccb2114a57e4eb}{00033}}\ \ \ \ \ Ki\ =\ 0.05}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00034}\mbox{\hyperlink{class_encoder_1_1_encoder_aa930e1d02919262e23c697d0e0a67bb3}{00034}}\ \ \ \ \ Kd\ =\ 0}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00035}\mbox{\hyperlink{class_encoder_1_1_encoder_a7c82d6078e4da87365d1ab09b787734b}{00035}}\ \ \ \ \ Kw\ =\ 0.10}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00036}\mbox{\hyperlink{class_encoder_1_1_encoder_aa042bd20ee3d5f417e38ac84c0018c74}{00036}}\ \ \ \ \ Kff\ =\ 0.075}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00032}00032\ \ \ \ \ Kp\ =\ 0.05}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00033}00033\ \ \ \ \ Ki\ =\ 0.05}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00034}00034\ \ \ \ \ Kd\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00035}00035\ \ \ \ \ Kw\ =\ 0.10}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00036}00036\ \ \ \ \ Kff\ =\ 0.075}
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00037}00037\ }
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00038}\mbox{\hyperlink{class_encoder_1_1_encoder_a06d0075dd3bbccf95dae20e3769c38f6}{00038}}\ \ \ \ \ PWM\_startl\ =\ 5.5}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00039}\mbox{\hyperlink{class_encoder_1_1_encoder_a2f1ece000ee65d95a7dba3ca75246223}{00039}}\ \ \ \ \ PWM\_startr\ =\ 5.5}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00038}00038\ \ \ \ \ PWM\_startl\ =\ 5.5}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00039}00039\ \ \ \ \ PWM\_startr\ =\ 5.5}
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00040}00040\ }
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00041}00041\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00049}\mbox{\hyperlink{class_encoder_1_1_encoder_aaf03c8c07b265741974d6a8f7d8c25db}{00049}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_encoder_1_1_encoder_aaf03c8c07b265741974d6a8f7d8c25db}{\_\_init\_\_}}(self,\ motor,\ tim:\ Timer,\ chA\_pin,\ chA\_num:\ int,\ chB\_pin,\ chB\_num:\ int):}
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ super().\mbox{\hyperlink{class_encoder_1_1_encoder_aaf03c8c07b265741974d6a8f7d8c25db}{\_\_init\_\_}}()}
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00051}00051\ }
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00052}\mbox{\hyperlink{class_encoder_1_1_encoder_a396482f541be6246f852207da4549c50}{00052}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a396482f541be6246f852207da4549c50}{motor}}\ =\ motor}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00053}\mbox{\hyperlink{class_encoder_1_1_encoder_aed52f4ae493169a30d1053ef155d89e3}{00053}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_aed52f4ae493169a30d1053ef155d89e3}{\_position}}\ =\ 0\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Accumulated\ wheel\ position\ (rad)}}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00054}\mbox{\hyperlink{class_encoder_1_1_encoder_a4833ccfbac5153c4f3262b035729e974}{00054}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a4833ccfbac5153c4f3262b035729e974}{prev\_count}}\ =\ 0\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Last\ timer\ count}}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00055}\mbox{\hyperlink{class_encoder_1_1_encoder_a2308e3a2ab31eae5118dadfe5a955bf2}{00055}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a2308e3a2ab31eae5118dadfe5a955bf2}{delta}}\ =\ 0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Tick\ difference\ between\ updates}}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a396482f541be6246f852207da4549c50}{motor}}\ =\ motor}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_aed52f4ae493169a30d1053ef155d89e3}{\_position}}\ =\ 0\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Accumulated\ wheel\ position\ (rad)}}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a4833ccfbac5153c4f3262b035729e974}{prev\_count}}\ =\ 0\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Last\ timer\ count}}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a2308e3a2ab31eae5118dadfe5a955bf2}{delta}}\ =\ 0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Tick\ difference\ between\ updates}}
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00056}00056\ }
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00057}\mbox{\hyperlink{class_encoder_1_1_encoder_af374aae717869154cd576f8c218ee893}{00057}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_af374aae717869154cd576f8c218ee893}{ar}}\ =\ tim.period()\ \ \ \ \ \ \textcolor{comment}{\#\ Auto-\/reload\ value}}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00058}\mbox{\hyperlink{class_encoder_1_1_encoder_a382ad8b72c52f9f092e7da87a55a17a5}{00058}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a382ad8b72c52f9f092e7da87a55a17a5}{tim}}\ =\ tim}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_af374aae717869154cd576f8c218ee893}{ar}}\ =\ tim.period()\ \ \ \ \ \ \textcolor{comment}{\#\ Auto-\/reload\ value}}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a382ad8b72c52f9f092e7da87a55a17a5}{tim}}\ =\ tim}
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00059}00059\ }
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Configure\ pins\ and\ timer\ channels}}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00061}\mbox{\hyperlink{class_encoder_1_1_encoder_a446ccf4e54570b0f86b84d42770c9f77}{00061}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a446ccf4e54570b0f86b84d42770c9f77}{chA\_pin}}\ =\ Pin(chA\_pin,\ mode=Pin.IN)}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00062}\mbox{\hyperlink{class_encoder_1_1_encoder_ac3775fb335ea931b85c9942ea55d994f}{00062}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_ac3775fb335ea931b85c9942ea55d994f}{chB\_pin}}\ =\ Pin(chB\_pin,\ mode=Pin.IN)}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00063}\mbox{\hyperlink{class_encoder_1_1_encoder_a117693752e24d2ccce1432dcb3c48708}{00063}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a117693752e24d2ccce1432dcb3c48708}{chA}}\ =\ tim.channel(chA\_num,\ pin=self.\mbox{\hyperlink{class_encoder_1_1_encoder_a446ccf4e54570b0f86b84d42770c9f77}{chA\_pin}},\ mode=Timer.ENC\_AB)}
-\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00064}\mbox{\hyperlink{class_encoder_1_1_encoder_a43c719e3b6ee3b6b86a29caf21b76858}{00064}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a43c719e3b6ee3b6b86a29caf21b76858}{chB}}\ =\ tim.channel(chB\_num,\ pin=self.\mbox{\hyperlink{class_encoder_1_1_encoder_ac3775fb335ea931b85c9942ea55d994f}{chB\_pin}},\ mode=Timer.ENC\_AB)}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a446ccf4e54570b0f86b84d42770c9f77}{chA\_pin}}\ =\ Pin(chA\_pin,\ mode=Pin.IN)}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_ac3775fb335ea931b85c9942ea55d994f}{chB\_pin}}\ =\ Pin(chB\_pin,\ mode=Pin.IN)}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a117693752e24d2ccce1432dcb3c48708}{chA}}\ =\ tim.channel(chA\_num,\ pin=self.\mbox{\hyperlink{class_encoder_1_1_encoder_a446ccf4e54570b0f86b84d42770c9f77}{chA\_pin}},\ mode=Timer.ENC\_AB)}
+\DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_encoder_1_1_encoder_a43c719e3b6ee3b6b86a29caf21b76858}{chB}}\ =\ tim.channel(chB\_num,\ pin=self.\mbox{\hyperlink{class_encoder_1_1_encoder_ac3775fb335ea931b85c9942ea55d994f}{chB\_pin}},\ mode=Timer.ENC\_AB)}
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00065}00065\ }
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00066}00066\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{_encoder_8py_source_l00069}00069\ \ \ \ \ \textcolor{preprocessor}{@property}}

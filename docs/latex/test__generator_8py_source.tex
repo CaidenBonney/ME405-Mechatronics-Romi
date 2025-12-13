@@ -1,0 +1,74 @@
+\doxysection{test\+\_\+generator.\+py}
+\hypertarget{test__generator_8py_source}{}\label{test__generator_8py_source}\index{Homework/Antonio\textquotesingle{}s Homework/0x01/test\_generator.py@{Homework/Antonio\textquotesingle{}s Homework/0x01/test\_generator.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00001}00001\ \textcolor{keyword}{import}\ unittest}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00002}00002\ \textcolor{keyword}{from}\ generator\ \textcolor{keyword}{import}\ fibonaci}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00005}\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci}{00005}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci}{TestFibonacci}}(unittest.TestCase):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00006}\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_a480b9042dd3e16e609f7709133a3eff2}{00006}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_a480b9042dd3e16e609f7709133a3eff2}{test\_fibonaci\_sequence}}(self):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00007}00007\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Check\ that\ the\ Fibonacci\ generator\ yields\ the\ correct\ sequence."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00008}00008\ \ \ \ \ \ \ \ \ n\ =\ 10}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00009}00009\ \ \ \ \ \ \ \ \ expected\ =\ [0,\ 1,\ 1,\ 2,\ 3,\ 5,\ 8,\ 13,\ 21,\ 34]}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00010}00010\ \ \ \ \ \ \ \ \ result\ =\ list(fibonaci(n))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00011}00011\ \ \ \ \ \ \ \ \ self.assertEqual(result,\ expected)}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00013}\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_a5ba8f1fa83fd45358c62bbd3ec74a957}{00013}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_a5ba8f1fa83fd45358c62bbd3ec74a957}{test\_fibonaci\_non\_integer\_input}}(self):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Ensure\ non-\/integer\ input\ raises\ the\ correct\ exception."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00015}00015\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(TypeError):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(3.5))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{stringliteral}{"{}abc"{}}))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(TypeError):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci([1,\ 2,\ 3]))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(TypeError):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{keywordtype}{None}))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{stringliteral}{"{}12.34"{}}))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{stringliteral}{"{}12abc"{}}))\ }
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{stringliteral}{"{}"{}}))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(TypeError):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{keyword}{False}))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00032}\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_ac32e6d261554213df0abdb6a80a5f992}{00032}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_ac32e6d261554213df0abdb6a80a5f992}{test\_fibonaci\_string\_integer\_input}}(self):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Check\ that\ string\ integer\ input\ works."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ result\ =\ list(fibonaci(\textcolor{stringliteral}{"{}5"{}}))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ self.assertEqual(result,\ [0,\ 1,\ 1,\ 2,\ 3])}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00037}\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_ac2d68bf9d0f77e012b037fbfb476c055}{00037}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_ac2d68bf9d0f77e012b037fbfb476c055}{test\_fibonaci\_negative\_or\_zero}}(self):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Check\ for\ zero\ or\ negative\ input."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(0))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(-\/10))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{stringliteral}{"{}0"{}}))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ self.assertRaises(ValueError):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ list(fibonaci(\textcolor{stringliteral}{"{}-\/5"{}}))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00049}\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_a35de9f507f6b436a725976332dea60c5}{00049}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classtest__generator_1_1_test_fibonacci_a35de9f507f6b436a725976332dea60c5}{test\_sum\_every\_third\_value}}(self):}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Verify\ the\ sum\ of\ every\ third\ Fibonacci\ number\ for\ small\ n."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00051}00051\ \ \ \ \ \ \ \ \ fib\_length\ =\ 7}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ total\ =\ sum(}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ map(}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{lambda}\ pair:\ pair[1],}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filter(}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{lambda}\ pair:\ (pair[0])\ \%\ 3\ ==\ 0,}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ enumerate(fibonaci(fib\_length))}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Fibonacci\ sequence\ up\ to\ n=7\ →\ [0,1,1,2,3,5,8,13,21,34]}}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Every\ 3rd\ value:\ 0\ (index\ 0),\ 2\ (3),\ 8\ (6)}}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ expected\_sum\ =\ 0\ +\ 2\ +\ 8}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ self.assertEqual(total,\ expected\_sum)}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00067}00067\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{test__generator_8py_source_l00068}00068\ \ \ \ \ unittest.main()}
+
+\end{DoxyCode}

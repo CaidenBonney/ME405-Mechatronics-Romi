@@ -1,0 +1,50 @@
+\doxysection{generator.\+py}
+\hypertarget{generator_8py_source}{}\label{generator_8py_source}\index{Homework/Antonio\textquotesingle{}s Homework/0x01/generator.py@{Homework/Antonio\textquotesingle{}s Homework/0x01/generator.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00001}00001\ \textcolor{keyword}{import}\ time}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00004}00004\ \textcolor{keyword}{def\ }fibonaci(n):}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00005}00005\ \ \ \ \ \textcolor{keywordflow}{if}\ type(n)\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ int:}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00006}00006\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(n,\ str):}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00007}00007\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00008}00008\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ int(n)}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00009}00009\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ ValueError:}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00010}00010\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Incorrect\ input\ value.\ String\ inputs\ must\ contain\ only\ integers."{}})}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00011}00011\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00012}00012\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ TypeError(\textcolor{stringliteral}{"{}Incorrect\ type\ inputted.\ Input\ type\ must\ be\ an\ integer\ or\ string\ of\ an\ integer."{}})\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00013}00013\ \ \ \ \ \textcolor{keywordflow}{if}\ n\ <=\ 0:}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Input\ must\ be\ a\ positive\ non-\/zero\ integer."{}})}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00015}00015\ \ \ \ \ a,\ b\ =\ 0,\ 1}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{for}\ \_\ \textcolor{keywordflow}{in}\ range(n):}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{yield}\ a}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00018}00018\ \ \ \ \ \ \ \ \ a,\ b\ =\ b,\ a\ +\ b}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00022}00022\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00023}00023\ \ \ \ \ start\_time\ =\ time.perf\_counter\_ns()}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00024}00024\ \ \ \ \ fib\_length\ =\ 7}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00026}00026\ \ \ \ \ total\ =\ sum(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00027}00027\ \ \ \ \ map(\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{lambda}\ pair:\ pair[1],}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ filter(}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{lambda}\ pair:\ (pair[0])\ \%\ 3\ ==\ 0,}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ enumerate(fibonaci(fib\_length))}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00034}00034\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00036}00036\ \ \ \ \ \textcolor{comment}{\#\ enumerate\ makes\ lazy\ list\ of\ tuples\ (index,\ value)}}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00037}00037\ \ \ \ \ \textcolor{comment}{\#\ filter\ grabs\ every\ third\ tuple}}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00038}00038\ \ \ \ \ \textcolor{comment}{\#\ map\ extracts\ the\ value\ from\ each\ tuple}}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00039}00039\ \ \ \ \ \textcolor{comment}{\#\ sum\ adds\ them\ all\ up}}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00041}00041\ \ \ \ \ end\_time\ =\ time.perf\_counter\_ns()}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00042}00042\ \ \ \ \ time\_elapsed\ =\ (end\_time\ -\/\ start\_time)\ /\ 1\_000\_000\_000\ \ \textcolor{comment}{\#\ Convert\ nanoseconds\ to\ seconds}}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00043}00043\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Sum\ of\ every\ third\ value:\ \{total\}"{}})}
+\DoxyCodeLine{\Hypertarget{generator_8py_source_l00044}00044\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Execution\ time:\ \{time\_elapsed\}\ seconds"{}})}
+
+\end{DoxyCode}
