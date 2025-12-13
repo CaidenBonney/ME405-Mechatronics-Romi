@@ -1,28 +1,6 @@
 var searchData=
 [
-  ['path_5fdirector_0',['Path_Director',['../namespace_path___director.html',1,'']]],
-  ['path_5fdirector_2epy_1',['Path_Director.py',['../_path___director_8py.html',1,'']]],
-  ['path_5fdirector_5fobj_2',['path_director_obj',['../namespacemain.html#a0fa7d6f4052103fee7b808e1ad512ea1',1,'main']]],
-  ['path_5fdirector_5fvars_3',['Path_Director_vars',['../namespace_path___director__vars.html',1,'']]],
-  ['path_5fdirector_5fvars_2epy_4',['Path_Director_vars.py',['../_path___director__vars_8py.html',1,'']]],
-  ['pathdirector_5',['PathDirector',['../class_path___director_1_1_path_director.html',1,'Path_Director']]],
-  ['pd_5fvars_6',['PD_vars',['../class_path___director__vars_1_1_p_d__vars.html',1,'Path_Director_vars']]],
-  ['period_7',['period',['../classcotask_1_1_task.html#afc5c88f112f516002f67118a0ee82f44',1,'cotask::Task']]],
-  ['plot_5fdata_8',['Plot_Data',['../namespace_plot___data.html',1,'']]],
-  ['plot_5fdata_2epy_9',['Plot_Data.py',['../12_803_825_01_0d3_800pm_2_plot___data_8py.html',1,'(Global Namespace)'],['../12_803_825_01_0d3_810pm_2_plot___data_8py.html',1,'(Global Namespace)'],['../12_808_825_01_0d4_800pm_2_plot___data_8py.html',1,'(Global Namespace)'],['../12_808_825_01_0d4_820pm_2_plot___data_8py.html',1,'(Global Namespace)']]],
-  ['plot_5fpairs_10',['plot_pairs',['../namespace_plot___data.html#af85fe34dcd491706587a0d42765ad8a4',1,'Plot_Data']]],
-  ['poll_11',['poll',['../class_user___input_1_1_user_input.html#a31db03cc321bcc918560ed85e2f17044',1,'User_Input::UserInput']]],
-  ['position_12',['position',['../class_encoder_1_1_encoder.html#a6d2eb2fb79cbc8fa4674a0697bcd1b48',1,'Encoder.Encoder.position(self)'],['../class_encoder_1_1_encoder.html#a5ed1fa42676a8cdf235aefe1dc799036',1,'Encoder.Encoder.position(self, float value)'],['../namespacemain.html#ae651c740514675bddea83d3310163a4b',1,'main.position']]],
-  ['prev_5fcount_13',['prev_count',['../class_encoder_1_1_encoder.html#a4833ccfbac5153c4f3262b035729e974',1,'Encoder::Encoder']]],
-  ['prev_5ferror_14',['prev_error',['../class_closed___loop___control_1_1_closed_loop_control.html#a14465388d3a7ee676ad952b546404d02',1,'Closed_Loop_Control::ClosedLoopControl']]],
-  ['prev_5fimu_5fheading_15',['prev_imu_heading',['../class_i_m_u_1_1_i_m_u.html#ae95535b92360c55599b342e84aa71089',1,'IMU::IMU']]],
-  ['pri_5flist_16',['pri_list',['../classcotask_1_1_task_list.html#a724ac8246e4b4bf4493d5fce02a8307e',1,'cotask::TaskList']]],
-  ['pri_5fsched_17',['pri_sched',['../classcotask_1_1_task_list.html#a53819d1e25955560b7cb06bd21715966',1,'cotask::TaskList']]],
-  ['priority_18',['priority',['../classcotask_1_1_task.html#aeced93c7b7d23e33de9693d278aef88b',1,'cotask::Task']]],
-  ['put_19',['put',['../classtask__share_1_1_queue.html#a0611b4838abb13731d1d487a8178b883',1,'task_share.Queue.put()'],['../classtask__share_1_1_share.html#a6bca473510fc2d28f5b7a32f242e4e18',1,'task_share.Share.put()']]],
-  ['pwm_5fch_20',['PWM_ch',['../class_motor_1_1_motor.html#ac2fc73b7acebc74097bc77942c7c2318',1,'Motor::Motor']]],
-  ['pwm_5fpin_21',['PWM_pin',['../class_motor_1_1_motor.html#aa607f1a9f2a0165124537af8eea39348',1,'Motor::Motor']]],
-  ['pwm_5fstart_22',['PWM_start',['../class_closed___loop___control_1_1_closed_loop_control.html#a78d8eb6ca8c73a1fb550c4385cf0336c',1,'Closed_Loop_Control::ClosedLoopControl']]],
-  ['pwm_5fstartl_23',['PWM_startl',['../class_encoder_1_1_encoder.html#a06d0075dd3bbccf95dae20e3769c38f6',1,'Encoder::Encoder']]],
-  ['pwm_5fstartr_24',['PWM_startr',['../class_encoder_1_1_encoder.html#a2f1ece000ee65d95a7dba3ca75246223',1,'Encoder::Encoder']]]
+  ['name_0',['name',['../classcotask_1_1_task.html#ab54e069dd0b4f0a2f8e7f00c94998a10',1,'cotask::Task']]],
+  ['nucleo_20board_1',['Nucleo Board',['../index.html#autotoc_md7',1,'']]],
+  ['num_5fin_2',['num_in',['../classtask__share_1_1_queue.html#aef595fc4133d297e2b63014c47ac5f27',1,'task_share::Queue']]]
 ];

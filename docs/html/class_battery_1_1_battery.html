@@ -104,7 +104,7 @@ $(function(){initNavTree('class_battery_1_1_battery.html','','class_battery_1_1_
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6f7235b1db18423f9e6b3d891dd1da15" id="r_a6f7235b1db18423f9e6b3d891dd1da15"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f7235b1db18423f9e6b3d891dd1da15">__init__</a> (self, ADC|None <a class="el" href="#ad4ff933497b00de54e6041604943dffe">battery_ADC</a>=None)</td></tr>
+<tr class="memitem:a6f7235b1db18423f9e6b3d891dd1da15" id="r_a6f7235b1db18423f9e6b3d891dd1da15"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f7235b1db18423f9e6b3d891dd1da15">__init__</a> (self, ADC|None battery_ADC=None)</td></tr>
 <tr class="memdesc:a6f7235b1db18423f9e6b3d891dd1da15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a battery monitor object.  <br /></td></tr>
 <tr class="memitem:ad5ef7cf1e8e9105157a963acded69b21" id="r_ad5ef7cf1e8e9105157a963acded69b21"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad5ef7cf1e8e9105157a963acded69b21">get_cur_perc</a> (self)</td></tr>
 <tr class="memdesc:ad5ef7cf1e8e9105157a963acded69b21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current battery percentage.  <br /></td></tr>
@@ -113,11 +113,12 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ad4ff933497b00de54e6041604943dffe" id="r_ad4ff933497b00de54e6041604943dffe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4ff933497b00de54e6041604943dffe">battery_ADC</a> = battery_ADC</td></tr>
-<tr class="memitem:a32e14b12122e17fb0a227c015590614e" id="r_a32e14b12122e17fb0a227c015590614e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32e14b12122e17fb0a227c015590614e">ADC_nom</a> = 3210</td></tr>
-<tr class="memdesc:a32e14b12122e17fb0a227c015590614e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nominal ADC reading corresponding to nominal battery voltage.  <br /></td></tr>
-<tr class="memitem:a9bf4f4b1e49e3b893eed68bf653a8dd3" id="r_a9bf4f4b1e49e3b893eed68bf653a8dd3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9bf4f4b1e49e3b893eed68bf653a8dd3">V_nom</a> = 8.5</td></tr>
-<tr class="memdesc:a9bf4f4b1e49e3b893eed68bf653a8dd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nominal battery voltage corresponding to <code>ADC_nom</code>.  <br /></td></tr>
+<tr class="memitem:a32e14b12122e17fb0a227c015590614e" id="r_a32e14b12122e17fb0a227c015590614e"><td class="memItemLeft" align="right" valign="top"><a id="a32e14b12122e17fb0a227c015590614e" name="a32e14b12122e17fb0a227c015590614e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>ADC_nom</b> = 3210</td></tr>
+<tr class="memdesc:a32e14b12122e17fb0a227c015590614e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nominal ADC reading corresponding to nominal battery voltage. <br /></td></tr>
+<tr class="memitem:a9bf4f4b1e49e3b893eed68bf653a8dd3" id="r_a9bf4f4b1e49e3b893eed68bf653a8dd3"><td class="memItemLeft" align="right" valign="top"><a id="a9bf4f4b1e49e3b893eed68bf653a8dd3" name="a9bf4f4b1e49e3b893eed68bf653a8dd3"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>V_nom</b> = 8.5</td></tr>
+<tr class="memdesc:a9bf4f4b1e49e3b893eed68bf653a8dd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nominal battery voltage corresponding to <code>ADC_nom</code>. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class which provides access to Romi's battery voltage. </p>
@@ -164,6 +165,8 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   38</span>        self.V_nom = 8.5</div>
 <div class="line"><span class="lineno">   39</span> </div>
 </div><!-- fragment -->
+<p class="reference">References <a class="el" href="_battery_8py_source.html#l00032">battery_ADC</a>.</p>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -226,59 +229,6 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="a32e14b12122e17fb0a227c015590614e" name="a32e14b12122e17fb0a227c015590614e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a32e14b12122e17fb0a227c015590614e">&#9670;&#160;</a></span>ADC_nom</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Battery.Battery.ADC_nom = 3210</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Nominal ADC reading corresponding to nominal battery voltage. </p>
-
-<p class="definition">Definition at line <a class="el" href="_battery_8py_source.html#l00035">35</a> of file <a class="el" href="_battery_8py_source.html">Battery.py</a>.</p>
-
-</div>
-</div>
-<a id="ad4ff933497b00de54e6041604943dffe" name="ad4ff933497b00de54e6041604943dffe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4ff933497b00de54e6041604943dffe">&#9670;&#160;</a></span>battery_ADC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Battery.Battery.battery_ADC = battery_ADC</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_battery_8py_source.html#l00032">32</a> of file <a class="el" href="_battery_8py_source.html">Battery.py</a>.</p>
-
-</div>
-</div>
-<a id="a9bf4f4b1e49e3b893eed68bf653a8dd3" name="a9bf4f4b1e49e3b893eed68bf653a8dd3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9bf4f4b1e49e3b893eed68bf653a8dd3">&#9670;&#160;</a></span>V_nom</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">float Battery.Battery.V_nom = 8.5</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Nominal battery voltage corresponding to <code>ADC_nom</code>. </p>
-
-<p class="definition">Definition at line <a class="el" href="_battery_8py_source.html#l00038">38</a> of file <a class="el" href="_battery_8py_source.html">Battery.py</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>Lab Final/Files On Romi/<a class="el" href="_battery_8py_source.html">Battery.py</a></li>
 </ul>
@@ -295,7 +245,7 @@ Public Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespace_battery.html">Battery</a></li><li class="navelem"><a href="class_battery_1_1_battery.html">Battery</a></li>
+    <li class="navelem"><b>Battery</b></li><li class="navelem"><a href="class_battery_1_1_battery.html">Battery</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

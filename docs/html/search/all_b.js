@@ -1,27 +1,7 @@
 var searchData=
 [
-  ['l_5fencoder_0',['l_encoder',['../class_observer_1_1_observer.html#a8a3304327d521edc1a0f62df8e6aeca3',1,'Observer.Observer.l_encoder'],['../namespacemain.html#ad74da7df8c7825425c69ffd08f17e72b',1,'main.l_encoder']]],
-  ['l_5fflag_5fs_1',['l_flag_s',['../namespacemain.html#a2e04582add1f1548e3ec182bdf92fe4d',1,'main']]],
-  ['l_5fmotor_2',['l_motor',['../namespacemain.html#aa69a512d6f620081a09207c39e815a38',1,'main']]],
-  ['l_5fmotor_5fnslp_5fpin_3',['l_motor_nSLP_pin',['../class_observer_1_1_observer.html#a257ca0250482a1a206c7ba06ad4bf214',1,'Observer::Observer']]],
-  ['l_5fmotor_5fpwm_5fch_4',['l_motor_pwm_ch',['../class_observer_1_1_observer.html#a1ebca79cb1f3b5c9fc3416fd55c2acc9',1,'Observer::Observer']]],
-  ['l_5fpos_5fq_5',['l_pos_q',['../namespacemain.html#a46eef4cc8ff6309ffe33d09f068aec08',1,'main']]],
-  ['l_5fspeed_5fs_6',['l_speed_s',['../namespacemain.html#a6ef303866b5ae6c37b04cf9736b53e48',1,'main']]],
-  ['l_5ftime_5fq_7',['l_time_q',['../namespacemain.html#a146b2b641afeee203bbe961dbecf5019',1,'main']]],
-  ['l_5fvel_5fq_8',['l_vel_q',['../namespacemain.html#a2330eeeb2e24bc8271e787df6a072e29',1,'main']]],
-  ['line_5f2_5fcp2_9',['LINE_2_CP2',['../class_path___director_1_1_path_director.html#a8ff26b4bebf4b771bcffd4fd62bcdccc',1,'Path_Director::PathDirector']]],
-  ['line_5f2_5fcp3_10',['LINE_2_CP3',['../class_path___director_1_1_path_director.html#ab1f324a7e409157aaddcda68df06a2bf',1,'Path_Director::PathDirector']]],
-  ['line_5f2_5fcp4_11',['LINE_2_CP4',['../class_path___director_1_1_path_director.html#a43c73ce1c65cc49720673e3747507ec6',1,'Path_Director::PathDirector']]],
-  ['line_5fb4_5fcp3_12',['LINE_B4_CP3',['../class_path___director_1_1_path_director.html#a38cad761e2696b9eea4dbe883204fb85',1,'Path_Director::PathDirector']]],
-  ['line_5fclc_13',['Line_CLC',['../class_path___director_1_1_path_director.html#aa1becd4e09212e138cf283373e9350f7',1,'Path_Director::PathDirector']]],
-  ['line_5ffollow_5f2_5fdiamond_14',['LINE_FOLLOW_2_DIAMOND',['../class_path___director_1_1_path_director.html#a788a49c7be7edb452bfd53bac1164400',1,'Path_Director::PathDirector']]],
-  ['line_5fsensor_15',['Line_Sensor',['../namespace_line___sensor.html',1,'']]],
-  ['line_5fsensor_16',['line_sensor',['../class_path___director_1_1_path_director.html#a30e92d2b75a4f921f99faaf9c0a6078a',1,'Path_Director::PathDirector']]],
-  ['line_5fsensor_2epy_17',['Line_Sensor.py',['../_line___sensor_8py.html',1,'']]],
-  ['linesensor_18',['LineSensor',['../class_line___sensor_1_1_line_sensor.html',1,'Line_Sensor']]],
-  ['linesensor_19',['Linesensor',['../namespacemain.html#a66c88c24660816c8d73375cde2b51ccc',1,'main']]],
-  ['list_5fir_5fsensors_20',['list_IR_Sensors',['../class_line___sensor_1_1_line_sensor.html#ac4a5ed1ef9e27baae790f74f6bee68ce',1,'Line_Sensor::LineSensor']]],
-  ['list_5fof_5fqueues_21',['list_of_queues',['../namespacemain.html#ae4da7b0e93a13e050866580987c0ec86',1,'main']]],
-  ['lmc_5fobj_22',['LMC_obj',['../namespacemain.html#a0964682f027b2871d3f68580ac1aaad7',1,'main']]],
-  ['location_23',['location',['../class_i_r___sensor_1_1_i_r_sensor.html#a3f28bab795dc0b5c41ef19f8f55f95d1',1,'IR_Sensor::IRSensor']]]
+  ['imu_0',['IMU',['../class_i_m_u_1_1_i_m_u.html',1,'IMU.IMU'],['../index.html#autotoc_md12',1,'IMU']]],
+  ['incremental_20encoder_1',['Quadrature Incremental Encoder',['../index.html#autotoc_md9',1,'']]],
+  ['input_2',['User Input',['../index.html#autotoc_md16',1,'']]],
+  ['irsensor_3',['IRSensor',['../class_i_r___sensor_1_1_i_r_sensor.html',1,'IR_Sensor']]]
 ];

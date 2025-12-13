@@ -6,22 +6,5 @@ var class_encoder_1_1_encoder =
     [ "position", "class_encoder_1_1_encoder.html#a5ed1fa42676a8cdf235aefe1dc799036", null ],
     [ "update", "class_encoder_1_1_encoder.html#a38735c3e7480ced90b58e80e2704d677", null ],
     [ "velocity", "class_encoder_1_1_encoder.html#a350e18a3d12255c04ae76cbebd0e9a6c", null ],
-    [ "zero", "class_encoder_1_1_encoder.html#a02c0a2ebcfb0989ea1cc849a6525d342", null ],
-    [ "_position", "class_encoder_1_1_encoder.html#aed52f4ae493169a30d1053ef155d89e3", null ],
-    [ "ar", "class_encoder_1_1_encoder.html#af374aae717869154cd576f8c218ee893", null ],
-    [ "chA", "class_encoder_1_1_encoder.html#a117693752e24d2ccce1432dcb3c48708", null ],
-    [ "chA_pin", "class_encoder_1_1_encoder.html#a446ccf4e54570b0f86b84d42770c9f77", null ],
-    [ "chB", "class_encoder_1_1_encoder.html#a43c719e3b6ee3b6b86a29caf21b76858", null ],
-    [ "chB_pin", "class_encoder_1_1_encoder.html#ac3775fb335ea931b85c9942ea55d994f", null ],
-    [ "delta", "class_encoder_1_1_encoder.html#a2308e3a2ab31eae5118dadfe5a955bf2", null ],
-    [ "Kd", "class_encoder_1_1_encoder.html#aa930e1d02919262e23c697d0e0a67bb3", null ],
-    [ "Kff", "class_encoder_1_1_encoder.html#aa042bd20ee3d5f417e38ac84c0018c74", null ],
-    [ "Ki", "class_encoder_1_1_encoder.html#a42c8fb766db0956d4cccb2114a57e4eb", null ],
-    [ "Kp", "class_encoder_1_1_encoder.html#acf49ca39b8a870b86b608ef4ec9f507d", null ],
-    [ "Kw", "class_encoder_1_1_encoder.html#a7c82d6078e4da87365d1ab09b787734b", null ],
-    [ "motor", "class_encoder_1_1_encoder.html#a396482f541be6246f852207da4549c50", null ],
-    [ "prev_count", "class_encoder_1_1_encoder.html#a4833ccfbac5153c4f3262b035729e974", null ],
-    [ "PWM_startl", "class_encoder_1_1_encoder.html#a06d0075dd3bbccf95dae20e3769c38f6", null ],
-    [ "PWM_startr", "class_encoder_1_1_encoder.html#a2f1ece000ee65d95a7dba3ca75246223", null ],
-    [ "tim", "class_encoder_1_1_encoder.html#a382ad8b72c52f9f092e7da87a55a17a5", null ]
+    [ "zero", "class_encoder_1_1_encoder.html#a02c0a2ebcfb0989ea1cc849a6525d342", null ]
 ];

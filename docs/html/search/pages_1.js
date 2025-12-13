@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['romi_0',['ME405-Mechatronics-Romi',['../md__r_e_a_d_m_e.html',1,'']]]
+  ['2_20—_20using_20matlab’s_20c2d_20function_0',['Step 2 — Using MATLAB’s c2d Function',['../index.html#autotoc_md43',1,'']]]
 ];

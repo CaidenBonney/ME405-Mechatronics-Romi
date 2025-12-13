@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['wait_0',['WAIT',['../class_path___director_1_1_path_director.html#aafcffd4b70fbb261a20ffe99658d602b',1,'Path_Director::PathDirector']]],
-  ['wdiv2_1',['wdiv2',['../class_romi___props_1_1_romi_props.html#aad7a7afbdbfac3b39da08a8b192b24b3',1,'Romi_Props::RomiProps']]],
-  ['wheel_5fradius_2',['wheel_radius',['../class_romi___props_1_1_romi_props.html#a4202d589e60fbde47daaac18f134b2d9',1,'Romi_Props::RomiProps']]],
-  ['white_3',['white',['../class_i_r___sensor_1_1_i_r_sensor.html#a7c3660569c60c9164596bef1c0032f53',1,'IR_Sensor::IRSensor']]]
+  ['update_0',['update',['../class_encoder_1_1_encoder.html#a38735c3e7480ced90b58e80e2704d677',1,'Encoder::Encoder']]],
+  ['user_20input_1',['User Input',['../index.html#autotoc_md16',1,'']]],
+  ['userinput_2',['UserInput',['../class_user___input_1_1_user_input.html',1,'User_Input']]],
+  ['using_20matlab’s_20c2d_20function_3',['Step 2 — Using MATLAB’s c2d Function',['../index.html#autotoc_md43',1,'']]]
 ];

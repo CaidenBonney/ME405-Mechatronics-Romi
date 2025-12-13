@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['me405_20mechatronics_20romi_0',['ME405-Mechatronics-Romi',['../md__r_e_a_d_m_e.html',1,'']]],
-  ['mechatronics_20romi_1',['ME405-Mechatronics-Romi',['../md__r_e_a_d_m_e.html',1,'']]]
+  ['1_20—_20forming_20the_20continuous_20augmented_20system_0',['Step 1 — Forming the Continuous Augmented System',['../index.html#autotoc_md42',1,'']]]
 ];

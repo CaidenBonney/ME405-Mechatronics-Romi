@@ -104,7 +104,7 @@ $(function(){initNavTree('classcotask_1_1_task.html','','classcotask_1_1_task-me
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2fe3b73c0ccc2cd20a89694e336291f5" id="r_a2fe3b73c0ccc2cd20a89694e336291f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2fe3b73c0ccc2cd20a89694e336291f5">__init__</a> (self, run_fun, <a class="el" href="#ab54e069dd0b4f0a2f8e7f00c94998a10">name</a>=&quot;NoName&quot;, <a class="el" href="#aeced93c7b7d23e33de9693d278aef88b">priority</a>=0, <a class="el" href="#afc5c88f112f516002f67118a0ee82f44">period</a>=None, profile=False, trace=False, shares=())</td></tr>
+<tr class="memitem:a2fe3b73c0ccc2cd20a89694e336291f5" id="r_a2fe3b73c0ccc2cd20a89694e336291f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2fe3b73c0ccc2cd20a89694e336291f5">__init__</a> (self, run_fun, <a class="el" href="#ab54e069dd0b4f0a2f8e7f00c94998a10">name</a>=&quot;NoName&quot;, <a class="el" href="#aeced93c7b7d23e33de9693d278aef88b">priority</a>=0, period=None, profile=False, trace=False, shares=())</td></tr>
 <tr class="memdesc:a2fe3b73c0ccc2cd20a89694e336291f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a task object so it may be run by the scheduler.  <br /></td></tr>
 <tr class="memitem:af60def0ed4a1bc5fec32f3cf8b8a90c8" id="r_af60def0ed4a1bc5fec32f3cf8b8a90c8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af60def0ed4a1bc5fec32f3cf8b8a90c8">schedule</a> (self)</td></tr>
 <tr class="memdesc:af60def0ed4a1bc5fec32f3cf8b8a90c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is called by the scheduler; it attempts to run this task.  <br /></td></tr>
@@ -123,28 +123,15 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ab54e069dd0b4f0a2f8e7f00c94998a10" id="r_ab54e069dd0b4f0a2f8e7f00c94998a10"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab54e069dd0b4f0a2f8e7f00c94998a10">name</a> = name</td></tr>
-<tr class="memdesc:ab54e069dd0b4f0a2f8e7f00c94998a10"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the task, hopefully a short and descriptive string.  <br /></td></tr>
-<tr class="memitem:aeced93c7b7d23e33de9693d278aef88b" id="r_aeced93c7b7d23e33de9693d278aef88b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeced93c7b7d23e33de9693d278aef88b">priority</a> = int(priority)</td></tr>
-<tr class="memdesc:aeced93c7b7d23e33de9693d278aef88b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The task's priority, an integer with higher numbers meaning higher priority.  <br /></td></tr>
-<tr class="memitem:afc5c88f112f516002f67118a0ee82f44" id="r_afc5c88f112f516002f67118a0ee82f44"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc5c88f112f516002f67118a0ee82f44">period</a> = int(period * 1000)</td></tr>
-<tr class="memitem:ad309fae1890bffafa75e9fdb33fae600" id="r_ad309fae1890bffafa75e9fdb33fae600"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad309fae1890bffafa75e9fdb33fae600">go_flag</a> = False</td></tr>
-<tr class="memdesc:ad309fae1890bffafa75e9fdb33fae600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag which is set true when the task is ready to be run by the scheduler.  <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a3d158e6e4971c204449c07f72e67a186" id="r_a3d158e6e4971c204449c07f72e67a186"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d158e6e4971c204449c07f72e67a186">_run_gen</a> = run_fun(shares)</td></tr>
-<tr class="memitem:aa443e9f35f5dee489023afb5d5b9d091" id="r_aa443e9f35f5dee489023afb5d5b9d091"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa443e9f35f5dee489023afb5d5b9d091">_next_run</a> = utime.ticks_us() + self.period</td></tr>
-<tr class="memitem:a0d0e9249bbce322f63ad1d2004069fac" id="r_a0d0e9249bbce322f63ad1d2004069fac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d0e9249bbce322f63ad1d2004069fac">_prof</a> = profile</td></tr>
-<tr class="memitem:a05a6180fe3ba22a1d1e36fe1cc34cd16" id="r_a05a6180fe3ba22a1d1e36fe1cc34cd16"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05a6180fe3ba22a1d1e36fe1cc34cd16">_prev_state</a> = 0</td></tr>
-<tr class="memitem:a12647eaf44c1e5c9e6083e0ce77bcb3f" id="r_a12647eaf44c1e5c9e6083e0ce77bcb3f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a12647eaf44c1e5c9e6083e0ce77bcb3f">_trace</a> = trace</td></tr>
-<tr class="memitem:acaeeb90a6096f7d1e6458648dc84f6b7" id="r_acaeeb90a6096f7d1e6458648dc84f6b7"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acaeeb90a6096f7d1e6458648dc84f6b7">_tr_data</a> = []</td></tr>
-<tr class="memitem:a99c833294c7426f5f5b753f382d9f88d" id="r_a99c833294c7426f5f5b753f382d9f88d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99c833294c7426f5f5b753f382d9f88d">_prev_time</a> = utime.ticks_us()</td></tr>
-<tr class="memitem:a5549bd87387fee6088efba87766a6fa7" id="r_a5549bd87387fee6088efba87766a6fa7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5549bd87387fee6088efba87766a6fa7">_slowest</a></td></tr>
-<tr class="memitem:a9b281cae547cbe63219a13ec6f032cb9" id="r_a9b281cae547cbe63219a13ec6f032cb9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b281cae547cbe63219a13ec6f032cb9">_latest</a></td></tr>
-<tr class="memitem:ae190f013ce9955c05841c20f2d46e9ac" id="r_ae190f013ce9955c05841c20f2d46e9ac"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae190f013ce9955c05841c20f2d46e9ac">_runs</a> = 0</td></tr>
-<tr class="memitem:ac93a114add603ab2bb498c995fd64ecd" id="r_ac93a114add603ab2bb498c995fd64ecd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac93a114add603ab2bb498c995fd64ecd">_run_sum</a> = 0</td></tr>
-<tr class="memitem:a10930f344a7f5615b2fd996aa95e39aa" id="r_a10930f344a7f5615b2fd996aa95e39aa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10930f344a7f5615b2fd996aa95e39aa">_late_sum</a> = 0</td></tr>
+<tr class="memitem:ab54e069dd0b4f0a2f8e7f00c94998a10" id="r_ab54e069dd0b4f0a2f8e7f00c94998a10"><td class="memItemLeft" align="right" valign="top"><a id="ab54e069dd0b4f0a2f8e7f00c94998a10" name="ab54e069dd0b4f0a2f8e7f00c94998a10"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> = name</td></tr>
+<tr class="memdesc:ab54e069dd0b4f0a2f8e7f00c94998a10"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the task, hopefully a short and descriptive string. <br /></td></tr>
+<tr class="memitem:aeced93c7b7d23e33de9693d278aef88b" id="r_aeced93c7b7d23e33de9693d278aef88b"><td class="memItemLeft" align="right" valign="top"><a id="aeced93c7b7d23e33de9693d278aef88b" name="aeced93c7b7d23e33de9693d278aef88b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>priority</b> = int(priority)</td></tr>
+<tr class="memdesc:aeced93c7b7d23e33de9693d278aef88b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The task's priority, an integer with higher numbers meaning higher priority. <br /></td></tr>
+<tr class="memitem:ad309fae1890bffafa75e9fdb33fae600" id="r_ad309fae1890bffafa75e9fdb33fae600"><td class="memItemLeft" align="right" valign="top"><a id="ad309fae1890bffafa75e9fdb33fae600" name="ad309fae1890bffafa75e9fdb33fae600"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>go_flag</b> = False</td></tr>
+<tr class="memdesc:ad309fae1890bffafa75e9fdb33fae600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag which is set true when the task is ready to be run by the scheduler. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements multitasking with scheduling and some performance logging. </p>
@@ -278,6 +265,8 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  133</span>        self.go_flag = <span class="keyword">False</span></div>
 <div class="line"><span class="lineno">  134</span> </div>
 </div><!-- fragment -->
+<p class="reference">References <a class="el" href="cotask_8py_source.html#l00093">_run_gen</a>.</p>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -428,7 +417,7 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  208</span>        <span class="keywordflow">return</span> self.go_flag</div>
 <div class="line"><span class="lineno">  209</span> </div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="cotask_8py_source.html#l00226">_late_sum</a>, <a class="el" href="cotask_8py_source.html#l00111">_next_run</a>, <a class="el" href="cotask_8py_source.html#l00118">_prof</a>, <a class="el" href="cotask_8py_source.html#l00133">go_flag</a>, and <a class="el" href="cotask_8py_source.html#l00110">period</a>.</p>
+<p class="reference">References <a class="el" href="cotask_8py_source.html#l00226">_late_sum</a>, <a class="el" href="cotask_8py_source.html#l00204">_latest</a>, <a class="el" href="cotask_8py_source.html#l00111">_next_run</a>, <a class="el" href="cotask_8py_source.html#l00118">_prof</a>, <a class="el" href="cotask_8py_source.html#l00133">go_flag</a>, and <a class="el" href="cotask_8py_source.html#l00110">period</a>.</p>
 
 </div>
 </div>
@@ -459,6 +448,8 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  227</span>        self._latest = 0</div>
 <div class="line"><span class="lineno">  228</span> </div>
 </div><!-- fragment -->
+<p class="reference">References <a class="el" href="cotask_8py_source.html#l00226">_late_sum</a>, <a class="el" href="cotask_8py_source.html#l00204">_latest</a>, <a class="el" href="cotask_8py_source.html#l00224">_run_sum</a>, <a class="el" href="cotask_8py_source.html#l00223">_runs</a>, and <a class="el" href="cotask_8py_source.html#l00164">_slowest</a>.</p>
+
 </div>
 </div>
 <a id="af60def0ed4a1bc5fec32f3cf8b8a90c8" name="af60def0ed4a1bc5fec32f3cf8b8a90c8"></a>
@@ -527,7 +518,7 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  184</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
 <div class="line"><span class="lineno">  185</span> </div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="cotask_8py_source.html#l00118">_prof</a>, <a class="el" href="cotask_8py_source.html#l00093">_run_gen</a>, <a class="el" href="cotask_8py_source.html#l00224">_run_sum</a>, <a class="el" href="cotask_8py_source.html#l00223">_runs</a>, <a class="el" href="cotask_8py_source.html#l00127">_trace</a>, <a class="el" href="cotask_8py_source.html#l00133">go_flag</a>, and <a class="el" href="cotask_8py_source.html#l00192">ready()</a>.</p>
+<p class="reference">References <a class="el" href="cotask_8py_source.html#l00123">_prev_state</a>, <a class="el" href="cotask_8py_source.html#l00129">_prev_time</a>, <a class="el" href="cotask_8py_source.html#l00118">_prof</a>, <a class="el" href="cotask_8py_source.html#l00093">_run_gen</a>, <a class="el" href="cotask_8py_source.html#l00224">_run_sum</a>, <a class="el" href="cotask_8py_source.html#l00223">_runs</a>, <a class="el" href="cotask_8py_source.html#l00164">_slowest</a>, <a class="el" href="cotask_8py_source.html#l00128">_tr_data</a>, <a class="el" href="cotask_8py_source.html#l00127">_trace</a>, <a class="el" href="cotask_8py_source.html#l00133">go_flag</a>, and <a class="el" href="cotask_8py_source.html#l00192">ready()</a>.</p>
 
 </div>
 </div>
@@ -570,365 +561,6 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="a10930f344a7f5615b2fd996aa95e39aa" name="a10930f344a7f5615b2fd996aa95e39aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a10930f344a7f5615b2fd996aa95e39aa">&#9670;&#160;</a></span>_late_sum</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int cotask.Task._late_sum = 0</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00226">226</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="a9b281cae547cbe63219a13ec6f032cb9" name="a9b281cae547cbe63219a13ec6f032cb9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b281cae547cbe63219a13ec6f032cb9">&#9670;&#160;</a></span>_latest</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int cotask.Task._latest</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00204">204</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="aa443e9f35f5dee489023afb5d5b9d091" name="aa443e9f35f5dee489023afb5d5b9d091"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa443e9f35f5dee489023afb5d5b9d091">&#9670;&#160;</a></span>_next_run</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">cotask.Task._next_run = utime.ticks_us() + self.period</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00111">111</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="a05a6180fe3ba22a1d1e36fe1cc34cd16" name="a05a6180fe3ba22a1d1e36fe1cc34cd16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05a6180fe3ba22a1d1e36fe1cc34cd16">&#9670;&#160;</a></span>_prev_state</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int cotask.Task._prev_state = 0</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00123">123</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="a99c833294c7426f5f5b753f382d9f88d" name="a99c833294c7426f5f5b753f382d9f88d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99c833294c7426f5f5b753f382d9f88d">&#9670;&#160;</a></span>_prev_time</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">cotask.Task._prev_time = utime.ticks_us()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00129">129</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="a0d0e9249bbce322f63ad1d2004069fac" name="a0d0e9249bbce322f63ad1d2004069fac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d0e9249bbce322f63ad1d2004069fac">&#9670;&#160;</a></span>_prof</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">cotask.Task._prof = profile</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00118">118</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="a3d158e6e4971c204449c07f72e67a186" name="a3d158e6e4971c204449c07f72e67a186"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d158e6e4971c204449c07f72e67a186">&#9670;&#160;</a></span>_run_gen</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">cotask.Task._run_gen = run_fun(shares)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00093">93</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="ac93a114add603ab2bb498c995fd64ecd" name="ac93a114add603ab2bb498c995fd64ecd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac93a114add603ab2bb498c995fd64ecd">&#9670;&#160;</a></span>_run_sum</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int cotask.Task._run_sum = 0</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00224">224</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="ae190f013ce9955c05841c20f2d46e9ac" name="ae190f013ce9955c05841c20f2d46e9ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae190f013ce9955c05841c20f2d46e9ac">&#9670;&#160;</a></span>_runs</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int cotask.Task._runs = 0</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00223">223</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="a5549bd87387fee6088efba87766a6fa7" name="a5549bd87387fee6088efba87766a6fa7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5549bd87387fee6088efba87766a6fa7">&#9670;&#160;</a></span>_slowest</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int cotask.Task._slowest</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00164">164</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="acaeeb90a6096f7d1e6458648dc84f6b7" name="acaeeb90a6096f7d1e6458648dc84f6b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acaeeb90a6096f7d1e6458648dc84f6b7">&#9670;&#160;</a></span>_tr_data</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">list cotask.Task._tr_data = []</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00128">128</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="a12647eaf44c1e5c9e6083e0ce77bcb3f" name="a12647eaf44c1e5c9e6083e0ce77bcb3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12647eaf44c1e5c9e6083e0ce77bcb3f">&#9670;&#160;</a></span>_trace</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool cotask.Task._trace = trace</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00127">127</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="ad309fae1890bffafa75e9fdb33fae600" name="ad309fae1890bffafa75e9fdb33fae600"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad309fae1890bffafa75e9fdb33fae600">&#9670;&#160;</a></span>go_flag</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool cotask.Task.go_flag = False</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Flag which is set true when the task is ready to be run by the scheduler. </p>
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00133">133</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="ab54e069dd0b4f0a2f8e7f00c94998a10" name="ab54e069dd0b4f0a2f8e7f00c94998a10"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab54e069dd0b4f0a2f8e7f00c94998a10">&#9670;&#160;</a></span>name</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">cotask.Task.name = name</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The name of the task, hopefully a short and descriptive string. </p>
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00098">98</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="afc5c88f112f516002f67118a0ee82f44" name="afc5c88f112f516002f67118a0ee82f44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc5c88f112f516002f67118a0ee82f44">&#9670;&#160;</a></span>period</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int cotask.Task.period = int(period * 1000)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00110">110</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
-<a id="aeced93c7b7d23e33de9693d278aef88b" name="aeced93c7b7d23e33de9693d278aef88b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeced93c7b7d23e33de9693d278aef88b">&#9670;&#160;</a></span>priority</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">cotask.Task.priority = int(priority)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The task's priority, an integer with higher numbers meaning higher priority. </p>
-
-<p class="definition">Definition at line <a class="el" href="cotask_8py_source.html#l00102">102</a> of file <a class="el" href="cotask_8py_source.html">cotask.py</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>Lab Final/Files On Romi/<a class="el" href="cotask_8py_source.html">cotask.py</a></li>
 </ul>
@@ -945,7 +577,7 @@ Protected Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespacecotask.html">cotask</a></li><li class="navelem"><a href="classcotask_1_1_task.html">Task</a></li>
+    <li class="navelem"><b>cotask</b></li><li class="navelem"><a href="classcotask_1_1_task.html">Task</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

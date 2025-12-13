@@ -127,16 +127,9 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a2e8df029af46fbfd44ef0c2e7e8c7af6" id="r_a2e8df029af46fbfd44ef0c2e7e8c7af6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e8df029af46fbfd44ef0c2e7e8c7af6">ser_num</a> = 0</td></tr>
-<tr class="memdesc:a2e8df029af46fbfd44ef0c2e7e8c7af6"><td class="mdescLeft">&#160;</td><td class="mdescRight">A counter used to give serial numbers to shares for diagnostic use.  <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a2f7e0b72d08d27b7ccf92da6ddc127a8" id="r_a2f7e0b72d08d27b7ccf92da6ddc127a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f7e0b72d08d27b7ccf92da6ddc127a8">_buffer</a> = array.array(type_code, [0])</td></tr>
-<tr class="memitem:acff3918997966ba1e31292398f3ca196" id="r_acff3918997966ba1e31292398f3ca196"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acff3918997966ba1e31292398f3ca196">_name</a> = None else &quot;Share&quot; + str(<a class="el" href="#a2e8df029af46fbfd44ef0c2e7e8c7af6">Share.ser_num</a>)</td></tr>
-<tr class="inherit_header pro_attribs_classtask__share_1_1_base_share"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_classtask__share_1_1_base_share')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Protected Attributes inherited from <a class="el" href="classtask__share_1_1_base_share.html">task_share.BaseShare</a></td></tr>
-<tr class="memitem:a0e45276424d1600740942b82f216c649 inherit pro_attribs_classtask__share_1_1_base_share" id="r_a0e45276424d1600740942b82f216c649"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__share_1_1_base_share.html#a0e45276424d1600740942b82f216c649">_type_code</a> = type_code</td></tr>
-<tr class="memitem:acf1741d88ede8f82b9c5f321a92aaa5e inherit pro_attribs_classtask__share_1_1_base_share" id="r_acf1741d88ede8f82b9c5f321a92aaa5e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__share_1_1_base_share.html#acf1741d88ede8f82b9c5f321a92aaa5e">_thread_protect</a> = thread_protect</td></tr>
+<tr class="memitem:a2e8df029af46fbfd44ef0c2e7e8c7af6" id="r_a2e8df029af46fbfd44ef0c2e7e8c7af6"><td class="memItemLeft" align="right" valign="top"><a id="a2e8df029af46fbfd44ef0c2e7e8c7af6" name="a2e8df029af46fbfd44ef0c2e7e8c7af6"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>ser_num</b> = 0</td></tr>
+<tr class="memdesc:a2e8df029af46fbfd44ef0c2e7e8c7af6"><td class="mdescLeft">&#160;</td><td class="mdescRight">A counter used to give serial numbers to shares for diagnostic use. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An item which holds data to be shared between tasks. </p>
@@ -222,7 +215,7 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  357</span>        Share.ser_num += 1</div>
 <div class="line"><span class="lineno">  358</span> </div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="task__share_8py_source.html#l00350">__init__()</a>.</p>
+<p class="reference">References <a class="el" href="task__share_8py_source.html#l00350">__init__()</a>, <a class="el" href="task__share_8py_source.html#l00139">task_share.Queue._buffer</a>, <a class="el" href="task__share_8py_source.html#l00354">_buffer</a>, <a class="el" href="task__share_8py_source.html#l00134">task_share.Queue._name</a>, and <a class="el" href="task__share_8py_source.html#l00356">_name</a>.</p>
 
 </div>
 </div>
@@ -350,81 +343,6 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="a2f7e0b72d08d27b7ccf92da6ddc127a8" name="a2f7e0b72d08d27b7ccf92da6ddc127a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f7e0b72d08d27b7ccf92da6ddc127a8">&#9670;&#160;</a></span>_buffer</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">task_share.Share._buffer = array.array(type_code, [0])</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="task__share_8py_source.html#l00354">354</a> of file <a class="el" href="task__share_8py_source.html">task_share.py</a>.</p>
-
-</div>
-</div>
-<a id="acff3918997966ba1e31292398f3ca196" name="acff3918997966ba1e31292398f3ca196"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acff3918997966ba1e31292398f3ca196">&#9670;&#160;</a></span>_name</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">task_share.Share._name = None else &quot;Share&quot; + str(<a class="el" href="#a2e8df029af46fbfd44ef0c2e7e8c7af6">Share.ser_num</a>)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="task__share_8py_source.html#l00356">356</a> of file <a class="el" href="task__share_8py_source.html">task_share.py</a>.</p>
-
-</div>
-</div>
-<a id="a2e8df029af46fbfd44ef0c2e7e8c7af6" name="a2e8df029af46fbfd44ef0c2e7e8c7af6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e8df029af46fbfd44ef0c2e7e8c7af6">&#9670;&#160;</a></span>ser_num</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int task_share.Share.ser_num = 0</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>A counter used to give serial numbers to shares for diagnostic use. </p>
-
-<p class="definition">Definition at line <a class="el" href="task__share_8py_source.html#l00327">327</a> of file <a class="el" href="task__share_8py_source.html">task_share.py</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>Lab Final/Files On Romi/<a class="el" href="task__share_8py_source.html">task_share.py</a></li>
 </ul>
@@ -441,7 +359,7 @@ Protected Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespacetask__share.html">task_share</a></li><li class="navelem"><a href="classtask__share_1_1_share.html">Share</a></li>
+    <li class="navelem"><b>task_share</b></li><li class="navelem"><a href="classtask__share_1_1_share.html">Share</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

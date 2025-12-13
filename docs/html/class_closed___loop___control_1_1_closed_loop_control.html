@@ -104,45 +104,22 @@ $(function(){initNavTree('class_closed___loop___control_1_1_closed_loop_control.
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa89aca6d34821d9829a583a49173e1f3" id="r_aa89aca6d34821d9829a583a49173e1f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa89aca6d34821d9829a583a49173e1f3">__init__</a> (self, <a class="el" href="#ac3b27a7a6f30b5c0f36fd4dfd8743326">sensor</a>, float <a class="el" href="#abb8512f3b3f49b5fc309bb60200f9e7a">max_min</a>=100, float <a class="el" href="#a406e8e11787e9934d388532642da8090">Kp</a>=0, float <a class="el" href="#af48234a52ccabdbcd66677a5910a867b">Ki</a>=0, float <a class="el" href="#a42b5b0355b09e8d751050ab403506fc0">Kd</a>=0, float <a class="el" href="#af0626545ac77094f36c753ca6ceba206">Kw</a>=0, float <a class="el" href="#a0dbdffad84c06801b52a1f6bdf12958c">Kff</a>=0, float <a class="el" href="#a78d8eb6ca8c73a1fb550c4385cf0336c">PWM_start</a>=0, <a class="el" href="#ab6ae3f050641b67f2541decb8fbb6c6f">battery</a>=None)</td></tr>
+<tr class="memitem:aa89aca6d34821d9829a583a49173e1f3" id="r_aa89aca6d34821d9829a583a49173e1f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa89aca6d34821d9829a583a49173e1f3">__init__</a> (self, sensor, float max_min=100, float Kp=0, float Ki=0, float Kd=0, float Kw=0, float Kff=0, float PWM_start=0, battery=None)</td></tr>
 <tr class="memdesc:aa89aca6d34821d9829a583a49173e1f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the closed-loop controller.  <br /></td></tr>
 <tr class="memitem:afa1f942294a85e304bf8d73279a80e02" id="r_afa1f942294a85e304bf8d73279a80e02"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa1f942294a85e304bf8d73279a80e02">reset</a> (self)</td></tr>
 <tr class="memdesc:afa1f942294a85e304bf8d73279a80e02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the controller.  <br /></td></tr>
 <tr class="memitem:aebb3d324c6fade3ecffb58764d6f52fb" id="r_aebb3d324c6fade3ecffb58764d6f52fb"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aebb3d324c6fade3ecffb58764d6f52fb">set_ref</a> (self, speed)</td></tr>
 <tr class="memdesc:aebb3d324c6fade3ecffb58764d6f52fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the controller reference (setpoint).  <br /></td></tr>
-<tr class="memitem:a2058e62e1b3f8f85b526ed66463d5ba4" id="r_a2058e62e1b3f8f85b526ed66463d5ba4"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2058e62e1b3f8f85b526ed66463d5ba4">disable</a> (self)</td></tr>
-<tr class="memdesc:a2058e62e1b3f8f85b526ed66463d5ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the controller (output will remain zero).  <br /></td></tr>
-<tr class="memitem:a1035044a2b4ce0d9a0f43168c22548d6" id="r_a1035044a2b4ce0d9a0f43168c22548d6"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1035044a2b4ce0d9a0f43168c22548d6">enable</a> (self)</td></tr>
-<tr class="memdesc:a1035044a2b4ce0d9a0f43168c22548d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the controller.  <br /></td></tr>
-<tr class="memitem:a95aa8ea640bd1a855a21b43d69f888fd" id="r_a95aa8ea640bd1a855a21b43d69f888fd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95aa8ea640bd1a855a21b43d69f888fd">gain_update</a> (self, float <a class="el" href="#a406e8e11787e9934d388532642da8090">Kp</a>=0, float <a class="el" href="#af48234a52ccabdbcd66677a5910a867b">Ki</a>=0, float <a class="el" href="#a42b5b0355b09e8d751050ab403506fc0">Kd</a>=0, float <a class="el" href="#af0626545ac77094f36c753ca6ceba206">Kw</a>=0, float <a class="el" href="#a0dbdffad84c06801b52a1f6bdf12958c">Kff</a>=0, float <a class="el" href="#a78d8eb6ca8c73a1fb550c4385cf0336c">PWM_start</a>=0)</td></tr>
+<tr class="memitem:a2058e62e1b3f8f85b526ed66463d5ba4" id="r_a2058e62e1b3f8f85b526ed66463d5ba4"><td class="memItemLeft" align="right" valign="top"><a id="a2058e62e1b3f8f85b526ed66463d5ba4" name="a2058e62e1b3f8f85b526ed66463d5ba4"></a>
+None&#160;</td><td class="memItemRight" valign="bottom"><b>disable</b> (self)</td></tr>
+<tr class="memdesc:a2058e62e1b3f8f85b526ed66463d5ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the controller (output will remain zero). <br /></td></tr>
+<tr class="memitem:a1035044a2b4ce0d9a0f43168c22548d6" id="r_a1035044a2b4ce0d9a0f43168c22548d6"><td class="memItemLeft" align="right" valign="top"><a id="a1035044a2b4ce0d9a0f43168c22548d6" name="a1035044a2b4ce0d9a0f43168c22548d6"></a>
+None&#160;</td><td class="memItemRight" valign="bottom"><b>enable</b> (self)</td></tr>
+<tr class="memdesc:a1035044a2b4ce0d9a0f43168c22548d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the controller. <br /></td></tr>
+<tr class="memitem:a95aa8ea640bd1a855a21b43d69f888fd" id="r_a95aa8ea640bd1a855a21b43d69f888fd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95aa8ea640bd1a855a21b43d69f888fd">gain_update</a> (self, float Kp=0, float Ki=0, float Kd=0, float Kw=0, float Kff=0, float PWM_start=0)</td></tr>
 <tr class="memdesc:a95aa8ea640bd1a855a21b43d69f888fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update controller gains.  <br /></td></tr>
 <tr class="memitem:a53878544c99ca0962748a1b88101db3c" id="r_a53878544c99ca0962748a1b88101db3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53878544c99ca0962748a1b88101db3c">run</a> (self)</td></tr>
 <tr class="memdesc:a53878544c99ca0962748a1b88101db3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run one iteration of the closed-loop control law.  <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ac3b27a7a6f30b5c0f36fd4dfd8743326" id="r_ac3b27a7a6f30b5c0f36fd4dfd8743326"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac3b27a7a6f30b5c0f36fd4dfd8743326">sensor</a> = sensor</td></tr>
-<tr class="memitem:abb8512f3b3f49b5fc309bb60200f9e7a" id="r_abb8512f3b3f49b5fc309bb60200f9e7a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abb8512f3b3f49b5fc309bb60200f9e7a">max_min</a> = max_min</td></tr>
-<tr class="memitem:ab6ae3f050641b67f2541decb8fbb6c6f" id="r_ab6ae3f050641b67f2541decb8fbb6c6f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6ae3f050641b67f2541decb8fbb6c6f">battery</a> = battery</td></tr>
-<tr class="memitem:a406e8e11787e9934d388532642da8090" id="r_a406e8e11787e9934d388532642da8090"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a406e8e11787e9934d388532642da8090">Kp</a> = Kp</td></tr>
-<tr class="memitem:af48234a52ccabdbcd66677a5910a867b" id="r_af48234a52ccabdbcd66677a5910a867b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af48234a52ccabdbcd66677a5910a867b">Ki</a> = Ki</td></tr>
-<tr class="memitem:a42b5b0355b09e8d751050ab403506fc0" id="r_a42b5b0355b09e8d751050ab403506fc0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a42b5b0355b09e8d751050ab403506fc0">Kd</a> = Kd</td></tr>
-<tr class="memitem:af0626545ac77094f36c753ca6ceba206" id="r_af0626545ac77094f36c753ca6ceba206"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0626545ac77094f36c753ca6ceba206">Kw</a> = Kw</td></tr>
-<tr class="memitem:a0dbdffad84c06801b52a1f6bdf12958c" id="r_a0dbdffad84c06801b52a1f6bdf12958c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0dbdffad84c06801b52a1f6bdf12958c">Kff</a> = Kff</td></tr>
-<tr class="memitem:a78d8eb6ca8c73a1fb550c4385cf0336c" id="r_a78d8eb6ca8c73a1fb550c4385cf0336c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a78d8eb6ca8c73a1fb550c4385cf0336c">PWM_start</a> = PWM_start</td></tr>
-<tr class="memitem:a8a44db904cf3b50763c7fc4a6567b81d" id="r_a8a44db904cf3b50763c7fc4a6567b81d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a44db904cf3b50763c7fc4a6567b81d">r</a> = 0</td></tr>
-<tr class="memitem:a81954c460645556024a030752fb24b46" id="r_a81954c460645556024a030752fb24b46"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a81954c460645556024a030752fb24b46">x_h</a> = 0</td></tr>
-<tr class="memitem:aa8718d9fb4b9f82854489870ed42210d" id="r_aa8718d9fb4b9f82854489870ed42210d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8718d9fb4b9f82854489870ed42210d">a</a> = 0</td></tr>
-<tr class="memitem:a49a491ae59a2f2a0bb6f15e494c2c4b0" id="r_a49a491ae59a2f2a0bb6f15e494c2c4b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49a491ae59a2f2a0bb6f15e494c2c4b0">astar</a> = 0</td></tr>
-<tr class="memitem:ae462ea541c0cc1d4ed89b7cb432b5659" id="r_ae462ea541c0cc1d4ed89b7cb432b5659"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae462ea541c0cc1d4ed89b7cb432b5659">e</a> = 0</td></tr>
-<tr class="memitem:a14465388d3a7ee676ad952b546404d02" id="r_a14465388d3a7ee676ad952b546404d02"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14465388d3a7ee676ad952b546404d02">prev_error</a> = 0</td></tr>
-<tr class="memitem:a0972ef4544f2b33df947cb58f6becf22" id="r_a0972ef4544f2b33df947cb58f6becf22"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0972ef4544f2b33df947cb58f6becf22">integral</a> = 0</td></tr>
-<tr class="memitem:a875c3110a261d5de5b56d0dc6ad75611" id="r_a875c3110a261d5de5b56d0dc6ad75611"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a875c3110a261d5de5b56d0dc6ad75611">derivative</a> = 0</td></tr>
-<tr class="memitem:a99e44b4eb13279f22fbca8846893a8e2" id="r_a99e44b4eb13279f22fbca8846893a8e2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99e44b4eb13279f22fbca8846893a8e2">on</a> = True</td></tr>
-<tr class="memitem:a798df1d3fe2d0dd0f3dea5332c770750" id="r_a798df1d3fe2d0dd0f3dea5332c770750"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a798df1d3fe2d0dd0f3dea5332c770750">first_run</a> = True</td></tr>
-<tr class="memitem:a67e8a8eb7ac7be688a0526d3b12cf2c1" id="r_a67e8a8eb7ac7be688a0526d3b12cf2c1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67e8a8eb7ac7be688a0526d3b12cf2c1">num_corrections</a> = 75</td></tr>
-<tr class="memitem:af54ef54bb55c9f33fd834fee799c96ff" id="r_af54ef54bb55c9f33fd834fee799c96ff"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af54ef54bb55c9f33fd834fee799c96ff">total_num_corrections</a> = 200</td></tr>
-<tr class="memitem:aa36df9588b05e7a51c950cabb6726f7c" id="r_aa36df9588b05e7a51c950cabb6726f7c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa36df9588b05e7a51c950cabb6726f7c">r_u</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class implementing a closed-loop control algorithm. </p>
@@ -232,7 +209,7 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   54</span>        self.max_min = max_min</div>
 <div class="line"><span class="lineno">   55</span>        self.battery = battery</div>
 <div class="line"><span class="lineno">   56</span> </div>
-<div class="line"><span class="lineno">   57</span>        <span class="comment"># Gains</span></div>
+<div class="line"><span class="lineno">   57</span>        <span class="comment"># @brief Gains</span></div>
 <div class="line"><span class="lineno">   58</span>        self.Kp = Kp</div>
 <div class="line"><span class="lineno">   59</span>        self.Ki = Ki</div>
 <div class="line"><span class="lineno">   60</span>        self.Kd = Kd</div>
@@ -259,61 +236,11 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   81</span>        self.total_num_corrections = 200</div>
 <div class="line"><span class="lineno">   82</span> </div>
 </div><!-- fragment -->
+<p class="reference">References <a class="el" href="_closed___loop___control_8py_source.html#l00068">a</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00069">astar</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00055">battery</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00075">derivative</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00072">e</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00079">first_run</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00074">integral</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00060">Kd</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00062">Kff</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00059">Ki</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00058">Kp</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00061">Kw</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00054">max_min</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00080">num_corrections</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00078">on</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00073">prev_error</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00063">PWM_start</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00066">r</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00053">sensor</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00081">total_num_corrections</a>, and <a class="el" href="_closed___loop___control_8py_source.html#l00067">x_h</a>.</p>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a2058e62e1b3f8f85b526ed66463d5ba4" name="a2058e62e1b3f8f85b526ed66463d5ba4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2058e62e1b3f8f85b526ed66463d5ba4">&#9670;&#160;</a></span>disable()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> None Closed_Loop_Control.ClosedLoopControl.disable </td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Disable the controller (output will remain zero). </p>
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00102">102</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  102</span>    <span class="keyword">def </span>disable(self) -&gt; None:</div>
-<div class="line"><span class="lineno">  103</span>        self.on = <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  104</span> </div>
-</div><!-- fragment -->
-<p class="reference">References <a class="el" href="_closed___loop___control_8py_source.html#l00078">on</a>.</p>
-
-</div>
-</div>
-<a id="a1035044a2b4ce0d9a0f43168c22548d6" name="a1035044a2b4ce0d9a0f43168c22548d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1035044a2b4ce0d9a0f43168c22548d6">&#9670;&#160;</a></span>enable()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> None Closed_Loop_Control.ClosedLoopControl.enable </td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Enable the controller. </p>
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00106">106</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  106</span>    <span class="keyword">def </span>enable(self) -&gt; None:</div>
-<div class="line"><span class="lineno">  107</span>        self.on = <span class="keyword">True</span></div>
-<div class="line"><span class="lineno">  108</span> </div>
-</div><!-- fragment -->
-<p class="reference">References <a class="el" href="_closed___loop___control_8py_source.html#l00078">on</a>.</p>
-
-</div>
-</div>
 <a id="a95aa8ea640bd1a855a21b43d69f888fd" name="a95aa8ea640bd1a855a21b43d69f888fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a95aa8ea640bd1a855a21b43d69f888fd">&#9670;&#160;</a></span>gain_update()</h2>
 
@@ -442,7 +369,7 @@ Public Attributes</h2></td></tr>
 <li>feed-forward term</li>
 <li>anti-windup correction</li>
 </ul>
-<p><a class="el" href="namespace_battery.html">Battery</a> droop compensation scales the output gain to maintain performance under voltage sag.</p>
+<p>Battery droop compensation scales the output gain to maintain performance under voltage sag.</p>
 <dl class="section return"><dt>Returns</dt><dd>The saturated actuation command to send to hardware. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00148">148</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
@@ -499,7 +426,7 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  198</span> </div>
 <div class="line"><span class="lineno">  199</span>        <span class="keywordflow">return</span> self.astar</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_closed___loop___control_8py_source.html#l00080">num_corrections</a>, and <a class="el" href="_closed___loop___control_8py_source.html#l00078">on</a>.</p>
+<p class="reference">References <a class="el" href="_closed___loop___control_8py_source.html#l00068">a</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00069">astar</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00055">battery</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00075">derivative</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00072">e</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00079">first_run</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00074">integral</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00060">Kd</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00062">Kff</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00059">Ki</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00058">Kp</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00061">Kw</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00054">max_min</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00080">num_corrections</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00078">on</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00073">prev_error</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00063">PWM_start</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00066">r</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00154">r_u</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00053">sensor</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00081">total_num_corrections</a>, and <a class="el" href="_closed___loop___control_8py_source.html#l00067">x_h</a>.</p>
 
 </div>
 </div>
@@ -539,361 +466,6 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="aa8718d9fb4b9f82854489870ed42210d" name="aa8718d9fb4b9f82854489870ed42210d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8718d9fb4b9f82854489870ed42210d">&#9670;&#160;</a></span>a</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Closed_Loop_Control.ClosedLoopControl.a = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00068">68</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a49a491ae59a2f2a0bb6f15e494c2c4b0" name="a49a491ae59a2f2a0bb6f15e494c2c4b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49a491ae59a2f2a0bb6f15e494c2c4b0">&#9670;&#160;</a></span>astar</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Closed_Loop_Control.ClosedLoopControl.astar = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00069">69</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="ab6ae3f050641b67f2541decb8fbb6c6f" name="ab6ae3f050641b67f2541decb8fbb6c6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6ae3f050641b67f2541decb8fbb6c6f">&#9670;&#160;</a></span>battery</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Closed_Loop_Control.ClosedLoopControl.battery = battery</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00055">55</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a875c3110a261d5de5b56d0dc6ad75611" name="a875c3110a261d5de5b56d0dc6ad75611"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a875c3110a261d5de5b56d0dc6ad75611">&#9670;&#160;</a></span>derivative</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Closed_Loop_Control.ClosedLoopControl.derivative = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00075">75</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="ae462ea541c0cc1d4ed89b7cb432b5659" name="ae462ea541c0cc1d4ed89b7cb432b5659"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae462ea541c0cc1d4ed89b7cb432b5659">&#9670;&#160;</a></span>e</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Closed_Loop_Control.ClosedLoopControl.e = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00072">72</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a798df1d3fe2d0dd0f3dea5332c770750" name="a798df1d3fe2d0dd0f3dea5332c770750"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a798df1d3fe2d0dd0f3dea5332c770750">&#9670;&#160;</a></span>first_run</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Closed_Loop_Control.ClosedLoopControl.first_run = True</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00079">79</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a0972ef4544f2b33df947cb58f6becf22" name="a0972ef4544f2b33df947cb58f6becf22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0972ef4544f2b33df947cb58f6becf22">&#9670;&#160;</a></span>integral</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Closed_Loop_Control.ClosedLoopControl.integral = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00074">74</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a42b5b0355b09e8d751050ab403506fc0" name="a42b5b0355b09e8d751050ab403506fc0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42b5b0355b09e8d751050ab403506fc0">&#9670;&#160;</a></span>Kd</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Closed_Loop_Control.ClosedLoopControl.Kd = Kd</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00060">60</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a0dbdffad84c06801b52a1f6bdf12958c" name="a0dbdffad84c06801b52a1f6bdf12958c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0dbdffad84c06801b52a1f6bdf12958c">&#9670;&#160;</a></span>Kff</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Closed_Loop_Control.ClosedLoopControl.Kff = Kff</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00062">62</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="af48234a52ccabdbcd66677a5910a867b" name="af48234a52ccabdbcd66677a5910a867b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af48234a52ccabdbcd66677a5910a867b">&#9670;&#160;</a></span>Ki</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Closed_Loop_Control.ClosedLoopControl.Ki = Ki</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00059">59</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a406e8e11787e9934d388532642da8090" name="a406e8e11787e9934d388532642da8090"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a406e8e11787e9934d388532642da8090">&#9670;&#160;</a></span>Kp</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Closed_Loop_Control.ClosedLoopControl.Kp = Kp</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00058">58</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="af0626545ac77094f36c753ca6ceba206" name="af0626545ac77094f36c753ca6ceba206"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0626545ac77094f36c753ca6ceba206">&#9670;&#160;</a></span>Kw</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Closed_Loop_Control.ClosedLoopControl.Kw = Kw</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00061">61</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="abb8512f3b3f49b5fc309bb60200f9e7a" name="abb8512f3b3f49b5fc309bb60200f9e7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb8512f3b3f49b5fc309bb60200f9e7a">&#9670;&#160;</a></span>max_min</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Closed_Loop_Control.ClosedLoopControl.max_min = max_min</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00054">54</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a67e8a8eb7ac7be688a0526d3b12cf2c1" name="a67e8a8eb7ac7be688a0526d3b12cf2c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67e8a8eb7ac7be688a0526d3b12cf2c1">&#9670;&#160;</a></span>num_corrections</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Closed_Loop_Control.ClosedLoopControl.num_corrections = 75</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00080">80</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a99e44b4eb13279f22fbca8846893a8e2" name="a99e44b4eb13279f22fbca8846893a8e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99e44b4eb13279f22fbca8846893a8e2">&#9670;&#160;</a></span>on</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Closed_Loop_Control.ClosedLoopControl.on = True</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00078">78</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a14465388d3a7ee676ad952b546404d02" name="a14465388d3a7ee676ad952b546404d02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14465388d3a7ee676ad952b546404d02">&#9670;&#160;</a></span>prev_error</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Closed_Loop_Control.ClosedLoopControl.prev_error = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00073">73</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a78d8eb6ca8c73a1fb550c4385cf0336c" name="a78d8eb6ca8c73a1fb550c4385cf0336c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78d8eb6ca8c73a1fb550c4385cf0336c">&#9670;&#160;</a></span>PWM_start</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Closed_Loop_Control.ClosedLoopControl.PWM_start = PWM_start</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00063">63</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a8a44db904cf3b50763c7fc4a6567b81d" name="a8a44db904cf3b50763c7fc4a6567b81d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a44db904cf3b50763c7fc4a6567b81d">&#9670;&#160;</a></span>r</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Closed_Loop_Control.ClosedLoopControl.r = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00066">66</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="aa36df9588b05e7a51c950cabb6726f7c" name="aa36df9588b05e7a51c950cabb6726f7c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa36df9588b05e7a51c950cabb6726f7c">&#9670;&#160;</a></span>r_u</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Closed_Loop_Control.ClosedLoopControl.r_u</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=  self.r * ((self.total_num_corrections - self.num_corrections)</div>
-<div class="line">                                 / self.total_num_corrections)</div>
-</div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00154">154</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="ac3b27a7a6f30b5c0f36fd4dfd8743326" name="ac3b27a7a6f30b5c0f36fd4dfd8743326"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3b27a7a6f30b5c0f36fd4dfd8743326">&#9670;&#160;</a></span>sensor</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Closed_Loop_Control.ClosedLoopControl.sensor = sensor</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00053">53</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="af54ef54bb55c9f33fd834fee799c96ff" name="af54ef54bb55c9f33fd834fee799c96ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af54ef54bb55c9f33fd834fee799c96ff">&#9670;&#160;</a></span>total_num_corrections</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Closed_Loop_Control.ClosedLoopControl.total_num_corrections = 200</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00081">81</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
-<a id="a81954c460645556024a030752fb24b46" name="a81954c460645556024a030752fb24b46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81954c460645556024a030752fb24b46">&#9670;&#160;</a></span>x_h</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Closed_Loop_Control.ClosedLoopControl.x_h = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_closed___loop___control_8py_source.html#l00067">67</a> of file <a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>Lab Final/Files On Romi/<a class="el" href="_closed___loop___control_8py_source.html">Closed_Loop_Control.py</a></li>
 </ul>
@@ -910,7 +482,7 @@ Public Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespace_closed___loop___control.html">Closed_Loop_Control</a></li><li class="navelem"><a href="class_closed___loop___control_1_1_closed_loop_control.html">ClosedLoopControl</a></li>
+    <li class="navelem"><b>Closed_Loop_Control</b></li><li class="navelem"><a href="class_closed___loop___control_1_1_closed_loop_control.html">ClosedLoopControl</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

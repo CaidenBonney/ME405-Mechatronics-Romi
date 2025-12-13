@@ -1,21 +1,5 @@
 var searchData=
 [
-  ['cal_5fblack_0',['cal_black',['../class_line___sensor_1_1_line_sensor.html#a3ccd17548038620c4abd3b84c9577768',1,'Line_Sensor::LineSensor']]],
-  ['cal_5fblack_5fcomplete_1',['cal_black_complete',['../class_line___sensor_1_1_line_sensor.html#a7d0c8e58224ee9078426b7445e2d0f80',1,'Line_Sensor::LineSensor']]],
-  ['cal_5fblack_5fs_2',['cal_black_s',['../namespacemain.html#a4514dd5b8b5488a24b66e8f8376dcf43',1,'main']]],
-  ['cal_5fwhite_3',['cal_white',['../class_line___sensor_1_1_line_sensor.html#aaf96266db50bb1c76a9e8bfa4b90f90d',1,'Line_Sensor::LineSensor']]],
-  ['cal_5fwhite_5fcomplete_4',['cal_white_complete',['../class_line___sensor_1_1_line_sensor.html#a1ffea8bffa58ec8341b58db4ab67c3ba',1,'Line_Sensor::LineSensor']]],
-  ['cal_5fwhite_5fs_5',['cal_white_s',['../namespacemain.html#a1f86a9003ca7b9030ef6769e41dc4e74',1,'main']]],
-  ['calib_5fstat_6',['CALIB_STAT',['../class_i_m_u_1_1_i_m_u_1_1reg.html#ade371891c651df0b7990c4e0d2e67cf0',1,'IMU::IMU::reg']]],
-  ['calibrate_7',['CALIBRATE',['../class_path___director_1_1_path_director.html#a09770d27374794ed68eae04de2743bac',1,'Path_Director::PathDirector']]],
-  ['calibrated_8',['calibrated',['../class_i_m_u_1_1_i_m_u.html#a63014eeda3ed0cc4591b80809e66cf7a',1,'IMU.IMU.calibrated'],['../class_line___sensor_1_1_line_sensor.html#a4fb723579dbad928f2a336d7951f174e',1,'Line_Sensor.LineSensor.calibrated']]],
-  ['calibration_5fcoefficients_9',['calibration_coefficients',['../class_i_m_u_1_1_i_m_u_1_1reg.html#a26e2371c654e8c0a1ba5becc3c579132',1,'IMU::IMU::reg']]],
-  ['cha_10',['chA',['../class_encoder_1_1_encoder.html#a117693752e24d2ccce1432dcb3c48708',1,'Encoder::Encoder']]],
-  ['cha_5fpin_11',['chA_pin',['../class_encoder_1_1_encoder.html#a446ccf4e54570b0f86b84d42770c9f77',1,'Encoder::Encoder']]],
-  ['chb_12',['chB',['../class_encoder_1_1_encoder.html#a43c719e3b6ee3b6b86a29caf21b76858',1,'Encoder::Encoder']]],
-  ['chb_5fpin_13',['chB_pin',['../class_encoder_1_1_encoder.html#ac3775fb335ea931b85c9942ea55d994f',1,'Encoder::Encoder']]],
-  ['clc_14',['CLC',['../class_motor___controller_1_1_motor_controller.html#a631ffd32285de90888d6333256fd2518',1,'Motor_Controller::MotorController']]],
-  ['cmd_5fqueue_15',['cmd_queue',['../class_user___input_1_1_user_input.html#af8c167833ad18e4a258d73a9b7bbaf90',1,'User_Input::UserInput']]],
-  ['convert_5freg_5fto_5frad_16',['convert_reg_to_rad',['../class_i_m_u_1_1_i_m_u.html#ababc43f9f8bdf021f155fd0324d48ba5',1,'IMU::IMU']]],
-  ['counts_5fper_5frev_17',['counts_per_rev',['../class_romi___props_1_1_romi_props.html#a19c1db104c2be3104e67570824773892',1,'Romi_Props::RomiProps']]]
+  ['pri_5flist_0',['pri_list',['../classcotask_1_1_task_list.html#a724ac8246e4b4bf4493d5fce02a8307e',1,'cotask::TaskList']]],
+  ['priority_1',['priority',['../classcotask_1_1_task.html#aeced93c7b7d23e33de9693d278aef88b',1,'cotask::Task']]]
 ];
