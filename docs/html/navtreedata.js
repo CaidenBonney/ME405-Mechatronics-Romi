@@ -83,6 +83,7 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Hardware Setup", "index.html#autotoc_md45", null ],
+    [ "Lab Final Folder", "md__lab_01_final_2_r_e_a_d_m_e.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],

@@ -10,7 +10,7 @@ var searchData=
   ['reset_5fnum_5fcorrections_7',['reset_num_corrections',['../class_closed___loop___control_1_1_closed_loop_control.html#acb83cff298fec33e438a5e9d3292de88',1,'Closed_Loop_Control::ClosedLoopControl']]],
   ['reset_5fprofile_8',['reset_profile',['../classcotask_1_1_task.html#a0fd4093dcd01cd1d05ace187956340cf',1,'cotask::Task']]],
   ['reset_5ftiming_9',['reset_timing',['../class_sensor_1_1_sensor.html#affeced0c1599dffadd293a9823ede43e',1,'Sensor::Sensor']]],
-  ['romi_10',['ME405 Mechatronics Romi',['../index.html',1,'']]],
+  ['romi_10',['Romi',['../md__lab_01_final_2_r_e_a_d_m_e.html#autotoc_md47',1,'Files On Romi'],['../index.html',1,'ME405 Mechatronics Romi']]],
   ['romi_20chassis_11',['Romi Chassis',['../index.html#autotoc_md5',1,'']]],
   ['romi_20dynamics_12',['Romi Dynamics',['../index.html#autotoc_md39',1,'']]],
   ['romi_20performance_13',['Final Romi Performance',['../index.html#autotoc_md2',1,'']]],

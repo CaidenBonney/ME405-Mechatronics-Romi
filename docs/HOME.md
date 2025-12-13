@@ -70,7 +70,7 @@ By capturing the number of encoder ticks that occur across a measured time inter
 The encoder can be purchased directly from https://www.pololu.com/product/3542.
 
 ## Line Sensor
-In order to follow the 1/2 inch black lines on the course, Romi utilizes Pololu's line sensor composed of 13 infrared (IR) sensors. The line sensor 
+In order to follow the 1/2 inch black lines on the course, Romi utilizes Pololu's line sensor composed of 13 infrared (IR) sensors. The line sensor array provides a centroid measurement of the detected line to keep the robot aligned over the path.
 array is aggregated in `Line_Sensor.py`, which normalizes each IR reading (via `IR_Sensor.py`) and computes the centroid of the detected line for feedback. The line-following closed-loop controller in `Closed_Loop_Control.py` uses this centroid error in `Path_Director.py` to steer Romi along the course. Calibration (white/black) can be triggered through `User_Input.py` and is persisted by `Line_Sensor.py` when flags are set from the task shares.
 
 ### Mounting
