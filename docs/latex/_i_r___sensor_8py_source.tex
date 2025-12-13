@@ -1,28 +1,33 @@
 \doxysection{IR\+\_\+\+Sensor.\+py}
 \hypertarget{_i_r___sensor_8py_source}{}\label{_i_r___sensor_8py_source}\index{Lab Final/Files On Romi/IR\_Sensor.py@{Lab Final/Files On Romi/IR\_Sensor.py}}
-
+\mbox{\hyperlink{_i_r___sensor_8py}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00001}00001\ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ Pin,\ ADC\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00002}00002\ \textcolor{keyword}{from}\ Sensor\ \textcolor{keyword}{import}\ Sensor}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00003}00003\ }
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00004}00004\ }
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00005}\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor}{00005}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor}{IRSensor}}(\mbox{\hyperlink{class_sensor_1_1_sensor}{Sensor}}):}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00006}00006\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ id:\ int,\ ADC\_pin):}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00007}00007\ \ \ \ \ \ \ \ \ super().\_\_init\_\_()}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00008}00008\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Sensor\ number\ from\ 1\ to\ 13.\ ASSUMES\ 13\ IS\ RIGHT\ MOST\ SENSOR}}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00009}00009\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_aa784b648ec0c5e8ae96febaa89c7d172}{id}}\ =\ id}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00010}00010\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ location\ in\ mm\ from\ line\ sensor\ center.\ ASSUMES\ 13\ IS\ RIGHT\ WHICH\ IS\ POSITIVE}}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00011}00011\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a3f28bab795dc0b5c41ef19f8f55f95d1}{location}}\ =\ (self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_aa784b648ec0c5e8ae96febaa89c7d172}{id}}\ -\/\ 7)\ *\ 8}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00012}00012\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_aa77be2debcd1ce4292e3240375666ff2}{ADC\_pin}}\ =\ Pin(ADC\_pin,\ mode=Pin.ANALOG)}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00013}00013\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a1ca6164c60933e3cfcbccaac32bbec4b}{ADC}}\ =\ ADC(self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_aa77be2debcd1ce4292e3240375666ff2}{ADC\_pin}})}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a7c3660569c60c9164596bef1c0032f53}{white}}\ =\ 0}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00015}00015\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a89f2572631bb64022891b02dbe4fb828}{black}}\ =\ 1}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00016}00016\ }
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00017}00017\ \ \ \ \ \textcolor{comment}{\#\ Return\ the\ current\ infrared\ sensor\ reading\ with\ zeroing\ applied.}}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{def\ }get\_data(self)\ -\/>\ float:}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a1ca6164c60933e3cfcbccaac32bbec4b}{ADC}}.read()\ -\/\ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a7c3660569c60c9164596bef1c0032f53}{white}})\ /\ (self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a89f2572631bb64022891b02dbe4fb828}{black}}\ -\/\ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a7c3660569c60c9164596bef1c0032f53}{white}})}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00020}00020\ }
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00021}00021\ \ \ \ \ \textcolor{keyword}{def\ }read(self):}
-\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a1ca6164c60933e3cfcbccaac32bbec4b}{ADC}}.read()}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00009}00009\ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ Pin,\ ADC\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00010}00010\ \textcolor{keyword}{from}\ Sensor\ \textcolor{keyword}{import}\ Sensor}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00014}\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor}{00014}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor}{IRSensor}}(\mbox{\hyperlink{class_sensor_1_1_sensor}{Sensor}}):}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00015}00015\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00019}\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_adbb3fbe8314335fb043d630875b39ffc}{00019}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_adbb3fbe8314335fb043d630875b39ffc}{\_\_init\_\_}}(self,\ id:\ int,\ ADC\_pin):}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ super().\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_adbb3fbe8314335fb043d630875b39ffc}{\_\_init\_\_}}()}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Sensor\ number\ from\ 1\ to\ 13.\ ASSUMES\ 13\ IS\ RIGHT\ MOST\ SENSOR}}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_aa784b648ec0c5e8ae96febaa89c7d172}{id}}\ =\ id}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ location\ in\ mm\ from\ line\ sensor\ center.\ ASSUMES\ 13\ IS\ RIGHT\ WHICH\ IS\ POSITIVE}}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a3f28bab795dc0b5c41ef19f8f55f95d1}{location}}\ =\ (self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_aa784b648ec0c5e8ae96febaa89c7d172}{id}}\ -\/\ 7)\ *\ 8}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_aa77be2debcd1ce4292e3240375666ff2}{ADC\_pin}}\ =\ Pin(ADC\_pin,\ mode=Pin.ANALOG)}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a1ca6164c60933e3cfcbccaac32bbec4b}{ADC}}\ =\ ADC(self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_aa77be2debcd1ce4292e3240375666ff2}{ADC\_pin}})}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a7c3660569c60c9164596bef1c0032f53}{white}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a89f2572631bb64022891b02dbe4fb828}{black}}\ =\ 1}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00030}00030\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00031}\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_ad3604ecf3fb0560153ec026d1f595c55}{00031}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_ad3604ecf3fb0560153ec026d1f595c55}{get\_data}}(self)\ -\/>\ float:}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a1ca6164c60933e3cfcbccaac32bbec4b}{ADC}}.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_aec28879eeeb6c06cc19a944392a5c756}{read}}()\ -\/\ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a7c3660569c60c9164596bef1c0032f53}{white}})\ /\ (self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a89f2572631bb64022891b02dbe4fb828}{black}}\ -\/\ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a7c3660569c60c9164596bef1c0032f53}{white}})}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00034}00034\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00035}\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_aec28879eeeb6c06cc19a944392a5c756}{00035}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_aec28879eeeb6c06cc19a944392a5c756}{read}}(self):}
+\DoxyCodeLine{\Hypertarget{_i_r___sensor_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_a1ca6164c60933e3cfcbccaac32bbec4b}{ADC}}.\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_aec28879eeeb6c06cc19a944392a5c756}{read}}()}
 
 \end{DoxyCode}

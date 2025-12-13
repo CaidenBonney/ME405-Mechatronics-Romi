@@ -1,20 +1,133 @@
 \doxysection{Sensor.\+Sensor Class Reference}
 \hypertarget{class_sensor_1_1_sensor}{}\label{class_sensor_1_1_sensor}\index{Sensor.Sensor@{Sensor.Sensor}}
+
+
+Base class for sensors that exposes a common interface.  
+
+
 Inheritance diagram for Sensor.\+Sensor\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[height=1.761006cm]{class_sensor_1_1_sensor}
 \end{center}
 \end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sensor_1_1_sensor_abdd7ecd205bec477ec349a8221a86fc9}{set\+\_\+attr}} (cls, K="{}Kp"{}, value=0.\+0)
+\begin{DoxyCompactList}\small\item\em Set a class-\/level gain attribute. \end{DoxyCompactList}\item 
+\Hypertarget{class_sensor_1_1_sensor_ac7ffe148df7b257f7551f29dd392481e}\label{class_sensor_1_1_sensor_ac7ffe148df7b257f7551f29dd392481e} 
+None {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em Initialize timing variables for dt computation. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_sensor_1_1_sensor_add8d874d2c517212fec197b36d089c31}{get\+\_\+data}} (self)
+\begin{DoxyCompactList}\small\item\em Return the most recent scalar measurement for the sensor. \end{DoxyCompactList}\item 
+None \mbox{\hyperlink{class_sensor_1_1_sensor_a49cdbda3f5a9c633664e069b976be896}{update\+\_\+dt}} (self)
+\begin{DoxyCompactList}\small\item\em Refresh the stored time differential for subclasses. \end{DoxyCompactList}\item 
+\Hypertarget{class_sensor_1_1_sensor_affeced0c1599dffadd293a9823ede43e}\label{class_sensor_1_1_sensor_affeced0c1599dffadd293a9823ede43e} 
+None {\bfseries reset\+\_\+timing} (self)
+\begin{DoxyCompactList}\small\item\em Reset the timing history used for dt calculations. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
+Base class for sensors that exposes a common interface. 
+
+Subclasses must implement {\ttfamily \doxylink{class_sensor_1_1_sensor_add8d874d2c517212fec197b36d089c31}{get\+\_\+data()}}. Timing helpers keep track of delta-\/t between measurements for control algorithms. 
+
+Definition at line \mbox{\hyperlink{_sensor_8py_source_l00020}{20}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
 
 
-Definition at line \mbox{\hyperlink{_sensor_8py_source_l00008}{8}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
+
+\label{doc-func-members}
+\Hypertarget{class_sensor_1_1_sensor_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_sensor_1_1_sensor_add8d874d2c517212fec197b36d089c31}\index{Sensor.Sensor@{Sensor.Sensor}!get\_data@{get\_data}}
+\index{get\_data@{get\_data}!Sensor.Sensor@{Sensor.Sensor}}
+\doxysubsubsection{\texorpdfstring{get\_data()}{get\_data()}}
+{\footnotesize\ttfamily \label{class_sensor_1_1_sensor_add8d874d2c517212fec197b36d089c31} 
+ float Sensor.\+Sensor.\+get\+\_\+data (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Return the most recent scalar measurement for the sensor. 
+
+Must be implemented by subclasses. 
+
+Reimplemented in \mbox{\hyperlink{class_encoder_1_1_encoder_adbf9d1c5ade7dd439d00c60d238c5aad}{Encoder.\+Encoder}}, \mbox{\hyperlink{class_i_m_u_1_1_i_m_u_afa673c8e8d1af1635c95e0b88f97a3df}{IMU.\+IMU}}, \mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_ad3604ecf3fb0560153ec026d1f595c55}{IR\+\_\+\+Sensor.\+IRSensor}}, and \mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a75fb34eb1397286364663b408ef23c89}{Line\+\_\+\+Sensor.\+Line\+Sensor}}.
+
+
+
+Definition at line \mbox{\hyperlink{_sensor_8py_source_l00043}{43}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{def\ }get\_data(self)\ -\/>\ float: }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ NotImplementedError(\textcolor{stringliteral}{"{}Sensor\ subclasses\ must\ implement\ get\_data()."{}}) }
+\DoxyCodeLine{00045\  }
+
+\end{DoxyCode}
+\Hypertarget{class_sensor_1_1_sensor_abdd7ecd205bec477ec349a8221a86fc9}\index{Sensor.Sensor@{Sensor.Sensor}!set\_attr@{set\_attr}}
+\index{set\_attr@{set\_attr}!Sensor.Sensor@{Sensor.Sensor}}
+\doxysubsubsection{\texorpdfstring{set\_attr()}{set\_attr()}}
+{\footnotesize\ttfamily \label{class_sensor_1_1_sensor_abdd7ecd205bec477ec349a8221a86fc9} 
+Sensor.\+Sensor.\+set\+\_\+attr (\begin{DoxyParamCaption}\item[{}]{cls}{, }\item[{}]{K}{ = {\ttfamily "{}Kp"{}}, }\item[{}]{value}{ = {\ttfamily 0.0}}\end{DoxyParamCaption})}
+
+
+
+Set a class-\/level gain attribute. 
+
+Used to tune controller gains stored on sensor classes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em K} & Name of the gain attribute (default {\ttfamily Kp}) \\
+\hline
+{\em value} & New value for the gain \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_sensor_8py_source_l00028}{28}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{def\ }set\_attr(cls,\ K="{}Kp"{},\ value=0.0): }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ hasattr(cls,\ K): }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ AttributeError(f\textcolor{stringliteral}{"{}'\{K\}'\ is\ not\ a\ defined\ gain\ on\ \{cls.\_\_name\_\_\}"{}}) }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ setattr(cls,\ K,\ value) }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ print(K,\ value) }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ uart.write(f\textcolor{stringliteral}{"{}\{K\}\{value\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00034\  }
+
+\end{DoxyCode}
+\Hypertarget{class_sensor_1_1_sensor_a49cdbda3f5a9c633664e069b976be896}\index{Sensor.Sensor@{Sensor.Sensor}!update\_dt@{update\_dt}}
+\index{update\_dt@{update\_dt}!Sensor.Sensor@{Sensor.Sensor}}
+\doxysubsubsection{\texorpdfstring{update\_dt()}{update\_dt()}}
+{\footnotesize\ttfamily \label{class_sensor_1_1_sensor_a49cdbda3f5a9c633664e069b976be896} 
+ None Sensor.\+Sensor.\+update\+\_\+dt (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Refresh the stored time differential for subclasses. 
+
+Updates {\ttfamily dt} using current and previous {\ttfamily ticks\+\_\+us()} values. 
+
+Definition at line \mbox{\hyperlink{_sensor_8py_source_l00049}{49}} of file \mbox{\hyperlink{_sensor_8py_source}{Sensor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{def\ }update\_dt(self)\ -\/>\ None: }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ now\ =\ ticks\_us() }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ self.dt\ =\ ticks\_diff(now,\ self.\_prev\_t) }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ self.\_prev\_t\ =\ now }
+\DoxyCodeLine{00053\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_sensor_8py_source_l00037}{\+\_\+prev\+\_\+t}}, and \mbox{\hyperlink{_sensor_8py_source_l00038}{dt}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-Lab Final/\+Files On Romi/Sensor.\+py\end{DoxyCompactItemize}
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_sensor_8py}{Sensor.\+py}}\end{DoxyCompactItemize}

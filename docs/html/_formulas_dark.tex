@@ -1,0 +1,86 @@
+\documentclass{article}
+\usepackage{iftex}
+\usepackage{ifthen}
+\usepackage{epsfig}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\color{white}
+\pagecolor{black}
+\ifPDFTeX
+\usepackage{newunicodechar}
+  \makeatletter
+    \def\doxynewunicodechar#1#2{%
+    \@tempswafalse
+    \edef\nuc@tempa{\detokenize{#1}}%
+    \if\relax\nuc@tempa\relax
+      \nuc@emptyargerr
+    \else
+      \edef\@tempb{\expandafter\@car\nuc@tempa\@nil}%
+      \nuc@check
+      \if@tempswa
+        \@namedef{u8:\nuc@tempa}{#2}%
+      \fi
+    \fi
+  }
+  \makeatother
+  \doxynewunicodechar{⁻}{${}^{-}$}% Superscript minus
+  \doxynewunicodechar{²}{${}^{2}$}% Superscript two
+  \doxynewunicodechar{³}{${}^{3}$}% Superscript three
+
+\fi
+\pagestyle{empty}
+\begin{document}
+$ r $
+\pagebreak
+
+$ \hat{x} $
+\pagebreak
+
+$ dt $
+\pagebreak
+
+$ a $
+\pagebreak
+
+$ a^* $
+\pagebreak
+
+\[PWM = K_{ff}*v + PWM_{start}
+\]
+\pagebreak
+
+\[PWM_{\text{scaled}} = PWM \left(\frac{V_{\text{full}}}{V_{\text{measured}}}\right)
+\]
+\pagebreak
+
+\[%OS = e^{\left( -\frac{\zeta\pi}{\sqrt{1-\zeta^2}} \right)}, \qquad
+t_s \approx \frac{3}{\zeta\omega_n},
+\]
+\pagebreak
+
+\[s^2 + 2\zeta\omega_n s + \omega_n^2 = 0,
+\]
+\pagebreak
+
+\[(s - p_1)(s - p_2)(s - p_3)(s - p_4) = 0. \tag{1}
+\]
+\pagebreak
+
+\[x[k+1] = A_d x[k] + B_d u[k],
+\]
+\pagebreak
+
+\[A_c = A - LC,\qquad
+B_c = \begin{bmatrix} B & L \end{bmatrix},
+\]
+\pagebreak
+
+\[(A_d,, B_d) = \mathrm{c2d}(A_c,, B_c,, \Delta t).
+\]
+\pagebreak
+
+\[\hat{x}[k+1] = A_d \hat{x}[k] + B_d u[k].
+\]
+\pagebreak
+
+\end{document}

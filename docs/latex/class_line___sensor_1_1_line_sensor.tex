@@ -1,20 +1,179 @@
 \doxysection{Line\+\_\+\+Sensor.\+Line\+Sensor Class Reference}
 \hypertarget{class_line___sensor_1_1_line_sensor}{}\label{class_line___sensor_1_1_line_sensor}\index{Line\_Sensor.LineSensor@{Line\_Sensor.LineSensor}}
+
+
+Line sensor array with calibration and centroid computation.  
+
+
 Inheritance diagram for Line\+\_\+\+Sensor.\+Line\+Sensor\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[height=2.000000cm]{class_line___sensor_1_1_line_sensor}
 \end{center}
 \end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a988fce141f6fff3036f0275660fb1239}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, list\+\_\+of\+\_\+\+IR\+\_\+\+Sensors)
+\begin{DoxyCompactList}\small\item\em Initialize the line sensor array. \end{DoxyCompactList}\item 
+\Hypertarget{class_line___sensor_1_1_line_sensor_a75fb34eb1397286364663b408ef23c89}\label{class_line___sensor_1_1_line_sensor_a75fb34eb1397286364663b408ef23c89} 
+float {\bfseries get\+\_\+data} (self)
+\begin{DoxyCompactList}\small\item\em Return the centroid position computed from the IR sensor array. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ad01805de6dd955ddac614bba629235d7}{calibrate}} (self)
+\begin{DoxyCompactList}\small\item\em Calibrate the line sensor (load from file or capture new data). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_sensor_1_1_sensor}{Sensor.\+Sensor}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sensor_1_1_sensor_abdd7ecd205bec477ec349a8221a86fc9}{set\+\_\+attr}} (cls, K="{}Kp"{}, value=0.\+0)
+\begin{DoxyCompactList}\small\item\em Set a class-\/level gain attribute. \end{DoxyCompactList}\item 
+None {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em Initialize timing variables for dt computation. \end{DoxyCompactList}\item 
+None \mbox{\hyperlink{class_sensor_1_1_sensor_a49cdbda3f5a9c633664e069b976be896}{update\+\_\+dt}} (self)
+\begin{DoxyCompactList}\small\item\em Refresh the stored time differential for subclasses. \end{DoxyCompactList}\item 
+None {\bfseries reset\+\_\+timing} (self)
+\begin{DoxyCompactList}\small\item\em Reset the timing history used for dt calculations. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
+Line sensor array with calibration and centroid computation. 
+
+Definition at line \mbox{\hyperlink{_line___sensor_8py_source_l00016}{16}} of file \mbox{\hyperlink{_line___sensor_8py_source}{Line\+\_\+\+Sensor.\+py}}.
 
 
-Definition at line \mbox{\hyperlink{_line___sensor_8py_source_l00006}{6}} of file \mbox{\hyperlink{_line___sensor_8py_source}{Line\+\_\+\+Sensor.\+py}}.
+
+\label{doc-constructors}
+\Hypertarget{class_line___sensor_1_1_line_sensor_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_line___sensor_1_1_line_sensor_a988fce141f6fff3036f0275660fb1239}\index{Line\_Sensor.LineSensor@{Line\_Sensor.LineSensor}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!Line\_Sensor.LineSensor@{Line\_Sensor.LineSensor}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_line___sensor_1_1_line_sensor_a988fce141f6fff3036f0275660fb1239} 
+Line\+\_\+\+Sensor.\+Line\+Sensor.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{list\+\_\+of\+\_\+\+IR\+\_\+\+Sensors}{}\end{DoxyParamCaption})}
+
+
+
+Initialize the line sensor array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list\+\_\+of\+\_\+\+IR\+\_\+\+Sensors} & List of {\ttfamily IRSensor} objects \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_line___sensor_8py_source_l00025}{25}} of file \mbox{\hyperlink{_line___sensor_8py_source}{Line\+\_\+\+Sensor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ list\_of\_IR\_Sensors): }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ super().\_\_init\_\_() }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ self.list\_IR\_Sensors\ =\ list\_of\_IR\_Sensors }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ self.cal\_white\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ self.cal\_black\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ self.cal\_white\_complete\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ self.cal\_black\_complete\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ self.use\_cal\ =\ \textcolor{keyword}{True}\ \ \textcolor{comment}{\#\ Set\ to\ False\ to\ force\ recalibration }}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ self.calibrated\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00034\  }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ tuple\ of\ buffers\ for\ readings }}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.list\_IR\_Sensors: }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ self.buffer\ =\ array(\textcolor{stringliteral}{"{}f"{}},\ (0.0\ \textcolor{keywordflow}{for}\ \_\ \textcolor{keywordflow}{in}\ range(len(self.list\_IR\_Sensors)))) }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Line\ sensor\ array\ is\ empty."{}}) }
+\DoxyCodeLine{00040\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_line___sensor_8py_source_l00025}{\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{_line___sensor_8py_source_l00037}{buffer}}, \mbox{\hyperlink{_line___sensor_8py_source_l00029}{cal\+\_\+black}}, \mbox{\hyperlink{_line___sensor_8py_source_l00031}{cal\+\_\+black\+\_\+complete}}, \mbox{\hyperlink{_line___sensor_8py_source_l00028}{cal\+\_\+white}}, \mbox{\hyperlink{_line___sensor_8py_source_l00030}{cal\+\_\+white\+\_\+complete}}, \mbox{\hyperlink{_i_m_u_8py_source_l00077}{IMU.\+IMU.\+calibrated}}, \mbox{\hyperlink{_line___sensor_8py_source_l00033}{calibrated}}, \mbox{\hyperlink{_line___sensor_8py_source_l00027}{list\+\_\+\+IR\+\_\+\+Sensors}}, and \mbox{\hyperlink{_line___sensor_8py_source_l00032}{use\+\_\+cal}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_line___sensor_1_1_line_sensor_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_line___sensor_1_1_line_sensor_ad01805de6dd955ddac614bba629235d7}\index{Line\_Sensor.LineSensor@{Line\_Sensor.LineSensor}!calibrate@{calibrate}}
+\index{calibrate@{calibrate}!Line\_Sensor.LineSensor@{Line\_Sensor.LineSensor}}
+\doxysubsubsection{\texorpdfstring{calibrate()}{calibrate()}}
+{\footnotesize\ttfamily \label{class_line___sensor_1_1_line_sensor_ad01805de6dd955ddac614bba629235d7} 
+ bool Line\+\_\+\+Sensor.\+Line\+Sensor.\+calibrate (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Calibrate the line sensor (load from file or capture new data). 
+
+Loads {\ttfamily IR\+\_\+cal.\+txt} if {\ttfamily use\+\_\+cal} is {\ttfamily True}; otherwise captures white and black references when flags are set and saves to file.
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily True} when calibration is complete 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_line___sensor_8py_source_l00071}{71}} of file \mbox{\hyperlink{_line___sensor_8py_source}{Line\+\_\+\+Sensor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{def\ }calibrate(self)\ -\/>\ bool: }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.use\_cal\ \textcolor{keywordflow}{and}\ \textcolor{stringliteral}{"{}IR\_cal.txt"{}}\ \textcolor{keywordflow}{in}\ listdir(): }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ data\ is\ present }}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Found\ Line\ Sensor\ calibration\ data,\ skipping\ calibration"{}}) }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{"{}IR\_cal.txt"{}},\ \textcolor{stringliteral}{"{}r"{}})\ \textcolor{keyword}{as}\ file: }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Read\ data\ from\ file,\ strip\ special\ characters,\ split\ on\ commas,\ assign }}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ to\ variables. }}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ white\_data\ =\ array(\textcolor{stringliteral}{"{}H"{}},\ map(int,\ file.readline().strip().split(\textcolor{stringliteral}{"{},"{}})))\ \ \textcolor{comment}{\#\ uint16 }}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ black\_data\ =\ array(\textcolor{stringliteral}{"{}H"{}},\ map(int,\ file.readline().strip().split(\textcolor{stringliteral}{"{},"{}})))\ \ \textcolor{comment}{\#\ uint16 }}
+\DoxyCodeLine{00080\  }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(white\_data)\ !=\ len(black\_data)\ \textcolor{keywordflow}{or}\ len(white\_data)\ !=\ len(self.list\_IR\_Sensors): }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Line\ Sensor\ Calibration\ data\ length\ does\ not\ match\ number\ of\ IR\ sensors."{}}) }
+\DoxyCodeLine{00083\  }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ idx,\ IR\ \textcolor{keywordflow}{in}\ enumerate(self.list\_IR\_Sensors): }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IR.white\ =\ white\_data[idx] }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IR.black\ =\ black\_data[idx] }
+\DoxyCodeLine{00087\  }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ successful }}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ self.calibrated\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ data\ is\ not\ present }}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.cal\_white\ ==\ \textcolor{keyword}{True}\ \textcolor{keywordflow}{and}\ self.cal\_white\_complete\ ==\ \textcolor{keyword}{False}: }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ sensor\ \textcolor{keywordflow}{in}\ self.list\_IR\_Sensors: }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sensor.read() }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sensor.white\ =\ sensor.ADC.read() }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.cal\_white\_complete\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ Calibration\ Flag }}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.cal\_white\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}White\ Calibration\ Complete"{}}) }
+\DoxyCodeLine{00101\  }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.cal\_black\ ==\ \textcolor{keyword}{True}\ \textcolor{keywordflow}{and}\ self.cal\_black\_complete\ ==\ \textcolor{keyword}{False}: }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ sensor\ \textcolor{keywordflow}{in}\ self.list\_IR\_Sensors: }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sensor.read() }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sensor.black\ =\ sensor.ADC.read() }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.cal\_black\_complete\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ Calibration\ Flag }}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.cal\_black\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Black\ Calibration\ Complete"{}}) }
+\DoxyCodeLine{00110\  }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.cal\_white\_complete\ \textcolor{keywordflow}{and}\ self.cal\_black\_complete: }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{"{}IR\_cal.txt"{}},\ \textcolor{stringliteral}{"{}w"{}})\ \textcolor{keyword}{as}\ f: }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ whites\ =\ \textcolor{stringliteral}{"{},"{}}.join(str(s.white)\ \textcolor{keywordflow}{for}\ s\ \textcolor{keywordflow}{in}\ self.list\_IR\_Sensors) }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ blacks\ =\ \textcolor{stringliteral}{"{},"{}}.join(str(s.black)\ \textcolor{keywordflow}{for}\ s\ \textcolor{keywordflow}{in}\ self.list\_IR\_Sensors) }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f.write(f\textcolor{stringliteral}{"{}\{whites\}\(\backslash\)n\{blacks\}\(\backslash\)n"{}}) }
+\DoxyCodeLine{00116\  }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ Calibration\ Flags }}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.cal\_white\_complete\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.cal\_black\_complete\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.calibrated\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ self.calibrated\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{False} }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_line___sensor_8py_source_l00029}{cal\+\_\+black}}, \mbox{\hyperlink{_line___sensor_8py_source_l00031}{cal\+\_\+black\+\_\+complete}}, \mbox{\hyperlink{_line___sensor_8py_source_l00028}{cal\+\_\+white}}, \mbox{\hyperlink{_line___sensor_8py_source_l00030}{cal\+\_\+white\+\_\+complete}}, \mbox{\hyperlink{_i_m_u_8py_source_l00077}{IMU.\+IMU.\+calibrated}}, \mbox{\hyperlink{_line___sensor_8py_source_l00033}{calibrated}}, \mbox{\hyperlink{_line___sensor_8py_source_l00027}{list\+\_\+\+IR\+\_\+\+Sensors}}, and \mbox{\hyperlink{_line___sensor_8py_source_l00032}{use\+\_\+cal}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-Lab Final/\+Files On Romi/Line\+\_\+\+Sensor.\+py\end{DoxyCompactItemize}
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_line___sensor_8py}{Line\+\_\+\+Sensor.\+py}}\end{DoxyCompactItemize}

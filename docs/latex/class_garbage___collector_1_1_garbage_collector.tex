@@ -2,13 +2,53 @@
 \hypertarget{class_garbage___collector_1_1_garbage_collector}{}\label{class_garbage___collector_1_1_garbage_collector}\index{Garbage\_Collector.GarbageCollector@{Garbage\_Collector.GarbageCollector}}
 
 
+Task wrapper that invokes {\ttfamily gc.\+collect()} on a cooperative schedule.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_garbage___collector_1_1_garbage_collector_aa232eeb65988a03c389cee49aa41a901}\label{class_garbage___collector_1_1_garbage_collector_aa232eeb65988a03c389cee49aa41a901} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em Initialize the garbage collector task. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_garbage___collector_1_1_garbage_collector_a34ccea8ebe8e46142e818b1716334037}{run}} (self)
+\begin{DoxyCompactList}\small\item\em Generator that runs garbage collection each time it\textquotesingle{}s scheduled. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
 \doxysubsection{Detailed Description}
+Task wrapper that invokes {\ttfamily gc.\+collect()} on a cooperative schedule. 
+
+Definition at line \mbox{\hyperlink{_garbage___collector_8py_source_l00014}{14}} of file \mbox{\hyperlink{_garbage___collector_8py_source}{Garbage\+\_\+\+Collector.\+py}}.
 
 
-Definition at line \mbox{\hyperlink{_garbage___collector_8py_source_l00004}{4}} of file \mbox{\hyperlink{_garbage___collector_8py_source}{Garbage\+\_\+\+Collector.\+py}}.
 
+\label{doc-func-members}
+\Hypertarget{class_garbage___collector_1_1_garbage_collector_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_garbage___collector_1_1_garbage_collector_a34ccea8ebe8e46142e818b1716334037}\index{Garbage\_Collector.GarbageCollector@{Garbage\_Collector.GarbageCollector}!run@{run}}
+\index{run@{run}!Garbage\_Collector.GarbageCollector@{Garbage\_Collector.GarbageCollector}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily \label{class_garbage___collector_1_1_garbage_collector_a34ccea8ebe8e46142e818b1716334037} 
+Garbage\+\_\+\+Collector.\+Garbage\+Collector.\+run (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Generator that runs garbage collection each time it\textquotesingle{}s scheduled. 
+
+Yields after collecting so the scheduler can continue running other tasks. 
+
+Definition at line \mbox{\hyperlink{_garbage___collector_8py_source_l00022}{22}} of file \mbox{\hyperlink{_garbage___collector_8py_source}{Garbage\+\_\+\+Collector.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{def\ }run(self): }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}: }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ collect() }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{yield} }
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-Lab Final/\+Files On Romi/Garbage\+\_\+\+Collector.\+py\end{DoxyCompactItemize}
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_garbage___collector_8py}{Garbage\+\_\+\+Collector.\+py}}\end{DoxyCompactItemize}

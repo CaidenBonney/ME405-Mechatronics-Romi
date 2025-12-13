@@ -1,262 +1,274 @@
 \doxysection{main.\+py}
 \hypertarget{main_8py_source}{}\label{main_8py_source}\index{Lab Final/Files On Romi/main.py@{Lab Final/Files On Romi/main.py}}
-
+\mbox{\hyperlink{main_8py}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00001}00001\ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ Pin,\ Timer,\ ADC,\ I2C,\ UART\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00002}00002\ \textcolor{keyword}{import}\ cotask}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00003}00003\ \textcolor{keyword}{import}\ task\_share}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00004}00004\ \textcolor{keyword}{from}\ gc\ \textcolor{keyword}{import}\ collect}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00005}00005\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00006}00006\ \textcolor{keyword}{from}\ Romi\_Props\ \textcolor{keyword}{import}\ RomiProps}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00007}00007\ \textcolor{keyword}{from}\ Motor\ \textcolor{keyword}{import}\ Motor}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00008}00008\ \textcolor{keyword}{from}\ Encoder\ \textcolor{keyword}{import}\ Encoder}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00009}00009\ \textcolor{keyword}{from}\ Battery\ \textcolor{keyword}{import}\ Battery}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00010}00010\ \textcolor{keyword}{from}\ Line\_Sensor\ \textcolor{keyword}{import}\ LineSensor}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00011}00011\ \textcolor{keyword}{from}\ IR\_Sensor\ \textcolor{keyword}{import}\ IRSensor}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00012}00012\ \textcolor{keyword}{from}\ IMU\ \textcolor{keyword}{import}\ IMU}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00009}00009\ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ Pin,\ Timer,\ ADC,\ I2C,\ UART\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00010}00010\ \textcolor{keyword}{import}\ cotask}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00011}00011\ \textcolor{keyword}{import}\ task\_share}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00012}00012\ \textcolor{keyword}{from}\ gc\ \textcolor{keyword}{import}\ collect}
 \DoxyCodeLine{\Hypertarget{main_8py_source_l00013}00013\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00014}00014\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00015}00015\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00016}00016\ \ \ \ \ \textcolor{comment}{\#\ Configure\ default\ pins}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00017}00017\ \ \ \ \ Pin(Pin.cpu.C12)\ \ \textcolor{comment}{\#\ TXD\ aka\ write\ Pin}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00018}00018\ \ \ \ \ Pin(Pin.cpu.D2)\ \ \textcolor{comment}{\#\ RXD\ aka\ read\ Pin}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00019}00019\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00020}00020\ \ \ \ \ \textcolor{comment}{\#\ Configure\ button\ pin}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00021}00021\ \ \ \ \ button\_pin\ =\ Pin(Pin.cpu.C13,\ mode=Pin.PULL\_NONE)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00022}00022\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00023}00023\ \ \ \ \ \textcolor{comment}{\#\ Configure\ battery\ ADC}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00024}00024\ \ \ \ \ bat\_ADC\_Pin\ =\ Pin(Pin.cpu.C3,\ mode=Pin.ANALOG)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00025}00025\ \ \ \ \ Battery\_obj\ =\ \mbox{\hyperlink{namespace_battery}{Battery}}(ADC(bat\_ADC\_Pin))}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00026}00026\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00027}00027\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00029}00029\ \ \ \ \ tim4\ =\ Timer(4,\ freq=20\_000)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00030}00030\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00031}00031\ \ \ \ \ \textcolor{comment}{\#\ Create\ motors}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00032}00032\ \ \ \ \ l\_motor\ =\ \mbox{\hyperlink{namespace_motor}{Motor}}(Pin.cpu.B7,\ Pin.cpu.H1,\ Pin.cpu.H0,\ tim4,\ 2)\ \ \textcolor{comment}{\#\ type:\ ignore}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00033}00033\ \ \ \ \ r\_motor\ =\ \mbox{\hyperlink{namespace_motor}{Motor}}(Pin.cpu.B6,\ Pin.cpu.A7,\ Pin.cpu.A6,\ tim4,\ 1)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00034}00034\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00035}00035\ \ \ \ \ \textcolor{comment}{\#\ Create\ encoders\ and\ their\ respective\ timers\ for\ counting\ pulses}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00036}00036\ \ \ \ \ tim2\ =\ Timer(2,\ prescaler=0,\ period=0xFFFF)\ \ \textcolor{comment}{\#\ Left\ encoder\ counter}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00037}00037\ \ \ \ \ l\_encoder\ =\ \mbox{\hyperlink{namespace_encoder}{Encoder}}(l\_motor,\ tim2,\ Pin.cpu.A0,\ 1,\ Pin.cpu.A1,\ 2)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00038}00038\ \ \ \ \ tim3\ =\ Timer(3,\ prescaler=0,\ period=0xFFFF)\ \ \textcolor{comment}{\#\ right\ encoder\ counter}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00039}00039\ \ \ \ \ r\_encoder\ =\ \mbox{\hyperlink{namespace_encoder}{Encoder}}(r\_motor,\ tim3,\ Pin.cpu.B4,\ 3,\ Pin.cpu.B5,\ 4)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00014}00014\ \textcolor{keyword}{from}\ Romi\_Props\ \textcolor{keyword}{import}\ RomiProps}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00015}00015\ \textcolor{keyword}{from}\ Motor\ \textcolor{keyword}{import}\ Motor}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00016}00016\ \textcolor{keyword}{from}\ Encoder\ \textcolor{keyword}{import}\ Encoder}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00017}00017\ \textcolor{keyword}{from}\ Battery\ \textcolor{keyword}{import}\ Battery}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00018}00018\ \textcolor{keyword}{from}\ Line\_Sensor\ \textcolor{keyword}{import}\ LineSensor}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00019}00019\ \textcolor{keyword}{from}\ IR\_Sensor\ \textcolor{keyword}{import}\ IRSensor}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00020}00020\ \textcolor{keyword}{from}\ IMU\ \textcolor{keyword}{import}\ IMU}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00022}00022\ collect()}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00024}00024\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00026}00026\ \ \ \ \ \textcolor{comment}{\#\ Configure\ default\ pins}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00027}00027\ \ \ \ \ Pin(Pin.cpu.C12)\ \ \textcolor{comment}{\#\ TXD\ aka\ write\ Pin}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00028}00028\ \ \ \ \ Pin(Pin.cpu.D2)\ \ \textcolor{comment}{\#\ RXD\ aka\ read\ Pin}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00030}00030\ \ \ \ \ \textcolor{comment}{\#\ Configure\ button\ pin}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00031}00031\ \ \ \ \ button\_pin\ =\ Pin(Pin.cpu.C13,\ mode=Pin.PULL\_NONE)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00033}00033\ \ \ \ \ \textcolor{comment}{\#\ Configure\ battery\ ADC}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00034}00034\ \ \ \ \ bat\_ADC\_Pin\ =\ Pin(Pin.cpu.C3,\ mode=Pin.ANALOG)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00035}00035\ \ \ \ \ Battery\_obj\ =\ \mbox{\hyperlink{namespace_battery}{Battery}}(ADC(bat\_ADC\_Pin))}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00037}00037\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00039}00039\ \ \ \ \ tim4\ =\ Timer(4,\ freq=20\_000)}
 \DoxyCodeLine{\Hypertarget{main_8py_source_l00040}00040\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00041}00041\ \ \ \ \ \textcolor{comment}{\#\ Create\ IR\ sensor\ objects}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00042}00042\ \ \ \ \ IRSensor1\ =\ IRSensor(1,\ Pin.cpu.A4)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00043}00043\ \ \ \ \ \textcolor{comment}{\#\ IRSensor2\ =\ IRSensor(2,\ Pin.cpu.A3)\ \#\ RANDOM\ PIN\ SELECTED}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00044}00044\ \ \ \ \ IRSensor3\ =\ IRSensor(3,\ Pin.cpu.B0)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00045}00045\ \ \ \ \ \textcolor{comment}{\#\ IRSensor4\ =\ IRSensor(4,\ Pin.cpu.A5)\ \#\ RANDOM\ PIN\ SELECTED}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00046}00046\ \ \ \ \ IRSensor5\ =\ IRSensor(5,\ Pin.cpu.C1)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00047}00047\ \ \ \ \ \textcolor{comment}{\#\ IRSensor6\ =\ IRSensor(6,\ Pin.cpu.A7)\ \#\ RANDOM\ PIN\ SELECTED}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00048}00048\ \ \ \ \ IRSensor7\ =\ IRSensor(7,\ Pin.cpu.C0)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00049}00049\ \ \ \ \ \textcolor{comment}{\#\ IRSensor8\ =\ IRSensor(8,\ Pin.cpu.A9)\ \#\ RANDOM\ PIN\ SELECTED}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00050}00050\ \ \ \ \ IRSensor9\ =\ IRSensor(9,\ Pin.cpu.C4)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00051}00051\ \ \ \ \ \textcolor{comment}{\#\ IRSensor10\ =\ IRSensor(10,\ Pin.cpu.A11)\ \#\ RANDOM\ PIN\ SELECTED}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00052}00052\ \ \ \ \ IRSensor11\ =\ IRSensor(11,\ Pin.cpu.B1)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00053}00053\ \ \ \ \ \textcolor{comment}{\#\ IRSensor12\ =\ IRSensor(12,\ Pin.cpu.A13)\ \#\ RANDOM\ PIN\ SELECTED}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00054}00054\ \ \ \ \ IRSensor13\ =\ IRSensor(13,\ Pin.cpu.C5)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00055}00055\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00056}00056\ \ \ \ \ \textcolor{comment}{\#\ Linesensor\ =\ LineSensor([IRSensor1,\ IRSensor2,\ IRSensor3,\ IRSensor4,\ IRSensor5,\ IRSensor6,\ IRSensor7,\ IRSensor8,\ IRSensor9,\ IRSensor10,\ IRSensor11,\ IRSensor12,\ IRSensor13])}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00057}00057\ \ \ \ \ Linesensor\ =\ LineSensor([IRSensor1,\ IRSensor3,\ IRSensor5,\ IRSensor7,\ IRSensor9,\ IRSensor11,\ IRSensor13])}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00058}00058\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00059}00059\ \ \ \ \ \textcolor{comment}{\#\ Create\ IMU\ object}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00060}00060\ \ \ \ \ I2C\_obj\ =\ I2C(2,\ I2C.CONTROLLER)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00061}00061\ \ \ \ \ SCL2\_pin\ =\ Pin(Pin.cpu.B10,\ Pin.ALT,\ alt=4)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00062}00062\ \ \ \ \ SDA2\_pin\ =\ Pin(Pin.cpu.B11,\ Pin.ALT,\ alt=4)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00063}00063\ \ \ \ \ IMU\_reset\_pin\ =\ Pin(Pin.cpu.B2,\ Pin.OUT\_PP)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00064}00064\ \ \ \ \ IMU\_reset\_pin.value(1)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00065}00065\ \ \ \ \ IMU\_obj\ =\ \mbox{\hyperlink{namespace_i_m_u}{IMU}}(I2C\_obj,\ IMU\_reset\_pin)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00066}00066\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00067}00067\ \ \ \ \ \textcolor{comment}{\#\ Setting\ inital\ encoder\ positions\ based\ on\ initial\ IMU\ heading}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00068}00068\ \ \ \ \ l\_encoder.position\ =\ -\/RomiProps.wdiv2\ *\ (IMU\_obj.get\_heading())}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00069}00069\ \ \ \ \ r\_encoder.position\ =\ RomiProps.wdiv2\ *\ (IMU\_obj.get\_heading())}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00070}00070\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00071}00071\ \ \ \ \ \textcolor{comment}{\#\ Create\ bump\ sensor\ pins}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00072}00072\ \ \ \ \ bump0\ =\ Pin(Pin.cpu.C7,\ mode=Pin.IN)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00073}00073\ \ \ \ \ bump1\ =\ Pin(Pin.cpu.B8,\ mode=Pin.IN)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00074}00074\ \ \ \ \ bump2\ =\ Pin(Pin.cpu.C9,\ mode=Pin.IN)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00075}00075\ \ \ \ \ bump3\ =\ Pin(Pin.cpu.C11,\ mode=Pin.IN)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00076}00076\ \ \ \ \ bump4\ =\ Pin(Pin.cpu.C10,\ mode=Pin.IN)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00077}00077\ \ \ \ \ bump5\ =\ Pin(Pin.cpu.A15,\ mode=Pin.IN)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00078}00078\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00079}00079\ \ \ \ \ bump\_sensors\ =\ (bump0,\ bump1,\ bump2,\ bump3,\ bump4,\ bump5)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00041}00041\ \ \ \ \ \textcolor{comment}{\#\ Create\ motors}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00042}00042\ \ \ \ \ l\_motor\ =\ \mbox{\hyperlink{namespace_motor}{Motor}}(Pin.cpu.B7,\ Pin.cpu.H1,\ Pin.cpu.H0,\ tim4,\ 2)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00043}00043\ \ \ \ \ r\_motor\ =\ \mbox{\hyperlink{namespace_motor}{Motor}}(Pin.cpu.B6,\ Pin.cpu.A7,\ Pin.cpu.A6,\ tim4,\ 1)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00045}00045\ \ \ \ \ \textcolor{comment}{\#\ Create\ encoders\ and\ their\ respective\ timers\ for\ counting\ pulses}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00046}00046\ \ \ \ \ tim2\ =\ Timer(2,\ prescaler=0,\ period=0xFFFF)\ \ \textcolor{comment}{\#\ Left\ encoder\ counter}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00047}00047\ \ \ \ \ l\_encoder\ =\ \mbox{\hyperlink{namespace_encoder}{Encoder}}(l\_motor,\ tim2,\ Pin.cpu.A0,\ 1,\ Pin.cpu.A1,\ 2)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00048}00048\ \ \ \ \ tim3\ =\ Timer(3,\ prescaler=0,\ period=0xFFFF)\ \ \textcolor{comment}{\#\ right\ encoder\ counter}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00049}00049\ \ \ \ \ r\_encoder\ =\ \mbox{\hyperlink{namespace_encoder}{Encoder}}(r\_motor,\ tim3,\ Pin.cpu.B4,\ 3,\ Pin.cpu.B5,\ 4)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00051}00051\ \ \ \ \ \textcolor{comment}{\#\ Create\ IR\ sensor\ objects}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00052}00052\ \ \ \ \ IRSensor1\ =\ IRSensor(1,\ Pin.cpu.A4)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00053}00053\ \ \ \ \ \textcolor{comment}{\#\ IRSensor2\ =\ IRSensor(2,\ Pin.cpu.A3)\ \#\ RANDOM\ PIN\ SELECTED}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00054}00054\ \ \ \ \ IRSensor3\ =\ IRSensor(3,\ Pin.cpu.B0)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00055}00055\ \ \ \ \ \textcolor{comment}{\#\ IRSensor4\ =\ IRSensor(4,\ Pin.cpu.A5)\ \#\ RANDOM\ PIN\ SELECTED}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00056}00056\ \ \ \ \ IRSensor5\ =\ IRSensor(5,\ Pin.cpu.C1)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00057}00057\ \ \ \ \ \textcolor{comment}{\#\ IRSensor6\ =\ IRSensor(6,\ Pin.cpu.A7)\ \#\ RANDOM\ PIN\ SELECTED}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00058}00058\ \ \ \ \ IRSensor7\ =\ IRSensor(7,\ Pin.cpu.C0)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00059}00059\ \ \ \ \ \textcolor{comment}{\#\ IRSensor8\ =\ IRSensor(8,\ Pin.cpu.A9)\ \#\ RANDOM\ PIN\ SELECTED}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00060}00060\ \ \ \ \ IRSensor9\ =\ IRSensor(9,\ Pin.cpu.C4)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00061}00061\ \ \ \ \ \textcolor{comment}{\#\ IRSensor10\ =\ IRSensor(10,\ Pin.cpu.A11)\ \#\ RANDOM\ PIN\ SELECTED}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00062}00062\ \ \ \ \ IRSensor11\ =\ IRSensor(11,\ Pin.cpu.B1)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00063}00063\ \ \ \ \ \textcolor{comment}{\#\ IRSensor12\ =\ IRSensor(12,\ Pin.cpu.A13)\ \#\ RANDOM\ PIN\ SELECTED}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00064}00064\ \ \ \ \ IRSensor13\ =\ IRSensor(13,\ Pin.cpu.C5)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00066}00066\ \ \ \ \ \textcolor{comment}{\#\ Linesensor\ =\ LineSensor([IRSensor1,\ IRSensor2,\ IRSensor3,\ IRSensor4,\ IRSensor5,\ IRSensor6,\ IRSensor7,\ IRSensor8,\ IRSensor9,\ IRSensor10,\ IRSensor11,\ IRSensor12,\ IRSensor13])}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00067}00067\ \ \ \ \ Linesensor\ =\ LineSensor([IRSensor1,\ IRSensor3,\ IRSensor5,\ IRSensor7,\ IRSensor9,\ IRSensor11,\ IRSensor13])}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00069}00069\ \ \ \ \ \textcolor{comment}{\#\ Create\ IMU\ object}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00070}00070\ \ \ \ \ I2C\_obj\ =\ I2C(2,\ I2C.CONTROLLER)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00071}00071\ \ \ \ \ SCL2\_pin\ =\ Pin(Pin.cpu.B10,\ Pin.ALT,\ alt=4)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00072}00072\ \ \ \ \ SDA2\_pin\ =\ Pin(Pin.cpu.B11,\ Pin.ALT,\ alt=4)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00073}00073\ \ \ \ \ IMU\_reset\_pin\ =\ Pin(Pin.cpu.B2,\ Pin.OUT\_PP)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00074}00074\ \ \ \ \ IMU\_reset\_pin.value(1)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00075}00075\ \ \ \ \ IMU\_obj\ =\ \mbox{\hyperlink{namespace_i_m_u}{IMU}}(I2C\_obj,\ IMU\_reset\_pin)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00077}00077\ \ \ \ \ \textcolor{comment}{\#\ Setting\ inital\ encoder\ positions\ based\ on\ initial\ IMU\ heading}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00078}00078\ \ \ \ \ l\_encoder.position\ =\ -\/RomiProps.wdiv2\ *\ (IMU\_obj.get\_heading())}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00079}00079\ \ \ \ \ r\_encoder.position\ =\ RomiProps.wdiv2\ *\ (IMU\_obj.get\_heading())}
 \DoxyCodeLine{\Hypertarget{main_8py_source_l00080}00080\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00081}00081\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00083}00083\ \ \ \ \ l\_flag\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}left\ flag\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00084}00084\ \ \ \ \ r\_flag\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}right\ flag\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00085}00085\ \ \ \ \ l\_speed\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}left\ speed\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00086}00086\ \ \ \ \ r\_speed\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}right\ speed\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00087}00087\ \ \ \ \ data\_transfer\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}data\ transfer\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00088}00088\ \ \ \ \ test\_complete\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}test\ complete\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00089}00089\ \ \ \ \ cal\_white\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}white\ calibration\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00090}00090\ \ \ \ \ cal\_black\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}black\ calibration\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00091}00091\ \ \ \ \ set\_seg\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}H"{}},\ thread\_protect=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}new\ segment\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00092}00092\ \ \ \ \ seg\_start\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}segment\ start\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00093}00093\ \ \ \ \ obsd\_lpos\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Oberserved\ left\ position\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00094}00094\ \ \ \ \ obsd\_rpos\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Oberserved\ right\ position\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00095}00095\ \ \ \ \ obsd\_cpos\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Oberserved\ center\ position\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00096}00096\ \ \ \ \ obsd\_yaw\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Oberserved\ yaw\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00097}00097\ \ \ \ \ obsd\_yawrate\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Oberserved\ yawrate\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00098}00098\ \ \ \ \ obsd\_X\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Oberserved\ X\ position\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00099}00099\ \ \ \ \ obsd\_Y\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Oberserved\ Y\ position\ share"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00100}00100\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00101}00101\ \ \ \ \ \textcolor{comment}{\#\ Queue\ creation\ here}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00102}00102\ \ \ \ \ \textcolor{comment}{\#\ All\ queues\ have\ overwrite=True\ because\ if\ the\ data\ is\ being\ overwritten\ because\ the\ queue\ is\ full,\ we\ can\ see\ with\ discontinuous\ data}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00103}00103\ \ \ \ \ l\_time\_q\ =\ \mbox{\hyperlink{classtask__share_1_1_queue}{task\_share.Queue}}(\textcolor{stringliteral}{"{}L"{}},\ 1,\ thread\_protect=\textcolor{keyword}{False},\ overwrite=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}time\ queue"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00104}00104\ \ \ \ \ r\_time\_q\ =\ \mbox{\hyperlink{classtask__share_1_1_queue}{task\_share.Queue}}(\textcolor{stringliteral}{"{}L"{}},\ 1,\ thread\_protect=\textcolor{keyword}{False},\ overwrite=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}time\ queue"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00105}00105\ \ \ \ \ l\_pos\_q\ =\ \mbox{\hyperlink{classtask__share_1_1_queue}{task\_share.Queue}}(\textcolor{stringliteral}{"{}f"{}},\ 1,\ thread\_protect=\textcolor{keyword}{False},\ overwrite=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}left\ position\ queue"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00106}00106\ \ \ \ \ r\_pos\_q\ =\ \mbox{\hyperlink{classtask__share_1_1_queue}{task\_share.Queue}}(\textcolor{stringliteral}{"{}f"{}},\ 1,\ thread\_protect=\textcolor{keyword}{False},\ overwrite=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}right\ position\ queue"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00107}00107\ \ \ \ \ l\_vel\_q\ =\ \mbox{\hyperlink{classtask__share_1_1_queue}{task\_share.Queue}}(\textcolor{stringliteral}{"{}f"{}},\ 1,\ thread\_protect=\textcolor{keyword}{False},\ overwrite=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}left\ velocity\ queue"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00108}00108\ \ \ \ \ r\_vel\_q\ =\ \mbox{\hyperlink{classtask__share_1_1_queue}{task\_share.Queue}}(\textcolor{stringliteral}{"{}f"{}},\ 1,\ thread\_protect=\textcolor{keyword}{False},\ overwrite=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}right\ velocity\ queue"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00109}00109\ \ \ \ \ list\_of\_queues\ =\ [l\_time\_q,\ r\_time\_q,\ l\_pos\_q,\ r\_pos\_q,\ l\_vel\_q,\ r\_vel\_q]}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00110}00110\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00111}00111\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00113}00113\ \ \ \ \ collect()}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00114}00114\ \ \ \ \ \textcolor{comment}{\#\ Task\ object\ imports}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00115}00115\ \ \ \ \ \textcolor{keyword}{from}\ User\_Input\ \textcolor{keyword}{import}\ UserInput}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00116}00116\ \ \ \ \ \textcolor{keyword}{from}\ Path\_Director\ \textcolor{keyword}{import}\ PathDirector}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00117}00117\ \ \ \ \ \textcolor{keyword}{from}\ Observer\ \textcolor{keyword}{import}\ Observer}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00118}00118\ \ \ \ \ \textcolor{keyword}{from}\ Motor\_Controller\ \textcolor{keyword}{import}\ MotorController}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00119}00119\ \ \ \ \ \textcolor{keyword}{from}\ Garbage\_Collector\ \textcolor{keyword}{import}\ GarbageCollector}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00120}00120\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00121}00121\ \ \ \ \ user\_input\_obj\ =\ UserInput(button\_pin,\ Battery\_obj)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00122}00122\ \ \ \ \ observer\_obj\ =\ \mbox{\hyperlink{namespace_observer}{Observer}}(IMU\_obj,\ l\_encoder,\ r\_encoder,\ Battery\_obj)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00123}00123\ \ \ \ \ path\_director\_obj\ =\ PathDirector(Linesensor,\ IMU\_obj,\ bump\_sensors)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00124}00124\ \ \ \ \ LMC\_obj\ =\ MotorController(l\_motor,\ l\_encoder,\ Battery\_obj,\ \textcolor{keyword}{False})\ \ \textcolor{comment}{\#\ False\ =\ left}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00125}00125\ \ \ \ \ RMC\_obj\ =\ MotorController(r\_motor,\ r\_encoder,\ Battery\_obj,\ \textcolor{keyword}{True})\ \ \textcolor{comment}{\#\ True\ =\ right}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00126}00126\ \ \ \ \ garbage\_collector\_obj\ =\ GarbageCollector()}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00127}00127\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00128}00128\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00133}00133\ \ \ \ \ task\_User\_Input\ =\ \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}}(}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00134}00134\ \ \ \ \ \ \ \ \ user\_input\_obj.run,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00135}00135\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}User\ Input\ Task\ \ \ \ \ \ "{}},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00136}00136\ \ \ \ \ \ \ \ \ priority=10,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00137}00137\ \ \ \ \ \ \ \ \ period=100,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00138}00138\ \ \ \ \ \ \ \ \ profile=\textcolor{keyword}{True},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ trace=\textcolor{keyword}{False},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ shares=(}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ data\_transfer\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ cal\_white\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ cal\_black\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ ),}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00151}00151\ \ \ \ \ )}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00152}00152\ \ \ \ \ task\_Observer\ =\ \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}}(}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00153}00153\ \ \ \ \ \ \ \ \ observer\_obj.run,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}Observer\ Task\ \ \ \ \ \ \ \ "{}},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00155}00155\ \ \ \ \ \ \ \ \ priority=4,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ period=20,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00157}00157\ \ \ \ \ \ \ \ \ profile=\textcolor{keyword}{True},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ trace=\textcolor{keyword}{False},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ shares=(obsd\_lpos\_s,\ obsd\_rpos\_s,\ obsd\_cpos\_s,\ obsd\_yaw\_s,\ obsd\_yawrate\_s,\ obsd\_X\_s,\ obsd\_Y\_s),}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00160}00160\ \ \ \ \ )}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00161}00161\ \ \ \ \ task\_Path\_Director\ =\ \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}}(}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ path\_director\_obj.run,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00163}00163\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}Path\ Director\ Task\ \ \ "{}},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00164}00164\ \ \ \ \ \ \ \ \ priority=3,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00165}00165\ \ \ \ \ \ \ \ \ period=30,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00166}00166\ \ \ \ \ \ \ \ \ profile=\textcolor{keyword}{True},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00167}00167\ \ \ \ \ \ \ \ \ trace=\textcolor{keyword}{False},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00168}00168\ \ \ \ \ \ \ \ \ shares=(}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ data\_transfer\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ cal\_white\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ cal\_black\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_lpos\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_rpos\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_cpos\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yaw\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yawrate\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00186}00186\ \ \ \ \ \ \ \ \ ),}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00187}00187\ \ \ \ \ )}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00188}00188\ \ \ \ \ task\_LMC\ =\ \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}}(}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00189}00189\ \ \ \ \ \ \ \ \ LMC\_obj.run,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00190}00190\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}Left\ Motor\ Cont\ Task\ "{}},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00191}00191\ \ \ \ \ \ \ \ \ priority=2,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ period=20,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00193}00193\ \ \ \ \ \ \ \ \ profile=\textcolor{keyword}{True},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00194}00194\ \ \ \ \ \ \ \ \ trace=\textcolor{keyword}{False},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00195}00195\ \ \ \ \ \ \ \ \ shares=(l\_flag\_s,\ l\_speed\_s,\ data\_transfer\_s,\ test\_complete\_s,\ seg\_start\_s,\ l\_time\_q,\ l\_pos\_q,\ l\_vel\_q),}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00196}00196\ \ \ \ \ )}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00197}00197\ \ \ \ \ task\_RMC\ =\ \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}}(}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00198}00198\ \ \ \ \ \ \ \ \ RMC\_obj.run,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00199}00199\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}Right\ Motor\ Cont\ Task"{}},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00200}00200\ \ \ \ \ \ \ \ \ priority=2,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00201}00201\ \ \ \ \ \ \ \ \ period=20,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00202}00202\ \ \ \ \ \ \ \ \ profile=\textcolor{keyword}{True},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00203}00203\ \ \ \ \ \ \ \ \ trace=\textcolor{keyword}{False},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00204}00204\ \ \ \ \ \ \ \ \ shares=(r\_flag\_s,\ r\_speed\_s,\ data\_transfer\_s,\ test\_complete\_s,\ seg\_start\_s,\ r\_time\_q,\ r\_pos\_q,\ r\_vel\_q),}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00205}00205\ \ \ \ \ )}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00206}00206\ \ \ \ \ task\_Garbage\_Collection\ =\ \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}}(}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00207}00207\ \ \ \ \ \ \ \ \ garbage\_collector\_obj.run,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00208}00208\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}Garbage\ Collect\ Task\ "{}},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00209}00209\ \ \ \ \ \ \ \ \ priority=0,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00210}00210\ \ \ \ \ \ \ \ \ period=0,}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00211}00211\ \ \ \ \ \ \ \ \ profile=\textcolor{keyword}{True},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00212}00212\ \ \ \ \ \ \ \ \ trace=\textcolor{keyword}{False},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00213}00213\ \ \ \ \ \ \ \ \ shares=\textcolor{keywordtype}{None},}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00214}00214\ \ \ \ \ )}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00215}00215\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00216}00216\ \ \ \ \ cotask.task\_list.append(task\_User\_Input)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00217}00217\ \ \ \ \ cotask.task\_list.append(task\_Observer)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00218}00218\ \ \ \ \ cotask.task\_list.append(task\_Path\_Director)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00219}00219\ \ \ \ \ cotask.task\_list.append(task\_LMC)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00220}00220\ \ \ \ \ cotask.task\_list.append(task\_RMC)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00221}00221\ \ \ \ \ cotask.task\_list.append(task\_Garbage\_Collection)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00222}00222\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00223}00223\ \ \ \ \ \textcolor{comment}{\#\ Run\ the\ memory\ garbage\ collector\ to\ ensure\ memory\ is\ as\ defragmented\ as}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00224}00224\ \ \ \ \ \textcolor{comment}{\#\ possible\ before\ the\ real-\/time\ scheduler\ is\ started}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00225}00225\ \ \ \ \ collect()}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00226}00226\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00227}00227\ \ \ \ \ \textcolor{comment}{\#\ Run\ the\ scheduler\ with\ the\ chosen\ scheduling\ algorithm.\ Quit\ if\ \string^C\ pressed}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00228}00228\ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}:}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00229}00229\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ cotask.task\_list.pri\_sched()}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00231}00231\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ BaseException\ \textcolor{keyword}{as}\ e:}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ uart\ =\ UART(5,\ 115200)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(e,\ OSError):}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}OSError:\ \{e\}"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uart.write(f\textcolor{stringliteral}{"{}OSError:\ \{e\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00081}00081\ \ \ \ \ \textcolor{comment}{\#\ Create\ bump\ sensor\ pins}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00082}00082\ \ \ \ \ bump0\ =\ Pin(Pin.cpu.C7,\ mode=Pin.IN)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00083}00083\ \ \ \ \ bump1\ =\ Pin(Pin.cpu.B8,\ mode=Pin.IN)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00084}00084\ \ \ \ \ bump2\ =\ Pin(Pin.cpu.C9,\ mode=Pin.IN)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00085}00085\ \ \ \ \ bump3\ =\ Pin(Pin.cpu.C11,\ mode=Pin.IN)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00086}00086\ \ \ \ \ bump4\ =\ Pin(Pin.cpu.C10,\ mode=Pin.IN)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00087}00087\ \ \ \ \ bump5\ =\ Pin(Pin.cpu.A15,\ mode=Pin.IN)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00089}00089\ \ \ \ \ bump\_sensors\ =\ (bump0,\ bump1,\ bump2,\ bump3,\ bump4,\ bump5)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00091}00091\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00093}00093\ \ \ \ \ l\_flag\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}left\ flag\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00094}00094\ \ \ \ \ r\_flag\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}right\ flag\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00095}00095\ \ \ \ \ l\_speed\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}left\ speed\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00096}00096\ \ \ \ \ r\_speed\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}right\ speed\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00097}00097\ \ \ \ \ data\_transfer\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}data\ transfer\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00098}00098\ \ \ \ \ test\_complete\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}test\ complete\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00099}00099\ \ \ \ \ cal\_white\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}white\ calibration\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00100}00100\ \ \ \ \ cal\_black\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}black\ calibration\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00101}00101\ \ \ \ \ set\_seg\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}H"{}},\ thread\_protect=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}new\ segment\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00102}00102\ \ \ \ \ seg\_start\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}B"{}},\ thread\_protect=\textcolor{keyword}{True},\ name=\textcolor{stringliteral}{"{}segment\ start\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00103}00103\ \ \ \ \ obsd\_lpos\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Observed\ left\ position\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00104}00104\ \ \ \ \ obsd\_rpos\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Observed\ right\ position\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00105}00105\ \ \ \ \ obsd\_cpos\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Observed\ center\ position\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00106}00106\ \ \ \ \ obsd\_yaw\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Observed\ yaw\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00107}00107\ \ \ \ \ obsd\_yawrate\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Observed\ yawrate\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00108}00108\ \ \ \ \ obsd\_X\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Observed\ X\ position\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00109}00109\ \ \ \ \ obsd\_Y\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}Observed\ Y\ position\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00110}00110\ \ \ \ \ dist\_yaw\_s\ =\ \mbox{\hyperlink{classtask__share_1_1_share}{task\_share.Share}}(\textcolor{stringliteral}{"{}f"{}},\ thread\_protect=\textcolor{keyword}{False},\ name=\textcolor{stringliteral}{"{}distance\ derived\ yaw\ share"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00112}00112\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00114}00114\ \ \ \ \ collect()}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00115}00115\ \ \ \ \ \textcolor{keyword}{from}\ Path\_Director\ \textcolor{keyword}{import}\ PathDirector}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00116}00116\ \ \ \ \ collect()}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00118}00118\ \ \ \ \ \textcolor{comment}{\#\ Task\ object\ imports}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00119}00119\ \ \ \ \ \textcolor{keyword}{from}\ User\_Input\ \textcolor{keyword}{import}\ UserInput}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00120}00120\ \ \ \ \ \textcolor{keyword}{from}\ Observer\ \textcolor{keyword}{import}\ Observer}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00121}00121\ \ \ \ \ \textcolor{keyword}{from}\ Motor\_Controller\ \textcolor{keyword}{import}\ MotorController}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00122}00122\ \ \ \ \ \textcolor{keyword}{from}\ Garbage\_Collector\ \textcolor{keyword}{import}\ GarbageCollector}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00124}00124\ \ \ \ \ collect()}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00126}00126\ \ \ \ \ user\_input\_obj\ =\ UserInput(button\_pin,\ Battery\_obj)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00127}00127\ \ \ \ \ observer\_obj\ =\ \mbox{\hyperlink{namespace_observer}{Observer}}(IMU\_obj,\ l\_encoder,\ r\_encoder,\ Battery\_obj)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00128}00128\ \ \ \ \ path\_director\_obj\ =\ PathDirector(Linesensor,\ IMU\_obj,\ bump\_sensors)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00129}00129\ \ \ \ \ LMC\_obj\ =\ MotorController(l\_motor,\ l\_encoder,\ Battery\_obj,\ \textcolor{keyword}{False})\ \ \textcolor{comment}{\#\ False\ =\ left}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00130}00130\ \ \ \ \ RMC\_obj\ =\ MotorController(r\_motor,\ r\_encoder,\ Battery\_obj,\ \textcolor{keyword}{True})\ \ \textcolor{comment}{\#\ True\ =\ right}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00131}00131\ \ \ \ \ garbage\_collector\_obj\ =\ GarbageCollector()}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00133}00133\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00138}00138\ \ \ \ \ task\_User\_Input\ =\ \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}}(}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ user\_input\_obj.run,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}User\ Input\ Task\ \ \ \ \ \ "{}},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ priority=10,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ period=100,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ profile=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00144}00144\ \ \ \ \ \ \ \ \ trace=\textcolor{keyword}{False},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00145}00145\ \ \ \ \ \ \ \ \ shares=(}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ data\_transfer\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ cal\_white\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ cal\_black\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00155}00155\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00156}00156\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00157}00157\ \ \ \ \ task\_Observer\ =\ \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}}(}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ observer\_obj.run,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}Observer\ Task\ \ \ \ \ \ \ \ "{}},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ priority=4,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00161}00161\ \ \ \ \ \ \ \ \ period=20,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ profile=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00163}00163\ \ \ \ \ \ \ \ \ trace=\textcolor{keyword}{False},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00164}00164\ \ \ \ \ \ \ \ \ shares=(}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_lpos\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_rpos\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_cpos\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yaw\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yawrate\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ dist\_yaw\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00173}00173\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00174}00174\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00175}00175\ \ \ \ \ task\_Path\_Director\ =\ \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}}(}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00176}00176\ \ \ \ \ \ \ \ \ path\_director\_obj.run,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00177}00177\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}Path\ Director\ Task\ \ \ "{}},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00178}00178\ \ \ \ \ \ \ \ \ priority=3,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00179}00179\ \ \ \ \ \ \ \ \ period=30,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00180}00180\ \ \ \ \ \ \ \ \ profile=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00181}00181\ \ \ \ \ \ \ \ \ trace=\textcolor{keyword}{False},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00182}00182\ \ \ \ \ \ \ \ \ shares=(}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ data\_transfer\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ cal\_white\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ cal\_black\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_lpos\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_rpos\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_cpos\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yaw\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yawrate\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ dist\_yaw\_s,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00201}00201\ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00202}00202\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00203}00203\ \ \ \ \ task\_LMC\ =\ \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}}(}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00204}00204\ \ \ \ \ \ \ \ \ LMC\_obj.run,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00205}00205\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}Left\ Motor\ Cont\ Task\ "{}},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00206}00206\ \ \ \ \ \ \ \ \ priority=2,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00207}00207\ \ \ \ \ \ \ \ \ period=20,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00208}00208\ \ \ \ \ \ \ \ \ profile=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00209}00209\ \ \ \ \ \ \ \ \ trace=\textcolor{keyword}{False},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00210}00210\ \ \ \ \ \ \ \ \ shares=(l\_flag\_s,\ l\_speed\_s,\ data\_transfer\_s,\ test\_complete\_s,\ seg\_start\_s),}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00211}00211\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00212}00212\ \ \ \ \ task\_RMC\ =\ \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}}(}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00213}00213\ \ \ \ \ \ \ \ \ RMC\_obj.run,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00214}00214\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}Right\ Motor\ Cont\ Task"{}},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00215}00215\ \ \ \ \ \ \ \ \ priority=2,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00216}00216\ \ \ \ \ \ \ \ \ period=20,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00217}00217\ \ \ \ \ \ \ \ \ profile=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00218}00218\ \ \ \ \ \ \ \ \ trace=\textcolor{keyword}{False},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00219}00219\ \ \ \ \ \ \ \ \ shares=(r\_flag\_s,\ r\_speed\_s,\ data\_transfer\_s,\ test\_complete\_s,\ seg\_start\_s),}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00220}00220\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00221}00221\ \ \ \ \ task\_Garbage\_Collection\ =\ \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}}(}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00222}00222\ \ \ \ \ \ \ \ \ garbage\_collector\_obj.run,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00223}00223\ \ \ \ \ \ \ \ \ name=\textcolor{stringliteral}{"{}Garbage\ Collect\ Task\ "{}},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00224}00224\ \ \ \ \ \ \ \ \ priority=0,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00225}00225\ \ \ \ \ \ \ \ \ period=0,}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00226}00226\ \ \ \ \ \ \ \ \ profile=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00227}00227\ \ \ \ \ \ \ \ \ trace=\textcolor{keyword}{False},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00228}00228\ \ \ \ \ \ \ \ \ shares=\textcolor{keywordtype}{None},}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00229}00229\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00230}00230\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00231}00231\ \ \ \ \ cotask.task\_list.append(task\_User\_Input)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00232}00232\ \ \ \ \ cotask.task\_list.append(task\_Observer)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00233}00233\ \ \ \ \ cotask.task\_list.append(task\_Path\_Director)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00234}00234\ \ \ \ \ cotask.task\_list.append(task\_LMC)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00235}00235\ \ \ \ \ cotask.task\_list.append(task\_RMC)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00236}00236\ \ \ \ \ cotask.task\_list.append(task\_Garbage\_Collection)}
 \DoxyCodeLine{\Hypertarget{main_8py_source_l00237}00237\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ LMC\_obj.motor.set\_effort(0)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ RMC\_obj.motor.set\_effort(0)}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00240}00240\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ queue\ \textcolor{keywordflow}{in}\ list\_of\_queues:}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ queue.clear()}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00243}00243\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Print\ a\ table\ of\ task\ data\ and\ a\ table\ of\ shared\ information\ data}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\(\backslash\)n"{}}\ +\ str(cotask.task\_list))}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ print(\mbox{\hyperlink{task__share_8py_ad6aea1db68be1a10f72039a5ac9e9dd4}{task\_share.show\_all}}())}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(task\_User\_Input.get\_trace())}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print("{}"{})}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(task\_Observer.get\_trace())}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print("{}"{})}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(task\_Path\_Director.get\_trace())}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print("{}"{})}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(task\_LMC.get\_trace())}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print("{}"{})}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(task\_RMC.get\_trace())}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print("{}"{})}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(task\_Garbage\_Collection.get\_trace())}}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print("{}"{})}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00238}00238\ \ \ \ \ \textcolor{comment}{\#\ Run\ the\ memory\ garbage\ collector\ to\ ensure\ memory\ is\ as\ defragmented\ as}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00239}00239\ \ \ \ \ \textcolor{comment}{\#\ possible\ before\ the\ real-\/time\ scheduler\ is\ started}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00240}00240\ \ \ \ \ collect()}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00241}00241\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00242}00242\ \ \ \ \ \textcolor{comment}{\#\ Run\ the\ scheduler\ with\ the\ chosen\ scheduling\ algorithm.\ Quit\ if\ \string^C\ pressed}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00243}00243\ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}:}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00244}00244\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ cotask.task\_list.pri\_sched()}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00246}00246\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ BaseException\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ uart\ =\ UART(5,\ 115200)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ the\ error\ is\ an\ OSError,\ print\ notify\ the\ user\ and\ soft\ reset}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(e,\ OSError):}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}OSError:\ \{e\}"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uart.write(f\textcolor{stringliteral}{"{}OSError:\ \{e\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{from}\ machine\ \textcolor{keyword}{import}\ soft\_reset\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00254}00254\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ soft\_reset()}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00256}00256\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ LMC\_obj.motor.set\_effort(0)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ RMC\_obj.motor.set\_effort(0)}
 \DoxyCodeLine{\Hypertarget{main_8py_source_l00259}00259\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Battery\ -\/\ \%:\{Battery\_obj.get\_cur\_perc()\},\ V:\{Battery\_obj.get\_cur\_volt()\}\(\backslash\)n"{}})}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00261}00261\ }
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ uart.write(f\textcolor{stringliteral}{"{}Error:\ \{type(e)\}\ -\/\ \{e\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
-\DoxyCodeLine{\Hypertarget{main_8py_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ e}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Print\ a\ table\ of\ task\ data\ and\ a\ table\ of\ shared\ information\ data}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\(\backslash\)n"{}}\ +\ str(cotask.task\_list))}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ print(\mbox{\hyperlink{task__share_8py_ad6aea1db68be1a10f72039a5ac9e9dd4}{task\_share.show\_all}}())}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(task\_User\_Input.get\_trace())}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print("{}"{})}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(task\_Observer.get\_trace())}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print("{}"{})}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(task\_Path\_Director.get\_trace())}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print("{}"{})}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(task\_LMC.get\_trace())}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print("{}"{})}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(task\_RMC.get\_trace())}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print("{}"{})}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(task\_Garbage\_Collection.get\_trace())}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print("{}"{})}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Print\ the\ current\ battery\ voltage\ and\ percentage\ after\ every\ error\ including\ keyboard\ interrupts}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Battery\ -\/\ \%:\{Battery\_obj.get\_cur\_perc()\},\ V:\{Battery\_obj.get\_cur\_volt()\}\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00278}00278\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Write\ the\ error\ type\ and\ message\ to\ the\ UART\ when\ only\ bluetooth\ is\ connected}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ uart.write(f\textcolor{stringliteral}{"{}Error:\ \{type(e)\}\ -\/\ \{e\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ e}
 
 \end{DoxyCode}

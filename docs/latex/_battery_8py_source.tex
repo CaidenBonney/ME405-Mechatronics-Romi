@@ -9,27 +9,26 @@
 \DoxyCodeLine{\Hypertarget{_battery_8py_source_l00016}00016\ }
 \DoxyCodeLine{\Hypertarget{_battery_8py_source_l00017}00017\ }
 \DoxyCodeLine{\Hypertarget{_battery_8py_source_l00023}\mbox{\hyperlink{class_battery_1_1_battery}{00023}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_battery_1_1_battery}{Battery}}:}
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00024}00024\ }
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00025}00025\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00031}\mbox{\hyperlink{class_battery_1_1_battery_a6f7235b1db18423f9e6b3d891dd1da15}{00031}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_battery_1_1_battery_a6f7235b1db18423f9e6b3d891dd1da15}{\_\_init\_\_}}(self,\ battery\_ADC:\ ADC\ |\ \textcolor{keywordtype}{None}\ =\ \textcolor{keywordtype}{None}):}
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_battery_1_1_battery_ad4ff933497b00de54e6041604943dffe}{battery\_ADC}}\ =\ battery\_ADC}
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00033}00033\ }
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00035}\mbox{\hyperlink{class_battery_1_1_battery_a32e14b12122e17fb0a227c015590614e}{00035}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_battery_1_1_battery_a32e14b12122e17fb0a227c015590614e}{ADC\_nom}}\ =\ 3210}
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00036}00036\ }
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00038}\mbox{\hyperlink{class_battery_1_1_battery_a9bf4f4b1e49e3b893eed68bf653a8dd3}{00038}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_battery_1_1_battery_a9bf4f4b1e49e3b893eed68bf653a8dd3}{V\_nom}}\ =\ 8.5}
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00039}00039\ }
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00040}00040\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00047}\mbox{\hyperlink{class_battery_1_1_battery_ad5ef7cf1e8e9105157a963acded69b21}{00047}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_battery_1_1_battery_ad5ef7cf1e8e9105157a963acded69b21}{get\_cur\_perc}}(self):}
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_battery_1_1_battery_ad4ff933497b00de54e6041604943dffe}{battery\_ADC}}\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Battery\ ADC\ is\ not\ set"{}})}
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{class_battery_1_1_battery_ad4ff933497b00de54e6041604943dffe}{battery\_ADC}}.read()\ /\ self.\mbox{\hyperlink{class_battery_1_1_battery_a32e14b12122e17fb0a227c015590614e}{ADC\_nom}}}
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00051}00051\ }
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00052}00052\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00058}\mbox{\hyperlink{class_battery_1_1_battery_a663685fa7bec698f746a01cd288346cb}{00058}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_battery_1_1_battery_a663685fa7bec698f746a01cd288346cb}{get\_cur\_volt}}(self):}
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_battery_1_1_battery_ad4ff933497b00de54e6041604943dffe}{battery\_ADC}}\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Battery\ ADC\ is\ not\ set"{}})}
-\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{class_battery_1_1_battery_ad5ef7cf1e8e9105157a963acded69b21}{get\_cur\_perc}}()\ *\ self.\mbox{\hyperlink{class_battery_1_1_battery_a9bf4f4b1e49e3b893eed68bf653a8dd3}{V\_nom}}}
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00024}00024\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00030}\mbox{\hyperlink{class_battery_1_1_battery_a6f7235b1db18423f9e6b3d891dd1da15}{00030}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_battery_1_1_battery_a6f7235b1db18423f9e6b3d891dd1da15}{\_\_init\_\_}}(self,\ battery\_ADC:\ ADC\ |\ \textcolor{keywordtype}{None}\ =\ \textcolor{keywordtype}{None}):}
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_battery_1_1_battery_ad4ff933497b00de54e6041604943dffe}{battery\_ADC}}\ =\ battery\_ADC}
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00034}\mbox{\hyperlink{class_battery_1_1_battery_a32e14b12122e17fb0a227c015590614e}{00034}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_battery_1_1_battery_a32e14b12122e17fb0a227c015590614e}{ADC\_nom}}\ =\ 3210}
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00037}\mbox{\hyperlink{class_battery_1_1_battery_a9bf4f4b1e49e3b893eed68bf653a8dd3}{00037}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_battery_1_1_battery_a9bf4f4b1e49e3b893eed68bf653a8dd3}{V\_nom}}\ =\ 8.5}
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00039}00039\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00046}\mbox{\hyperlink{class_battery_1_1_battery_ad5ef7cf1e8e9105157a963acded69b21}{00046}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_battery_1_1_battery_ad5ef7cf1e8e9105157a963acded69b21}{get\_cur\_perc}}(self):}
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_battery_1_1_battery_ad4ff933497b00de54e6041604943dffe}{battery\_ADC}}\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Battery\ ADC\ is\ not\ set"{}})}
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{class_battery_1_1_battery_ad4ff933497b00de54e6041604943dffe}{battery\_ADC}}.read()\ /\ self.\mbox{\hyperlink{class_battery_1_1_battery_a32e14b12122e17fb0a227c015590614e}{ADC\_nom}}}
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00051}00051\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00057}\mbox{\hyperlink{class_battery_1_1_battery_a663685fa7bec698f746a01cd288346cb}{00057}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_battery_1_1_battery_a663685fa7bec698f746a01cd288346cb}{get\_cur\_volt}}(self):}
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_battery_1_1_battery_ad4ff933497b00de54e6041604943dffe}{battery\_ADC}}\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Battery\ ADC\ is\ not\ set"{}})}
+\DoxyCodeLine{\Hypertarget{_battery_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{class_battery_1_1_battery_ad5ef7cf1e8e9105157a963acded69b21}{get\_cur\_perc}}()\ *\ self.\mbox{\hyperlink{class_battery_1_1_battery_a9bf4f4b1e49e3b893eed68bf653a8dd3}{V\_nom}}}
 
 \end{DoxyCode}

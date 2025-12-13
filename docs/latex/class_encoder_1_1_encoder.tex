@@ -28,6 +28,17 @@ float \mbox{\hyperlink{class_encoder_1_1_encoder_adbf9d1c5ade7dd439d00c60d238c5a
 \begin{DoxyCompactList}\small\item\em Return the most recent velocity measurement. \end{DoxyCompactList}\item 
 None \mbox{\hyperlink{class_encoder_1_1_encoder_a02c0a2ebcfb0989ea1cc849a6525d342}{zero}} (self)
 \begin{DoxyCompactList}\small\item\em Reset encoder displacement and timing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_sensor_1_1_sensor}{Sensor.\+Sensor}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sensor_1_1_sensor_abdd7ecd205bec477ec349a8221a86fc9}{set\+\_\+attr}} (cls, K="{}Kp"{}, value=0.\+0)
+\begin{DoxyCompactList}\small\item\em Set a class-\/level gain attribute. \end{DoxyCompactList}\item 
+None {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em Initialize timing variables for dt computation. \end{DoxyCompactList}\item 
+None \mbox{\hyperlink{class_sensor_1_1_sensor_a49cdbda3f5a9c633664e069b976be896}{update\+\_\+dt}} (self)
+\begin{DoxyCompactList}\small\item\em Refresh the stored time differential for subclasses. \end{DoxyCompactList}\item 
+None {\bfseries reset\+\_\+timing} (self)
+\begin{DoxyCompactList}\small\item\em Reset the timing history used for dt calculations. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -73,23 +84,23 @@ Definition at line \mbox{\hyperlink{_encoder_8py_source_l00049}{49}} of file \mb
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ motor,\ tim:\ Timer,\ chA\_pin,\ chA\_num:\ int,\ chB\_pin,\ chB\_num:\ int):}
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ super().\_\_init\_\_()}
-\DoxyCodeLine{00051\ }
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ self.motor\ =\ motor}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ self.\_position\ =\ 0\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Accumulated\ wheel\ position\ (rad)}}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ self.prev\_count\ =\ 0\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Last\ timer\ count}}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ self.delta\ =\ 0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Tick\ difference\ between\ updates}}
-\DoxyCodeLine{00056\ }
-\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ self.ar\ =\ tim.period()\ \ \ \ \ \ \textcolor{comment}{\#\ Auto-\/reload\ value}}
-\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ self.tim\ =\ tim}
-\DoxyCodeLine{00059\ }
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Configure\ pins\ and\ timer\ channels}}
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ self.chA\_pin\ =\ Pin(chA\_pin,\ mode=Pin.IN)}
-\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ self.chB\_pin\ =\ Pin(chB\_pin,\ mode=Pin.IN)}
-\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ self.chA\ =\ tim.channel(chA\_num,\ pin=self.chA\_pin,\ mode=Timer.ENC\_AB)}
-\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ self.chB\ =\ tim.channel(chB\_num,\ pin=self.chB\_pin,\ mode=Timer.ENC\_AB)}
-\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ motor,\ tim:\ Timer,\ chA\_pin,\ chA\_num:\ int,\ chB\_pin,\ chB\_num:\ int): }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ super().\_\_init\_\_() }
+\DoxyCodeLine{00051\  }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ self.motor\ =\ motor }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ self.\_position\ =\ 0\ \ \textcolor{comment}{\#\ Accumulated\ wheel\ position\ (rad) }}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ self.prev\_count\ =\ 0\ \ \textcolor{comment}{\#\ Last\ timer\ count }}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ self.delta\ =\ 0\ \ \textcolor{comment}{\#\ Tick\ difference\ between\ updates }}
+\DoxyCodeLine{00056\  }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ self.ar\ =\ tim.period()\ \ \textcolor{comment}{\#\ Auto-\/reload\ value }}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ self.tim\ =\ tim }
+\DoxyCodeLine{00059\  }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Configure\ pins\ and\ timer\ channels }}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ self.chA\_pin\ =\ Pin(chA\_pin,\ mode=Pin.IN) }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ self.chB\_pin\ =\ Pin(chB\_pin,\ mode=Pin.IN) }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ self.chA\ =\ tim.channel(chA\_num,\ pin=self.chA\_pin,\ mode=Timer.ENC\_AB) }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ self.chB\ =\ tim.channel(chB\_num,\ pin=self.chB\_pin,\ mode=Timer.ENC\_AB) }
+\DoxyCodeLine{00065\  }
 
 \end{DoxyCode}
 
@@ -118,7 +129,7 @@ Velocity in mm/s.
 \end{DoxyReturn}
 
 
-Reimplemented from \mbox{\hyperlink{class_sensor_1_1_sensor}{Sensor.\+Sensor}}.
+Reimplemented from \mbox{\hyperlink{class_sensor_1_1_sensor_add8d874d2c517212fec197b36d089c31}{Sensor.\+Sensor}}.
 
 
 
@@ -126,9 +137,9 @@ Definition at line \mbox{\hyperlink{_encoder_8py_source_l00122}{122}} of file \m
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{def\ }get\_data(self)\ -\/>\ float:}
-\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.velocity}
-\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{def\ }get\_data(self)\ -\/>\ float: }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.velocity }
+\DoxyCodeLine{00124\  }
 
 \end{DoxyCode}
 
@@ -154,9 +165,9 @@ Definition at line \mbox{\hyperlink{_encoder_8py_source_l00070}{70}} of file \mb
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{def\ }position(self)\ -\/>\ float:}
-\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/self.\_position}
-\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{def\ }position(self)\ -\/>\ float: }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/self.\_position }
+\DoxyCodeLine{00072\  }
 
 \end{DoxyCode}
 
@@ -184,9 +195,9 @@ Definition at line \mbox{\hyperlink{_encoder_8py_source_l00077}{77}} of file \mb
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{def\ }position(self,\ value:\ float)\ -\/>\ \textcolor{keywordtype}{None}:}
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ self.\_position\ =\ -\/value}
-\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{def\ }position(self,\ value:\ float)\ -\/>\ \textcolor{keywordtype}{None}: }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ self.\_position\ =\ -\/value }
+\DoxyCodeLine{00079\  }
 
 \end{DoxyCode}
 
@@ -205,14 +216,10 @@ Update encoder position and velocity.
 
 
 \begin{DoxyItemize}
-\item Reads timer counter ~\newline
-
-\item Computes tick difference with wrap-\/around handling ~\newline
-
-\item Converts ticks to radians ~\newline
-
-\item Updates total position ~\newline
-
+\item Reads timer counter
+\item Computes tick difference with wrap-\/around handling
+\item Converts ticks to radians
+\item Updates total position
 \item Updates {\ttfamily dt} for timing 
 \end{DoxyItemize}
 
@@ -220,30 +227,30 @@ Definition at line \mbox{\hyperlink{_encoder_8py_source_l00098}{98}} of file \mb
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{def\ }update(self)\ -\/>\ None:}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ count\ =\ self.tim.counter()}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ self.delta\ =\ count\ -\/\ self.prev\_count}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ self.prev\_count\ =\ count}
-\DoxyCodeLine{00102\ }
-\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Wrap-\/around\ correction}}
-\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ half\_range\ =\ (self.ar\ +\ 1)\ /\ 2}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.delta\ <\ -\/half\_range:}
-\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ self.delta\ +=\ self.ar\ +\ 1}
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.delta\ >\ half\_range:}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ self.delta\ -\/=\ self.ar\ +\ 1}
-\DoxyCodeLine{00109\ }
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Convert\ to\ radians\ and\ accumulate}}
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ self.delta\ *=\ RomiProps.ticks\_to\_rads}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ self.\_position\ +=\ self.delta}
-\DoxyCodeLine{00113\ }
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Update\ timing\ from\ Sensor\ base\ class}}
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ self.update\_dt()}
-\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{def\ }update(self)\ -\/>\ None: }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ count\ =\ self.tim.counter() }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ self.delta\ =\ count\ -\/\ self.prev\_count }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ self.prev\_count\ =\ count }
+\DoxyCodeLine{00102\  }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Wrap-\/around\ correction }}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ half\_range\ =\ (self.ar\ +\ 1)\ /\ 2 }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.delta\ <\ -\/half\_range: }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ self.delta\ +=\ self.ar\ +\ 1 }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.delta\ >\ half\_range: }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ self.delta\ -\/=\ self.ar\ +\ 1 }
+\DoxyCodeLine{00109\  }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Convert\ to\ radians\ and\ accumulate }}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ self.delta\ *=\ RomiProps.ticks\_to\_rads }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ self.\_position\ +=\ self.delta }
+\DoxyCodeLine{00113\  }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Update\ timing\ from\ Sensor\ base\ class }}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ self.update\_dt() }
+\DoxyCodeLine{00116\  }
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{_encoder_8py_source_l00053}{\+\_\+position}}, \mbox{\hyperlink{_encoder_8py_source_l00057}{ar}}, \mbox{\hyperlink{_encoder_8py_source_l00055}{delta}}, \mbox{\hyperlink{_encoder_8py_source_l00054}{prev\+\_\+count}}, \mbox{\hyperlink{_encoder_8py_source_l00058}{tim}}, and \mbox{\hyperlink{_sensor_8py_source_l00027}{Sensor.\+Sensor.\+update\+\_\+dt()}}.
+References \mbox{\hyperlink{_encoder_8py_source_l00053}{\+\_\+position}}, \mbox{\hyperlink{_encoder_8py_source_l00057}{ar}}, \mbox{\hyperlink{_encoder_8py_source_l00055}{delta}}, \mbox{\hyperlink{_encoder_8py_source_l00054}{prev\+\_\+count}}, \mbox{\hyperlink{_encoder_8py_source_l00058}{tim}}, and \mbox{\hyperlink{_sensor_8py_source_l00049}{Sensor.\+Sensor.\+update\+\_\+dt()}}.
 
 \Hypertarget{class_encoder_1_1_encoder_a350e18a3d12255c04ae76cbebd0e9a6c}\index{Encoder.Encoder@{Encoder.Encoder}!velocity@{velocity}}
 \index{velocity@{velocity}!Encoder.Encoder@{Encoder.Encoder}}
@@ -266,16 +273,16 @@ Definition at line \mbox{\hyperlink{_encoder_8py_source_l00086}{86}} of file \mb
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{def\ }velocity(self)\ -\/>\ float:}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.delta\ ==\ 0\ \textcolor{keywordflow}{or}\ self.dt\ ==\ 0:}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0}
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/(self.delta\ *\ RomiProps.wheel\_radius\ *\ 1e6)\ /\ self.dt}
-\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{def\ }velocity(self)\ -\/>\ float: }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.delta\ ==\ 0\ \textcolor{keywordflow}{or}\ self.dt\ ==\ 0: }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0 }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/(self.delta\ *\ RomiProps.wheel\_radius\ *\ 1e6)\ /\ self.dt }
+\DoxyCodeLine{00090\  }
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{_encoder_8py_source_l00055}{delta}}, and \mbox{\hyperlink{_sensor_8py_source_l00020}{Sensor.\+Sensor.\+dt}}.
+References \mbox{\hyperlink{_encoder_8py_source_l00055}{delta}}, and \mbox{\hyperlink{_sensor_8py_source_l00038}{Sensor.\+Sensor.\+dt}}.
 
 \Hypertarget{class_encoder_1_1_encoder_a02c0a2ebcfb0989ea1cc849a6525d342}\index{Encoder.Encoder@{Encoder.Encoder}!zero@{zero}}
 \index{zero@{zero}!Encoder.Encoder@{Encoder.Encoder}}
@@ -293,16 +300,16 @@ Definition at line \mbox{\hyperlink{_encoder_8py_source_l00128}{128}} of file \m
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{def\ }zero(self)\ -\/>\ None:}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ self.\_position\ =\ 0}
-\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ self.prev\_count\ =\ self.tim.counter()}
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ self.delta\ =\ 0}
-\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ self.reset\_timing()}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{def\ }zero(self)\ -\/>\ None: }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ self.\_position\ =\ 0 }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ self.prev\_count\ =\ self.tim.counter() }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ self.delta\ =\ 0 }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ self.reset\_timing() }
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{_encoder_8py_source_l00053}{\+\_\+position}}, \mbox{\hyperlink{_encoder_8py_source_l00055}{delta}}, \mbox{\hyperlink{_encoder_8py_source_l00054}{prev\+\_\+count}}, \mbox{\hyperlink{_sensor_8py_source_l00033}{Sensor.\+Sensor.\+reset\+\_\+timing()}}, and \mbox{\hyperlink{_encoder_8py_source_l00058}{tim}}.
+References \mbox{\hyperlink{_encoder_8py_source_l00053}{\+\_\+position}}, \mbox{\hyperlink{_encoder_8py_source_l00055}{delta}}, \mbox{\hyperlink{_encoder_8py_source_l00054}{prev\+\_\+count}}, \mbox{\hyperlink{_sensor_8py_source_l00055}{Sensor.\+Sensor.\+reset\+\_\+timing()}}, and \mbox{\hyperlink{_encoder_8py_source_l00058}{tim}}.
 
 
 

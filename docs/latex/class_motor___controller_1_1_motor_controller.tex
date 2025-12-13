@@ -2,13 +2,209 @@
 \hypertarget{class_motor___controller_1_1_motor_controller}{}\label{class_motor___controller_1_1_motor_controller}\index{Motor\_Controller.MotorController@{Motor\_Controller.MotorController}}
 
 
+Closed-\/loop motor controller task for one motor.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_motor___controller_1_1_motor_controller_afac7426acd1747c66632538d0f243c4d}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, motor, encoder, battery, bool side, int duration=0)
+\begin{DoxyCompactList}\small\item\em Initialize the motor controller. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_motor___controller_1_1_motor_controller_a6c62ae5f354b2c4ce4c3e03c7f7aab93}{run}} (self, shares)
+\begin{DoxyCompactList}\small\item\em Generator task that drives the motor under closed-\/loop control. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
 \doxysubsection{Detailed Description}
+Closed-\/loop motor controller task for one motor. 
+
+Definition at line \mbox{\hyperlink{_motor___controller_8py_source_l00015}{15}} of file \mbox{\hyperlink{_motor___controller_8py_source}{Motor\+\_\+\+Controller.\+py}}.
 
 
-Definition at line \mbox{\hyperlink{_motor___controller_8py_source_l00006}{6}} of file \mbox{\hyperlink{_motor___controller_8py_source}{Motor\+\_\+\+Controller.\+py}}.
+
+\label{doc-constructors}
+\Hypertarget{class_motor___controller_1_1_motor_controller_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_motor___controller_1_1_motor_controller_afac7426acd1747c66632538d0f243c4d}\index{Motor\_Controller.MotorController@{Motor\_Controller.MotorController}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!Motor\_Controller.MotorController@{Motor\_Controller.MotorController}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_motor___controller_1_1_motor_controller_afac7426acd1747c66632538d0f243c4d} 
+Motor\+\_\+\+Controller.\+Motor\+Controller.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{motor}{, }\item[{}]{encoder}{, }\item[{}]{battery}{, }\item[{bool}]{side}{, }\item[{int }]{duration}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+
+
+Initialize the motor controller. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em motor} & Motor driver instance \\
+\hline
+{\em encoder} & \doxylink{class_encoder_1_1_encoder}{Encoder} instance paired with the motor \\
+\hline
+{\em battery} & Battery monitor for droop compensation \\
+\hline
+{\em side} & {\ttfamily False} for left, {\ttfamily True} for right motor \\
+\hline
+{\em duration} & Optional test duration in seconds (0 = continuous) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_motor___controller_8py_source_l00025}{25}} of file \mbox{\hyperlink{_motor___controller_8py_source}{Motor\+\_\+\+Controller.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ motor,\ encoder,\ battery,\ side:\ bool,\ duration:\ int\ =\ 0): }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ self.motor\ =\ motor }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ self.encoder\ =\ encoder }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ self.side\ =\ side\ \ \textcolor{comment}{\#\ False\ =\ left,\ True\ =\ right }}
+\DoxyCodeLine{00029\  }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Zeroing\ Encoders\ and\ Enabling\ Motors }}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ self.motor.enable() }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ self.encoder.zero() }
+\DoxyCodeLine{00033\  }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ self.queues\_were\_full\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ self.duration\ =\ duration\ \ \textcolor{comment}{\#\ duration\ of\ test\ in\ seconds\ where\ 0\ =\ infinite }}
+\DoxyCodeLine{00036\  }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Internal\ flag\ to\ indicate\ when\ the\ current\ test\ is\ complete }}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ self.done\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00039\  }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ self.CLC\ =\ ClosedLoopControl( }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ sensor=self.encoder, }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ max\_min=100, }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ Kp=Encoder.Kp, }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ Ki=Encoder.Ki, }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ Kd=Encoder.Kd, }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ Kw=Encoder.Kw, }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ Kff=Encoder.Kff, }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ PWM\_start=Encoder.PWM\_startr\ \textcolor{keywordflow}{if}\ self.side\ \textcolor{keywordflow}{else}\ Encoder.PWM\_startl, }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ battery=battery, }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ ) }
+\DoxyCodeLine{00051\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_motor___controller_8py_source_l00040}{CLC}}, \mbox{\hyperlink{_motor___controller_8py_source_l00038}{done}}, \mbox{\hyperlink{_motor___controller_8py_source_l00035}{duration}}, \mbox{\hyperlink{_motor___controller_8py_source_l00027}{encoder}}, \mbox{\hyperlink{_encoder_8py_source_l00052}{Encoder.\+Encoder.\+motor}}, \mbox{\hyperlink{_motor___controller_8py_source_l00026}{motor}}, \mbox{\hyperlink{_motor___controller_8py_source_l00034}{queues\+\_\+were\+\_\+full}}, and \mbox{\hyperlink{_motor___controller_8py_source_l00028}{side}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_motor___controller_1_1_motor_controller_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_motor___controller_1_1_motor_controller_a6c62ae5f354b2c4ce4c3e03c7f7aab93}\index{Motor\_Controller.MotorController@{Motor\_Controller.MotorController}!run@{run}}
+\index{run@{run}!Motor\_Controller.MotorController@{Motor\_Controller.MotorController}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily \label{class_motor___controller_1_1_motor_controller_a6c62ae5f354b2c4ce4c3e03c7f7aab93} 
+Motor\+\_\+\+Controller.\+Motor\+Controller.\+run (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{shares}{}\end{DoxyParamCaption})}
+
+
+
+Generator task that drives the motor under closed-\/loop control. 
+
+Responds to flag and speed shares, manages segment starts, updates gains, and writes efforts to the motor driver.
+
+
+\begin{DoxyParams}{Parameters}
+{\em shares} & Tuple of {\ttfamily task\+\_\+share} variables for flags, speed, data transfer and test completion signaling \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_motor___controller_8py_source_l00059}{59}} of file \mbox{\hyperlink{_motor___controller_8py_source}{Motor\+\_\+\+Controller.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{def\ }run(self,\ shares): }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Separating\ the\ shares }}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ ( }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ flag\_s, }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ speed\_s, }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ data\_transfer\_s, }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s, }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s, }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ )\ =\ shares }
+\DoxyCodeLine{00068\  }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keyword}{def\ }test\_complete(): }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ self.done\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s.put(1) }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ data\_transfer\_s.put(0) }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ self.motor.set\_effort(0) }}
+\DoxyCodeLine{00074\  }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ self.start\ =\ ticks\_us() }
+\DoxyCodeLine{00076\  }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}: }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ seg\_start\_s.get(): }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(seg\_start\_s.get()\ -\/\ 1)\ \ \textcolor{comment}{\#\ decrement\ seg\_start\_s\ because\ we\ have\ two\ motor\ controllers }}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.test\_start\ =\ ticks\_us() }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s.put(0) }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.queues\_were\_full\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.done\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00084\  }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ All\ motor\ control\ code\ goes\ here\ in\ the\ needed\ states }}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ flag\_s.get(): }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flag\_s.put(0) }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ speed\_s.get()\ ==\ 0: }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Speed\ is\ zero\ so\ disable\ the\ closed\ loop\ control }}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.CLC.reset() }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.CLC.reset\_num\_corrections() }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.CLC.disable() }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.motor.set\_effort(0) }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Speed\ is\ not\ zero\ so\ enable\ the\ closed\ loop\ control }}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.CLC.enable() }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.CLC.set\_ref(speed\_s.get()) }
+\DoxyCodeLine{00098\  }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Updating\ encoders\ before\ next\ loop }}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ self.encoder.update() }
+\DoxyCodeLine{00101\  }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ first\ check\ if\ test\ is\ already\ complete }}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ test\_complete\_s.get(): }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ change\ effort\ by\ running\ closed\ loop\ control\ if\ it\ is\ on }}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.CLC.on: }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.CLC.gain\_update( }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Kp=Encoder.Kp, }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Ki=Encoder.Ki, }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Kd=Encoder.Kd, }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Kw=Encoder.Kw, }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Kff=Encoder.Kff, }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PWM\_start=Encoder.PWM\_startr\ \textcolor{keywordflow}{if}\ self.side\ \textcolor{keywordflow}{else}\ Encoder.PWM\_startl, }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ) }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.motor.set\_effort(self.CLC.run()) }
+\DoxyCodeLine{00115\  }
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ if\ data\ transfer\ is\ on,\ then\ put\ data\ into\ queues }}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ data\_transfer\_s.get(): }
+\DoxyCodeLine{00118\  }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ if\ no\ time\ limit\ -\/>\ always\ run\ ;\ if\ time\ limit\ -\/>\ check\ if\ less\ than\ duration }}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.duration\ <=\ 0\ \textcolor{keywordflow}{or}\ ticks\_diff(ticks\_us(),\ self.test\_start)\ <=\ self.duration\ *\ 1e6: }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Original\ queues\ were\ removed\ for\ memory\ management\ but\ were\ used\ during\ data\ collection\ in\ prior\ labs }}
+\DoxyCodeLine{00122\  }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ \ \ \ \#\ if\ queues\ are\ currently\ full,\ then\ set\ test\ complete,\ stop\ motors\ and\ zero\ encoders }}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ \ \ \ if\ time\_q.full()\ or\ pos\_q.full()\ or\ vel\_q.full(): }}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ self.queues\_were\_full\ =\ True }}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ test\_complete() }}
+\DoxyCodeLine{00127\  }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ \ \ \ \#\ if\ queues\ are\ not\ full\ and\ have\ not\ been\ full\ within\ the\ current\ test,\ then\ put\ data\ into\ queues }}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ \ \ \ if\ not\ self.queues\_were\_full: }}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ time\_q.put(ticks\_diff(ticks\_us(),\ self.test\_start))\ \ \#\ \ [us] }}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ pos\_q.put(self.encoder.position)\ \ \#\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [rad] }}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ vel\_q.put(self.encoder.velocity)\ \ \#\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [mm/s] }}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{pass} }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ if\ time\ limit\ is\ reached,\ then\ set\ test\ complete,\ stop\ motors\ and\ zero\ encoders }}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete() }
+\DoxyCodeLine{00137\  }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ \textcolor{keywordflow}{not}\ self.done: }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ if\ test\ is\ not\ complete,\ but\ we\ are\ not\ done\ then\ set\ test\ to\ complete }}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete() }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{yield} }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_motor___controller_8py_source_l00040}{CLC}}, \mbox{\hyperlink{_motor___controller_8py_source_l00038}{done}}, \mbox{\hyperlink{_motor___controller_8py_source_l00035}{duration}}, \mbox{\hyperlink{_motor___controller_8py_source_l00027}{encoder}}, \mbox{\hyperlink{_encoder_8py_source_l00052}{Encoder.\+Encoder.\+motor}}, \mbox{\hyperlink{_motor___controller_8py_source_l00026}{motor}}, \mbox{\hyperlink{_motor___controller_8py_source_l00034}{queues\+\_\+were\+\_\+full}}, \mbox{\hyperlink{_motor___controller_8py_source_l00059}{run()}}, \mbox{\hyperlink{_motor___controller_8py_source_l00028}{side}}, \mbox{\hyperlink{_motor___controller_8py_source_l00075}{start}}, and \mbox{\hyperlink{_motor___controller_8py_source_l00080}{test\+\_\+start}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-Lab Final/\+Files On Romi/Motor\+\_\+\+Controller.\+py\end{DoxyCompactItemize}
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_motor___controller_8py}{Motor\+\_\+\+Controller.\+py}}\end{DoxyCompactItemize}

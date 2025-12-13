@@ -2,13 +2,39 @@
 \hypertarget{class_romi___props_1_1_romi_props}{}\label{class_romi___props_1_1_romi_props}\index{Romi\_Props.RomiProps@{Romi\_Props.RomiProps}}
 
 
+Holds static geometric and encoder properties for Romi.  
+
+
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_romi___props_1_1_romi_props_a4202d589e60fbde47daaac18f134b2d9}\label{class_romi___props_1_1_romi_props_a4202d589e60fbde47daaac18f134b2d9} 
+float {\bfseries wheel\+\_\+radius} = 34.\+75
+\begin{DoxyCompactList}\small\item\em Wheel radius in millimeters (diameter measured at 69.\+5 mm). \end{DoxyCompactList}\item 
+\Hypertarget{class_romi___props_1_1_romi_props_ace5c7246440f3b08debc6019ab49b7c7}\label{class_romi___props_1_1_romi_props_ace5c7246440f3b08debc6019ab49b7c7} 
+int {\bfseries trackwidth} = 141
+\begin{DoxyCompactList}\small\item\em Trackwidth in millimeters. \end{DoxyCompactList}\item 
+\Hypertarget{class_romi___props_1_1_romi_props_aad7a7afbdbfac3b39da08a8b192b24b3}\label{class_romi___props_1_1_romi_props_aad7a7afbdbfac3b39da08a8b192b24b3} 
+int {\bfseries wdiv2} = \mbox{\hyperlink{class_romi___props_1_1_romi_props_ace5c7246440f3b08debc6019ab49b7c7}{trackwidth}} / 2
+\begin{DoxyCompactList}\small\item\em Half of trackwidth, used for differential drive calculations. \end{DoxyCompactList}\item 
+\Hypertarget{class_romi___props_1_1_romi_props_a8332bae4721a7a917f5d8c2a4eee0136}\label{class_romi___props_1_1_romi_props_a8332bae4721a7a917f5d8c2a4eee0136} 
+float {\bfseries gear\+\_\+ratio} = 119.\+7576
+\begin{DoxyCompactList}\small\item\em Gear ratio\+: shaft revolutions per wheel revolution. \end{DoxyCompactList}\item 
+\Hypertarget{class_romi___props_1_1_romi_props_a19c1db104c2be3104e67570824773892}\label{class_romi___props_1_1_romi_props_a19c1db104c2be3104e67570824773892} 
+int {\bfseries counts\+\_\+per\+\_\+rev} = 12
+\begin{DoxyCompactList}\small\item\em Encoder counts per motor shaft revolution. \end{DoxyCompactList}\item 
+\Hypertarget{class_romi___props_1_1_romi_props_ac9eb45338f14aed428e16d7cb197d6b8}\label{class_romi___props_1_1_romi_props_ac9eb45338f14aed428e16d7cb197d6b8} 
+tuple {\bfseries ticks\+\_\+to\+\_\+rads} = (2 \texorpdfstring{$\ast$}{*} pi) / (\mbox{\hyperlink{class_romi___props_1_1_romi_props_a19c1db104c2be3104e67570824773892}{counts\+\_\+per\+\_\+rev}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_romi___props_1_1_romi_props_a8332bae4721a7a917f5d8c2a4eee0136}{gear\+\_\+ratio}})
+\begin{DoxyCompactList}\small\item\em Conversion from encoder ticks to radians of wheel rotation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
 \doxysubsection{Detailed Description}
+Holds static geometric and encoder properties for Romi. 
 
-
-Definition at line \mbox{\hyperlink{_romi___props_8py_source_l00004}{4}} of file \mbox{\hyperlink{_romi___props_8py_source}{Romi\+\_\+\+Props.\+py}}.
+Definition at line \mbox{\hyperlink{_romi___props_8py_source_l00015}{15}} of file \mbox{\hyperlink{_romi___props_8py_source}{Romi\+\_\+\+Props.\+py}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-Lab Final/\+Files On Romi/Romi\+\_\+\+Props.\+py\end{DoxyCompactItemize}
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_romi___props_8py}{Romi\+\_\+\+Props.\+py}}\end{DoxyCompactItemize}

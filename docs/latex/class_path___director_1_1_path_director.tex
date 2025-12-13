@@ -2,13 +2,693 @@
 \hypertarget{class_path___director_1_1_path_director}{}\label{class_path___director_1_1_path_director}\index{Path\_Director.PathDirector@{Path\_Director.PathDirector}}
 
 
+Task-\/level controller that sequences Romi through predefined path states.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_path___director_1_1_path_director_a12318528350ed41f193b9a5caa0ac949}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, line\+\_\+sensor, IMU\+\_\+obj, tuple bump\+\_\+sensors)
+\begin{DoxyCompactList}\small\item\em Initialize the path director. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_path___director_1_1_path_director_a38e326a15acf08b661e9d5d76afad751}{run}} (self, shares)
+\begin{DoxyCompactList}\small\item\em Generator implementing the state machine for path execution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
 \doxysubsection{Detailed Description}
+Task-\/level controller that sequences Romi through predefined path states. 
+
+This class wraps the motion logic for each segment of the course, sharing data with other tasks via {\ttfamily task\+\_\+share} queues and using closed-\/loop controllers for heading and line tracking. States are defined as integers and executed inside the generator {\ttfamily \doxylink{class_path___director_1_1_path_director_a38e326a15acf08b661e9d5d76afad751}{run()}}. 
+
+Definition at line \mbox{\hyperlink{_path___director_8py_source_l00027}{27}} of file \mbox{\hyperlink{_path___director_8py_source}{Path\+\_\+\+Director.\+py}}.
 
 
-Definition at line \mbox{\hyperlink{_path___director_8py_source_l00013}{13}} of file \mbox{\hyperlink{_path___director_8py_source}{Path\+\_\+\+Director.\+py}}.
+
+\label{doc-constructors}
+\Hypertarget{class_path___director_1_1_path_director_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_path___director_1_1_path_director_a12318528350ed41f193b9a5caa0ac949}\index{Path\_Director.PathDirector@{Path\_Director.PathDirector}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!Path\_Director.PathDirector@{Path\_Director.PathDirector}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_path___director_1_1_path_director_a12318528350ed41f193b9a5caa0ac949} 
+Path\+\_\+\+Director.\+Path\+Director.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{line\+\_\+sensor}{, }\item[{}]{IMU\+\_\+obj}{, }\item[{tuple}]{bump\+\_\+sensors}{}\end{DoxyParamCaption})}
+
+
+
+Initialize the path director. 
+
+Sets up closed-\/loop controllers, UART telemetry, bump callbacks, and initializes path state variables.
+
+
+\begin{DoxyParams}{Parameters}
+{\em line\+\_\+sensor} & Calibrated line sensor instance \\
+\hline
+{\em IMU\+\_\+obj} & IMU instance providing heading and calibration \\
+\hline
+{\em bump\+\_\+sensors} & Tuple of bumper pins for collision detection \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_path___director_8py_source_l00081}{81}} of file \mbox{\hyperlink{_path___director_8py_source}{Path\+\_\+\+Director.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ line\_sensor,\ IMU\_obj,\ bump\_sensors:\ tuple): }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ collect() }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keyword}{from}\ Closed\_Loop\_Control\ \textcolor{keyword}{import}\ ClosedLoopControl }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{from}\ Line\_Sensor\ \textcolor{keyword}{import}\ LineSensor }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keyword}{from}\ IMU\ \textcolor{keyword}{import}\ IMU }
+\DoxyCodeLine{00086\  }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ self.state\ =\ PathDirector.CALIBRATE\ \ \textcolor{comment}{\#\ this\ is\ overwritten\ on\ first\ run }}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ self.seg\_start\_time\ =\ 0 }
+\DoxyCodeLine{00090\  }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ self.line\_sensor\ =\ line\_sensor }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ self.Line\_CLC\ =\ ClosedLoopControl( }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ sensor=self.line\_sensor, }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ max\_min=12, }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ Kp=LineSensor.Kp, }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ Ki=LineSensor.Ki, }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ Kd=LineSensor.Kd, }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ ) }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ self.IMU\ =\ IMU\_obj }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ self.Heading\_CLC\ =\ ClosedLoopControl( }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ sensor=self.IMU, }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ max\_min=12, }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ Kp=IMU.Kp, }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ Ki=IMU.Ki, }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ Kd=IMU.Kd, }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ ) }
+\DoxyCodeLine{00107\  }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ self.uart\ =\ UART(5,\ 115200) }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ self.bumped\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ self.bump\_stop\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ self.bump\_wall\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ self.bumptimer\ =\ 0 }
+\DoxyCodeLine{00113\  }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ collect() }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ Pin,\ ExtInt\ \ \textcolor{comment}{\#\ pyright:\ ignore }}
+\DoxyCodeLine{00116\  }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Create\ bumper\ callbacks\ for\ all\ pins }}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keyword}{def\ }bmp\_callback\_handler(pin:\ Pin): }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{def\ }bumper\_callback(line): }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ pin.value()\ !=\ 0: }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bumped\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00122\  }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ bumper\_callback }
+\DoxyCodeLine{00124\  }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ bump\_sensor\ \textcolor{keywordflow}{in}\ bump\_sensors: }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ ExtInt(bump\_sensor,\ ExtInt.IRQ\_FALLING,\ Pin.PULL\_UP,\ bmp\_callback\_handler(bump\_sensor)) }
+\DoxyCodeLine{00127\  }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Extra\ variables\ used\ for\ fixed\ distance }}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ self.distance\ =\ 1000\ \ \textcolor{comment}{\#\ mm }}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ self.end\_point\ =\ 0\ \ \textcolor{comment}{\#\ mm }}
+\DoxyCodeLine{00131\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_path___director_8py_source_l00110}{bump\+\_\+stop}}, \mbox{\hyperlink{_path___director_8py_source_l00111}{bump\+\_\+wall}}, \mbox{\hyperlink{_path___director_8py_source_l00109}{bumped}}, \mbox{\hyperlink{_path___director_8py_source_l00112}{bumptimer}}, \mbox{\hyperlink{_path___director_8py_source_l00129}{distance}}, \mbox{\hyperlink{_path___director_8py_source_l00130}{end\+\_\+point}}, \mbox{\hyperlink{_path___director_8py_source_l00100}{Heading\+\_\+\+CLC}}, \mbox{\hyperlink{_observer_8py_source_l00024}{Observer.\+Observer.\+IMU}}, \mbox{\hyperlink{_path___director_8py_source_l00099}{IMU}}, \mbox{\hyperlink{_path___director_8py_source_l00092}{Line\+\_\+\+CLC}}, \mbox{\hyperlink{_path___director_8py_source_l00091}{line\+\_\+sensor}}, \mbox{\hyperlink{_path___director_8py_source_l00089}{seg\+\_\+start\+\_\+time}}, \mbox{\hyperlink{_path___director_8py_source_l00088}{segment\+\_\+set}}, \mbox{\hyperlink{_path___director_8py_source_l00087}{state}}, \mbox{\hyperlink{_observer_8py_source_l00038}{Observer.\+Observer.\+uart}}, and \mbox{\hyperlink{_path___director_8py_source_l00108}{uart}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_path___director_1_1_path_director_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_path___director_1_1_path_director_a38e326a15acf08b661e9d5d76afad751}\index{Path\_Director.PathDirector@{Path\_Director.PathDirector}!run@{run}}
+\index{run@{run}!Path\_Director.PathDirector@{Path\_Director.PathDirector}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily \label{class_path___director_1_1_path_director_a38e326a15acf08b661e9d5d76afad751} 
+Path\+\_\+\+Director.\+Path\+Director.\+run (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{shares}{}\end{DoxyParamCaption})}
+
+
+
+Generator implementing the state machine for path execution. 
+
+Pulls data from shared variables, updates control references, and sequences through segments such as calibration, line following, turns, and point-\/to-\/point navigation. Yields the current state each loop to cooperate with the scheduler.
+
+
+\begin{DoxyParams}{Parameters}
+{\em shares} & Tuple of task\+\_\+share queues used for inter-\/task comms \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_path___director_8py_source_l00140}{140}} of file \mbox{\hyperlink{_path___director_8py_source}{Path\+\_\+\+Director.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keyword}{def\ }run(self,\ shares): }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Separating\ the\ shares }}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ ( }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s, }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s, }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s, }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s, }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ data\_transfer\_s, }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s, }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ white\_cal\_s, }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ black\_cal\_s, }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s, }
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s, }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_lpos\_s, }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_rpos\_s, }
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_cpos\_s, }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yaw\_s, }
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yawrate\_s, }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s, }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s, }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ dist\_yaw\_s, }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ )\ =\ shares }
+\DoxyCodeLine{00162\  }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keyword}{def\ }set\_state(new\_state:\ int): }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ self.state\ =\ new\_state }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s.put(new\_state) }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00167\  }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ notify\ motors\ previous\ segment\ is\ complete }}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s.put(1) }
+\DoxyCodeLine{00170\  }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keyword}{def\ }update\_motors\_CLC(CLC\_obj): }
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ v\_adjust\ =\ CLC\_obj.run()\ *\ RomiProps.wdiv2 }
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1) }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref\ -\/\ v\_adjust) }
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1) }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref\ +\ v\_adjust) }
+\DoxyCodeLine{00177\  }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keyword}{def\ }forward\_at\_speed(speed:\ float): }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1) }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(speed) }
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1) }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(speed) }
+\DoxyCodeLine{00183\  }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ set\_state(PathDirector.CALIBRATE) }
+\DoxyCodeLine{00185\  }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}: }
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.bumped: }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.bump\_stop: }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}bumped\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bumped\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.WAIT) }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.bump\_wall: }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}wall\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.REVERSE\_FROM\_WALL) }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.bumptimer\ ==\ 0: }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}bumped\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bumptimer\ =\ ticks\_us() }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ forward\_at\_speed(-\/100) }
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ticks\_diff(ticks\_us(),\ self.bumptimer)\ >=\ 1000\_000: }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}unbumped\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ forward\_at\_speed(0) }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bumptimer\ =\ 0 }
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bumped\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00205\  }
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.Line\_CLC: }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{from}\ Line\_Sensor\ \textcolor{keyword}{import}\ LineSensor }
+\DoxyCodeLine{00208\  }
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Line\_CLC.gain\_update(Kp=LineSensor.Kp,\ Ki=LineSensor.Ki,\ Kd=LineSensor.Kd) }
+\DoxyCodeLine{00210\  }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.Heading\_CLC: }
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{from}\ IMU\ \textcolor{keyword}{import}\ IMU }
+\DoxyCodeLine{00213\  }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Heading\_CLC.gain\_update(Kp=IMU.Kp,\ Ki=IMU.Ki,\ Kd=IMU.Kd) }
+\DoxyCodeLine{00215\  }
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ set\_seg\_s.get()\ !=\ self.state: }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(set\_seg\_s.get()) }
+\DoxyCodeLine{00218\  }
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.state\ ==\ PathDirector.WAIT: }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set: }
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers }}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start }}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ forward\_at\_speed(0) }
+\DoxyCodeLine{00226\  }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Waiting\ Segment"{}}) }
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Waiting\ Segment }}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ self.uart.write(f"{}curr\ state:\ \{self.state\}\(\backslash\)r\(\backslash\)n"{}.encode("{}utf-\/8"{})) }}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}L:\ \{obsd\_lpos\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}R:\ \{obsd\_rpos\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}C:\ \{obsd\_cpos\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}H:\ \{obsd\_yaw\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}X:\ \{obsd\_X\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}Y:\ \{obsd\_Y\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00236\  }
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.CALIBRATE: }
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ Segment }}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set: }
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers }}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start }}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Calibration\ Segment"{}}) }
+\DoxyCodeLine{00245\  }
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ white\_cal\_s.get()\ ==\ 1: }
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.line\_sensor.cal\_white\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ white\_cal\_s.put(0) }
+\DoxyCodeLine{00249\  }
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ black\_cal\_s.get()\ ==\ 1: }
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.line\_sensor.cal\_black\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ black\_cal\_s.put(0) }
+\DoxyCodeLine{00253\  }
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.line\_sensor.calibrated\ \textcolor{keywordflow}{and}\ self.line\_sensor.calibrate(): }
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Line\ Sensor\ Calibration\ Complete"{}}) }
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Line\_CLC.reset() }
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Line\_CLC.set\_ref(0) }
+\DoxyCodeLine{00258\  }
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.IMU.calibrated\ \textcolor{keywordflow}{and}\ self.IMU.calibrate(): }
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}IMU\ Calibration\ Complete"{}}) }
+\DoxyCodeLine{00261\  }
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.line\_sensor.calibrated\ \textcolor{keywordflow}{and}\ self.IMU.calibrated: }
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ both\ calibrations\ complete }}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ return\ back\ to\ waiting\ state }}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.WAIT) }
+\DoxyCodeLine{00266\  }
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.FOLLOW\_LINE: }
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Line\ Following\ Segment }}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set:\ \ \textcolor{comment}{\#\ ran\ once\ per\ segment }}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers }}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start }}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Line\ Following\ Segment"{}}) }
+\DoxyCodeLine{00275\  }
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Linesensor\ CLC\ centroid\ reference }}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Line\_CLC.set\_ref(0) }
+\DoxyCodeLine{00278\  }
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings }}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ forward\_at\_speed(PD\_vars.v\_ref) }
+\DoxyCodeLine{00281\  }
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ update\_motors\_CLC(self.Line\_CLC) }
+\DoxyCodeLine{00283\  }
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Start\ of\ Functions\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \# }}
+\DoxyCodeLine{00285\  }
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.FIXED\_FORWARD: }
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Fixed\ Forward\ Distance\ Segment }}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set:\ \ \textcolor{comment}{\#\ ran\ once\ per\ segment }}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers }}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start }}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Fixed\ Forward\ Distance\ Segment"{}}) }
+\DoxyCodeLine{00294\  }
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ self.distance\ =\ 1000\ \ \#\ mm }}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.end\_point\ =\ obsd\_cpos\_s.get()\ +\ self.distance\ \ \textcolor{comment}{\#\ mm }}
+\DoxyCodeLine{00297\  }
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings }}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ forward\_at\_speed(PD\_vars.v\_ref) }
+\DoxyCodeLine{00300\  }
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obsd\_cpos\_s.get()\ >=\ self.end\_point: }
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}L:\ \{obsd\_lpos\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}R:\ \{obsd\_rpos\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}C:\ \{obsd\_cpos\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}H:\ \{obsd\_yaw\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}X:\ \{obsd\_X\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}Y:\ \{obsd\_Y\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PD\_vars.next\_state) }
+\DoxyCodeLine{00309\  }
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.TURN\_ANGLE: }
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Turn\ In\ Place\ Segment }}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ var1\ =\ angle\ [deg],\ var2\ =\ -\/-\/-\/-\/,\ var3\ =\ -\/-\/-\/-\/ }}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set:\ \ \textcolor{comment}{\#\ ran\ once\ per\ segment }}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers }}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start }}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Turn\ Angle\ Segment"{}}) }
+\DoxyCodeLine{00319\  }
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.v\_ref\ =\ 0 }
+\DoxyCodeLine{00321\  }
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ degrees\ to\ rads }}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ PD\_vars.var\_1\ *\ pi\ /\ 180\ \ \textcolor{comment}{\#\ radians\ to\ turn }}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ self.IMU.heading\ +\ PD\_vars.var\_1\ \ \textcolor{comment}{\#\ new\ desired\ heading }}
+\DoxyCodeLine{00325\  }
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Set\ IMU\ heading }}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Heading\_CLC.set\_ref(PD\_vars.var\_2) }
+\DoxyCodeLine{00328\  }
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ diff\ =\ ((PD\_vars.var\_1\ -\/\ self.IMU.heading\ +\ pi)\ \%\ (2\ *\ pi))\ -\/\ pi }
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Heading\_CLC.set\_ref(self.IMU.heading\ +\ diff) }
+\DoxyCodeLine{00331\  }
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ abs(diff)\ <=\ 3\ /\ 180\ *\ pi:\ \ \textcolor{comment}{\#\ 3\ deg\ tolerance }}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PD\_vars.next\_state) }
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.v\_ref\ =\ PD\_vars.v\_ref\_DEFAULT }
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ update\_motors\_CLC(self.Heading\_CLC) }
+\DoxyCodeLine{00337\  }
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.GO\_2\_POINT: }
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Using\ current\ heading\ and\ position,\ move\ to\ another\ point }}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ var1\ =\ X,\ var2\ =\ Y, }}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ var3\ =\ "{}boolean\ for\ X\ tolerance"{}:\ True\ =\ ignore\ X\ tolerance }}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ var4\ =\ "{}boolean\ for\ Y\ tolerance"{}:\ True\ =\ ignore\ Y\ tolerance }}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set:\ \ \textcolor{comment}{\#\ ran\ once\ per\ segment }}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers }}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start }}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Go\ 2\ Point\ Segment"{}}) }
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings }}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ forward\_at\_speed(PD\_vars.v\_ref) }
+\DoxyCodeLine{00351\  }
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Heading\_CLC.reset() }
+\DoxyCodeLine{00353\  }
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dX\ =\ PD\_vars.var\_1\ -\/\ obsd\_X\_s.get() }
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ PD\_vars.var\_2\ -\/\ obsd\_Y\_s.get() }
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ target\_angle\ =\ atan2(dY,\ dX) }
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ diff\ =\ ((target\_angle\ -\/\ self.IMU.heading\ +\ pi)\ \%\ (2\ *\ pi))\ -\/\ pi }
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Heading\_CLC.set\_ref(self.IMU.heading\ +\ diff) }
+\DoxyCodeLine{00359\  }
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (PD\_vars.v\_ref\ ==\ 0\ \textcolor{keywordflow}{and}\ abs(diff)\ <=\ 3\ /\ 180\ *\ pi)\ \textcolor{keywordflow}{or}\ ( }
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (PD\_vars.var\_3\ \textcolor{keywordflow}{or}\ abs(dX)\ <=\ 25)\ \textcolor{keywordflow}{and}\ (PD\_vars.var\_4\ \textcolor{keywordflow}{or}\ abs(dY)\ <=\ 25) }
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ): }
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}\{obsd\_X\_s.get()\},\{obsd\_Y\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}Next\ State:\ \{PD\_vars.next\_state\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PD\_vars.next\_state) }
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.v\_ref\ =\ PD\_vars.v\_ref\_DEFAULT }
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ update\_motors\_CLC(self.Heading\_CLC) }
+\DoxyCodeLine{00369\  }
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.FOLLOW\_LINE\_4\_TIME: }
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set: }
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors }}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Line\ Follow\ For\ Time\ Segment"{}}) }
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.seg\_start\_time\ =\ ticks\_us() }
+\DoxyCodeLine{00377\  }
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings }}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ forward\_at\_speed(PD\_vars.v\_ref) }
+\DoxyCodeLine{00380\  }
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Line\_CLC.reset() }
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Line\_CLC.set\_ref(0) }
+\DoxyCodeLine{00383\  }
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ticks\_diff(ticks\_us(),\ self.seg\_start\_time)\ >=\ PD\_vars.var\_1: }
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PD\_vars.next\_state) }
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ update\_motors\_CLC(self.Line\_CLC) }
+\DoxyCodeLine{00388\  }
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.FOLLOW\_LINE\_2\_POINT: }
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set: }
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors }}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Line\ Follow\ To\ Point\ Segment"{}}) }
+\DoxyCodeLine{00395\  }
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings }}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ forward\_at\_speed(PD\_vars.v\_ref) }
+\DoxyCodeLine{00398\  }
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Line\_CLC.reset() }
+\DoxyCodeLine{00400\  }
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dX\ =\ PD\_vars.var\_1\ -\/\ obsd\_X\_s.get() }
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dY\ =\ PD\_vars.var\_2\ -\/\ obsd\_Y\_s.get() }
+\DoxyCodeLine{00403\  }
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (PD\_vars.var\_3\ \textcolor{keywordflow}{or}\ abs(dX)\ <=\ 25)\ \textcolor{keywordflow}{and}\ (PD\_vars.var\_4\ \textcolor{keywordflow}{or}\ abs(dY)\ <=\ 25): }
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PD\_vars.next\_state) }
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ update\_motors\_CLC(self.Line\_CLC) }
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ End\ of\ Functions\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \# }}
+\DoxyCodeLine{00409\  }
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Start\ of\ Path\ for\ final\ course\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \# }}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.ST\_B4\_FOLLOW\_LINE: }
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Straight\ before\ following\ line\ segment }}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set: }
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors }}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Straight\ before\ following\ line\ segment"{}}) }
+\DoxyCodeLine{00418\  }
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings }}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ forward\_at\_speed(PD\_vars.v\_ref) }
+\DoxyCodeLine{00421\  }
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.distance\ =\ 50\ \ \textcolor{comment}{\#\ mm }}
+\DoxyCodeLine{00423\  }
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obsd\_cpos\_s.get()\ >=\ self.distance: }
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FOLLOW\_LINE\_B4\_FORK) }
+\DoxyCodeLine{00426\  }
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.FOLLOW\_LINE\_B4\_FORK: }
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Line\ Following\ Segment }}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set: }
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors }}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ FOLLOW\_LINE\_B4\_FORK\ Segment"{}}) }
+\DoxyCodeLine{00434\  }
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Linesensor\ CLC\ centroid\ reference }}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Line\_CLC.reset() }
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Line\_CLC.set\_ref(0) }
+\DoxyCodeLine{00438\  }
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings }}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ forward\_at\_speed(PD\_vars.v\_ref) }
+\DoxyCodeLine{00441\  }
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obsd\_X\_s.get()\ >=\ 725: }
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FORCE\_RIGHT\_FORK) }
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ update\_motors\_CLC(self.Line\_CLC) }
+\DoxyCodeLine{00446\  }
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.FORCE\_RIGHT\_FORK: }
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Force\ Right\ Fork }}
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set: }
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors }}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00453\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Force\ Right\ Fork\ Segment"{}}) }
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.seg\_start\_time\ =\ ticks\_us() }
+\DoxyCodeLine{00455\  }
+\DoxyCodeLine{00456\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings }}
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1) }
+\DoxyCodeLine{00458\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(PD\_vars.v\_ref\ *\ 1.75) }
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1) }
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(PD\_vars.v\_ref) }
+\DoxyCodeLine{00461\  }
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ticks\_diff(ticks\_us(),\ self.seg\_start\_time)\ >=\ 500\_000: }
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.LINE\_FOLLOW\_2\_DIAMOND) }
+\DoxyCodeLine{00464\  }
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.LINE\_FOLLOW\_2\_DIAMOND: }
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Line\ Follow\ to\ Diamond }}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set: }
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00469\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ comms\ to\ motors }}
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Starting\ Line\ Following\ 2\ Diamond\ Segment"{}}) }
+\DoxyCodeLine{00472\  }
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Linesensor\ CLC\ centroid\ reference }}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Line\_CLC.reset() }
+\DoxyCodeLine{00475\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.Line\_CLC.set\_ref(0) }
+\DoxyCodeLine{00476\  }
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings }}
+\DoxyCodeLine{00478\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ forward\_at\_speed(PD\_vars.v\_ref) }
+\DoxyCodeLine{00479\  }
+\DoxyCodeLine{00480\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (obsd\_X\_s.get()\ >=\ 900\ \textcolor{keywordflow}{and}\ obsd\_Y\_s.get()\ <=\ 600)\ \textcolor{keywordflow}{or}\ self.IMU.heading\ <=\ -\/pi\ /\ 2\ +\ 0.1: }
+\DoxyCodeLine{00481\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}X\_LF2D:\ \{obsd\_X\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}Y\_LF2D:\ \{obsd\_Y\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00483\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}H\_LF2D:\ \{obsd\_yaw\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00484\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.DIAMOND\_2\_CP1) }
+\DoxyCodeLine{00485\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ update\_motors\_CLC(self.Line\_CLC) }
+\DoxyCodeLine{00487\  }
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.DIAMOND\_2\_CP1: }
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 950 }
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 450 }
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00493\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT) }
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.TURN\_2\_CP2 }
+\DoxyCodeLine{00495\  }
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.TURN\_2\_CP2: }
+\DoxyCodeLine{00497\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 1300 }
+\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 650 }
+\DoxyCodeLine{00499\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.v\_ref\ =\ 0 }
+\DoxyCodeLine{00502\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT) }
+\DoxyCodeLine{00503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.GO\_2\_LINE\_B4\_CP2 }
+\DoxyCodeLine{00504\  }
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.GO\_2\_LINE\_B4\_CP2: }
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s.put(950) }
+\DoxyCodeLine{00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s.put(425) }
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 1300 }
+\DoxyCodeLine{00509\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 650 }
+\DoxyCodeLine{00510\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00511\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT) }
+\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.LINE\_2\_CP2 }
+\DoxyCodeLine{00514\  }
+\DoxyCodeLine{00515\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.LINE\_2\_CP2: }
+\DoxyCodeLine{00516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 800\_000 }
+\DoxyCodeLine{00517\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FOLLOW\_LINE\_4\_TIME) }
+\DoxyCodeLine{00518\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.LINE\_B4\_CP3 }
+\DoxyCodeLine{00519\  }
+\DoxyCodeLine{00520\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.LINE\_B4\_CP3: }
+\DoxyCodeLine{00521\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s.put(1400) }
+\DoxyCodeLine{00522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s.put(800) }
+\DoxyCodeLine{00523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 400\_000 }
+\DoxyCodeLine{00524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FOLLOW\_LINE\_4\_TIME) }
+\DoxyCodeLine{00525\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.TURN\_2\_LINE\_B4\_CP3 }
+\DoxyCodeLine{00526\  }
+\DoxyCodeLine{00527\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.TURN\_2\_LINE\_B4\_CP3: }
+\DoxyCodeLine{00528\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 1600 }
+\DoxyCodeLine{00529\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 100 }
+\DoxyCodeLine{00530\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00531\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00532\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.v\_ref\ =\ 0 }
+\DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT) }
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.GO\_2\_LINE\_B4\_CP3 }
+\DoxyCodeLine{00535\  }
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.GO\_2\_LINE\_B4\_CP3: }
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 1600 }
+\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 100 }
+\DoxyCodeLine{00539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00541\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT) }
+\DoxyCodeLine{00542\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.TURN\_2\_CP3 }
+\DoxyCodeLine{00543\  }
+\DoxyCodeLine{00544\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.TURN\_2\_CP3: }
+\DoxyCodeLine{00545\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}T2C3\ X,\ Y:\ \{obsd\_X\_s.get()\},\ \{obsd\_Y\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00546\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.IMU.set\_heading(-\/pi\ /\ 2) }
+\DoxyCodeLine{00547\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ -\/180 }
+\DoxyCodeLine{00548\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.TURN\_ANGLE) }
+\DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.GO\_2\_LINE\_B4\_CP4 }
+\DoxyCodeLine{00550\  }
+\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.GO\_2\_LINE\_B4\_CP4: }
+\DoxyCodeLine{00552\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}X,\ Y:\ \{obsd\_X\_s.get()\},\ \{obsd\_Y\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}dist\ yaw:\ \{dist\_yaw\_s.get()\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00554\  }
+\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s.put(1600) }
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s.put(100) }
+\DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.IMU.set\_heading(dist\_yaw\_s.get()) }
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 1100 }
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 100 }
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT) }
+\DoxyCodeLine{00563\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.FOLLOW\_LINE\_2\_CP4 }
+\DoxyCodeLine{00564\  }
+\DoxyCodeLine{00565\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.FOLLOW\_LINE\_2\_CP4: }
+\DoxyCodeLine{00566\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bump\_stop\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 900 }
+\DoxyCodeLine{00568\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 100 }
+\DoxyCodeLine{00569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FOLLOW\_LINE\_2\_POINT) }
+\DoxyCodeLine{00572\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.TURN\_4\_GARAGE }
+\DoxyCodeLine{00573\  }
+\DoxyCodeLine{00574\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.TURN\_4\_GARAGE: }
+\DoxyCodeLine{00575\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s.put(800) }
+\DoxyCodeLine{00576\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s.put(150) }
+\DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ -\/180 }
+\DoxyCodeLine{00578\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.TURN\_ANGLE) }
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.MOVE\_IN\_GARAGE }
+\DoxyCodeLine{00580\  }
+\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.MOVE\_IN\_GARAGE: }
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}dist,\ head:\ \{dist\_yaw\_s.get()\},\ \{self.IMU.heading\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.IMU.set\_heading(-\/pi) }
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 160 }
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 150 }
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT) }
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.TURN\_2\_GARAGE\_EXIT }
+\DoxyCodeLine{00590\  }
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.TURN\_2\_GARAGE\_EXIT: }
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}dist,\ head:\ \{dist\_yaw\_s.get()\},\ \{self.IMU.heading\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00593\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ -\/260 }
+\DoxyCodeLine{00594\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.TURN\_ANGLE) }
+\DoxyCodeLine{00595\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.GO\_2\_GARAGE\_EXIT }
+\DoxyCodeLine{00596\  }
+\DoxyCodeLine{00597\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.GO\_2\_GARAGE\_EXIT: }
+\DoxyCodeLine{00598\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bump\_wall\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}dist,\ head:\ \{dist\_yaw\_s.get()\},\ \{self.IMU.heading\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00600\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s.put(175) }
+\DoxyCodeLine{00601\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s.put(175) }
+\DoxyCodeLine{00602\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.IMU.set\_heading(-\/3\ *\ pi\ /\ 2) }
+\DoxyCodeLine{00603\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 100 }
+\DoxyCodeLine{00604\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 400 }
+\DoxyCodeLine{00605\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00606\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00607\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT) }
+\DoxyCodeLine{00608\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.FOLLOW\_LINE\_2\_CP4 }
+\DoxyCodeLine{00609\  }
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.FOLLOW\_LINE\_2\_WALL: }
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.v\_ref\ =\ 100 }
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bump\_wall\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00613\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 2\_000\_000 }
+\DoxyCodeLine{00614\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FOLLOW\_LINE\_4\_TIME) }
+\DoxyCodeLine{00615\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.REVERSE\_FROM\_WALL\ \ \textcolor{comment}{\#\ changed\ in\ bumped\ section }}
+\DoxyCodeLine{00616\  }
+\DoxyCodeLine{00617\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.REVERSE\_FROM\_WALL: }
+\DoxyCodeLine{00618\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.segment\_set:\ \ \textcolor{comment}{\#\ ran\ once\ per\ segment }}
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.segment\_set\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ seg\_start\_s\ to\ 2\ because\ we\ have\ two\ motor\ controllers }}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ that\ both\ have\ to\ acknowledge\ the\ segment\ start }}
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ seg\_start\_s.put(2) }
+\DoxyCodeLine{00623\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Fixed\ Reverse\ Distance\ Segment"{}}) }
+\DoxyCodeLine{00624\  }
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bump\_wall\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bumped\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.IMU.set\_heading(-\/3\ *\ pi\ /\ 2) }
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s.put(100) }
+\DoxyCodeLine{00629\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s.put(675) }
+\DoxyCodeLine{00630\  }
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.distance\ =\ -\/100\ \ \textcolor{comment}{\#\ mm }}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.end\_point\ =\ obsd\_cpos\_s.get()\ +\ self.distance\ \ \textcolor{comment}{\#\ mm }}
+\DoxyCodeLine{00633\  }
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ motor\ settings }}
+\DoxyCodeLine{00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ forward\_at\_speed(-\/200) }
+\DoxyCodeLine{00636\  }
+\DoxyCodeLine{00637\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ obsd\_cpos\_s.get()\ <=\ self.end\_point: }
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}reversed\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}})) }
+\DoxyCodeLine{00639\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.TURN\_2\_CUP2) }
+\DoxyCodeLine{00640\  }
+\DoxyCodeLine{00641\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.TURN\_2\_CUP2: }
+\DoxyCodeLine{00642\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 500 }
+\DoxyCodeLine{00643\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 500 }
+\DoxyCodeLine{00644\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00645\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00646\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.v\_ref\ =\ 0 }
+\DoxyCodeLine{00647\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT) }
+\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.GO\_2\_CUP2 }
+\DoxyCodeLine{00649\  }
+\DoxyCodeLine{00650\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.GO\_2\_CUP2: }
+\DoxyCodeLine{00651\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.IMU.set\_heading(pi) }
+\DoxyCodeLine{00652\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 500 }
+\DoxyCodeLine{00653\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 500 }
+\DoxyCodeLine{00654\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00655\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00656\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT) }
+\DoxyCodeLine{00657\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.TURN\_2\_CP6 }
+\DoxyCodeLine{00658\  }
+\DoxyCodeLine{00659\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.TURN\_2\_CP6: }
+\DoxyCodeLine{00660\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 100 }
+\DoxyCodeLine{00661\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 300 }
+\DoxyCodeLine{00662\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00663\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00664\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.v\_ref\ =\ 0 }
+\DoxyCodeLine{00665\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT) }
+\DoxyCodeLine{00666\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.GO\_2\_CP6 }
+\DoxyCodeLine{00667\  }
+\DoxyCodeLine{00668\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.GO\_2\_CP6: }
+\DoxyCodeLine{00669\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 100 }
+\DoxyCodeLine{00670\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ 300 }
+\DoxyCodeLine{00671\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00672\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00673\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.GO\_2\_POINT) }
+\DoxyCodeLine{00674\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.TURN\_2\_CP6 }
+\DoxyCodeLine{00675\  }
+\DoxyCodeLine{00676\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ self.state\ ==\ PathDirector.FOLLOW\_LINE\_2\_CP6: }
+\DoxyCodeLine{00677\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ 400\_000 }
+\DoxyCodeLine{00678\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_state(PathDirector.FOLLOW\_LINE\_4\_TIME) }
+\DoxyCodeLine{00679\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ PathDirector.WAIT }
+\DoxyCodeLine{00680\  }
+\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ End\ of\ Path\ for\ final\ course\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \# }}
+\DoxyCodeLine{00682\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{yield}\ self.state }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_path___director_8py_source_l00110}{bump\+\_\+stop}}, \mbox{\hyperlink{_path___director_8py_source_l00111}{bump\+\_\+wall}}, \mbox{\hyperlink{_path___director_8py_source_l00109}{bumped}}, \mbox{\hyperlink{_path___director_8py_source_l00112}{bumptimer}}, \mbox{\hyperlink{_path___director_8py_source_l00129}{distance}}, \mbox{\hyperlink{_path___director_8py_source_l00130}{end\+\_\+point}}, \mbox{\hyperlink{_path___director_8py_source_l00100}{Heading\+\_\+\+CLC}}, \mbox{\hyperlink{_observer_8py_source_l00024}{Observer.\+Observer.\+IMU}}, \mbox{\hyperlink{_path___director_8py_source_l00099}{IMU}}, \mbox{\hyperlink{_path___director_8py_source_l00092}{Line\+\_\+\+CLC}}, \mbox{\hyperlink{_path___director_8py_source_l00091}{line\+\_\+sensor}}, \mbox{\hyperlink{_path___director_8py_source_l00089}{seg\+\_\+start\+\_\+time}}, \mbox{\hyperlink{_path___director_8py_source_l00088}{segment\+\_\+set}}, \mbox{\hyperlink{_path___director_8py_source_l00087}{state}}, \mbox{\hyperlink{_observer_8py_source_l00038}{Observer.\+Observer.\+uart}}, and \mbox{\hyperlink{_path___director_8py_source_l00108}{uart}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-Lab Final/\+Files On Romi/Path\+\_\+\+Director.\+py\end{DoxyCompactItemize}
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_path___director_8py}{Path\+\_\+\+Director.\+py}}\end{DoxyCompactItemize}

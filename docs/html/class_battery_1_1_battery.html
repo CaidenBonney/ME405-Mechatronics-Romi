@@ -154,18 +154,18 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>V_nom</b> = 8.5</td>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_battery_8py_source.html#l00031">31</a> of file <a class="el" href="_battery_8py_source.html">Battery.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   31</span>    <span class="keyword">def </span>__init__(self, battery_ADC: ADC | <span class="keywordtype">None</span> = <span class="keywordtype">None</span>):</div>
-<div class="line"><span class="lineno">   32</span>        self.battery_ADC = battery_ADC</div>
-<div class="line"><span class="lineno">   33</span> </div>
-<div class="line"><span class="lineno">   34</span>        </div>
-<div class="line"><span class="lineno">   35</span>        self.ADC_nom = 3210</div>
-<div class="line"><span class="lineno">   36</span> </div>
-<div class="line"><span class="lineno">   37</span>        </div>
-<div class="line"><span class="lineno">   38</span>        self.V_nom = 8.5</div>
-<div class="line"><span class="lineno">   39</span> </div>
+<p class="definition">Definition at line <a class="el" href="_battery_8py_source.html#l00030">30</a> of file <a class="el" href="_battery_8py_source.html">Battery.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   30</span>    <span class="keyword">def </span>__init__(self, battery_ADC: ADC | <span class="keywordtype">None</span> = <span class="keywordtype">None</span>):</div>
+<div class="line"><span class="lineno">   31</span>        self.battery_ADC = battery_ADC</div>
+<div class="line"><span class="lineno">   32</span> </div>
+<div class="line"><span class="lineno">   33</span>        </div>
+<div class="line"><span class="lineno">   34</span>        self.ADC_nom = 3210</div>
+<div class="line"><span class="lineno">   35</span> </div>
+<div class="line"><span class="lineno">   36</span>        </div>
+<div class="line"><span class="lineno">   37</span>        self.V_nom = 8.5</div>
+<div class="line"><span class="lineno">   38</span> </div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_battery_8py_source.html#l00032">battery_ADC</a>.</p>
+<p class="reference">References <a class="el" href="_battery_8py_source.html#l00031">battery_ADC</a>.</p>
 
 </div>
 </div>
@@ -186,17 +186,17 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>V_nom</b> = 8.5</td>
 </div><div class="memdoc">
 
 <p>Get the current battery percentage. </p>
-<p>Reads the ADC and returns the ratio of the current reading to the nominal calibrated value. The returned number is a decimal between approximately 0 and 1.</p>
-<dl class="section return"><dt>Returns</dt><dd>A float representing battery charge percentage (0–1). </dd></dl>
+<p>Reads the ADC and returns the ratio of the current reading to the nominal calibrated value. The returned number is a decimal between approximately 0 and 1. Raises <code>ValueError</code> if no ADC is configured.</p>
+<dl class="section return"><dt>Returns</dt><dd>A float representing battery charge percentage (0..1). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_battery_8py_source.html#l00047">47</a> of file <a class="el" href="_battery_8py_source.html">Battery.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   47</span>    <span class="keyword">def </span>get_cur_perc(self):</div>
-<div class="line"><span class="lineno">   48</span>        <span class="keywordflow">if</span> self.battery_ADC <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">   49</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Battery ADC is not set&quot;</span>)</div>
-<div class="line"><span class="lineno">   50</span>        <span class="keywordflow">return</span> self.battery_ADC.read() / self.ADC_nom</div>
-<div class="line"><span class="lineno">   51</span> </div>
+<p class="definition">Definition at line <a class="el" href="_battery_8py_source.html#l00046">46</a> of file <a class="el" href="_battery_8py_source.html">Battery.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   46</span>    <span class="keyword">def </span>get_cur_perc(self):</div>
+<div class="line"><span class="lineno">   47</span>        <span class="keywordflow">if</span> self.battery_ADC <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   48</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Battery ADC is not set&quot;</span>)</div>
+<div class="line"><span class="lineno">   49</span>        <span class="keywordflow">return</span> self.battery_ADC.read() / self.ADC_nom</div>
+<div class="line"><span class="lineno">   50</span> </div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_battery_8py_source.html#l00035">ADC_nom</a>, and <a class="el" href="_battery_8py_source.html#l00032">battery_ADC</a>.</p>
+<p class="reference">References <a class="el" href="_battery_8py_source.html#l00034">ADC_nom</a>, and <a class="el" href="_battery_8py_source.html#l00031">battery_ADC</a>.</p>
 
 </div>
 </div>
@@ -219,13 +219,13 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>V_nom</b> = 8.5</td>
 <p>This method scales the normalized battery percentage by the nominal calibrated voltage to produce an estimated real voltage.</p>
 <dl class="section return"><dt>Returns</dt><dd>The estimated battery voltage in volts. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_battery_8py_source.html#l00058">58</a> of file <a class="el" href="_battery_8py_source.html">Battery.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   58</span>    <span class="keyword">def </span>get_cur_volt(self):</div>
-<div class="line"><span class="lineno">   59</span>        <span class="keywordflow">if</span> self.battery_ADC <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">   60</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Battery ADC is not set&quot;</span>)</div>
-<div class="line"><span class="lineno">   61</span>        <span class="keywordflow">return</span> self.get_cur_perc() * self.V_nom</div>
+<p class="definition">Definition at line <a class="el" href="_battery_8py_source.html#l00057">57</a> of file <a class="el" href="_battery_8py_source.html">Battery.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   57</span>    <span class="keyword">def </span>get_cur_volt(self):</div>
+<div class="line"><span class="lineno">   58</span>        <span class="keywordflow">if</span> self.battery_ADC <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   59</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Battery ADC is not set&quot;</span>)</div>
+<div class="line"><span class="lineno">   60</span>        <span class="keywordflow">return</span> self.get_cur_perc() * self.V_nom</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="_battery_8py_source.html#l00032">battery_ADC</a>, <a class="el" href="_battery_8py_source.html#l00047">get_cur_perc()</a>, and <a class="el" href="_battery_8py_source.html#l00038">V_nom</a>.</p>
+<p class="reference">References <a class="el" href="_battery_8py_source.html#l00031">battery_ADC</a>, <a class="el" href="_battery_8py_source.html#l00046">get_cur_perc()</a>, and <a class="el" href="_battery_8py_source.html#l00037">V_nom</a>.</p>
 
 </div>
 </div>

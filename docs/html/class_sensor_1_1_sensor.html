@@ -98,6 +98,9 @@ $(function(){initNavTree('class_sensor_1_1_sensor.html','','class_sensor_1_1_sen
   <div class="headertitle"><div class="title">Sensor.Sensor Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Base class for sensors that exposes a common interface.  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for Sensor.Sensor:</div>
 <div class="dyncontent">
@@ -105,15 +108,135 @@ Inheritance diagram for Sensor.Sensor:</div>
   <img src="class_sensor_1_1_sensor.png" usemap="#Sensor_2ESensor_map" alt=""/>
   <map id="Sensor_2ESensor_map" name="Sensor_2ESensor_map">
 <area href="class_encoder_1_1_encoder.html" title="A quadrature encoder class for position and velocity measurement." alt="Encoder.Encoder" shape="rect" coords="0,56,151,80"/>
-<area href="class_i_m_u_1_1_i_m_u.html" alt="IMU.IMU" shape="rect" coords="161,56,312,80"/>
-<area href="class_i_r___sensor_1_1_i_r_sensor.html" alt="IR_Sensor.IRSensor" shape="rect" coords="322,56,473,80"/>
-<area href="class_line___sensor_1_1_line_sensor.html" alt="Line_Sensor.LineSensor" shape="rect" coords="483,56,634,80"/>
+<area href="class_i_m_u_1_1_i_m_u.html" title="BNO055 IMU interface with heading and calibration support." alt="IMU.IMU" shape="rect" coords="161,56,312,80"/>
+<area href="class_i_r___sensor_1_1_i_r_sensor.html" title="Single IR reflectance sensor with calibration offsets." alt="IR_Sensor.IRSensor" shape="rect" coords="322,56,473,80"/>
+<area href="class_line___sensor_1_1_line_sensor.html" title="Line sensor array with calibration and centroid computation." alt="Line_Sensor.LineSensor" shape="rect" coords="483,56,634,80"/>
   </map>
 </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:abdd7ecd205bec477ec349a8221a86fc9" id="r_abdd7ecd205bec477ec349a8221a86fc9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abdd7ecd205bec477ec349a8221a86fc9">set_attr</a> (cls, K=&quot;Kp&quot;, value=0.0)</td></tr>
+<tr class="memdesc:abdd7ecd205bec477ec349a8221a86fc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a class-level gain attribute.  <br /></td></tr>
+<tr class="memitem:ac7ffe148df7b257f7551f29dd392481e" id="r_ac7ffe148df7b257f7551f29dd392481e"><td class="memItemLeft" align="right" valign="top"><a id="ac7ffe148df7b257f7551f29dd392481e" name="ac7ffe148df7b257f7551f29dd392481e"></a>
+None&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self)</td></tr>
+<tr class="memdesc:ac7ffe148df7b257f7551f29dd392481e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize timing variables for dt computation. <br /></td></tr>
+<tr class="memitem:add8d874d2c517212fec197b36d089c31" id="r_add8d874d2c517212fec197b36d089c31"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add8d874d2c517212fec197b36d089c31">get_data</a> (self)</td></tr>
+<tr class="memdesc:add8d874d2c517212fec197b36d089c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the most recent scalar measurement for the sensor.  <br /></td></tr>
+<tr class="memitem:a49cdbda3f5a9c633664e069b976be896" id="r_a49cdbda3f5a9c633664e069b976be896"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49cdbda3f5a9c633664e069b976be896">update_dt</a> (self)</td></tr>
+<tr class="memdesc:a49cdbda3f5a9c633664e069b976be896"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refresh the stored time differential for subclasses.  <br /></td></tr>
+<tr class="memitem:affeced0c1599dffadd293a9823ede43e" id="r_affeced0c1599dffadd293a9823ede43e"><td class="memItemLeft" align="right" valign="top"><a id="affeced0c1599dffadd293a9823ede43e" name="affeced0c1599dffadd293a9823ede43e"></a>
+None&#160;</td><td class="memItemRight" valign="bottom"><b>reset_timing</b> (self)</td></tr>
+<tr class="memdesc:affeced0c1599dffadd293a9823ede43e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the timing history used for dt calculations. <br /></td></tr>
+</table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_sensor_8py_source.html#l00008">8</a> of file <a class="el" href="_sensor_8py_source.html">Sensor.py</a>.</p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Base class for sensors that exposes a common interface. </p>
+<p>Subclasses must implement <code><a class="el" href="#add8d874d2c517212fec197b36d089c31" title="Return the most recent scalar measurement for the sensor.">get_data()</a></code>. Timing helpers keep track of delta-t between measurements for control algorithms. </p>
+
+<p class="definition">Definition at line <a class="el" href="_sensor_8py_source.html#l00020">20</a> of file <a class="el" href="_sensor_8py_source.html">Sensor.py</a>.</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="add8d874d2c517212fec197b36d089c31" name="add8d874d2c517212fec197b36d089c31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add8d874d2c517212fec197b36d089c31">&#9670;&#160;</a></span>get_data()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> float Sensor.Sensor.get_data </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the most recent scalar measurement for the sensor. </p>
+<p>Must be implemented by subclasses. </p>
+
+<p>Reimplemented in <a class="el" href="class_encoder_1_1_encoder.html#adbf9d1c5ade7dd439d00c60d238c5aad">Encoder.Encoder</a>, <a class="el" href="class_i_m_u_1_1_i_m_u.html#afa673c8e8d1af1635c95e0b88f97a3df">IMU.IMU</a>, <a class="el" href="class_i_r___sensor_1_1_i_r_sensor.html#ad3604ecf3fb0560153ec026d1f595c55">IR_Sensor.IRSensor</a>, and <a class="el" href="class_line___sensor_1_1_line_sensor.html#a75fb34eb1397286364663b408ef23c89">Line_Sensor.LineSensor</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_sensor_8py_source.html#l00043">43</a> of file <a class="el" href="_sensor_8py_source.html">Sensor.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   43</span>    <span class="keyword">def </span>get_data(self) -&gt; float:</div>
+<div class="line"><span class="lineno">   44</span>        <span class="keywordflow">raise</span> NotImplementedError(<span class="stringliteral">&quot;Sensor subclasses must implement get_data().&quot;</span>)</div>
+<div class="line"><span class="lineno">   45</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abdd7ecd205bec477ec349a8221a86fc9" name="abdd7ecd205bec477ec349a8221a86fc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdd7ecd205bec477ec349a8221a86fc9">&#9670;&#160;</a></span>set_attr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Sensor.Sensor.set_attr </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>cls</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>K</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;Kp&quot;</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>value</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.0</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set a class-level gain attribute. </p>
+<p>Used to tune controller gains stored on sensor classes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">K</td><td>Name of the gain attribute (default <code>Kp</code>) </td></tr>
+    <tr><td class="paramname">value</td><td>New value for the gain </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_sensor_8py_source.html#l00028">28</a> of file <a class="el" href="_sensor_8py_source.html">Sensor.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   28</span>    <span class="keyword">def </span>set_attr(cls, K=&quot;Kp&quot;, value=0.0):</div>
+<div class="line"><span class="lineno">   29</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> hasattr(cls, K):</div>
+<div class="line"><span class="lineno">   30</span>            <span class="keywordflow">raise</span> AttributeError(f<span class="stringliteral">&quot;&#39;{K}&#39; is not a defined gain on {cls.__name__}&quot;</span>)</div>
+<div class="line"><span class="lineno">   31</span>        setattr(cls, K, value)</div>
+<div class="line"><span class="lineno">   32</span>        print(K, value)</div>
+<div class="line"><span class="lineno">   33</span>        uart.write(f<span class="stringliteral">&quot;{K}{value}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">   34</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a49cdbda3f5a9c633664e069b976be896" name="a49cdbda3f5a9c633664e069b976be896"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49cdbda3f5a9c633664e069b976be896">&#9670;&#160;</a></span>update_dt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None Sensor.Sensor.update_dt </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Refresh the stored time differential for subclasses. </p>
+<p>Updates <code>dt</code> using current and previous <code>ticks_us()</code> values. </p>
+
+<p class="definition">Definition at line <a class="el" href="_sensor_8py_source.html#l00049">49</a> of file <a class="el" href="_sensor_8py_source.html">Sensor.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   49</span>    <span class="keyword">def </span>update_dt(self) -&gt; None:</div>
+<div class="line"><span class="lineno">   50</span>        now = ticks_us()</div>
+<div class="line"><span class="lineno">   51</span>        self.dt = ticks_diff(now, self._prev_t)</div>
+<div class="line"><span class="lineno">   52</span>        self._prev_t = now</div>
+<div class="line"><span class="lineno">   53</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_sensor_8py_source.html#l00037">_prev_t</a>, and <a class="el" href="_sensor_8py_source.html#l00038">dt</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>Lab Final/Files On Romi/<a class="el" href="_sensor_8py_source.html">Sensor.py</a></li>
 </ul>
 </div><!-- contents -->

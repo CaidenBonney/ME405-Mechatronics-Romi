@@ -1,20 +1,92 @@
 \doxysection{IR\+\_\+\+Sensor.\+IRSensor Class Reference}
 \hypertarget{class_i_r___sensor_1_1_i_r_sensor}{}\label{class_i_r___sensor_1_1_i_r_sensor}\index{IR\_Sensor.IRSensor@{IR\_Sensor.IRSensor}}
+
+
+Single IR reflectance sensor with calibration offsets.  
+
+
 Inheritance diagram for IR\+\_\+\+Sensor.\+IRSensor\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[height=2.000000cm]{class_i_r___sensor_1_1_i_r_sensor}
 \end{center}
 \end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_i_r___sensor_1_1_i_r_sensor_adbb3fbe8314335fb043d630875b39ffc}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, int id, ADC\+\_\+pin)
+\begin{DoxyCompactList}\small\item\em Initialize an IR sensor. \end{DoxyCompactList}\item 
+\Hypertarget{class_i_r___sensor_1_1_i_r_sensor_ad3604ecf3fb0560153ec026d1f595c55}\label{class_i_r___sensor_1_1_i_r_sensor_ad3604ecf3fb0560153ec026d1f595c55} 
+float {\bfseries get\+\_\+data} (self)
+\begin{DoxyCompactList}\small\item\em Return the current infrared sensor reading with zeroing applied. \end{DoxyCompactList}\item 
+\Hypertarget{class_i_r___sensor_1_1_i_r_sensor_aec28879eeeb6c06cc19a944392a5c756}\label{class_i_r___sensor_1_1_i_r_sensor_aec28879eeeb6c06cc19a944392a5c756} 
+{\bfseries read} (self)
+\begin{DoxyCompactList}\small\item\em Raw ADC reading (uncalibrated). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_sensor_1_1_sensor}{Sensor.\+Sensor}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sensor_1_1_sensor_abdd7ecd205bec477ec349a8221a86fc9}{set\+\_\+attr}} (cls, K="{}Kp"{}, value=0.\+0)
+\begin{DoxyCompactList}\small\item\em Set a class-\/level gain attribute. \end{DoxyCompactList}\item 
+None {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em Initialize timing variables for dt computation. \end{DoxyCompactList}\item 
+None \mbox{\hyperlink{class_sensor_1_1_sensor_a49cdbda3f5a9c633664e069b976be896}{update\+\_\+dt}} (self)
+\begin{DoxyCompactList}\small\item\em Refresh the stored time differential for subclasses. \end{DoxyCompactList}\item 
+None {\bfseries reset\+\_\+timing} (self)
+\begin{DoxyCompactList}\small\item\em Reset the timing history used for dt calculations. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
+Single IR reflectance sensor with calibration offsets. 
+
+Definition at line \mbox{\hyperlink{_i_r___sensor_8py_source_l00014}{14}} of file \mbox{\hyperlink{_i_r___sensor_8py_source}{IR\+\_\+\+Sensor.\+py}}.
 
 
-Definition at line \mbox{\hyperlink{_i_r___sensor_8py_source_l00005}{5}} of file \mbox{\hyperlink{_i_r___sensor_8py_source}{IR\+\_\+\+Sensor.\+py}}.
+
+\label{doc-constructors}
+\Hypertarget{class_i_r___sensor_1_1_i_r_sensor_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_i_r___sensor_1_1_i_r_sensor_adbb3fbe8314335fb043d630875b39ffc}\index{IR\_Sensor.IRSensor@{IR\_Sensor.IRSensor}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!IR\_Sensor.IRSensor@{IR\_Sensor.IRSensor}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_i_r___sensor_1_1_i_r_sensor_adbb3fbe8314335fb043d630875b39ffc} 
+IR\+\_\+\+Sensor.\+IRSensor.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{int}]{id}{, }\item[{}]{ADC\+\_\+pin}{}\end{DoxyParamCaption})}
+
+
+
+Initialize an IR sensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Position index (1..13) in the sensor bar \\
+\hline
+{\em ADC\+\_\+pin} & Pin connected to the analog reflectance output \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_i_r___sensor_8py_source_l00019}{19}} of file \mbox{\hyperlink{_i_r___sensor_8py_source}{IR\+\_\+\+Sensor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ id:\ int,\ ADC\_pin): }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ super().\_\_init\_\_() }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Sensor\ number\ from\ 1\ to\ 13.\ ASSUMES\ 13\ IS\ RIGHT\ MOST\ SENSOR }}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ self.id\ =\ id }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ location\ in\ mm\ from\ line\ sensor\ center.\ ASSUMES\ 13\ IS\ RIGHT\ WHICH\ IS\ POSITIVE }}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ self.location\ =\ (self.id\ -\/\ 7)\ *\ 8 }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ self.ADC\_pin\ =\ Pin(ADC\_pin,\ mode=Pin.ANALOG) }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ self.ADC\ =\ ADC(self.ADC\_pin) }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ self.white\ =\ 0 }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ self.black\ =\ 1 }
+\DoxyCodeLine{00029\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_i_r___sensor_8py_source_l00019}{\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{_i_r___sensor_8py_source_l00026}{ADC}}, \mbox{\hyperlink{_i_r___sensor_8py_source_l00025}{ADC\+\_\+pin}}, \mbox{\hyperlink{_i_r___sensor_8py_source_l00028}{black}}, \mbox{\hyperlink{_i_r___sensor_8py_source_l00022}{id}}, \mbox{\hyperlink{_i_r___sensor_8py_source_l00024}{location}}, and \mbox{\hyperlink{_i_r___sensor_8py_source_l00027}{white}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-Lab Final/\+Files On Romi/IR\+\_\+\+Sensor.\+py\end{DoxyCompactItemize}
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_i_r___sensor_8py}{IR\+\_\+\+Sensor.\+py}}\end{DoxyCompactItemize}

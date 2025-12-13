@@ -56,24 +56,24 @@ Optionally an ADC channel may be passed in; if not, it must be assigned later be
 \end{DoxyParams}
 
 
-Definition at line \mbox{\hyperlink{_battery_8py_source_l00031}{31}} of file \mbox{\hyperlink{_battery_8py_source}{Battery.\+py}}.
+Definition at line \mbox{\hyperlink{_battery_8py_source_l00030}{30}} of file \mbox{\hyperlink{_battery_8py_source}{Battery.\+py}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ battery\_ADC:\ ADC\ |\ \textcolor{keywordtype}{None}\ =\ \textcolor{keywordtype}{None}):}
-\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ self.battery\_ADC\ =\ battery\_ADC}
-\DoxyCodeLine{00033\ }
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ self.ADC\_nom\ =\ 3210}
-\DoxyCodeLine{00036\ }
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ self.V\_nom\ =\ 8.5}
-\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ battery\_ADC:\ ADC\ |\ \textcolor{keywordtype}{None}\ =\ \textcolor{keywordtype}{None}):}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ self.battery\_ADC\ =\ battery\_ADC}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ self.ADC\_nom\ =\ 3210}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ self.V\_nom\ =\ 8.5}
+\DoxyCodeLine{00038\ }
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{_battery_8py_source_l00032}{battery\+\_\+\+ADC}}.
+References \mbox{\hyperlink{_battery_8py_source_l00031}{battery\+\_\+\+ADC}}.
 
 
 
@@ -90,27 +90,27 @@ Battery.\+Battery.\+get\+\_\+cur\+\_\+perc (\begin{DoxyParamCaption}\item[{}]{se
 
 Get the current battery percentage. 
 
-Reads the ADC and returns the ratio of the current reading to the nominal calibrated value. The returned number is a decimal between approximately 0 and 1.
+Reads the ADC and returns the ratio of the current reading to the nominal calibrated value. The returned number is a decimal between approximately 0 and 1. Raises {\ttfamily Value\+Error} if no ADC is configured.
 
 \begin{DoxyReturn}{Returns}
-A float representing battery charge percentage (0–1). 
+A float representing battery charge percentage (0..1). 
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{_battery_8py_source_l00047}{47}} of file \mbox{\hyperlink{_battery_8py_source}{Battery.\+py}}.
+Definition at line \mbox{\hyperlink{_battery_8py_source_l00046}{46}} of file \mbox{\hyperlink{_battery_8py_source}{Battery.\+py}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{def\ }get\_cur\_perc(self):}
-\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.battery\_ADC\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Battery\ ADC\ is\ not\ set"{}})}
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.battery\_ADC.read()\ /\ self.ADC\_nom}
-\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{def\ }get\_cur\_perc(self):}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.battery\_ADC\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Battery\ ADC\ is\ not\ set"{}})}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.battery\_ADC.read()\ /\ self.ADC\_nom}
+\DoxyCodeLine{00050\ }
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{_battery_8py_source_l00035}{ADC\+\_\+nom}}, and \mbox{\hyperlink{_battery_8py_source_l00032}{battery\+\_\+\+ADC}}.
+References \mbox{\hyperlink{_battery_8py_source_l00034}{ADC\+\_\+nom}}, and \mbox{\hyperlink{_battery_8py_source_l00031}{battery\+\_\+\+ADC}}.
 
 \Hypertarget{class_battery_1_1_battery_a663685fa7bec698f746a01cd288346cb}\index{Battery.Battery@{Battery.Battery}!get\_cur\_volt@{get\_cur\_volt}}
 \index{get\_cur\_volt@{get\_cur\_volt}!Battery.Battery@{Battery.Battery}}
@@ -129,19 +129,19 @@ The estimated battery voltage in volts.
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{_battery_8py_source_l00058}{58}} of file \mbox{\hyperlink{_battery_8py_source}{Battery.\+py}}.
+Definition at line \mbox{\hyperlink{_battery_8py_source_l00057}{57}} of file \mbox{\hyperlink{_battery_8py_source}{Battery.\+py}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{def\ }get\_cur\_volt(self):}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.battery\_ADC\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Battery\ ADC\ is\ not\ set"{}})}
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.get\_cur\_perc()\ *\ self.V\_nom}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{def\ }get\_cur\_volt(self):}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.battery\_ADC\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Battery\ ADC\ is\ not\ set"{}})}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.get\_cur\_perc()\ *\ self.V\_nom}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{_battery_8py_source_l00032}{battery\+\_\+\+ADC}}, \mbox{\hyperlink{_battery_8py_source_l00047}{get\+\_\+cur\+\_\+perc()}}, and \mbox{\hyperlink{_battery_8py_source_l00038}{V\+\_\+nom}}.
+References \mbox{\hyperlink{_battery_8py_source_l00031}{battery\+\_\+\+ADC}}, \mbox{\hyperlink{_battery_8py_source_l00046}{get\+\_\+cur\+\_\+perc()}}, and \mbox{\hyperlink{_battery_8py_source_l00037}{V\+\_\+nom}}.
 
 
 

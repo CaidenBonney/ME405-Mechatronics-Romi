@@ -98,9 +98,35 @@ $(function(){initNavTree('class_romi___props_1_1_romi_props.html','','class_romi
   <div class="headertitle"><div class="title">Romi_Props.RomiProps Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Holds static geometric and encoder properties for Romi.  
+ <a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a4202d589e60fbde47daaac18f134b2d9" id="r_a4202d589e60fbde47daaac18f134b2d9"><td class="memItemLeft" align="right" valign="top"><a id="a4202d589e60fbde47daaac18f134b2d9" name="a4202d589e60fbde47daaac18f134b2d9"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>wheel_radius</b> = 34.75</td></tr>
+<tr class="memdesc:a4202d589e60fbde47daaac18f134b2d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wheel radius in millimeters (diameter measured at 69.5 mm). <br /></td></tr>
+<tr class="memitem:ace5c7246440f3b08debc6019ab49b7c7" id="r_ace5c7246440f3b08debc6019ab49b7c7"><td class="memItemLeft" align="right" valign="top"><a id="ace5c7246440f3b08debc6019ab49b7c7" name="ace5c7246440f3b08debc6019ab49b7c7"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>trackwidth</b> = 141</td></tr>
+<tr class="memdesc:ace5c7246440f3b08debc6019ab49b7c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trackwidth in millimeters. <br /></td></tr>
+<tr class="memitem:aad7a7afbdbfac3b39da08a8b192b24b3" id="r_aad7a7afbdbfac3b39da08a8b192b24b3"><td class="memItemLeft" align="right" valign="top"><a id="aad7a7afbdbfac3b39da08a8b192b24b3" name="aad7a7afbdbfac3b39da08a8b192b24b3"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>wdiv2</b> = <a class="el" href="#ace5c7246440f3b08debc6019ab49b7c7">trackwidth</a> / 2</td></tr>
+<tr class="memdesc:aad7a7afbdbfac3b39da08a8b192b24b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Half of trackwidth, used for differential drive calculations. <br /></td></tr>
+<tr class="memitem:a8332bae4721a7a917f5d8c2a4eee0136" id="r_a8332bae4721a7a917f5d8c2a4eee0136"><td class="memItemLeft" align="right" valign="top"><a id="a8332bae4721a7a917f5d8c2a4eee0136" name="a8332bae4721a7a917f5d8c2a4eee0136"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>gear_ratio</b> = 119.7576</td></tr>
+<tr class="memdesc:a8332bae4721a7a917f5d8c2a4eee0136"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gear ratio: shaft revolutions per wheel revolution. <br /></td></tr>
+<tr class="memitem:a19c1db104c2be3104e67570824773892" id="r_a19c1db104c2be3104e67570824773892"><td class="memItemLeft" align="right" valign="top"><a id="a19c1db104c2be3104e67570824773892" name="a19c1db104c2be3104e67570824773892"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>counts_per_rev</b> = 12</td></tr>
+<tr class="memdesc:a19c1db104c2be3104e67570824773892"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encoder counts per motor shaft revolution. <br /></td></tr>
+<tr class="memitem:ac9eb45338f14aed428e16d7cb197d6b8" id="r_ac9eb45338f14aed428e16d7cb197d6b8"><td class="memItemLeft" align="right" valign="top"><a id="ac9eb45338f14aed428e16d7cb197d6b8" name="ac9eb45338f14aed428e16d7cb197d6b8"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>ticks_to_rads</b> = (2 * pi) / (<a class="el" href="#a19c1db104c2be3104e67570824773892">counts_per_rev</a> * <a class="el" href="#a8332bae4721a7a917f5d8c2a4eee0136">gear_ratio</a>)</td></tr>
+<tr class="memdesc:ac9eb45338f14aed428e16d7cb197d6b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conversion from encoder ticks to radians of wheel rotation. <br /></td></tr>
+</table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_romi___props_8py_source.html#l00004">4</a> of file <a class="el" href="_romi___props_8py_source.html">Romi_Props.py</a>.</p>
+<div class="textblock"><p>Holds static geometric and encoder properties for Romi. </p>
+
+<p class="definition">Definition at line <a class="el" href="_romi___props_8py_source.html#l00015">15</a> of file <a class="el" href="_romi___props_8py_source.html">Romi_Props.py</a>.</p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>Lab Final/Files On Romi/<a class="el" href="_romi___props_8py_source.html">Romi_Props.py</a></li>
 </ul>

@@ -99,17 +99,27 @@ $(function(){initNavTree('_user___input_8py.html','',''); });
 </div><!--header-->
 <div class="contents">
 
+<p>Bluetooth/serial command handler for Romi.  
+<a href="#details">More...</a></p>
+
 <p><a href="_user___input_8py_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:User_5FInput_2EUserInput" id="r_User_5FInput_2EUserInput"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user___input_1_1_user_input.html">User_Input.UserInput</a></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:User_5FInput" id="r_User_5FInput"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_user___input.html">User_Input</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads user commands over UART/Bluetooth and updates shared state.  <a href="class_user___input_1_1_user_input.html#details">More...</a><br /></td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Bluetooth/serial command handler for Romi. </p>
+<p>Polls UART for user commands, decodes configuration changes, calibration triggers, and direct state transitions, then writes results into shared variables for other tasks. This task is cooperative and yields after each loop iteration.</p>
+<dl class="section author"><dt>Author</dt><dd>Antonio Ventimiglia </dd>
+<dd>
+Caiden Bonney </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2025-Dec-12 </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>GPLv3 </dd></dl>
+
+<p class="definition">Definition in file <a class="el" href="_user___input_8py_source.html">User_Input.py</a>.</p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">
 <div id="page-nav-resize-handle"></div>

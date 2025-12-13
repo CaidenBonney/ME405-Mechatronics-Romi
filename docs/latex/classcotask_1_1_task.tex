@@ -109,47 +109,47 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00088}{88}} of file \mbox
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ run\_fun,\ name="{}NoName"{},\ priority=0,\ period=None,\ profile=False,\ trace=False,\ shares=()):}
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ The\ function\ which\ is\ run\ to\ implement\ this\ task's\ code.\ Since\ it}}
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ is\ a\ generator,\ we\ "{}run"{}\ it\ here,\ which\ doesn't\ actually\ run\ it\ but}}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ gets\ it\ going\ as\ a\ generator\ which\ is\ ready\ to\ yield\ values}}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ shares:}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_run\_gen\ =\ run\_fun(shares)}
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_run\_gen\ =\ run\_fun()}
-\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ run\_fun,\ name="{}NoName"{},\ priority=0,\ period=None,\ profile=False,\ trace=False,\ shares=()): }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ The\ function\ which\ is\ run\ to\ implement\ this\ task's\ code.\ Since\ it }}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ is\ a\ generator,\ we\ "{}run"{}\ it\ here,\ which\ doesn't\ actually\ run\ it\ but }}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ gets\ it\ going\ as\ a\ generator\ which\ is\ ready\ to\ yield\ values }}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ shares: }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_run\_gen\ =\ run\_fun(shares) }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_run\_gen\ =\ run\_fun() }
+\DoxyCodeLine{00096\  }
 \DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ self.name\ =\ name}
-\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ self.name\ =\ name }
+\DoxyCodeLine{00099\  }
 \DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ self.priority\ =\ int(priority)}
-\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ self.priority\ =\ int(priority) }
+\DoxyCodeLine{00103\  }
 \DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ period\ !=\ \textcolor{keywordtype}{None}:}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ int(period\ *\ 1000)}
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_next\_run\ =\ utime.ticks\_us()\ +\ self.period}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ period}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_next\_run\ =\ \textcolor{keywordtype}{None}}
-\DoxyCodeLine{00115\ }
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Flag\ which\ causes\ the\ task\ to\ be\ profiled,\ in\ which\ the\ execution}}
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ time\ of\ the\ @c\ run()\ method\ is\ measured\ and\ basic\ statistics\ kept.}}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ self.\_prof\ =\ profile}
-\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ self.reset\_profile()}
-\DoxyCodeLine{00120\ }
-\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ The\ previous\ state\ in\ which\ the\ task\ last\ ran.\ It\ is\ used\ to\ watch}}
-\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ for\ and\ track\ state\ transitions.}}
-\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ self.\_prev\_state\ =\ 0}
-\DoxyCodeLine{00124\ }
-\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ transition\ tracing\ has\ been\ enabled,\ create\ an\ empty\ list\ in}}
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ which\ to\ store\ transition\ (time,\ to-\/state)\ stamps}}
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ self.\_trace\ =\ trace}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ self.\_tr\_data\ =\ []}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ self.\_prev\_time\ =\ utime.ticks\_us()}
-\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ period\ !=\ \textcolor{keywordtype}{None}: }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ int(period\ *\ 1000) }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_next\_run\ =\ utime.ticks\_us()\ +\ self.period }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ period }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_next\_run\ =\ \textcolor{keywordtype}{None} }
+\DoxyCodeLine{00115\  }
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Flag\ which\ causes\ the\ task\ to\ be\ profiled,\ in\ which\ the\ execution }}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ time\ of\ the\ @c\ run()\ method\ is\ measured\ and\ basic\ statistics\ kept. }}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ self.\_prof\ =\ profile }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ self.reset\_profile() }
+\DoxyCodeLine{00120\  }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ The\ previous\ state\ in\ which\ the\ task\ last\ ran.\ It\ is\ used\ to\ watch }}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ for\ and\ track\ state\ transitions. }}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ self.\_prev\_state\ =\ 0 }
+\DoxyCodeLine{00124\  }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ transition\ tracing\ has\ been\ enabled,\ create\ an\ empty\ list\ in }}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ which\ to\ store\ transition\ (time,\ to-\/state)\ stamps }}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ self.\_trace\ =\ trace }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ self.\_tr\_data\ =\ [] }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ self.\_prev\_time\ =\ utime.ticks\_us() }
+\DoxyCodeLine{00130\  }
 \DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{False}}
-\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00134\  }
 
 \end{DoxyCode}
 
@@ -180,26 +180,26 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00257}{257}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keyword}{def\ }\_\_repr\_\_(self):}
-\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ rst\ =\ f\textcolor{stringliteral}{"{}\{self.name:<16s\}\{self.priority:\ 4d\}"{}}}
-\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
-\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{(self.period\ /\ 1000.0):\ 10.1f\}"{}}}
-\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ TypeError:}
-\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ -\/"{}}}
-\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{self.\_runs:\ 8d\}"{}}}
-\DoxyCodeLine{00264\ }
-\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof\ \textcolor{keywordflow}{and}\ self.\_runs\ >\ 0:}
-\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ avg\_dur\ =\ (self.\_run\_sum\ /\ self.\_runs)\ /\ 1000.0}
-\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ avg\_late\ =\ (self.\_late\_sum\ /\ self.\_runs)\ /\ 1000.0}
-\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{avg\_dur:\ 10.3f\}\{(self.\_slowest\ /\ 1000.0):\ 10.3f\}"{}}}
-\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.period\ !=\ \textcolor{keywordtype}{None}:}
-\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{avg\_late:\ 10.3f\}\{(self.\_latest\ /\ 1000.0):\ 10.3f\}"{}}}
-\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ rst}
-\DoxyCodeLine{00272\ }
-\DoxyCodeLine{00273\ }
-\DoxyCodeLine{00274\ \textcolor{comment}{\#\ =============================================================================}}
-\DoxyCodeLine{00275\ }
-\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keyword}{def\ }\_\_repr\_\_(self): }
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ rst\ =\ f\textcolor{stringliteral}{"{}\{self.name:<16s\}\{self.priority:\ 4d\}"{}} }
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}: }
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{(self.period\ /\ 1000.0):\ 10.1f\}"{}} }
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ TypeError: }
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ \ -\/"{}} }
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{self.\_runs:\ 8d\}"{}} }
+\DoxyCodeLine{00264\  }
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof\ \textcolor{keywordflow}{and}\ self.\_runs\ >\ 0: }
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ avg\_dur\ =\ (self.\_run\_sum\ /\ self.\_runs)\ /\ 1000.0 }
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ avg\_late\ =\ (self.\_late\_sum\ /\ self.\_runs)\ /\ 1000.0 }
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{avg\_dur:\ 10.3f\}\{(self.\_slowest\ /\ 1000.0):\ 10.3f\}"{}} }
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.period\ !=\ \textcolor{keywordtype}{None}: }
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rst\ +=\ f\textcolor{stringliteral}{"{}\{avg\_late:\ 10.3f\}\{(self.\_latest\ /\ 1000.0):\ 10.3f\}"{}} }
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ rst }
+\DoxyCodeLine{00272\  }
+\DoxyCodeLine{00273\  }
+\DoxyCodeLine{00274\ \textcolor{comment}{\#\ ============================================================================= }}
+\DoxyCodeLine{00275\  }
+\DoxyCodeLine{00276\  }
 
 \end{DoxyCode}
 
@@ -225,20 +225,20 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00233}{233}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keyword}{def\ }get\_trace(self):}
-\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ tr\_str\ =\ \textcolor{stringliteral}{"{}Task\ "{}}\ +\ self.name\ +\ \textcolor{stringliteral}{"{}:"{}}}
-\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_trace:}
-\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}}
-\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ last\_state\ =\ 0}
-\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ total\_time\ =\ 0.0}
-\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ item\ \textcolor{keywordflow}{in}\ self.\_tr\_data:}
-\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_time\ +=\ item[0]\ /\ 1000000.0}
-\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\{:\ 12.6f\}:\ \{:\ 2d\}\ -\/>\ \{:d\}\(\backslash\)n"{}}.format(total\_time,\ last\_state,\ item[1])}
-\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ last\_state\ =\ item[1]}
-\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
-\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\ not\ traced"{}}}
-\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tr\_str}
-\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keyword}{def\ }get\_trace(self): }
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ tr\_str\ =\ \textcolor{stringliteral}{"{}Task\ "{}}\ +\ self.name\ +\ \textcolor{stringliteral}{"{}:"{}} }
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_trace: }
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}} }
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ last\_state\ =\ 0 }
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ total\_time\ =\ 0.0 }
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ item\ \textcolor{keywordflow}{in}\ self.\_tr\_data: }
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_time\ +=\ item[0]\ /\ 1000000.0 }
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\{:\ 12.6f\}:\ \{:\ 2d\}\ -\/>\ \{:d\}\(\backslash\)n"{}}.format(total\_time,\ last\_state,\ item[1]) }
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ last\_state\ =\ item[1] }
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ tr\_str\ +=\ \textcolor{stringliteral}{"{}\ not\ traced"{}} }
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tr\_str }
+\DoxyCodeLine{00246\  }
 
 \end{DoxyCode}
 
@@ -261,9 +261,9 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00250}{250}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keyword}{def\ }go(self):}
-\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{True}}
-\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keyword}{def\ }go(self): }
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00252\  }
 
 \end{DoxyCode}
 
@@ -286,24 +286,24 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00192}{192}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{def\ }ready(self)\ -\/>\ bool:}
-\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ this\ task\ uses\ a\ timer,\ check\ if\ it's\ time\ to\ run\ run()\ again.\ If}}
-\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ so,\ set\ go\ flag\ and\ set\ the\ timer\ to\ go\ off\ at\ the\ next\ run\ time}}
-\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.period\ !=\ \textcolor{keywordtype}{None}:}
-\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ late\ =\ utime.ticks\_diff(utime.ticks\_us(),\ self.\_next\_run)}
-\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ late\ >\ 0:}
-\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{True}}
-\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_next\_run\ =\ utime.ticks\_diff(self.period,\ -\/self.\_next\_run)}
-\DoxyCodeLine{00200\ }
-\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ keeping\ a\ latency\ profile,\ record\ the\ data}}
-\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof:}
-\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_late\_sum\ +=\ late}
-\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ late\ >\ self.\_latest:}
-\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_latest\ =\ late}
-\DoxyCodeLine{00206\ }
-\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ the\ task\ doesn't\ use\ a\ timer,\ we\ rely\ on\ go\_flag\ to\ signal\ ready}}
-\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.go\_flag}
-\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{def\ }ready(self)\ -\/>\ bool: }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ this\ task\ uses\ a\ timer,\ check\ if\ it's\ time\ to\ run\ run()\ again.\ If }}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ so,\ set\ go\ flag\ and\ set\ the\ timer\ to\ go\ off\ at\ the\ next\ run\ time }}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.period\ !=\ \textcolor{keywordtype}{None}: }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ late\ =\ utime.ticks\_diff(utime.ticks\_us(),\ self.\_next\_run) }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ late\ >\ 0: }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_next\_run\ =\ utime.ticks\_diff(self.period,\ -\/self.\_next\_run) }
+\DoxyCodeLine{00200\  }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ keeping\ a\ latency\ profile,\ record\ the\ data }}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof: }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_late\_sum\ +=\ late }
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ late\ >\ self.\_latest: }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_latest\ =\ late }
+\DoxyCodeLine{00206\  }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ the\ task\ doesn't\ use\ a\ timer,\ we\ rely\ on\ go\_flag\ to\ signal\ ready }}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.go\_flag }
+\DoxyCodeLine{00209\  }
 
 \end{DoxyCode}
 
@@ -326,13 +326,13 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00222}{222}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keyword}{def\ }reset\_profile(self):}
-\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ self.\_runs\ =\ 0}
-\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ self.\_run\_sum\ =\ 0}
-\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ self.\_slowest\ =\ 0}
-\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ self.\_late\_sum\ =\ 0}
-\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ self.\_latest\ =\ 0}
-\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keyword}{def\ }reset\_profile(self): }
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ self.\_runs\ =\ 0 }
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ self.\_run\_sum\ =\ 0 }
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ self.\_slowest\ =\ 0 }
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ self.\_late\_sum\ =\ 0 }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ self.\_latest\ =\ 0 }
+\DoxyCodeLine{00228\  }
 
 \end{DoxyCode}
 
@@ -360,51 +360,51 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00141}{141}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{def\ }schedule(self)\ -\/>\ bool:}
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.ready():}
-\DoxyCodeLine{00143\ }
-\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ the\ go\ flag\ for\ the\ next\ run}}
-\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{False}}
-\DoxyCodeLine{00146\ }
-\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling,\ save\ the\ start\ time}}
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof:}
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stime\ =\ utime.ticks\_us()}
-\DoxyCodeLine{00150\ }
-\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Run\ the\ method\ belonging\ to\ the\ state\ which\ should\ be\ run\ next}}
-\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ curr\_state\ =\ next(self.\_run\_gen)}
-\DoxyCodeLine{00153\ }
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling\ or\ tracing,\ save\ timing\ data}}
-\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof\ \textcolor{keywordflow}{or}\ self.\_trace:}
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ etime\ =\ utime.ticks\_us()}
-\DoxyCodeLine{00157\ }
-\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling,\ save\ timing\ data}}
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof:}
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_runs\ +=\ 1}
-\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ runt\ =\ utime.ticks\_diff(etime,\ stime)}
-\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_runs\ >\ 2:}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_run\_sum\ +=\ runt}
-\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ runt\ >\ self.\_slowest:}
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_slowest\ =\ runt}
-\DoxyCodeLine{00166\ }
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ transition\ logic\ tracing\ is\ on,\ record\ a\ transition;\ if\ not,}}
-\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ ignore\ the\ state.\ If\ out\ of\ memory,\ switch\ tracing\ off\ and}}
-\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ run\ the\ memory\ allocation\ garbage\ collector}}
-\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_trace:}
-\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
-\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ curr\_state\ !=\ self.\_prev\_state:}
-\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_tr\_data.append((utime.ticks\_diff(etime,\ self.\_prev\_time),\ curr\_state))}
-\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ MemoryError:}
-\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_trace\ =\ \textcolor{keyword}{False}}
-\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gc.collect()}
-\DoxyCodeLine{00177\ }
-\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_prev\_state\ =\ curr\_state}
-\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_prev\_time\ =\ etime}
-\DoxyCodeLine{00180\ }
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True}}
-\DoxyCodeLine{00182\ }
-\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
-\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{False}}
-\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{def\ }schedule(self)\ -\/>\ bool: }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.ready(): }
+\DoxyCodeLine{00143\  }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ the\ go\ flag\ for\ the\ next\ run }}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ self.go\_flag\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00146\  }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling,\ save\ the\ start\ time }}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof: }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stime\ =\ utime.ticks\_us() }
+\DoxyCodeLine{00150\  }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Run\ the\ method\ belonging\ to\ the\ state\ which\ should\ be\ run\ next }}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ curr\_state\ =\ next(self.\_run\_gen) }
+\DoxyCodeLine{00153\  }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling\ or\ tracing,\ save\ timing\ data }}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof\ \textcolor{keywordflow}{or}\ self.\_trace: }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ etime\ =\ utime.ticks\_us() }
+\DoxyCodeLine{00157\  }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ profiling,\ save\ timing\ data }}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_prof: }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_runs\ +=\ 1 }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ runt\ =\ utime.ticks\_diff(etime,\ stime) }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_runs\ >\ 2: }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_run\_sum\ +=\ runt }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ runt\ >\ self.\_slowest: }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_slowest\ =\ runt }
+\DoxyCodeLine{00166\  }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ transition\ logic\ tracing\ is\ on,\ record\ a\ transition;\ if\ not, }}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ ignore\ the\ state.\ If\ out\ of\ memory,\ switch\ tracing\ off\ and }}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ run\ the\ memory\ allocation\ garbage\ collector }}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_trace: }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}: }
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ curr\_state\ !=\ self.\_prev\_state: }
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_tr\_data.append((utime.ticks\_diff(etime,\ self.\_prev\_time),\ curr\_state)) }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ MemoryError: }
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_trace\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gc.collect() }
+\DoxyCodeLine{00177\  }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_prev\_state\ =\ curr\_state }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_prev\_time\ =\ etime }
+\DoxyCodeLine{00180\  }
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00182\  }
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00185\  }
 
 \end{DoxyCode}
 
@@ -432,12 +432,12 @@ Definition at line \mbox{\hyperlink{cotask_8py_source_l00214}{214}} of file \mbo
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keyword}{def\ }set\_period(self,\ new\_period):}
-\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ new\_period\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
-\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ \textcolor{keywordtype}{None}}
-\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
-\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ int(new\_period)\ *\ 1000}
-\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keyword}{def\ }set\_period(self,\ new\_period): }
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ new\_period\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}: }
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ \textcolor{keywordtype}{None} }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ self.period\ =\ int(new\_period)\ *\ 1000 }
+\DoxyCodeLine{00219\  }
 
 \end{DoxyCode}
 

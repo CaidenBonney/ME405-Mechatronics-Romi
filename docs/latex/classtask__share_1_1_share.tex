@@ -102,15 +102,15 @@ Definition at line \mbox{\hyperlink{task__share_8py_source_l00350}{350}} of file
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ type\_code,\ thread\_protect=True,\ name=None):}
-\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ First\ call\ the\ parent\ class\ initializer}}
-\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ super().\_\_init\_\_(type\_code,\ thread\_protect,\ name)}
-\DoxyCodeLine{00353\ }
-\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ self.\_buffer\ =\ array.array(type\_code,\ [0])}
-\DoxyCodeLine{00355\ }
-\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ self.\_name\ =\ str(name)\ \textcolor{keywordflow}{if}\ name\ !=\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}Share"{}}\ +\ str(Share.ser\_num)}
-\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ Share.ser\_num\ +=\ 1}
-\DoxyCodeLine{00358\ }
+\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ type\_code,\ thread\_protect=True,\ name=None): }
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ First\ call\ the\ parent\ class\ initializer }}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ super().\_\_init\_\_(type\_code,\ thread\_protect,\ name) }
+\DoxyCodeLine{00353\  }
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ self.\_buffer\ =\ array.array(type\_code,\ [0]) }
+\DoxyCodeLine{00355\  }
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ self.\_name\ =\ str(name)\ \textcolor{keywordflow}{if}\ name\ !=\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}Share"{}}\ +\ str(Share.ser\_num) }
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ Share.ser\_num\ +=\ 1 }
+\DoxyCodeLine{00358\  }
 
 \end{DoxyCode}
 
@@ -138,8 +138,8 @@ Definition at line \mbox{\hyperlink{task__share_8py_source_l00403}{403}} of file
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00403\ \ \ \ \ \textcolor{keyword}{def\ }\_\_repr\_\_(self):}
-\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}\{:<12s\}\ Share<\{:s\}>"{}}.format(self.\_name,\ type\_code\_strings[self.\_type\_code])}
+\DoxyCodeLine{00403\ \ \ \ \ \textcolor{keyword}{def\ }\_\_repr\_\_(self): }
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}\{:<12s\}\ Share<\{:s\}>"{}}.format(self.\_name,\ type\_code\_strings[self.\_type\_code]) }
 
 \end{DoxyCode}
 
@@ -167,19 +167,19 @@ Definition at line \mbox{\hyperlink{task__share_8py_source_l00387}{387}} of file
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00387\ \ \ \ \ \textcolor{keyword}{def\ }get(self,\ in\_ISR=False):}
-\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Disable\ interrupts\ before\ reading\ the\ data}}
-\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
-\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ irq\_state\ =\ pyb.disable\_irq()}
-\DoxyCodeLine{00391\ }
-\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ to\_return\ =\ self.\_buffer[0]}
-\DoxyCodeLine{00393\ }
-\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts}}
-\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
-\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(irq\_state)}
-\DoxyCodeLine{00397\ }
-\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ to\_return}
-\DoxyCodeLine{00399\ }
+\DoxyCodeLine{00387\ \ \ \ \ \textcolor{keyword}{def\ }get(self,\ in\_ISR=False): }
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Disable\ interrupts\ before\ reading\ the\ data }}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR: }
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ irq\_state\ =\ pyb.disable\_irq() }
+\DoxyCodeLine{00391\  }
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ to\_return\ =\ self.\_buffer[0] }
+\DoxyCodeLine{00393\  }
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts }}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR: }
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(irq\_state) }
+\DoxyCodeLine{00397\  }
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ to\_return }
+\DoxyCodeLine{00399\  }
 
 \end{DoxyCode}
 
@@ -209,18 +209,18 @@ Definition at line \mbox{\hyperlink{task__share_8py_source_l00368}{368}} of file
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00368\ \ \ \ \ \textcolor{keyword}{def\ }put(self,\ data,\ in\_ISR=False):}
-\DoxyCodeLine{00369\ }
-\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Disable\ interrupts\ before\ writing\ the\ data}}
-\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
-\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ irq\_state\ =\ pyb.disable\_irq()}
-\DoxyCodeLine{00373\ }
-\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ self.\_buffer[0]\ =\ data}
-\DoxyCodeLine{00375\ }
-\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts}}
-\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR:}
-\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(irq\_state)}
-\DoxyCodeLine{00379\ }
+\DoxyCodeLine{00368\ \ \ \ \ \textcolor{keyword}{def\ }put(self,\ data,\ in\_ISR=False): }
+\DoxyCodeLine{00369\  }
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Disable\ interrupts\ before\ writing\ the\ data }}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR: }
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ irq\_state\ =\ pyb.disable\_irq() }
+\DoxyCodeLine{00373\  }
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ self.\_buffer[0]\ =\ data }
+\DoxyCodeLine{00375\  }
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Re-\/enable\ interrupts }}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\_thread\_protect\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ in\_ISR: }
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ pyb.enable\_irq(irq\_state) }
+\DoxyCodeLine{00379\  }
 
 \end{DoxyCode}
 

@@ -91,30 +91,38 @@ $(function(){initNavTree('_garbage___collector_8py_source.html','',''); });
   <div class="headertitle"><div class="title">Garbage_Collector.py</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="keyword">from</span> gc <span class="keyword">import</span> collect  <span class="comment"># , mem_alloc, mem_free</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="foldopen" id="foldopen00004" data-start="" data-end="">
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="class_garbage___collector_1_1_garbage_collector.html">    4</a></span><span class="keyword">class </span><a class="code hl_class" href="class_garbage___collector_1_1_garbage_collector.html">GarbageCollector</a>:</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>    <span class="keyword">def </span>__init__(self):</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>        <span class="keywordflow">pass</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="comment"># Collects garbage data for defragmentation</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">def </span>run(self):</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>        <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>            collect()</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>            <span class="comment"># print(&quot;Free:&quot;, mem_free())</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>            <span class="comment"># print(&quot;Allocated:&quot;, mem_alloc())</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>            <span class="keywordflow">yield</span></div>
+<a href="_garbage___collector_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">from</span> gc <span class="keyword">import</span> collect</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span></div>
+<div class="foldopen" id="foldopen00014" data-start="" data-end="">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_garbage___collector_1_1_garbage_collector.html">   14</a></span><span class="keyword">class </span><a class="code hl_class" href="class_garbage___collector_1_1_garbage_collector.html">GarbageCollector</a>:</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    </div>
+<div class="foldopen" id="foldopen00016" data-start="" data-end="">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="class_garbage___collector_1_1_garbage_collector.html#aa232eeb65988a03c389cee49aa41a901">   16</a></span>    <span class="keyword">def </span><a class="code hl_function" href="class_garbage___collector_1_1_garbage_collector.html#aa232eeb65988a03c389cee49aa41a901">__init__</a>(self):</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keywordflow">pass</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
 </div>
-<div class="ttc" id="aclass_garbage___collector_1_1_garbage_collector_html"><div class="ttname"><a href="class_garbage___collector_1_1_garbage_collector.html">Garbage_Collector.GarbageCollector</a></div><div class="ttdef"><b>Definition</b> <a href="#l00004">Garbage_Collector.py:4</a></div></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    </div>
+<div class="foldopen" id="foldopen00022" data-start="" data-end="">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_garbage___collector_1_1_garbage_collector.html#a34ccea8ebe8e46142e818b1716334037">   22</a></span>    <span class="keyword">def </span><a class="code hl_function" href="class_garbage___collector_1_1_garbage_collector.html#a34ccea8ebe8e46142e818b1716334037">run</a>(self):</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            collect()</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            <span class="keywordflow">yield</span></div>
+</div>
+</div>
+<div class="ttc" id="aclass_garbage___collector_1_1_garbage_collector_html"><div class="ttname"><a href="class_garbage___collector_1_1_garbage_collector.html">Garbage_Collector.GarbageCollector</a></div><div class="ttdoc">Task wrapper that invokes gc.collect() on a cooperative schedule.</div><div class="ttdef"><b>Definition</b> <a href="#l00014">Garbage_Collector.py:14</a></div></div>
+<div class="ttc" id="aclass_garbage___collector_1_1_garbage_collector_html_a34ccea8ebe8e46142e818b1716334037"><div class="ttname"><a href="class_garbage___collector_1_1_garbage_collector.html#a34ccea8ebe8e46142e818b1716334037">Garbage_Collector.GarbageCollector.run</a></div><div class="ttdeci">run(self)</div><div class="ttdoc">Generator that runs garbage collection each time it&#39;s scheduled.</div><div class="ttdef"><b>Definition</b> <a href="#l00022">Garbage_Collector.py:22</a></div></div>
+<div class="ttc" id="aclass_garbage___collector_1_1_garbage_collector_html_aa232eeb65988a03c389cee49aa41a901"><div class="ttname"><a href="class_garbage___collector_1_1_garbage_collector.html#aa232eeb65988a03c389cee49aa41a901">Garbage_Collector.GarbageCollector.__init__</a></div><div class="ttdeci">__init__(self)</div><div class="ttdoc">Initialize the garbage collector task.</div><div class="ttdef"><b>Definition</b> <a href="#l00016">Garbage_Collector.py:16</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_170f7b92e3f60ce52e1b92c96bff1631.html">Lab Final</a></li><li class="navelem"><a href="dir_8c11834c2acdb65bfbd6dd72ff3baf85.html">Files On Romi</a></li><li class="navelem"><b>Garbage_Collector.py</b></li>
+    <li class="navelem"><a href="dir_170f7b92e3f60ce52e1b92c96bff1631.html">Lab Final</a></li><li class="navelem"><a href="dir_8c11834c2acdb65bfbd6dd72ff3baf85.html">Files On Romi</a></li><li class="navelem"><a href="_garbage___collector_8py.html">Garbage_Collector.py</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

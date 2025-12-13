@@ -2,13 +2,383 @@
 \hypertarget{class_user___input_1_1_user_input}{}\label{class_user___input_1_1_user_input}\index{User\_Input.UserInput@{User\_Input.UserInput}}
 
 
+Reads user commands over UART/\+Bluetooth and updates shared state.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_user___input_1_1_user_input_a9c6e62f69d38089c9339e426951ea6f3}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, button\+\_\+pin, battery)
+\begin{DoxyCompactList}\small\item\em Construct a user input handler. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_user___input_1_1_user_input_a31db03cc321bcc918560ed85e2f17044}{poll}} (self)
+\begin{DoxyCompactList}\small\item\em Non-\/blocking read of raw bytes from UART into the queue. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_user___input_1_1_user_input_a9d99dbce44a53a55e62e3bef16707e1e}{has\+\_\+cmd}} (self)
+\begin{DoxyCompactList}\small\item\em Check if any command is queued. \end{DoxyCompactList}\item 
+\Hypertarget{class_user___input_1_1_user_input_a1aa1d4182e10ec26429325ff48610dc9}\label{class_user___input_1_1_user_input_a1aa1d4182e10ec26429325ff48610dc9} 
+{\bfseries get\+\_\+cmd} (self)
+\begin{DoxyCompactList}\small\item\em Return next command as a 1-\/character string, or {\ttfamily None} if none. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_user___input_1_1_user_input_a0a1ed8d53d45d48ec5d4ac3d649e8e91}{change\+\_\+attribute}} (self, sens, att\+\_\+str)
+\begin{DoxyCompactList}\small\item\em Change a sensor class attribute using the next numeric token. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_user___input_1_1_user_input_ace85e5744336ac2d8680125487d96fd8}{get\+\_\+next\+\_\+n\+\_\+char}} (self, n)
+\begin{DoxyCompactList}\small\item\em Fetch the next {\ttfamily n} characters (blocking until available). \end{DoxyCompactList}\item 
+\Hypertarget{class_user___input_1_1_user_input_ad1b152e56a6171c7356e8ba18015875f}\label{class_user___input_1_1_user_input_ad1b152e56a6171c7356e8ba18015875f} 
+{\bfseries drain} (self)
+\begin{DoxyCompactList}\small\item\em Clear any buffered commands. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_user___input_1_1_user_input_a97bcd47b7b7736e75e857437e5584d01}{run}} (self, shares)
+\begin{DoxyCompactList}\small\item\em Generator task that processes user commands and updates shares. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
 \doxysubsection{Detailed Description}
+Reads user commands over UART/\+Bluetooth and updates shared state. 
+
+Provides helpers for pulling fixed-\/length numeric inputs, changing sensor attributes, and relaying calibration or gain updates to the rest of the system through {\ttfamily task\+\_\+share} queues. 
+
+Definition at line \mbox{\hyperlink{_user___input_8py_source_l00027}{27}} of file \mbox{\hyperlink{_user___input_8py_source}{User\+\_\+\+Input.\+py}}.
 
 
-Definition at line \mbox{\hyperlink{_user___input_8py_source_l00011}{11}} of file \mbox{\hyperlink{_user___input_8py_source}{User\+\_\+\+Input.\+py}}.
+
+\label{doc-constructors}
+\Hypertarget{class_user___input_1_1_user_input_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_user___input_1_1_user_input_a9c6e62f69d38089c9339e426951ea6f3}\index{User\_Input.UserInput@{User\_Input.UserInput}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!User\_Input.UserInput@{User\_Input.UserInput}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_user___input_1_1_user_input_a9c6e62f69d38089c9339e426951ea6f3} 
+User\+\_\+\+Input.\+User\+Input.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{button\+\_\+pin}{, }\item[{}]{battery}{}\end{DoxyParamCaption})}
+
+
+
+Construct a user input handler. 
+
+Sets up UART, stores the reset button pin and battery reference, and clears any buffered characters.
+
+
+\begin{DoxyParams}{Parameters}
+{\em button\+\_\+pin} & Pin object used to trigger a soft reset \\
+\hline
+{\em battery} & Battery object for reporting/adjustment hooks \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_user___input_8py_source_l00035}{35}} of file \mbox{\hyperlink{_user___input_8py_source}{User\+\_\+\+Input.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ button\_pin,\ battery):}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ self.cmd\_queue\ =\ []}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ self.uart\ =\ UART(5,\ 115200)}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ self.battery\ =\ battery}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ self.button\_pin\ =\ button\_pin}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Flush\ the\ buffer}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ self.uart.any():}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.read()}
+\DoxyCodeLine{00045\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_closed___loop___control_8py_source_l00055}{Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+battery}}, \mbox{\hyperlink{_observer_8py_source_l00033}{Observer.\+Observer.\+battery}}, \mbox{\hyperlink{_user___input_8py_source_l00038}{battery}}, \mbox{\hyperlink{_user___input_8py_source_l00040}{button\+\_\+pin}}, \mbox{\hyperlink{_user___input_8py_source_l00036}{cmd\+\_\+queue}}, \mbox{\hyperlink{_observer_8py_source_l00038}{Observer.\+Observer.\+uart}}, \mbox{\hyperlink{_path___director_8py_source_l00108}{Path\+\_\+\+Director.\+Path\+Director.\+uart}}, and \mbox{\hyperlink{_user___input_8py_source_l00037}{uart}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_user___input_1_1_user_input_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_user___input_1_1_user_input_a0a1ed8d53d45d48ec5d4ac3d649e8e91}\index{User\_Input.UserInput@{User\_Input.UserInput}!change\_attribute@{change\_attribute}}
+\index{change\_attribute@{change\_attribute}!User\_Input.UserInput@{User\_Input.UserInput}}
+\doxysubsubsection{\texorpdfstring{change\_attribute()}{change\_attribute()}}
+{\footnotesize\ttfamily \label{class_user___input_1_1_user_input_a0a1ed8d53d45d48ec5d4ac3d649e8e91} 
+User\+\_\+\+Input.\+User\+Input.\+change\+\_\+attribute (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{sens}{, }\item[{}]{att\+\_\+str}{}\end{DoxyParamCaption})}
+
+
+
+Change a sensor class attribute using the next numeric token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sens} & Sensor class whose attribute is being modified \\
+\hline
+{\em att\+\_\+str} & Attribute name to set (e.\+g., {\ttfamily Kp}, {\ttfamily Ki}) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_user___input_8py_source_l00072}{72}} of file \mbox{\hyperlink{_user___input_8py_source}{User\+\_\+\+Input.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{def\ }change\_attribute(self,\ sens,\ att\_str):}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ value\ =\ self.get\_next\_n\_char(5)}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ sens.set\_attr(att\_str,\ value)}
+\DoxyCodeLine{00075\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_user___input_8py_source_l00082}{get\+\_\+next\+\_\+n\+\_\+char()}}.
+
+\Hypertarget{class_user___input_1_1_user_input_ace85e5744336ac2d8680125487d96fd8}\index{User\_Input.UserInput@{User\_Input.UserInput}!get\_next\_n\_char@{get\_next\_n\_char}}
+\index{get\_next\_n\_char@{get\_next\_n\_char}!User\_Input.UserInput@{User\_Input.UserInput}}
+\doxysubsubsection{\texorpdfstring{get\_next\_n\_char()}{get\_next\_n\_char()}}
+{\footnotesize\ttfamily \label{class_user___input_1_1_user_input_ace85e5744336ac2d8680125487d96fd8} 
+ float User\+\_\+\+Input.\+User\+Input.\+get\+\_\+next\+\_\+n\+\_\+char (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{n}{}\end{DoxyParamCaption})}
+
+
+
+Fetch the next {\ttfamily n} characters (blocking until available). 
+
+Converts the retrieved token to {\ttfamily float} and retries on invalid input.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of characters to read \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Parsed floating-\/point value 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_user___input_8py_source_l00082}{82}} of file \mbox{\hyperlink{_user___input_8py_source}{User\+\_\+\+Input.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{def\ }get\_next\_n\_char(self,\ n)\ -\/>\ float:}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ len(self.cmd\_queue)\ <\ n:}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ self.poll()}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ value\ =\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ \_\ \textcolor{keywordflow}{in}\ range(n):}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ char\ =\ self.get\_cmd()}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ char\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\ +=\ char}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ float(value)}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ ValueError:}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Invalid\ value\ try\ again"{}})}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(b\textcolor{stringliteral}{"{}Invalid\ value\ try\ again\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.get\_next\_n\_char(n)}
+\DoxyCodeLine{00096\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_user___input_8py_source_l00036}{cmd\+\_\+queue}}, \mbox{\hyperlink{_user___input_8py_source_l00063}{get\+\_\+cmd()}}, \mbox{\hyperlink{_user___input_8py_source_l00082}{get\+\_\+next\+\_\+n\+\_\+char()}}, \mbox{\hyperlink{_user___input_8py_source_l00050}{poll()}}, \mbox{\hyperlink{_observer_8py_source_l00038}{Observer.\+Observer.\+uart}}, \mbox{\hyperlink{_path___director_8py_source_l00108}{Path\+\_\+\+Director.\+Path\+Director.\+uart}}, and \mbox{\hyperlink{_user___input_8py_source_l00037}{uart}}.
+
+\Hypertarget{class_user___input_1_1_user_input_a9d99dbce44a53a55e62e3bef16707e1e}\index{User\_Input.UserInput@{User\_Input.UserInput}!has\_cmd@{has\_cmd}}
+\index{has\_cmd@{has\_cmd}!User\_Input.UserInput@{User\_Input.UserInput}}
+\doxysubsubsection{\texorpdfstring{has\_cmd()}{has\_cmd()}}
+{\footnotesize\ttfamily \label{class_user___input_1_1_user_input_a9d99dbce44a53a55e62e3bef16707e1e} 
+User\+\_\+\+Input.\+User\+Input.\+has\+\_\+cmd (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Check if any command is queued. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily True} if there is at least one queued character 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_user___input_8py_source_l00059}{59}} of file \mbox{\hyperlink{_user___input_8py_source}{User\+\_\+\+Input.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{def\ }has\_cmd(self):}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ bool(self.cmd\_queue)}
+\DoxyCodeLine{00061\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_user___input_8py_source_l00036}{cmd\+\_\+queue}}.
+
+\Hypertarget{class_user___input_1_1_user_input_a31db03cc321bcc918560ed85e2f17044}\index{User\_Input.UserInput@{User\_Input.UserInput}!poll@{poll}}
+\index{poll@{poll}!User\_Input.UserInput@{User\_Input.UserInput}}
+\doxysubsubsection{\texorpdfstring{poll()}{poll()}}
+{\footnotesize\ttfamily \label{class_user___input_1_1_user_input_a31db03cc321bcc918560ed85e2f17044} 
+User\+\_\+\+Input.\+User\+Input.\+poll (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Non-\/blocking read of raw bytes from UART into the queue. 
+
+Filters out carriage-\/return and line-\/feed; leaves other characters untouched. 
+
+Definition at line \mbox{\hyperlink{_user___input_8py_source_l00050}{50}} of file \mbox{\hyperlink{_user___input_8py_source}{User\+\_\+\+Input.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{def\ }poll(self):}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ self.uart.any():}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ char\_in\ =\ self.uart.read(1).decode()\ \ \textcolor{comment}{\#\ pyright:\ ignore}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ self.cmd\_queue.append(char\_in)}
+\DoxyCodeLine{00055\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_user___input_8py_source_l00036}{cmd\+\_\+queue}}, \mbox{\hyperlink{_observer_8py_source_l00038}{Observer.\+Observer.\+uart}}, \mbox{\hyperlink{_path___director_8py_source_l00108}{Path\+\_\+\+Director.\+Path\+Director.\+uart}}, and \mbox{\hyperlink{_user___input_8py_source_l00037}{uart}}.
+
+\Hypertarget{class_user___input_1_1_user_input_a97bcd47b7b7736e75e857437e5584d01}\index{User\_Input.UserInput@{User\_Input.UserInput}!run@{run}}
+\index{run@{run}!User\_Input.UserInput@{User\_Input.UserInput}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily \label{class_user___input_1_1_user_input_a97bcd47b7b7736e75e857437e5584d01} 
+User\+\_\+\+Input.\+User\+Input.\+run (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{shares}{}\end{DoxyParamCaption})}
+
+
+
+Generator task that processes user commands and updates shares. 
+
+Handles calibration triggers, segment selection, gain changes, and reference speed updates. Also supports soft reset via button press.
+
+
+\begin{DoxyParams}{Parameters}
+{\em shares} & Tuple of {\ttfamily task\+\_\+share} variables for motor flags, speeds, and calibration/status signaling \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_user___input_8py_source_l00108}{108}} of file \mbox{\hyperlink{_user___input_8py_source}{User\+\_\+\+Input.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{def\ }run(self,\ shares):}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ (}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s,}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s,}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s,}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s,}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ data\_transfer\_s,}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s,}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ cal\_white\_s,}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ cal\_black\_s,}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s,}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ )\ =\ shares}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ data\_transfer\_s.put(0)}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}Bluetooth\ Connection\ Established\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}:}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.button\_pin.value()\ ==\ 0:}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ soft\_reset()}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Add\ user\ input\ to\ queue}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ self.poll()}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Gets\ most\ recent\ command}}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ cmd\ =\ self.get\_cmd()}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ cmd\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cmd\ =\ cmd.lower()}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ command\ is\ valid\ do\ command}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ cmd:}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(cmd)}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}\{cmd\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ commands}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ cmd\ ==\ \textcolor{stringliteral}{"{}v"{}}:}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibrate\ White}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s.put(1)}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cal\_white\_s.put(1)}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s.put(1)}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ cmd\ ==\ \textcolor{stringliteral}{"{}b"{}}:}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibrate\ Black}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s.put(1)}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cal\_black\_s.put(1)}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s.put(1)}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ C\ for\ Cancel}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ cmd\ ==\ \textcolor{stringliteral}{"{}c"{}}:}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_flag\_s.put(1)}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_flag\_s.put(1)}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ l\_speed\_s.put(0)}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\_speed\_s.put(0)}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ test\_complete\_s.put(1)}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s.put(0)}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ cmd\ ==\ \textcolor{stringliteral}{"{}."{}}:}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}Set\ State\ (3\ chr):"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ int(self.get\_next\_n\_char(3))}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}\{value\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func\_id\ =\ value\ //\ 100}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ func\_id\ >=\ 1:}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.next\_state\ =\ 0}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ self.uart.write(f"{}Next\ State\ (3\ chr):"{}.encode("{}utf-\/8"{}))}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ PD\_vars.var\_1\ =\ int(self.get\_next\_n\_char(3))}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}Var1\ (5\ chr):"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_1\ =\ self.get\_next\_n\_char(5)}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}\{PD\_vars.var\_1\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ func\_id\ >=\ 2:}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}Var2\ (5\ chr):"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_2\ =\ self.get\_next\_n\_char(5)}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}\{PD\_vars.var\_2\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ func\_id\ >=\ 3:}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}Var3\ (5\ chr):"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_3\ =\ self.get\_next\_n\_char(5)}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}\{PD\_vars.var\_3\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ func\_id\ >=\ 4:}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}Var4\ (5\ chr):"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.var\_4\ =\ self.get\_next\_n\_char(5)}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}\{PD\_vars.var\_4\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_seg\_s.put(value)}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Gain\ Control}}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ cmd\ ==\ \textcolor{stringliteral}{"{}p"{}}:}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ which\_CLC\ =\ self.get\_next\_n\_char(1)}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}\{which\_CLC\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ which\_CLC\ ==\ \textcolor{stringliteral}{"{}1"{}}:}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sens\ =\ Encoder}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ which\_CLC\ ==\ \textcolor{stringliteral}{"{}2"{}}:}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sens\ =\ LineSensor}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sens\ =\ IMU}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.change\_attribute(sens,\ \textcolor{stringliteral}{"{}Kp"{}})}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ cmd\ ==\ \textcolor{stringliteral}{"{}i"{}}:}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ which\_CLC\ =\ self.get\_next\_n\_char(1)}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ which\_CLC\ ==\ \textcolor{stringliteral}{"{}1"{}}:}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sens\ =\ Encoder}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ which\_CLC\ ==\ \textcolor{stringliteral}{"{}2"{}}:}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sens\ =\ LineSensor}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sens\ =\ IMU}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.change\_attribute(sens,\ \textcolor{stringliteral}{"{}Ki"{}})}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ cmd\ ==\ \textcolor{stringliteral}{"{}o"{}}:}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ which\_CLC\ =\ self.get\_next\_n\_char(1)}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ which\_CLC\ ==\ \textcolor{stringliteral}{"{}1"{}}:}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sens\ =\ Encoder}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ which\_CLC\ ==\ \textcolor{stringliteral}{"{}2"{}}:}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sens\ =\ LineSensor}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sens\ =\ IMU}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.change\_attribute(sens,\ \textcolor{stringliteral}{"{}Kd"{}})}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ cmd\ ==\ \textcolor{stringliteral}{"{}k"{}}:}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sens\ =\ Encoder}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.change\_attribute(sens,\ \textcolor{stringliteral}{"{}Kff"{}})}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ cmd\ ==\ \textcolor{stringliteral}{"{}h"{}}:}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sens\ =\ Encoder}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.change\_attribute(sens,\ \textcolor{stringliteral}{"{}turn\_correctionl"{}})}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ cmd\ ==\ \textcolor{stringliteral}{"{}j"{}}:}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sens\ =\ Encoder}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.change\_attribute(sens,\ \textcolor{stringliteral}{"{}turn\_correctionr"{}})}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reference\ Speed}}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ cmd\ ==\ \textcolor{stringliteral}{"{}z"{}}:}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ self.get\_next\_n\_char(5)}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PD\_vars.v\_ref\ =\ value}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}v\_ref:"{}},\ PD\_vars.v\_ref)}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.uart.write(f\textcolor{stringliteral}{"{}v\_ref:\{PD\_vars.v\_ref\}\(\backslash\)r\(\backslash\)n"{}}.encode(\textcolor{stringliteral}{"{}utf-\/8"{}}))}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{yield}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_user___input_8py_source_l00040}{button\+\_\+pin}}, \mbox{\hyperlink{_user___input_8py_source_l00072}{change\+\_\+attribute()}}, \mbox{\hyperlink{_user___input_8py_source_l00063}{get\+\_\+cmd()}}, \mbox{\hyperlink{_user___input_8py_source_l00082}{get\+\_\+next\+\_\+n\+\_\+char()}}, \mbox{\hyperlink{_user___input_8py_source_l00050}{poll()}}, \mbox{\hyperlink{_observer_8py_source_l00038}{Observer.\+Observer.\+uart}}, \mbox{\hyperlink{_path___director_8py_source_l00108}{Path\+\_\+\+Director.\+Path\+Director.\+uart}}, and \mbox{\hyperlink{_user___input_8py_source_l00037}{uart}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-Lab Final/\+Files On Romi/User\+\_\+\+Input.\+py\end{DoxyCompactItemize}
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_user___input_8py}{User\+\_\+\+Input.\+py}}\end{DoxyCompactItemize}

@@ -1,110 +1,115 @@
 \doxysection{Line\+\_\+\+Sensor.\+py}
 \hypertarget{_line___sensor_8py_source}{}\label{_line___sensor_8py_source}\index{Lab Final/Files On Romi/Line\_Sensor.py@{Lab Final/Files On Romi/Line\_Sensor.py}}
-
+\mbox{\hyperlink{_line___sensor_8py}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00001}00001\ \textcolor{keyword}{from}\ Sensor\ \textcolor{keyword}{import}\ Sensor}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00002}00002\ \textcolor{keyword}{from}\ array\ \textcolor{keyword}{import}\ array}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00003}00003\ \textcolor{keyword}{from}\ os\ \textcolor{keyword}{import}\ listdir}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00004}00004\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00005}00005\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00006}\mbox{\hyperlink{class_line___sensor_1_1_line_sensor}{00006}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_line___sensor_1_1_line_sensor}{LineSensor}}(\mbox{\hyperlink{class_sensor_1_1_sensor}{Sensor}}):}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00007}00007\ \ \ \ \ \textcolor{comment}{\#\ Sensor\ Gains}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00008}00008\ \ \ \ \ Kp\ =\ 0.05\ \ \textcolor{comment}{\#\ Proportional\ gain}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00009}00009\ \ \ \ \ Ki\ =\ 0.05\ \ \textcolor{comment}{\#\ Integral\ gain}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00010}00010\ \ \ \ \ Kd\ =\ 0.00\ \ \textcolor{comment}{\#\ Derivative\ gain}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00011}00011\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00012}00012\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ list\_of\_IR\_Sensors):}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00013}00013\ \ \ \ \ \ \ \ \ super().\_\_init\_\_()}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}\ =\ list\_of\_IR\_Sensors}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00015}00015\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_aaf96266db50bb1c76a9e8bfa4b90f90d}{cal\_white}}\ =\ \textcolor{keyword}{False}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00016}00016\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a3ccd17548038620c4abd3b84c9577768}{cal\_black}}\ =\ \textcolor{keyword}{False}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a1ffea8bffa58ec8341b58db4ab67c3ba}{cal\_white\_complete}}\ =\ \textcolor{keyword}{False}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00018}00018\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a7d0c8e58224ee9078426b7445e2d0f80}{cal\_black\_complete}}\ =\ \textcolor{keyword}{False}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_acc0354ba3ac35c9683d6f9f7cd64f73f}{use\_cal}}\ =\ \textcolor{keyword}{True}\ \ \textcolor{comment}{\#\ Set\ to\ False\ to\ force\ recalibration}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a4fb723579dbad928f2a336d7951f174e}{calibrated}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00010}00010\ \textcolor{keyword}{from}\ Sensor\ \textcolor{keyword}{import}\ Sensor}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00011}00011\ \textcolor{keyword}{from}\ array\ \textcolor{keyword}{import}\ array}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00012}00012\ \textcolor{keyword}{from}\ os\ \textcolor{keyword}{import}\ listdir}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00016}\mbox{\hyperlink{class_line___sensor_1_1_line_sensor}{00016}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_line___sensor_1_1_line_sensor}{LineSensor}}(\mbox{\hyperlink{class_sensor_1_1_sensor}{Sensor}}):}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00017}00017\ \ \ \ \ \textcolor{comment}{\#\ Sensor\ Gains}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00018}00018\ \ \ \ \ Kp\ =\ 0.05\ \ \textcolor{comment}{\#\ Proportional\ gain}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00019}00019\ \ \ \ \ Ki\ =\ 0.05\ \ \textcolor{comment}{\#\ Integral\ gain}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00020}00020\ \ \ \ \ Kd\ =\ 0.00\ \ \textcolor{comment}{\#\ Derivative\ gain}}
 \DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00021}00021\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ tuple\ of\ buffers\ for\ readings}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a6c80709f94249040f1777810c862db12}{buffer}}\ =\ array(\textcolor{stringliteral}{"{}f"{}},\ (0.0\ \textcolor{keywordflow}{for}\ \_\ \textcolor{keywordflow}{in}\ range(len(self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}))))}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Line\ sensor\ array\ is\ empty."{}})}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00027}00027\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00028}00028\ \ \ \ \ \textcolor{comment}{\#\ Return\ the\ centroid\ position\ computed\ from\ the\ IR\ sensor\ array.}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00029}00029\ \ \ \ \ \textcolor{keyword}{def\ }get\_data(self)\ -\/>\ float:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ no\ sensors,\ data\ can't\ be\ gotten}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Line\ sensor\ array\ is\ empty."{}})}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00033}00033\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_sensor_1_1_sensor_a49cdbda3f5a9c633664e069b976be896}{update\_dt}}()}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00035}00035\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ sensor\ \textcolor{keywordflow}{in}\ enumerate(self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}):}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a6c80709f94249040f1777810c862db12}{buffer}}[i]\ =\ sensor.get\_data()}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00038}00038\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ compute\ centroid\ position}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ sum\_val\ =\ 0.0}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ sum\_pos\_val\ =\ 0.0}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ each\ item\ in\ buffer\ is\ an\ array}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ val\ \textcolor{keywordflow}{in}\ enumerate(self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a6c80709f94249040f1777810c862db12}{buffer}}):}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ pos\ =\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}[i].location}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ sum\_val\ +=\ val}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ sum\_pos\_val\ +=\ pos\ *\ val}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00047}00047\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(self.buffer)}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00049}00049\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ sum\_pos\_val\ /\ sum\_val}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00022}00022\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00025}\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a988fce141f6fff3036f0275660fb1239}{00025}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a988fce141f6fff3036f0275660fb1239}{\_\_init\_\_}}(self,\ list\_of\_IR\_Sensors):}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ super().\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a988fce141f6fff3036f0275660fb1239}{\_\_init\_\_}}()}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}\ =\ list\_of\_IR\_Sensors}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_aaf96266db50bb1c76a9e8bfa4b90f90d}{cal\_white}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a3ccd17548038620c4abd3b84c9577768}{cal\_black}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a1ffea8bffa58ec8341b58db4ab67c3ba}{cal\_white\_complete}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a7d0c8e58224ee9078426b7445e2d0f80}{cal\_black\_complete}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_acc0354ba3ac35c9683d6f9f7cd64f73f}{use\_cal}}\ =\ \textcolor{keyword}{True}\ \ \textcolor{comment}{\#\ Set\ to\ False\ to\ force\ recalibration}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a4fb723579dbad928f2a336d7951f174e}{calibrated}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ tuple\ of\ buffers\ for\ readings}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a6c80709f94249040f1777810c862db12}{buffer}}\ =\ array(\textcolor{stringliteral}{"{}f"{}},\ (0.0\ \textcolor{keywordflow}{for}\ \_\ \textcolor{keywordflow}{in}\ range(len(self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}))))}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Line\ sensor\ array\ is\ empty."{}})}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00041}00041\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00042}\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a75fb34eb1397286364663b408ef23c89}{00042}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a75fb34eb1397286364663b408ef23c89}{get\_data}}(self)\ -\/>\ float:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ If\ no\ sensors,\ data\ can't\ be\ gotten}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Line\ sensor\ array\ is\ empty."{}})}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_sensor_1_1_sensor_a49cdbda3f5a9c633664e069b976be896}{update\_dt}}()}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ sensor\ \textcolor{keywordflow}{in}\ enumerate(self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}):}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a6c80709f94249040f1777810c862db12}{buffer}}[i]\ =\ sensor.get\_data()}
 \DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00051}00051\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00052}00052\ \ \ \ \ \textcolor{keyword}{def\ }calibrate(self)\ -\/>\ bool:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_acc0354ba3ac35c9683d6f9f7cd64f73f}{use\_cal}}\ \textcolor{keywordflow}{and}\ \textcolor{stringliteral}{"{}IR\_cal.txt"{}}\ \textcolor{keywordflow}{in}\ listdir():}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ data\ is\ present}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Found\ Line\ Sensor\ calibration\ data,\ skipping\ calibration"{}})}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{"{}IR\_cal.txt"{}},\ \textcolor{stringliteral}{"{}r"{}})\ \textcolor{keyword}{as}\ file:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Read\ data\ from\ file,\ strip\ special\ characters,\ split\ on\ commas,\ assign}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ to\ variables.}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ white\_data\ =\ array(\textcolor{stringliteral}{"{}H"{}},\ map(int,\ file.readline().strip().split(\textcolor{stringliteral}{"{},"{}})))\ \ \textcolor{comment}{\#\ uint16}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ black\_data\ =\ array(\textcolor{stringliteral}{"{}H"{}},\ map(int,\ file.readline().strip().split(\textcolor{stringliteral}{"{},"{}})))\ \ \textcolor{comment}{\#\ uint16}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00061}00061\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(white\_data)\ !=\ len(black\_data)\ \textcolor{keywordflow}{or}\ len(white\_data)\ !=\ len(self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}):}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Line\ Sensor\ Calibration\ data\ length\ does\ not\ match\ number\ of\ IR\ sensors."{}})}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ compute\ centroid\ position}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ sum\_val\ =\ 0.0}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ sum\_pos\_val\ =\ 0.0}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ each\ item\ in\ buffer\ is\ an\ array}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ val\ \textcolor{keywordflow}{in}\ enumerate(self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a6c80709f94249040f1777810c862db12}{buffer}}):}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ pos\ =\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}[i].location}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ sum\_val\ +=\ val}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ sum\_pos\_val\ +=\ pos\ *\ val}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ print(self.buffer)}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ sum\_pos\_val\ /\ sum\_val}
 \DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00064}00064\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ idx,\ IR\ \textcolor{keywordflow}{in}\ enumerate(self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}):}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IR.white\ =\ white\_data[idx]}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IR.black\ =\ black\_data[idx]}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00068}00068\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ successful}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a4fb723579dbad928f2a336d7951f174e}{calibrated}}\ =\ \textcolor{keyword}{True}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ data\ is\ not\ present}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_aaf96266db50bb1c76a9e8bfa4b90f90d}{cal\_white}}\ ==\ \textcolor{keyword}{True}\ \textcolor{keywordflow}{and}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a1ffea8bffa58ec8341b58db4ab67c3ba}{cal\_white\_complete}}\ ==\ \textcolor{keyword}{False}:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ sensor\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sensor.read()}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sensor.white\ =\ sensor.ADC.read()}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a1ffea8bffa58ec8341b58db4ab67c3ba}{cal\_white\_complete}}\ =\ \textcolor{keyword}{True}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ Calibration\ Flag}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_aaf96266db50bb1c76a9e8bfa4b90f90d}{cal\_white}}\ =\ \textcolor{keyword}{False}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}White\ Calibration\ Complete"{}})}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00082}00082\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a3ccd17548038620c4abd3b84c9577768}{cal\_black}}\ ==\ \textcolor{keyword}{True}\ \textcolor{keywordflow}{and}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a7d0c8e58224ee9078426b7445e2d0f80}{cal\_black\_complete}}\ ==\ \textcolor{keyword}{False}:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ sensor\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sensor.read()}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sensor.black\ =\ sensor.ADC.read()}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a7d0c8e58224ee9078426b7445e2d0f80}{cal\_black\_complete}}\ =\ \textcolor{keyword}{True}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ Calibration\ Flag}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a3ccd17548038620c4abd3b84c9577768}{cal\_black}}\ =\ \textcolor{keyword}{False}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Black\ Calibration\ Complete"{}})}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00091}00091\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a1ffea8bffa58ec8341b58db4ab67c3ba}{cal\_white\_complete}}\ \textcolor{keywordflow}{and}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a7d0c8e58224ee9078426b7445e2d0f80}{cal\_black\_complete}}:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{"{}IR\_cal.txt"{}},\ \textcolor{stringliteral}{"{}w"{}})\ \textcolor{keyword}{as}\ f:}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ whites\ =\ \textcolor{stringliteral}{"{},"{}}.join(str(s.white)\ \textcolor{keywordflow}{for}\ s\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}})}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ blacks\ =\ \textcolor{stringliteral}{"{},"{}}.join(str(s.black)\ \textcolor{keywordflow}{for}\ s\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}})}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f.write(f\textcolor{stringliteral}{"{}\{whites\}\(\backslash\)n\{blacks\}\(\backslash\)n"{}})}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00097}00097\ }
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ Calibration\ Flags}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a1ffea8bffa58ec8341b58db4ab67c3ba}{cal\_white\_complete}}\ =\ \textcolor{keyword}{False}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a7d0c8e58224ee9078426b7445e2d0f80}{cal\_black\_complete}}\ =\ \textcolor{keyword}{False}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a4fb723579dbad928f2a336d7951f174e}{calibrated}}\ =\ \textcolor{keyword}{True}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00103}00103\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a4fb723579dbad928f2a336d7951f174e}{calibrated}}\ =\ \textcolor{keyword}{False}}
-\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00065}00065\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00071}\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ad01805de6dd955ddac614bba629235d7}{00071}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ad01805de6dd955ddac614bba629235d7}{calibrate}}(self)\ -\/>\ bool:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_acc0354ba3ac35c9683d6f9f7cd64f73f}{use\_cal}}\ \textcolor{keywordflow}{and}\ \textcolor{stringliteral}{"{}IR\_cal.txt"{}}\ \textcolor{keywordflow}{in}\ listdir():}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ data\ is\ present}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Found\ Line\ Sensor\ calibration\ data,\ skipping\ calibration"{}})}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{"{}IR\_cal.txt"{}},\ \textcolor{stringliteral}{"{}r"{}})\ \textcolor{keyword}{as}\ file:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Read\ data\ from\ file,\ strip\ special\ characters,\ split\ on\ commas,\ assign}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ to\ variables.}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ white\_data\ =\ array(\textcolor{stringliteral}{"{}H"{}},\ map(int,\ file.readline().strip().split(\textcolor{stringliteral}{"{},"{}})))\ \ \textcolor{comment}{\#\ uint16}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ black\_data\ =\ array(\textcolor{stringliteral}{"{}H"{}},\ map(int,\ file.readline().strip().split(\textcolor{stringliteral}{"{},"{}})))\ \ \textcolor{comment}{\#\ uint16}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(white\_data)\ !=\ len(black\_data)\ \textcolor{keywordflow}{or}\ len(white\_data)\ !=\ len(self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}):}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Line\ Sensor\ Calibration\ data\ length\ does\ not\ match\ number\ of\ IR\ sensors."{}})}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ idx,\ IR\ \textcolor{keywordflow}{in}\ enumerate(self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}):}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IR.white\ =\ white\_data[idx]}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ IR.black\ =\ black\_data[idx]}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ successful}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a4fb723579dbad928f2a336d7951f174e}{calibrated}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ data\ is\ not\ present}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_aaf96266db50bb1c76a9e8bfa4b90f90d}{cal\_white}}\ ==\ \textcolor{keyword}{True}\ \textcolor{keywordflow}{and}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a1ffea8bffa58ec8341b58db4ab67c3ba}{cal\_white\_complete}}\ ==\ \textcolor{keyword}{False}:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ sensor\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sensor.read()}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sensor.white\ =\ sensor.ADC.read()}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a1ffea8bffa58ec8341b58db4ab67c3ba}{cal\_white\_complete}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ Calibration\ Flag}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_aaf96266db50bb1c76a9e8bfa4b90f90d}{cal\_white}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}White\ Calibration\ Complete"{}})}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a3ccd17548038620c4abd3b84c9577768}{cal\_black}}\ ==\ \textcolor{keyword}{True}\ \textcolor{keywordflow}{and}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a7d0c8e58224ee9078426b7445e2d0f80}{cal\_black\_complete}}\ ==\ \textcolor{keyword}{False}:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ sensor\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}}:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sensor.read()}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sensor.black\ =\ sensor.ADC.read()}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a7d0c8e58224ee9078426b7445e2d0f80}{cal\_black\_complete}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ Calibration\ Flag}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a3ccd17548038620c4abd3b84c9577768}{cal\_black}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Black\ Calibration\ Complete"{}})}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a1ffea8bffa58ec8341b58db4ab67c3ba}{cal\_white\_complete}}\ \textcolor{keywordflow}{and}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a7d0c8e58224ee9078426b7445e2d0f80}{cal\_black\_complete}}:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{"{}IR\_cal.txt"{}},\ \textcolor{stringliteral}{"{}w"{}})\ \textcolor{keyword}{as}\ f:}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ whites\ =\ \textcolor{stringliteral}{"{},"{}}.join(str(s.white)\ \textcolor{keywordflow}{for}\ s\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}})}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ blacks\ =\ \textcolor{stringliteral}{"{},"{}}.join(str(s.black)\ \textcolor{keywordflow}{for}\ s\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_ac4a5ed1ef9e27baae790f74f6bee68ce}{list\_IR\_Sensors}})}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f.write(f\textcolor{stringliteral}{"{}\{whites\}\(\backslash\)n\{blacks\}\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reset\ Calibration\ Flags}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a1ffea8bffa58ec8341b58db4ab67c3ba}{cal\_white\_complete}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a7d0c8e58224ee9078426b7445e2d0f80}{cal\_black\_complete}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a4fb723579dbad928f2a336d7951f174e}{calibrated}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_line___sensor_1_1_line_sensor_a4fb723579dbad928f2a336d7951f174e}{calibrated}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_line___sensor_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{False}}
 
 \end{DoxyCode}

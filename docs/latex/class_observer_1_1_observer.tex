@@ -2,13 +2,227 @@
 \hypertarget{class_observer_1_1_observer}{}\label{class_observer_1_1_observer}\index{Observer.Observer@{Observer.Observer}}
 
 
+Luenberger-\/style observer that estimates pose from sensors and inputs.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_observer_1_1_observer_aebeb17d61a26f311346872d650f7fda3}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, IMU, l\+\_\+encoder, r\+\_\+encoder, battery)
+\begin{DoxyCompactList}\small\item\em Initialize the observer with required sensor references. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_observer_1_1_observer_ac89ce84c3ef1c8b06178a19d184c87bc}{run}} (self, shares)
+\begin{DoxyCompactList}\small\item\em Generator that updates state estimates and publishes to shares. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
 \doxysubsection{Detailed Description}
+Luenberger-\/style observer that estimates pose from sensors and inputs. 
+
+Definition at line \mbox{\hyperlink{_observer_8py_source_l00015}{15}} of file \mbox{\hyperlink{_observer_8py_source}{Observer.\+py}}.
 
 
-Definition at line \mbox{\hyperlink{_observer_8py_source_l00004}{4}} of file \mbox{\hyperlink{_observer_8py_source}{Observer.\+py}}.
+
+\label{doc-constructors}
+\Hypertarget{class_observer_1_1_observer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_observer_1_1_observer_aebeb17d61a26f311346872d650f7fda3}\index{Observer.Observer@{Observer.Observer}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!Observer.Observer@{Observer.Observer}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_observer_1_1_observer_aebeb17d61a26f311346872d650f7fda3} 
+Observer.\+Observer.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{IMU}{, }\item[{}]{l\+\_\+encoder}{, }\item[{}]{r\+\_\+encoder}{, }\item[{}]{battery}{}\end{DoxyParamCaption})}
+
+
+
+Initialize the observer with required sensor references. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em IMU} & IMU object for heading/yaw rate \\
+\hline
+{\em l\+\_\+encoder} & Left encoder instance \\
+\hline
+{\em r\+\_\+encoder} & Right encoder instance \\
+\hline
+{\em battery} & Battery monitor for voltage scaling \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_observer_8py_source_l00023}{23}} of file \mbox{\hyperlink{_observer_8py_source}{Observer.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ IMU,\ l\_encoder,\ r\_encoder,\ battery): }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ self.IMU\ =\ IMU }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ self.tstep\ =\ 0.020\ \ \textcolor{comment}{\#\ must\ assume\ constant\ timestep\ for\ observer\ to\ function }}
+\DoxyCodeLine{00026\  }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ self.l\_encoder\ =\ l\_encoder }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ self.l\_motor\_pwm\_ch\ =\ self.l\_encoder.motor.PWM\_ch }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ self.l\_motor\_nSLP\_pin\ =\ self.l\_encoder.motor.nSLP\_pin }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ self.r\_encoder\ =\ r\_encoder }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ self.r\_motor\_pwm\_ch\ =\ self.r\_encoder.motor.PWM\_ch }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ self.r\_motor\_nSLP\_pin\ =\ self.r\_encoder.motor.nSLP\_pin }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ self.battery\ =\ battery }
+\DoxyCodeLine{00034\  }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ only\ for\ printing\ to\ bluetooth }}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{from}\ pyb\ \textcolor{keyword}{import}\ UART\ \ \textcolor{comment}{\#\ pyright:\ ignore }}
+\DoxyCodeLine{00037\  }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ self.uart\ =\ UART(5,\ 115200) }
+\DoxyCodeLine{00039\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_closed___loop___control_8py_source_l00055}{Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+battery}}, \mbox{\hyperlink{_observer_8py_source_l00033}{battery}}, \mbox{\hyperlink{_observer_8py_source_l00024}{IMU}}, \mbox{\hyperlink{_observer_8py_source_l00027}{l\+\_\+encoder}}, \mbox{\hyperlink{_observer_8py_source_l00029}{l\+\_\+motor\+\_\+n\+SLP\+\_\+pin}}, \mbox{\hyperlink{_observer_8py_source_l00028}{l\+\_\+motor\+\_\+pwm\+\_\+ch}}, \mbox{\hyperlink{_observer_8py_source_l00030}{r\+\_\+encoder}}, \mbox{\hyperlink{_observer_8py_source_l00032}{r\+\_\+motor\+\_\+n\+SLP\+\_\+pin}}, \mbox{\hyperlink{_observer_8py_source_l00031}{r\+\_\+motor\+\_\+pwm\+\_\+ch}}, \mbox{\hyperlink{_observer_8py_source_l00025}{tstep}}, and \mbox{\hyperlink{_observer_8py_source_l00038}{uart}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_observer_1_1_observer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_observer_1_1_observer_ac89ce84c3ef1c8b06178a19d184c87bc}\index{Observer.Observer@{Observer.Observer}!run@{run}}
+\index{run@{run}!Observer.Observer@{Observer.Observer}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily \label{class_observer_1_1_observer_ac89ce84c3ef1c8b06178a19d184c87bc} 
+Observer.\+Observer.\+run (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{shares}{}\end{DoxyParamCaption})}
+
+
+
+Generator that updates state estimates and publishes to shares. 
+
+Uses discrete system matrices to propagate the state and updates pose accumulators. Yields after each update for cooperative scheduling.
+
+
+\begin{DoxyParams}{Parameters}
+{\em shares} & Tuple of {\ttfamily task\+\_\+share} variables for observed states \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_observer_8py_source_l00046}{46}} of file \mbox{\hyperlink{_observer_8py_source}{Observer.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{def\ }run(self,\ shares): }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Seperating\ the\ shares }}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ ( }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_lpos\_s, }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_rpos\_s, }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_cpos\_s, }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yaw\_s, }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yawrate\_s, }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s, }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s, }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ dist\_yaw\_s, }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ )\ =\ shares }
+\DoxyCodeLine{00058\  }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Making\ A\_D,\ B\_D,\ and\ C\ matrices }}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ A\_D\ =\ np.array( }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ [ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0.0012,\ 0.0012,\ 0.0140,\ 0.0000], }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0.0012,\ 0.0012,\ 0.0140,\ 0.0000], }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [-\/0.0001,\ -\/0.0001,\ 0.0039,\ 0.0000], }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0.0000,\ 0.0000,\ -\/0.0000,\ -\/0.0000], }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ ] }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ ) }
+\DoxyCodeLine{00068\  }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ B\_D\ =\ np.array( }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ [ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0.0506,\ 0.0436,\ -\/0.0070,\ -\/0.0070,\ -\/0.0000,\ -\/2.0241], }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0.0436,\ 0.0506,\ -\/0.0070,\ -\/0.0070,\ 0.0000,\ 2.0241], }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0.0029,\ 0.0029,\ 0.4980,\ 0.4980,\ -\/0.0000,\ 0.0000], }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0.0000,\ -\/0.0000,\ 0,\ 0,\ 1,\ 0.02], }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ ] }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ ) }
+\DoxyCodeLine{00077\  }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ C\ =\ np.array( }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ [ }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0.0000,\ 0.0000,\ 1.0000,\ -\/70.5000], }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0.0000,\ 0.0000,\ 1.0000,\ 70.5000], }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0.0000,\ 0.0000,\ 0.0000,\ 1.0000], }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [-\/0.2465,\ 0.2465,\ 0.0000,\ 0.0000], }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ ] }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ ) }
+\DoxyCodeLine{00086\  }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Preallocate\ state\ and\ input\ vectors }}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ x\_k\ =\ np.zeros((4,\ 1)) }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ ustar\ =\ np.zeros((6,\ 1))\ \ \textcolor{comment}{\#\ real-\/time\ input\ vector\ and\ real-\/time\ output\ vector\ concatenated }}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ y\_k\ =\ np.zeros((4,\ 1))\ \ \textcolor{comment}{\#\ calculated\ output\ vector }}
+\DoxyCodeLine{00091\  }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ prev\_c\ =\ 0 }
+\DoxyCodeLine{00093\  }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ zero\ heading }}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ self.IMU.set\_heading(0) }
+\DoxyCodeLine{00096\  }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Update\ encoders\ based\ on\ current\ IMU\ heading\ (which\ is\ zeroed) }}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ self.l\_encoder.position\ =\ -\/RomiProps.wdiv2\ *\ self.IMU.get\_heading() }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ self.r\_encoder.position\ =\ RomiProps.wdiv2\ *\ self.IMU.get\_heading() }
+\DoxyCodeLine{00100\  }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ set\ coordinate\ system }}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ obsd\_X\_s.put(100) }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ obsd\_Y\_s.put(800) }
+\DoxyCodeLine{00104\  }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}: }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Update\ real-\/time\ data }}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ ustar[0,\ 0]\ =\ self.l\_motor\_pwm\_ch.pulse\_width\_percent()\ /\ 100\ *\ self.battery.get\_cur\_volt() }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ ustar[1,\ 0]\ =\ self.r\_motor\_pwm\_ch.pulse\_width\_percent()\ /\ 100\ *\ self.battery.get\_cur\_volt() }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ ustar[2,\ 0]\ =\ self.l\_encoder.position\ *\ RomiProps.wheel\_radius }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ ustar[3,\ 0]\ =\ self.r\_encoder.position\ *\ RomiProps.wheel\_radius }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ ustar[4,\ 0]\ =\ self.IMU.get\_heading() }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ ustar[5,\ 0]\ =\ self.IMU.get\_yaw\_rate() }
+\DoxyCodeLine{00113\  }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Perform\ observer\ update }}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ y\_k\ calculated\ before\ next\ x\_k\ update }}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ y\_k\ =\ np.dot(C,\ x\_k)\ \ \textcolor{comment}{\#\ D\ term\ omitted\ since\ zero }}
+\DoxyCodeLine{00117\  }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calculate\ C\_delta }}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ C\_delta\ =\ x\_k[2,\ 0]\ -\/\ prev\_c }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ prev\_c\ =\ x\_k[2,\ 0] }
+\DoxyCodeLine{00121\  }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ X\_delta\ =\ C\_delta\ *\ np.cos(ustar[4,\ 0]) }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ Y\_delta\ =\ C\_delta\ *\ np.sin(ustar[4,\ 0]) }
+\DoxyCodeLine{00124\  }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Update\ Shares\ Accordingly }}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_lpos\_s.put(y\_k[0,\ 0]) }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_rpos\_s.put(y\_k[1,\ 0]) }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_cpos\_s.put(x\_k[2,\ 0]) }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yaw\_s.put(y\_k[2,\ 0]) }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_yawrate\_s.put(y\_k[3,\ 0]) }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_X\_s.put(obsd\_X\_s.get()\ +\ X\_delta) }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ obsd\_Y\_s.put(obsd\_Y\_s.get()\ +\ Y\_delta) }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ dist\_yaw\_s.put( }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (self.r\_encoder.position\ -\/\ self.l\_encoder.position)\ *\ RomiProps.wheel\_radius\ /\ RomiProps.trackwidth }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ ) }
+\DoxyCodeLine{00136\  }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Update\ x\_k\ to\ be\ used\ in\ next\ iteration }}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ x\_k\ =\ np.dot(A\_D,\ x\_k)\ +\ np.dot(B\_D,\ ustar) }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{yield}\ 0 }
+\DoxyCodeLine{00140\  }
+\DoxyCodeLine{00141\  }
+\DoxyCodeLine{00142\ \textcolor{comment}{\#\ For\ Reference: }}
+\DoxyCodeLine{00143\ \textcolor{comment}{\#\ x\_k[0,0]\ =\ Omega\_L\ \ \ [rad/s] }}
+\DoxyCodeLine{00144\ \textcolor{comment}{\#\ x\_k[1,0]\ =\ Omega\_R\ \ \ [rad/s] }}
+\DoxyCodeLine{00145\ \textcolor{comment}{\#\ x\_k[2,0]\ =\ s\ \ \ \ \ \ \ \ \ [mm] }}
+\DoxyCodeLine{00146\ \textcolor{comment}{\#\ x\_k[3,0]\ =\ psi\ \ \ \ \ \ \ [rad] }}
+\DoxyCodeLine{00147\  }
+\DoxyCodeLine{00148\ \textcolor{comment}{\#\ y\_k[0,0]\ =\ s\_L\ \ \ \ \ \ \ [mm] }}
+\DoxyCodeLine{00149\ \textcolor{comment}{\#\ y\_k[1,0]\ =\ s\_R\ \ \ \ \ \ \ [mm] }}
+\DoxyCodeLine{00150\ \textcolor{comment}{\#\ y\_k[2,0]\ =\ psi\ \ \ \ \ \ \ [rad] }}
+\DoxyCodeLine{00151\ \textcolor{comment}{\#\ y\_k[3,0]\ =\ psi\_dot\ \ \ [rad/s] }}
+\DoxyCodeLine{00152\  }
+\DoxyCodeLine{00153\ \textcolor{comment}{\#\ ustar[0,0]\ =\ v\_L\ \ \ \ \ [V] }}
+\DoxyCodeLine{00154\ \textcolor{comment}{\#\ ustar[1,0]\ =\ v\_R\ \ \ \ \ [V] }}
+\DoxyCodeLine{00155\ \textcolor{comment}{\#\ ustar[2,0]\ =\ s\_L\ \ \ \ \ [mm] }}
+\DoxyCodeLine{00156\ \textcolor{comment}{\#\ ustar[3,0]\ =\ s\_R\ \ \ \ \ [mm] }}
+\DoxyCodeLine{00157\ \textcolor{comment}{\#\ ustar[4,0]\ =\ psi\ \ \ \ \ [rad] }}
+\DoxyCodeLine{00158\ \textcolor{comment}{\#\ ustar[5,0]\ =\ psi\_dot\ [rad/s] }}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_closed___loop___control_8py_source_l00055}{Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+battery}}, \mbox{\hyperlink{_observer_8py_source_l00033}{battery}}, \mbox{\hyperlink{_observer_8py_source_l00024}{IMU}}, \mbox{\hyperlink{_observer_8py_source_l00027}{l\+\_\+encoder}}, \mbox{\hyperlink{_observer_8py_source_l00028}{l\+\_\+motor\+\_\+pwm\+\_\+ch}}, \mbox{\hyperlink{_observer_8py_source_l00030}{r\+\_\+encoder}}, and \mbox{\hyperlink{_observer_8py_source_l00031}{r\+\_\+motor\+\_\+pwm\+\_\+ch}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-Lab Final/\+Files On Romi/Observer.\+py\end{DoxyCompactItemize}
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_observer_8py}{Observer.\+py}}\end{DoxyCompactItemize}

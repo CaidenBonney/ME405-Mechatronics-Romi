@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['go_5fflag_0',['go_flag',['../classcotask_1_1_task.html#ad309fae1890bffafa75e9fdb33fae600',1,'cotask::Task']]]
+  ['counts_5fper_5frev_0',['counts_per_rev',['../class_romi___props_1_1_romi_props.html#a19c1db104c2be3104e67570824773892',1,'Romi_Props::RomiProps']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['velocity_0',['velocity',['../class_encoder_1_1_encoder.html#a350e18a3d12255c04ae76cbebd0e9a6c',1,'Encoder::Encoder']]]
+  ['update_0',['update',['../class_encoder_1_1_encoder.html#a38735c3e7480ced90b58e80e2704d677',1,'Encoder::Encoder']]],
+  ['update_5fdt_1',['update_dt',['../class_sensor_1_1_sensor.html#a49cdbda3f5a9c633664e069b976be896',1,'Sensor::Sensor']]]
 ];

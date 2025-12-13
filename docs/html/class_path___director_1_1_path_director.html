@@ -98,10 +98,699 @@ $(function(){initNavTree('class_path___director_1_1_path_director.html','','clas
   <div class="headertitle"><div class="title">Path_Director.PathDirector Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Task-level controller that sequences Romi through predefined path states.  
+ <a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a12318528350ed41f193b9a5caa0ac949" id="r_a12318528350ed41f193b9a5caa0ac949"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a12318528350ed41f193b9a5caa0ac949">__init__</a> (self, line_sensor, IMU_obj, tuple bump_sensors)</td></tr>
+<tr class="memdesc:a12318528350ed41f193b9a5caa0ac949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the path director.  <br /></td></tr>
+<tr class="memitem:a38e326a15acf08b661e9d5d76afad751" id="r_a38e326a15acf08b661e9d5d76afad751"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a38e326a15acf08b661e9d5d76afad751">run</a> (self, shares)</td></tr>
+<tr class="memdesc:a38e326a15acf08b661e9d5d76afad751"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generator implementing the state machine for path execution.  <br /></td></tr>
+</table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_path___director_8py_source.html#l00013">13</a> of file <a class="el" href="_path___director_8py_source.html">Path_Director.py</a>.</p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Task-level controller that sequences Romi through predefined path states. </p>
+<p>This class wraps the motion logic for each segment of the course, sharing data with other tasks via <code>task_share</code> queues and using closed-loop controllers for heading and line tracking. States are defined as integers and executed inside the generator <code><a class="el" href="#a38e326a15acf08b661e9d5d76afad751" title="Generator implementing the state machine for path execution.">run()</a></code>. </p>
+
+<p class="definition">Definition at line <a class="el" href="_path___director_8py_source.html#l00027">27</a> of file <a class="el" href="_path___director_8py_source.html">Path_Director.py</a>.</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a12318528350ed41f193b9a5caa0ac949" name="a12318528350ed41f193b9a5caa0ac949"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12318528350ed41f193b9a5caa0ac949">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Path_Director.PathDirector.__init__ </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>line_sensor</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>IMU_obj</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tuple</td>          <td class="paramname"><span class="paramname"><em>bump_sensors</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize the path director. </p>
+<p>Sets up closed-loop controllers, UART telemetry, bump callbacks, and initializes path state variables.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">line_sensor</td><td>Calibrated line sensor instance </td></tr>
+    <tr><td class="paramname">IMU_obj</td><td>IMU instance providing heading and calibration </td></tr>
+    <tr><td class="paramname">bump_sensors</td><td>Tuple of bumper pins for collision detection </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_path___director_8py_source.html#l00081">81</a> of file <a class="el" href="_path___director_8py_source.html">Path_Director.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   81</span>    <span class="keyword">def </span>__init__(self, line_sensor, IMU_obj, bump_sensors: tuple):</div>
+<div class="line"><span class="lineno">   82</span>        collect()</div>
+<div class="line"><span class="lineno">   83</span>        <span class="keyword">from</span> Closed_Loop_Control <span class="keyword">import</span> ClosedLoopControl</div>
+<div class="line"><span class="lineno">   84</span>        <span class="keyword">from</span> Line_Sensor <span class="keyword">import</span> LineSensor</div>
+<div class="line"><span class="lineno">   85</span>        <span class="keyword">from</span> IMU <span class="keyword">import</span> IMU</div>
+<div class="line"><span class="lineno">   86</span> </div>
+<div class="line"><span class="lineno">   87</span>        self.state = PathDirector.CALIBRATE  <span class="comment"># this is overwritten on first run</span></div>
+<div class="line"><span class="lineno">   88</span>        self.segment_set = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">   89</span>        self.seg_start_time = 0</div>
+<div class="line"><span class="lineno">   90</span> </div>
+<div class="line"><span class="lineno">   91</span>        self.line_sensor = line_sensor</div>
+<div class="line"><span class="lineno">   92</span>        self.Line_CLC = ClosedLoopControl(</div>
+<div class="line"><span class="lineno">   93</span>            sensor=self.line_sensor,</div>
+<div class="line"><span class="lineno">   94</span>            max_min=12,</div>
+<div class="line"><span class="lineno">   95</span>            Kp=LineSensor.Kp,</div>
+<div class="line"><span class="lineno">   96</span>            Ki=LineSensor.Ki,</div>
+<div class="line"><span class="lineno">   97</span>            Kd=LineSensor.Kd,</div>
+<div class="line"><span class="lineno">   98</span>        )</div>
+<div class="line"><span class="lineno">   99</span>        self.IMU = IMU_obj</div>
+<div class="line"><span class="lineno">  100</span>        self.Heading_CLC = ClosedLoopControl(</div>
+<div class="line"><span class="lineno">  101</span>            sensor=self.IMU,</div>
+<div class="line"><span class="lineno">  102</span>            max_min=12,</div>
+<div class="line"><span class="lineno">  103</span>            Kp=IMU.Kp,</div>
+<div class="line"><span class="lineno">  104</span>            Ki=IMU.Ki,</div>
+<div class="line"><span class="lineno">  105</span>            Kd=IMU.Kd,</div>
+<div class="line"><span class="lineno">  106</span>        )</div>
+<div class="line"><span class="lineno">  107</span> </div>
+<div class="line"><span class="lineno">  108</span>        self.uart = UART(5, 115200)</div>
+<div class="line"><span class="lineno">  109</span>        self.bumped = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  110</span>        self.bump_stop = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  111</span>        self.bump_wall = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  112</span>        self.bumptimer = 0</div>
+<div class="line"><span class="lineno">  113</span> </div>
+<div class="line"><span class="lineno">  114</span>        collect()</div>
+<div class="line"><span class="lineno">  115</span>        <span class="keyword">from</span> pyb <span class="keyword">import</span> Pin, ExtInt  <span class="comment"># pyright: ignore</span></div>
+<div class="line"><span class="lineno">  116</span> </div>
+<div class="line"><span class="lineno">  117</span>        <span class="comment"># Create bumper callbacks for all pins</span></div>
+<div class="line"><span class="lineno">  118</span>        <span class="keyword">def </span>bmp_callback_handler(pin: Pin):</div>
+<div class="line"><span class="lineno">  119</span>            <span class="keyword">def </span>bumper_callback(line):</div>
+<div class="line"><span class="lineno">  120</span>                <span class="keywordflow">if</span> pin.value() != 0:</div>
+<div class="line"><span class="lineno">  121</span>                    self.bumped = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  122</span> </div>
+<div class="line"><span class="lineno">  123</span>            <span class="keywordflow">return</span> bumper_callback</div>
+<div class="line"><span class="lineno">  124</span> </div>
+<div class="line"><span class="lineno">  125</span>        <span class="keywordflow">for</span> bump_sensor <span class="keywordflow">in</span> bump_sensors:</div>
+<div class="line"><span class="lineno">  126</span>            ExtInt(bump_sensor, ExtInt.IRQ_FALLING, Pin.PULL_UP, bmp_callback_handler(bump_sensor))</div>
+<div class="line"><span class="lineno">  127</span> </div>
+<div class="line"><span class="lineno">  128</span>        <span class="comment"># Extra variables used for fixed distance</span></div>
+<div class="line"><span class="lineno">  129</span>        self.distance = 1000  <span class="comment"># mm</span></div>
+<div class="line"><span class="lineno">  130</span>        self.end_point = 0  <span class="comment"># mm</span></div>
+<div class="line"><span class="lineno">  131</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_path___director_8py_source.html#l00110">bump_stop</a>, <a class="el" href="_path___director_8py_source.html#l00111">bump_wall</a>, <a class="el" href="_path___director_8py_source.html#l00109">bumped</a>, <a class="el" href="_path___director_8py_source.html#l00112">bumptimer</a>, <a class="el" href="_path___director_8py_source.html#l00129">distance</a>, <a class="el" href="_path___director_8py_source.html#l00130">end_point</a>, <a class="el" href="_path___director_8py_source.html#l00100">Heading_CLC</a>, <a class="el" href="_observer_8py_source.html#l00024">Observer.Observer.IMU</a>, <a class="el" href="_path___director_8py_source.html#l00099">IMU</a>, <a class="el" href="_path___director_8py_source.html#l00092">Line_CLC</a>, <a class="el" href="_path___director_8py_source.html#l00091">line_sensor</a>, <a class="el" href="_path___director_8py_source.html#l00089">seg_start_time</a>, <a class="el" href="_path___director_8py_source.html#l00088">segment_set</a>, <a class="el" href="_path___director_8py_source.html#l00087">state</a>, <a class="el" href="_observer_8py_source.html#l00038">Observer.Observer.uart</a>, and <a class="el" href="_path___director_8py_source.html#l00108">uart</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a38e326a15acf08b661e9d5d76afad751" name="a38e326a15acf08b661e9d5d76afad751"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38e326a15acf08b661e9d5d76afad751">&#9670;&#160;</a></span>run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Path_Director.PathDirector.run </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>shares</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generator implementing the state machine for path execution. </p>
+<p>Pulls data from shared variables, updates control references, and sequences through segments such as calibration, line following, turns, and point-to-point navigation. Yields the current state each loop to cooperate with the scheduler.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shares</td><td>Tuple of task_share queues used for inter-task comms </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_path___director_8py_source.html#l00140">140</a> of file <a class="el" href="_path___director_8py_source.html">Path_Director.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  140</span>    <span class="keyword">def </span>run(self, shares):</div>
+<div class="line"><span class="lineno">  141</span>        <span class="comment"># Separating the shares</span></div>
+<div class="line"><span class="lineno">  142</span>        (</div>
+<div class="line"><span class="lineno">  143</span>            l_flag_s,</div>
+<div class="line"><span class="lineno">  144</span>            l_speed_s,</div>
+<div class="line"><span class="lineno">  145</span>            r_flag_s,</div>
+<div class="line"><span class="lineno">  146</span>            r_speed_s,</div>
+<div class="line"><span class="lineno">  147</span>            data_transfer_s,</div>
+<div class="line"><span class="lineno">  148</span>            test_complete_s,</div>
+<div class="line"><span class="lineno">  149</span>            white_cal_s,</div>
+<div class="line"><span class="lineno">  150</span>            black_cal_s,</div>
+<div class="line"><span class="lineno">  151</span>            set_seg_s,</div>
+<div class="line"><span class="lineno">  152</span>            seg_start_s,</div>
+<div class="line"><span class="lineno">  153</span>            obsd_lpos_s,</div>
+<div class="line"><span class="lineno">  154</span>            obsd_rpos_s,</div>
+<div class="line"><span class="lineno">  155</span>            obsd_cpos_s,</div>
+<div class="line"><span class="lineno">  156</span>            obsd_yaw_s,</div>
+<div class="line"><span class="lineno">  157</span>            obsd_yawrate_s,</div>
+<div class="line"><span class="lineno">  158</span>            obsd_X_s,</div>
+<div class="line"><span class="lineno">  159</span>            obsd_Y_s,</div>
+<div class="line"><span class="lineno">  160</span>            dist_yaw_s,</div>
+<div class="line"><span class="lineno">  161</span>        ) = shares</div>
+<div class="line"><span class="lineno">  162</span> </div>
+<div class="line"><span class="lineno">  163</span>        <span class="keyword">def </span>set_state(new_state: int):</div>
+<div class="line"><span class="lineno">  164</span>            self.state = new_state</div>
+<div class="line"><span class="lineno">  165</span>            set_seg_s.put(new_state)</div>
+<div class="line"><span class="lineno">  166</span>            self.segment_set = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  167</span> </div>
+<div class="line"><span class="lineno">  168</span>            <span class="comment"># notify motors previous segment is complete</span></div>
+<div class="line"><span class="lineno">  169</span>            test_complete_s.put(1)</div>
+<div class="line"><span class="lineno">  170</span> </div>
+<div class="line"><span class="lineno">  171</span>        <span class="keyword">def </span>update_motors_CLC(CLC_obj):</div>
+<div class="line"><span class="lineno">  172</span>            v_adjust = CLC_obj.run() * RomiProps.wdiv2</div>
+<div class="line"><span class="lineno">  173</span>            l_flag_s.put(1)</div>
+<div class="line"><span class="lineno">  174</span>            l_speed_s.put(PD_vars.v_ref - v_adjust)</div>
+<div class="line"><span class="lineno">  175</span>            r_flag_s.put(1)</div>
+<div class="line"><span class="lineno">  176</span>            r_speed_s.put(PD_vars.v_ref + v_adjust)</div>
+<div class="line"><span class="lineno">  177</span> </div>
+<div class="line"><span class="lineno">  178</span>        <span class="keyword">def </span>forward_at_speed(speed: float):</div>
+<div class="line"><span class="lineno">  179</span>            l_flag_s.put(1)</div>
+<div class="line"><span class="lineno">  180</span>            l_speed_s.put(speed)</div>
+<div class="line"><span class="lineno">  181</span>            r_flag_s.put(1)</div>
+<div class="line"><span class="lineno">  182</span>            r_speed_s.put(speed)</div>
+<div class="line"><span class="lineno">  183</span> </div>
+<div class="line"><span class="lineno">  184</span>        set_state(PathDirector.CALIBRATE)</div>
+<div class="line"><span class="lineno">  185</span> </div>
+<div class="line"><span class="lineno">  186</span>        <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
+<div class="line"><span class="lineno">  187</span>            <span class="keywordflow">if</span> self.bumped:</div>
+<div class="line"><span class="lineno">  188</span>                <span class="keywordflow">if</span> self.bump_stop:</div>
+<div class="line"><span class="lineno">  189</span>                    self.uart.write(f<span class="stringliteral">&quot;bumped\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  190</span>                    self.bumped = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  191</span>                    set_state(PathDirector.WAIT)</div>
+<div class="line"><span class="lineno">  192</span>                <span class="keywordflow">elif</span> self.bump_wall:</div>
+<div class="line"><span class="lineno">  193</span>                    self.uart.write(f<span class="stringliteral">&quot;wall\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  194</span>                    set_state(PathDirector.REVERSE_FROM_WALL)</div>
+<div class="line"><span class="lineno">  195</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  196</span>                    <span class="keywordflow">if</span> self.bumptimer == 0:</div>
+<div class="line"><span class="lineno">  197</span>                        self.uart.write(f<span class="stringliteral">&quot;bumped\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  198</span>                        self.bumptimer = ticks_us()</div>
+<div class="line"><span class="lineno">  199</span>                    forward_at_speed(-100)</div>
+<div class="line"><span class="lineno">  200</span>                    <span class="keywordflow">if</span> ticks_diff(ticks_us(), self.bumptimer) &gt;= 1000_000:</div>
+<div class="line"><span class="lineno">  201</span>                        self.uart.write(f<span class="stringliteral">&quot;unbumped\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  202</span>                        forward_at_speed(0)</div>
+<div class="line"><span class="lineno">  203</span>                        self.bumptimer = 0</div>
+<div class="line"><span class="lineno">  204</span>                        self.bumped = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  205</span> </div>
+<div class="line"><span class="lineno">  206</span>            <span class="keywordflow">if</span> self.Line_CLC:</div>
+<div class="line"><span class="lineno">  207</span>                <span class="keyword">from</span> Line_Sensor <span class="keyword">import</span> LineSensor</div>
+<div class="line"><span class="lineno">  208</span> </div>
+<div class="line"><span class="lineno">  209</span>                self.Line_CLC.gain_update(Kp=LineSensor.Kp, Ki=LineSensor.Ki, Kd=LineSensor.Kd)</div>
+<div class="line"><span class="lineno">  210</span> </div>
+<div class="line"><span class="lineno">  211</span>            <span class="keywordflow">if</span> self.Heading_CLC:</div>
+<div class="line"><span class="lineno">  212</span>                <span class="keyword">from</span> IMU <span class="keyword">import</span> IMU</div>
+<div class="line"><span class="lineno">  213</span> </div>
+<div class="line"><span class="lineno">  214</span>                self.Heading_CLC.gain_update(Kp=IMU.Kp, Ki=IMU.Ki, Kd=IMU.Kd)</div>
+<div class="line"><span class="lineno">  215</span> </div>
+<div class="line"><span class="lineno">  216</span>            <span class="keywordflow">if</span> set_seg_s.get() != self.state:</div>
+<div class="line"><span class="lineno">  217</span>                set_state(set_seg_s.get())</div>
+<div class="line"><span class="lineno">  218</span> </div>
+<div class="line"><span class="lineno">  219</span>            <span class="keywordflow">if</span> self.state == PathDirector.WAIT:</div>
+<div class="line"><span class="lineno">  220</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:</div>
+<div class="line"><span class="lineno">  221</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  222</span>                    <span class="comment"># set seg_start_s to 2 because we have two motor controllers</span></div>
+<div class="line"><span class="lineno">  223</span>                    <span class="comment"># that both have to acknowledge the segment start</span></div>
+<div class="line"><span class="lineno">  224</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  225</span>                    forward_at_speed(0)</div>
+<div class="line"><span class="lineno">  226</span> </div>
+<div class="line"><span class="lineno">  227</span>                    print(<span class="stringliteral">&quot;Starting Waiting Segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  228</span>                    <span class="comment"># Waiting Segment</span></div>
+<div class="line"><span class="lineno">  229</span>                    <span class="comment"># self.uart.write(f&quot;curr state: {self.state}\r\n&quot;.encode(&quot;utf-8&quot;))</span></div>
+<div class="line"><span class="lineno">  230</span>                    self.uart.write(f<span class="stringliteral">&quot;L: {obsd_lpos_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  231</span>                    self.uart.write(f<span class="stringliteral">&quot;R: {obsd_rpos_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  232</span>                    self.uart.write(f<span class="stringliteral">&quot;C: {obsd_cpos_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  233</span>                    self.uart.write(f<span class="stringliteral">&quot;H: {obsd_yaw_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  234</span>                    self.uart.write(f<span class="stringliteral">&quot;X: {obsd_X_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  235</span>                    self.uart.write(f<span class="stringliteral">&quot;Y: {obsd_Y_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  236</span> </div>
+<div class="line"><span class="lineno">  237</span>            <span class="keywordflow">elif</span> self.state == PathDirector.CALIBRATE:</div>
+<div class="line"><span class="lineno">  238</span>                <span class="comment"># Calibration Segment</span></div>
+<div class="line"><span class="lineno">  239</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:</div>
+<div class="line"><span class="lineno">  240</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  241</span>                    <span class="comment"># set seg_start_s to 2 because we have two motor controllers</span></div>
+<div class="line"><span class="lineno">  242</span>                    <span class="comment"># that both have to acknowledge the segment start</span></div>
+<div class="line"><span class="lineno">  243</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  244</span>                    print(<span class="stringliteral">&quot;Starting Calibration Segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  245</span> </div>
+<div class="line"><span class="lineno">  246</span>                <span class="keywordflow">if</span> white_cal_s.get() == 1:</div>
+<div class="line"><span class="lineno">  247</span>                    self.line_sensor.cal_white = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  248</span>                    white_cal_s.put(0)</div>
+<div class="line"><span class="lineno">  249</span> </div>
+<div class="line"><span class="lineno">  250</span>                <span class="keywordflow">if</span> black_cal_s.get() == 1:</div>
+<div class="line"><span class="lineno">  251</span>                    self.line_sensor.cal_black = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  252</span>                    black_cal_s.put(0)</div>
+<div class="line"><span class="lineno">  253</span> </div>
+<div class="line"><span class="lineno">  254</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.line_sensor.calibrated <span class="keywordflow">and</span> self.line_sensor.calibrate():</div>
+<div class="line"><span class="lineno">  255</span>                    print(<span class="stringliteral">&quot;Line Sensor Calibration Complete&quot;</span>)</div>
+<div class="line"><span class="lineno">  256</span>                    self.Line_CLC.reset()</div>
+<div class="line"><span class="lineno">  257</span>                    self.Line_CLC.set_ref(0)</div>
+<div class="line"><span class="lineno">  258</span> </div>
+<div class="line"><span class="lineno">  259</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.IMU.calibrated <span class="keywordflow">and</span> self.IMU.calibrate():</div>
+<div class="line"><span class="lineno">  260</span>                    print(<span class="stringliteral">&quot;IMU Calibration Complete&quot;</span>)</div>
+<div class="line"><span class="lineno">  261</span> </div>
+<div class="line"><span class="lineno">  262</span>                <span class="keywordflow">if</span> self.line_sensor.calibrated <span class="keywordflow">and</span> self.IMU.calibrated:</div>
+<div class="line"><span class="lineno">  263</span>                    <span class="comment"># both calibrations complete</span></div>
+<div class="line"><span class="lineno">  264</span>                    <span class="comment"># return back to waiting state</span></div>
+<div class="line"><span class="lineno">  265</span>                    set_state(PathDirector.WAIT)</div>
+<div class="line"><span class="lineno">  266</span> </div>
+<div class="line"><span class="lineno">  267</span>            <span class="keywordflow">elif</span> self.state == PathDirector.FOLLOW_LINE:</div>
+<div class="line"><span class="lineno">  268</span>                <span class="comment"># Line Following Segment</span></div>
+<div class="line"><span class="lineno">  269</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:  <span class="comment"># ran once per segment</span></div>
+<div class="line"><span class="lineno">  270</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  271</span>                    <span class="comment"># set seg_start_s to 2 because we have two motor controllers</span></div>
+<div class="line"><span class="lineno">  272</span>                    <span class="comment"># that both have to acknowledge the segment start</span></div>
+<div class="line"><span class="lineno">  273</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  274</span>                    print(<span class="stringliteral">&quot;Starting Line Following Segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  275</span> </div>
+<div class="line"><span class="lineno">  276</span>                    <span class="comment"># Linesensor CLC centroid reference</span></div>
+<div class="line"><span class="lineno">  277</span>                    self.Line_CLC.set_ref(0)</div>
+<div class="line"><span class="lineno">  278</span> </div>
+<div class="line"><span class="lineno">  279</span>                    <span class="comment"># motor settings</span></div>
+<div class="line"><span class="lineno">  280</span>                    forward_at_speed(PD_vars.v_ref)</div>
+<div class="line"><span class="lineno">  281</span> </div>
+<div class="line"><span class="lineno">  282</span>                update_motors_CLC(self.Line_CLC)</div>
+<div class="line"><span class="lineno">  283</span> </div>
+<div class="line"><span class="lineno">  284</span>            <span class="comment"># -------------------------------------------------------- Start of Functions -------------------------------------------------------- #</span></div>
+<div class="line"><span class="lineno">  285</span> </div>
+<div class="line"><span class="lineno">  286</span>            <span class="keywordflow">elif</span> self.state == PathDirector.FIXED_FORWARD:</div>
+<div class="line"><span class="lineno">  287</span>                <span class="comment"># Fixed Forward Distance Segment</span></div>
+<div class="line"><span class="lineno">  288</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:  <span class="comment"># ran once per segment</span></div>
+<div class="line"><span class="lineno">  289</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  290</span>                    <span class="comment"># set seg_start_s to 2 because we have two motor controllers</span></div>
+<div class="line"><span class="lineno">  291</span>                    <span class="comment"># that both have to acknowledge the segment start</span></div>
+<div class="line"><span class="lineno">  292</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  293</span>                    print(<span class="stringliteral">&quot;Fixed Forward Distance Segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  294</span> </div>
+<div class="line"><span class="lineno">  295</span>                    <span class="comment"># self.distance = 1000  # mm</span></div>
+<div class="line"><span class="lineno">  296</span>                    self.end_point = obsd_cpos_s.get() + self.distance  <span class="comment"># mm</span></div>
+<div class="line"><span class="lineno">  297</span> </div>
+<div class="line"><span class="lineno">  298</span>                    <span class="comment"># motor settings</span></div>
+<div class="line"><span class="lineno">  299</span>                    forward_at_speed(PD_vars.v_ref)</div>
+<div class="line"><span class="lineno">  300</span> </div>
+<div class="line"><span class="lineno">  301</span>                <span class="keywordflow">if</span> obsd_cpos_s.get() &gt;= self.end_point:</div>
+<div class="line"><span class="lineno">  302</span>                    self.uart.write(f<span class="stringliteral">&quot;L: {obsd_lpos_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  303</span>                    self.uart.write(f<span class="stringliteral">&quot;R: {obsd_rpos_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  304</span>                    self.uart.write(f<span class="stringliteral">&quot;C: {obsd_cpos_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  305</span>                    self.uart.write(f<span class="stringliteral">&quot;H: {obsd_yaw_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  306</span>                    self.uart.write(f<span class="stringliteral">&quot;X: {obsd_X_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  307</span>                    self.uart.write(f<span class="stringliteral">&quot;Y: {obsd_Y_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  308</span>                    set_state(PD_vars.next_state)</div>
+<div class="line"><span class="lineno">  309</span> </div>
+<div class="line"><span class="lineno">  310</span>            <span class="keywordflow">elif</span> self.state == PathDirector.TURN_ANGLE:</div>
+<div class="line"><span class="lineno">  311</span>                <span class="comment"># Turn In Place Segment</span></div>
+<div class="line"><span class="lineno">  312</span>                <span class="comment"># var1 = angle [deg], var2 = ----, var3 = ----</span></div>
+<div class="line"><span class="lineno">  313</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:  <span class="comment"># ran once per segment</span></div>
+<div class="line"><span class="lineno">  314</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  315</span>                    <span class="comment"># set seg_start_s to 2 because we have two motor controllers</span></div>
+<div class="line"><span class="lineno">  316</span>                    <span class="comment"># that both have to acknowledge the segment start</span></div>
+<div class="line"><span class="lineno">  317</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  318</span>                    print(<span class="stringliteral">&quot;Turn Angle Segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  319</span> </div>
+<div class="line"><span class="lineno">  320</span>                    PD_vars.v_ref = 0</div>
+<div class="line"><span class="lineno">  321</span> </div>
+<div class="line"><span class="lineno">  322</span>                    <span class="comment"># degrees to rads</span></div>
+<div class="line"><span class="lineno">  323</span>                    PD_vars.var_1 = PD_vars.var_1 * pi / 180  <span class="comment"># radians to turn</span></div>
+<div class="line"><span class="lineno">  324</span>                    PD_vars.var_2 = self.IMU.heading + PD_vars.var_1  <span class="comment"># new desired heading</span></div>
+<div class="line"><span class="lineno">  325</span> </div>
+<div class="line"><span class="lineno">  326</span>                    <span class="comment"># Set IMU heading</span></div>
+<div class="line"><span class="lineno">  327</span>                    self.Heading_CLC.set_ref(PD_vars.var_2)</div>
+<div class="line"><span class="lineno">  328</span> </div>
+<div class="line"><span class="lineno">  329</span>                diff = ((PD_vars.var_1 - self.IMU.heading + pi) % (2 * pi)) - pi</div>
+<div class="line"><span class="lineno">  330</span>                self.Heading_CLC.set_ref(self.IMU.heading + diff)</div>
+<div class="line"><span class="lineno">  331</span> </div>
+<div class="line"><span class="lineno">  332</span>                <span class="keywordflow">if</span> abs(diff) &lt;= 3 / 180 * pi:  <span class="comment"># 3 deg tolerance</span></div>
+<div class="line"><span class="lineno">  333</span>                    set_state(PD_vars.next_state)</div>
+<div class="line"><span class="lineno">  334</span>                    PD_vars.v_ref = PD_vars.v_ref_DEFAULT</div>
+<div class="line"><span class="lineno">  335</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  336</span>                    update_motors_CLC(self.Heading_CLC)</div>
+<div class="line"><span class="lineno">  337</span> </div>
+<div class="line"><span class="lineno">  338</span>            <span class="keywordflow">elif</span> self.state == PathDirector.GO_2_POINT:</div>
+<div class="line"><span class="lineno">  339</span>                <span class="comment"># Using current heading and position, move to another point</span></div>
+<div class="line"><span class="lineno">  340</span>                <span class="comment"># var1 = X, var2 = Y,</span></div>
+<div class="line"><span class="lineno">  341</span>                <span class="comment"># var3 = &quot;boolean for X tolerance&quot;: True = ignore X tolerance</span></div>
+<div class="line"><span class="lineno">  342</span>                <span class="comment"># var4 = &quot;boolean for Y tolerance&quot;: True = ignore Y tolerance</span></div>
+<div class="line"><span class="lineno">  343</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:  <span class="comment"># ran once per segment</span></div>
+<div class="line"><span class="lineno">  344</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  345</span>                    <span class="comment"># set seg_start_s to 2 because we have two motor controllers</span></div>
+<div class="line"><span class="lineno">  346</span>                    <span class="comment"># that both have to acknowledge the segment start</span></div>
+<div class="line"><span class="lineno">  347</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  348</span>                    print(<span class="stringliteral">&quot;Go 2 Point Segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  349</span>                    <span class="comment"># motor settings</span></div>
+<div class="line"><span class="lineno">  350</span>                    forward_at_speed(PD_vars.v_ref)</div>
+<div class="line"><span class="lineno">  351</span> </div>
+<div class="line"><span class="lineno">  352</span>                    self.Heading_CLC.reset()</div>
+<div class="line"><span class="lineno">  353</span> </div>
+<div class="line"><span class="lineno">  354</span>                dX = PD_vars.var_1 - obsd_X_s.get()</div>
+<div class="line"><span class="lineno">  355</span>                dY = PD_vars.var_2 - obsd_Y_s.get()</div>
+<div class="line"><span class="lineno">  356</span>                target_angle = atan2(dY, dX)</div>
+<div class="line"><span class="lineno">  357</span>                diff = ((target_angle - self.IMU.heading + pi) % (2 * pi)) - pi</div>
+<div class="line"><span class="lineno">  358</span>                self.Heading_CLC.set_ref(self.IMU.heading + diff)</div>
+<div class="line"><span class="lineno">  359</span> </div>
+<div class="line"><span class="lineno">  360</span>                <span class="keywordflow">if</span> (PD_vars.v_ref == 0 <span class="keywordflow">and</span> abs(diff) &lt;= 3 / 180 * pi) <span class="keywordflow">or</span> (</div>
+<div class="line"><span class="lineno">  361</span>                    (PD_vars.var_3 <span class="keywordflow">or</span> abs(dX) &lt;= 25) <span class="keywordflow">and</span> (PD_vars.var_4 <span class="keywordflow">or</span> abs(dY) &lt;= 25)</div>
+<div class="line"><span class="lineno">  362</span>                ):</div>
+<div class="line"><span class="lineno">  363</span>                    self.uart.write(f<span class="stringliteral">&quot;{obsd_X_s.get()},{obsd_Y_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  364</span>                    self.uart.write(f<span class="stringliteral">&quot;Next State: {PD_vars.next_state}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  365</span>                    set_state(PD_vars.next_state)</div>
+<div class="line"><span class="lineno">  366</span>                    PD_vars.v_ref = PD_vars.v_ref_DEFAULT</div>
+<div class="line"><span class="lineno">  367</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  368</span>                    update_motors_CLC(self.Heading_CLC)</div>
+<div class="line"><span class="lineno">  369</span> </div>
+<div class="line"><span class="lineno">  370</span>            <span class="keywordflow">elif</span> self.state == PathDirector.FOLLOW_LINE_4_TIME:</div>
+<div class="line"><span class="lineno">  371</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:</div>
+<div class="line"><span class="lineno">  372</span>                    <span class="comment"># comms to motors</span></div>
+<div class="line"><span class="lineno">  373</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  374</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  375</span>                    print(<span class="stringliteral">&quot;Starting Line Follow For Time Segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  376</span>                    self.seg_start_time = ticks_us()</div>
+<div class="line"><span class="lineno">  377</span> </div>
+<div class="line"><span class="lineno">  378</span>                    <span class="comment"># motor settings</span></div>
+<div class="line"><span class="lineno">  379</span>                    forward_at_speed(PD_vars.v_ref)</div>
+<div class="line"><span class="lineno">  380</span> </div>
+<div class="line"><span class="lineno">  381</span>                    self.Line_CLC.reset()</div>
+<div class="line"><span class="lineno">  382</span>                    self.Line_CLC.set_ref(0)</div>
+<div class="line"><span class="lineno">  383</span> </div>
+<div class="line"><span class="lineno">  384</span>                <span class="keywordflow">if</span> ticks_diff(ticks_us(), self.seg_start_time) &gt;= PD_vars.var_1:</div>
+<div class="line"><span class="lineno">  385</span>                    set_state(PD_vars.next_state)</div>
+<div class="line"><span class="lineno">  386</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  387</span>                    update_motors_CLC(self.Line_CLC)</div>
+<div class="line"><span class="lineno">  388</span> </div>
+<div class="line"><span class="lineno">  389</span>            <span class="keywordflow">elif</span> self.state == PathDirector.FOLLOW_LINE_2_POINT:</div>
+<div class="line"><span class="lineno">  390</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:</div>
+<div class="line"><span class="lineno">  391</span>                    <span class="comment"># comms to motors</span></div>
+<div class="line"><span class="lineno">  392</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  393</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  394</span>                    print(<span class="stringliteral">&quot;Starting Line Follow To Point Segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  395</span> </div>
+<div class="line"><span class="lineno">  396</span>                    <span class="comment"># motor settings</span></div>
+<div class="line"><span class="lineno">  397</span>                    forward_at_speed(PD_vars.v_ref)</div>
+<div class="line"><span class="lineno">  398</span> </div>
+<div class="line"><span class="lineno">  399</span>                    self.Line_CLC.reset()</div>
+<div class="line"><span class="lineno">  400</span> </div>
+<div class="line"><span class="lineno">  401</span>                dX = PD_vars.var_1 - obsd_X_s.get()</div>
+<div class="line"><span class="lineno">  402</span>                dY = PD_vars.var_2 - obsd_Y_s.get()</div>
+<div class="line"><span class="lineno">  403</span> </div>
+<div class="line"><span class="lineno">  404</span>                <span class="keywordflow">if</span> (PD_vars.var_3 <span class="keywordflow">or</span> abs(dX) &lt;= 25) <span class="keywordflow">and</span> (PD_vars.var_4 <span class="keywordflow">or</span> abs(dY) &lt;= 25):</div>
+<div class="line"><span class="lineno">  405</span>                    set_state(PD_vars.next_state)</div>
+<div class="line"><span class="lineno">  406</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  407</span>                    update_motors_CLC(self.Line_CLC)</div>
+<div class="line"><span class="lineno">  408</span>            <span class="comment"># -------------------------------------------------------- End of Functions -------------------------------------------------------- #</span></div>
+<div class="line"><span class="lineno">  409</span> </div>
+<div class="line"><span class="lineno">  410</span>            <span class="comment"># -------------------------------------------------------- Start of Path for final course -------------------------------------------------------- #</span></div>
+<div class="line"><span class="lineno">  411</span>            <span class="keywordflow">elif</span> self.state == PathDirector.ST_B4_FOLLOW_LINE:</div>
+<div class="line"><span class="lineno">  412</span>                <span class="comment"># Straight before following line segment</span></div>
+<div class="line"><span class="lineno">  413</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:</div>
+<div class="line"><span class="lineno">  414</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  415</span>                    <span class="comment"># comms to motors</span></div>
+<div class="line"><span class="lineno">  416</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  417</span>                    print(<span class="stringliteral">&quot;Straight before following line segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  418</span> </div>
+<div class="line"><span class="lineno">  419</span>                    <span class="comment"># motor settings</span></div>
+<div class="line"><span class="lineno">  420</span>                    forward_at_speed(PD_vars.v_ref)</div>
+<div class="line"><span class="lineno">  421</span> </div>
+<div class="line"><span class="lineno">  422</span>                    self.distance = 50  <span class="comment"># mm</span></div>
+<div class="line"><span class="lineno">  423</span> </div>
+<div class="line"><span class="lineno">  424</span>                <span class="keywordflow">if</span> obsd_cpos_s.get() &gt;= self.distance:</div>
+<div class="line"><span class="lineno">  425</span>                    set_state(PathDirector.FOLLOW_LINE_B4_FORK)</div>
+<div class="line"><span class="lineno">  426</span> </div>
+<div class="line"><span class="lineno">  427</span>            <span class="keywordflow">elif</span> self.state == PathDirector.FOLLOW_LINE_B4_FORK:</div>
+<div class="line"><span class="lineno">  428</span>                <span class="comment"># Line Following Segment</span></div>
+<div class="line"><span class="lineno">  429</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:</div>
+<div class="line"><span class="lineno">  430</span>                    <span class="comment"># comms to motors</span></div>
+<div class="line"><span class="lineno">  431</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  432</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  433</span>                    print(<span class="stringliteral">&quot;Starting FOLLOW_LINE_B4_FORK Segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  434</span> </div>
+<div class="line"><span class="lineno">  435</span>                    <span class="comment"># Linesensor CLC centroid reference</span></div>
+<div class="line"><span class="lineno">  436</span>                    self.Line_CLC.reset()</div>
+<div class="line"><span class="lineno">  437</span>                    self.Line_CLC.set_ref(0)</div>
+<div class="line"><span class="lineno">  438</span> </div>
+<div class="line"><span class="lineno">  439</span>                    <span class="comment"># motor settings</span></div>
+<div class="line"><span class="lineno">  440</span>                    forward_at_speed(PD_vars.v_ref)</div>
+<div class="line"><span class="lineno">  441</span> </div>
+<div class="line"><span class="lineno">  442</span>                <span class="keywordflow">if</span> obsd_X_s.get() &gt;= 725:</div>
+<div class="line"><span class="lineno">  443</span>                    set_state(PathDirector.FORCE_RIGHT_FORK)</div>
+<div class="line"><span class="lineno">  444</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  445</span>                    update_motors_CLC(self.Line_CLC)</div>
+<div class="line"><span class="lineno">  446</span> </div>
+<div class="line"><span class="lineno">  447</span>            <span class="keywordflow">elif</span> self.state == PathDirector.FORCE_RIGHT_FORK:</div>
+<div class="line"><span class="lineno">  448</span>                <span class="comment"># Force Right Fork</span></div>
+<div class="line"><span class="lineno">  449</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:</div>
+<div class="line"><span class="lineno">  450</span>                    <span class="comment"># comms to motors</span></div>
+<div class="line"><span class="lineno">  451</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  452</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  453</span>                    print(<span class="stringliteral">&quot;Starting Force Right Fork Segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  454</span>                    self.seg_start_time = ticks_us()</div>
+<div class="line"><span class="lineno">  455</span> </div>
+<div class="line"><span class="lineno">  456</span>                    <span class="comment"># motor settings</span></div>
+<div class="line"><span class="lineno">  457</span>                    l_flag_s.put(1)</div>
+<div class="line"><span class="lineno">  458</span>                    l_speed_s.put(PD_vars.v_ref * 1.75)</div>
+<div class="line"><span class="lineno">  459</span>                    r_flag_s.put(1)</div>
+<div class="line"><span class="lineno">  460</span>                    r_speed_s.put(PD_vars.v_ref)</div>
+<div class="line"><span class="lineno">  461</span> </div>
+<div class="line"><span class="lineno">  462</span>                <span class="keywordflow">if</span> ticks_diff(ticks_us(), self.seg_start_time) &gt;= 500_000:</div>
+<div class="line"><span class="lineno">  463</span>                    set_state(PathDirector.LINE_FOLLOW_2_DIAMOND)</div>
+<div class="line"><span class="lineno">  464</span> </div>
+<div class="line"><span class="lineno">  465</span>            <span class="keywordflow">elif</span> self.state == PathDirector.LINE_FOLLOW_2_DIAMOND:</div>
+<div class="line"><span class="lineno">  466</span>                <span class="comment"># Line Follow to Diamond</span></div>
+<div class="line"><span class="lineno">  467</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:</div>
+<div class="line"><span class="lineno">  468</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  469</span>                    <span class="comment"># comms to motors</span></div>
+<div class="line"><span class="lineno">  470</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  471</span>                    print(<span class="stringliteral">&quot;Starting Line Following 2 Diamond Segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  472</span> </div>
+<div class="line"><span class="lineno">  473</span>                    <span class="comment"># Linesensor CLC centroid reference</span></div>
+<div class="line"><span class="lineno">  474</span>                    self.Line_CLC.reset()</div>
+<div class="line"><span class="lineno">  475</span>                    self.Line_CLC.set_ref(0)</div>
+<div class="line"><span class="lineno">  476</span> </div>
+<div class="line"><span class="lineno">  477</span>                    <span class="comment"># motor settings</span></div>
+<div class="line"><span class="lineno">  478</span>                    forward_at_speed(PD_vars.v_ref)</div>
+<div class="line"><span class="lineno">  479</span> </div>
+<div class="line"><span class="lineno">  480</span>                <span class="keywordflow">if</span> (obsd_X_s.get() &gt;= 900 <span class="keywordflow">and</span> obsd_Y_s.get() &lt;= 600) <span class="keywordflow">or</span> self.IMU.heading &lt;= -pi / 2 + 0.1:</div>
+<div class="line"><span class="lineno">  481</span>                    self.uart.write(f<span class="stringliteral">&quot;X_LF2D: {obsd_X_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  482</span>                    self.uart.write(f<span class="stringliteral">&quot;Y_LF2D: {obsd_Y_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  483</span>                    self.uart.write(f<span class="stringliteral">&quot;H_LF2D: {obsd_yaw_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  484</span>                    set_state(PathDirector.DIAMOND_2_CP1)</div>
+<div class="line"><span class="lineno">  485</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  486</span>                    update_motors_CLC(self.Line_CLC)</div>
+<div class="line"><span class="lineno">  487</span> </div>
+<div class="line"><span class="lineno">  488</span>            <span class="keywordflow">elif</span> self.state == PathDirector.DIAMOND_2_CP1:</div>
+<div class="line"><span class="lineno">  489</span>                PD_vars.var_1 = 950</div>
+<div class="line"><span class="lineno">  490</span>                PD_vars.var_2 = 450</div>
+<div class="line"><span class="lineno">  491</span>                PD_vars.var_3 = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  492</span>                PD_vars.var_4 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  493</span>                set_state(PathDirector.GO_2_POINT)</div>
+<div class="line"><span class="lineno">  494</span>                PD_vars.next_state = PathDirector.TURN_2_CP2</div>
+<div class="line"><span class="lineno">  495</span> </div>
+<div class="line"><span class="lineno">  496</span>            <span class="keywordflow">elif</span> self.state == PathDirector.TURN_2_CP2:</div>
+<div class="line"><span class="lineno">  497</span>                PD_vars.var_1 = 1300</div>
+<div class="line"><span class="lineno">  498</span>                PD_vars.var_2 = 650</div>
+<div class="line"><span class="lineno">  499</span>                PD_vars.var_3 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  500</span>                PD_vars.var_4 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  501</span>                PD_vars.v_ref = 0</div>
+<div class="line"><span class="lineno">  502</span>                set_state(PathDirector.GO_2_POINT)</div>
+<div class="line"><span class="lineno">  503</span>                PD_vars.next_state = PathDirector.GO_2_LINE_B4_CP2</div>
+<div class="line"><span class="lineno">  504</span> </div>
+<div class="line"><span class="lineno">  505</span>            <span class="keywordflow">elif</span> self.state == PathDirector.GO_2_LINE_B4_CP2:</div>
+<div class="line"><span class="lineno">  506</span>                obsd_X_s.put(950)</div>
+<div class="line"><span class="lineno">  507</span>                obsd_Y_s.put(425)</div>
+<div class="line"><span class="lineno">  508</span>                PD_vars.var_1 = 1300</div>
+<div class="line"><span class="lineno">  509</span>                PD_vars.var_2 = 650</div>
+<div class="line"><span class="lineno">  510</span>                PD_vars.var_3 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  511</span>                PD_vars.var_4 = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  512</span>                set_state(PathDirector.GO_2_POINT)</div>
+<div class="line"><span class="lineno">  513</span>                PD_vars.next_state = PathDirector.LINE_2_CP2</div>
+<div class="line"><span class="lineno">  514</span> </div>
+<div class="line"><span class="lineno">  515</span>            <span class="keywordflow">elif</span> self.state == PathDirector.LINE_2_CP2:</div>
+<div class="line"><span class="lineno">  516</span>                PD_vars.var_1 = 800_000</div>
+<div class="line"><span class="lineno">  517</span>                set_state(PathDirector.FOLLOW_LINE_4_TIME)</div>
+<div class="line"><span class="lineno">  518</span>                PD_vars.next_state = PathDirector.LINE_B4_CP3</div>
+<div class="line"><span class="lineno">  519</span> </div>
+<div class="line"><span class="lineno">  520</span>            <span class="keywordflow">elif</span> self.state == PathDirector.LINE_B4_CP3:</div>
+<div class="line"><span class="lineno">  521</span>                obsd_X_s.put(1400)</div>
+<div class="line"><span class="lineno">  522</span>                obsd_Y_s.put(800)</div>
+<div class="line"><span class="lineno">  523</span>                PD_vars.var_1 = 400_000</div>
+<div class="line"><span class="lineno">  524</span>                set_state(PathDirector.FOLLOW_LINE_4_TIME)</div>
+<div class="line"><span class="lineno">  525</span>                PD_vars.next_state = PathDirector.TURN_2_LINE_B4_CP3</div>
+<div class="line"><span class="lineno">  526</span> </div>
+<div class="line"><span class="lineno">  527</span>            <span class="keywordflow">elif</span> self.state == PathDirector.TURN_2_LINE_B4_CP3:</div>
+<div class="line"><span class="lineno">  528</span>                PD_vars.var_1 = 1600</div>
+<div class="line"><span class="lineno">  529</span>                PD_vars.var_2 = 100</div>
+<div class="line"><span class="lineno">  530</span>                PD_vars.var_3 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  531</span>                PD_vars.var_4 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  532</span>                PD_vars.v_ref = 0</div>
+<div class="line"><span class="lineno">  533</span>                set_state(PathDirector.GO_2_POINT)</div>
+<div class="line"><span class="lineno">  534</span>                PD_vars.next_state = PathDirector.GO_2_LINE_B4_CP3</div>
+<div class="line"><span class="lineno">  535</span> </div>
+<div class="line"><span class="lineno">  536</span>            <span class="keywordflow">elif</span> self.state == PathDirector.GO_2_LINE_B4_CP3:</div>
+<div class="line"><span class="lineno">  537</span>                PD_vars.var_1 = 1600</div>
+<div class="line"><span class="lineno">  538</span>                PD_vars.var_2 = 100</div>
+<div class="line"><span class="lineno">  539</span>                PD_vars.var_3 = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  540</span>                PD_vars.var_4 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  541</span>                set_state(PathDirector.GO_2_POINT)</div>
+<div class="line"><span class="lineno">  542</span>                PD_vars.next_state = PathDirector.TURN_2_CP3</div>
+<div class="line"><span class="lineno">  543</span> </div>
+<div class="line"><span class="lineno">  544</span>            <span class="keywordflow">elif</span> self.state == PathDirector.TURN_2_CP3:</div>
+<div class="line"><span class="lineno">  545</span>                self.uart.write(f<span class="stringliteral">&quot;T2C3 X, Y: {obsd_X_s.get()}, {obsd_Y_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  546</span>                self.IMU.set_heading(-pi / 2)</div>
+<div class="line"><span class="lineno">  547</span>                PD_vars.var_1 = -180</div>
+<div class="line"><span class="lineno">  548</span>                set_state(PathDirector.TURN_ANGLE)</div>
+<div class="line"><span class="lineno">  549</span>                PD_vars.next_state = PathDirector.GO_2_LINE_B4_CP4</div>
+<div class="line"><span class="lineno">  550</span> </div>
+<div class="line"><span class="lineno">  551</span>            <span class="keywordflow">elif</span> self.state == PathDirector.GO_2_LINE_B4_CP4:</div>
+<div class="line"><span class="lineno">  552</span>                self.uart.write(f<span class="stringliteral">&quot;X, Y: {obsd_X_s.get()}, {obsd_Y_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  553</span>                self.uart.write(f<span class="stringliteral">&quot;dist yaw: {dist_yaw_s.get()}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  554</span> </div>
+<div class="line"><span class="lineno">  555</span>                obsd_X_s.put(1600)</div>
+<div class="line"><span class="lineno">  556</span>                obsd_Y_s.put(100)</div>
+<div class="line"><span class="lineno">  557</span>                self.IMU.set_heading(dist_yaw_s.get())</div>
+<div class="line"><span class="lineno">  558</span>                PD_vars.var_1 = 1100</div>
+<div class="line"><span class="lineno">  559</span>                PD_vars.var_2 = 100</div>
+<div class="line"><span class="lineno">  560</span>                PD_vars.var_3 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  561</span>                PD_vars.var_4 = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  562</span>                set_state(PathDirector.GO_2_POINT)</div>
+<div class="line"><span class="lineno">  563</span>                PD_vars.next_state = PathDirector.FOLLOW_LINE_2_CP4</div>
+<div class="line"><span class="lineno">  564</span> </div>
+<div class="line"><span class="lineno">  565</span>            <span class="keywordflow">elif</span> self.state == PathDirector.FOLLOW_LINE_2_CP4:</div>
+<div class="line"><span class="lineno">  566</span>                self.bump_stop = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  567</span>                PD_vars.var_1 = 900</div>
+<div class="line"><span class="lineno">  568</span>                PD_vars.var_2 = 100</div>
+<div class="line"><span class="lineno">  569</span>                PD_vars.var_3 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  570</span>                PD_vars.var_4 = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  571</span>                set_state(PathDirector.FOLLOW_LINE_2_POINT)</div>
+<div class="line"><span class="lineno">  572</span>                PD_vars.next_state = PathDirector.TURN_4_GARAGE</div>
+<div class="line"><span class="lineno">  573</span> </div>
+<div class="line"><span class="lineno">  574</span>            <span class="keywordflow">elif</span> self.state == PathDirector.TURN_4_GARAGE:</div>
+<div class="line"><span class="lineno">  575</span>                obsd_X_s.put(800)</div>
+<div class="line"><span class="lineno">  576</span>                obsd_Y_s.put(150)</div>
+<div class="line"><span class="lineno">  577</span>                PD_vars.var_1 = -180</div>
+<div class="line"><span class="lineno">  578</span>                set_state(PathDirector.TURN_ANGLE)</div>
+<div class="line"><span class="lineno">  579</span>                PD_vars.next_state = PathDirector.MOVE_IN_GARAGE</div>
+<div class="line"><span class="lineno">  580</span> </div>
+<div class="line"><span class="lineno">  581</span>            <span class="keywordflow">elif</span> self.state == PathDirector.MOVE_IN_GARAGE:</div>
+<div class="line"><span class="lineno">  582</span>                self.uart.write(f<span class="stringliteral">&quot;dist, head: {dist_yaw_s.get()}, {self.IMU.heading}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  583</span>                self.IMU.set_heading(-pi)</div>
+<div class="line"><span class="lineno">  584</span>                PD_vars.var_1 = 160</div>
+<div class="line"><span class="lineno">  585</span>                PD_vars.var_2 = 150</div>
+<div class="line"><span class="lineno">  586</span>                PD_vars.var_3 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  587</span>                PD_vars.var_4 = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  588</span>                set_state(PathDirector.GO_2_POINT)</div>
+<div class="line"><span class="lineno">  589</span>                PD_vars.next_state = PathDirector.TURN_2_GARAGE_EXIT</div>
+<div class="line"><span class="lineno">  590</span> </div>
+<div class="line"><span class="lineno">  591</span>            <span class="keywordflow">elif</span> self.state == PathDirector.TURN_2_GARAGE_EXIT:</div>
+<div class="line"><span class="lineno">  592</span>                self.uart.write(f<span class="stringliteral">&quot;dist, head: {dist_yaw_s.get()}, {self.IMU.heading}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  593</span>                PD_vars.var_1 = -260</div>
+<div class="line"><span class="lineno">  594</span>                set_state(PathDirector.TURN_ANGLE)</div>
+<div class="line"><span class="lineno">  595</span>                PD_vars.next_state = PathDirector.GO_2_GARAGE_EXIT</div>
+<div class="line"><span class="lineno">  596</span> </div>
+<div class="line"><span class="lineno">  597</span>            <span class="keywordflow">elif</span> self.state == PathDirector.GO_2_GARAGE_EXIT:</div>
+<div class="line"><span class="lineno">  598</span>                self.bump_wall = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  599</span>                self.uart.write(f<span class="stringliteral">&quot;dist, head: {dist_yaw_s.get()}, {self.IMU.heading}\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  600</span>                obsd_X_s.put(175)</div>
+<div class="line"><span class="lineno">  601</span>                obsd_Y_s.put(175)</div>
+<div class="line"><span class="lineno">  602</span>                self.IMU.set_heading(-3 * pi / 2)</div>
+<div class="line"><span class="lineno">  603</span>                PD_vars.var_1 = 100</div>
+<div class="line"><span class="lineno">  604</span>                PD_vars.var_2 = 400</div>
+<div class="line"><span class="lineno">  605</span>                PD_vars.var_3 = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  606</span>                PD_vars.var_4 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  607</span>                set_state(PathDirector.GO_2_POINT)</div>
+<div class="line"><span class="lineno">  608</span>                PD_vars.next_state = PathDirector.FOLLOW_LINE_2_CP4</div>
+<div class="line"><span class="lineno">  609</span> </div>
+<div class="line"><span class="lineno">  610</span>            <span class="keywordflow">elif</span> self.state == PathDirector.FOLLOW_LINE_2_WALL:</div>
+<div class="line"><span class="lineno">  611</span>                PD_vars.v_ref = 100</div>
+<div class="line"><span class="lineno">  612</span>                self.bump_wall = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  613</span>                PD_vars.var_1 = 2_000_000</div>
+<div class="line"><span class="lineno">  614</span>                set_state(PathDirector.FOLLOW_LINE_4_TIME)</div>
+<div class="line"><span class="lineno">  615</span>                PD_vars.next_state = PathDirector.REVERSE_FROM_WALL  <span class="comment"># changed in bumped section</span></div>
+<div class="line"><span class="lineno">  616</span> </div>
+<div class="line"><span class="lineno">  617</span>            <span class="keywordflow">elif</span> self.state == PathDirector.REVERSE_FROM_WALL:</div>
+<div class="line"><span class="lineno">  618</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.segment_set:  <span class="comment"># ran once per segment</span></div>
+<div class="line"><span class="lineno">  619</span>                    self.segment_set = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  620</span>                    <span class="comment"># set seg_start_s to 2 because we have two motor controllers</span></div>
+<div class="line"><span class="lineno">  621</span>                    <span class="comment"># that both have to acknowledge the segment start</span></div>
+<div class="line"><span class="lineno">  622</span>                    seg_start_s.put(2)</div>
+<div class="line"><span class="lineno">  623</span>                    print(<span class="stringliteral">&quot;Fixed Reverse Distance Segment&quot;</span>)</div>
+<div class="line"><span class="lineno">  624</span> </div>
+<div class="line"><span class="lineno">  625</span>                    self.bump_wall = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  626</span>                    self.bumped = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  627</span>                    self.IMU.set_heading(-3 * pi / 2)</div>
+<div class="line"><span class="lineno">  628</span>                    obsd_X_s.put(100)</div>
+<div class="line"><span class="lineno">  629</span>                    obsd_Y_s.put(675)</div>
+<div class="line"><span class="lineno">  630</span> </div>
+<div class="line"><span class="lineno">  631</span>                    self.distance = -100  <span class="comment"># mm</span></div>
+<div class="line"><span class="lineno">  632</span>                    self.end_point = obsd_cpos_s.get() + self.distance  <span class="comment"># mm</span></div>
+<div class="line"><span class="lineno">  633</span> </div>
+<div class="line"><span class="lineno">  634</span>                    <span class="comment"># motor settings</span></div>
+<div class="line"><span class="lineno">  635</span>                    forward_at_speed(-200)</div>
+<div class="line"><span class="lineno">  636</span> </div>
+<div class="line"><span class="lineno">  637</span>                <span class="keywordflow">if</span> obsd_cpos_s.get() &lt;= self.end_point:</div>
+<div class="line"><span class="lineno">  638</span>                    self.uart.write(f<span class="stringliteral">&quot;reversed\r\n&quot;</span>.encode(<span class="stringliteral">&quot;utf-8&quot;</span>))</div>
+<div class="line"><span class="lineno">  639</span>                    set_state(PathDirector.TURN_2_CUP2)</div>
+<div class="line"><span class="lineno">  640</span> </div>
+<div class="line"><span class="lineno">  641</span>            <span class="keywordflow">elif</span> self.state == PathDirector.TURN_2_CUP2:</div>
+<div class="line"><span class="lineno">  642</span>                PD_vars.var_1 = 500</div>
+<div class="line"><span class="lineno">  643</span>                PD_vars.var_2 = 500</div>
+<div class="line"><span class="lineno">  644</span>                PD_vars.var_3 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  645</span>                PD_vars.var_4 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  646</span>                PD_vars.v_ref = 0</div>
+<div class="line"><span class="lineno">  647</span>                set_state(PathDirector.GO_2_POINT)</div>
+<div class="line"><span class="lineno">  648</span>                PD_vars.next_state = PathDirector.GO_2_CUP2</div>
+<div class="line"><span class="lineno">  649</span> </div>
+<div class="line"><span class="lineno">  650</span>            <span class="keywordflow">elif</span> self.state == PathDirector.GO_2_CUP2:</div>
+<div class="line"><span class="lineno">  651</span>                self.IMU.set_heading(pi)</div>
+<div class="line"><span class="lineno">  652</span>                PD_vars.var_1 = 500</div>
+<div class="line"><span class="lineno">  653</span>                PD_vars.var_2 = 500</div>
+<div class="line"><span class="lineno">  654</span>                PD_vars.var_3 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  655</span>                PD_vars.var_4 = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  656</span>                set_state(PathDirector.GO_2_POINT)</div>
+<div class="line"><span class="lineno">  657</span>                PD_vars.next_state = PathDirector.TURN_2_CP6</div>
+<div class="line"><span class="lineno">  658</span> </div>
+<div class="line"><span class="lineno">  659</span>            <span class="keywordflow">elif</span> self.state == PathDirector.TURN_2_CP6:</div>
+<div class="line"><span class="lineno">  660</span>                PD_vars.var_1 = 100</div>
+<div class="line"><span class="lineno">  661</span>                PD_vars.var_2 = 300</div>
+<div class="line"><span class="lineno">  662</span>                PD_vars.var_3 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  663</span>                PD_vars.var_4 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  664</span>                PD_vars.v_ref = 0</div>
+<div class="line"><span class="lineno">  665</span>                set_state(PathDirector.GO_2_POINT)</div>
+<div class="line"><span class="lineno">  666</span>                PD_vars.next_state = PathDirector.GO_2_CP6</div>
+<div class="line"><span class="lineno">  667</span> </div>
+<div class="line"><span class="lineno">  668</span>            <span class="keywordflow">elif</span> self.state == PathDirector.GO_2_CP6:</div>
+<div class="line"><span class="lineno">  669</span>                PD_vars.var_1 = 100</div>
+<div class="line"><span class="lineno">  670</span>                PD_vars.var_2 = 300</div>
+<div class="line"><span class="lineno">  671</span>                PD_vars.var_3 = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  672</span>                PD_vars.var_4 = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  673</span>                set_state(PathDirector.GO_2_POINT)</div>
+<div class="line"><span class="lineno">  674</span>                PD_vars.next_state = PathDirector.TURN_2_CP6</div>
+<div class="line"><span class="lineno">  675</span> </div>
+<div class="line"><span class="lineno">  676</span>            <span class="keywordflow">elif</span> self.state == PathDirector.FOLLOW_LINE_2_CP6:</div>
+<div class="line"><span class="lineno">  677</span>                PD_vars.var_1 = 400_000</div>
+<div class="line"><span class="lineno">  678</span>                set_state(PathDirector.FOLLOW_LINE_4_TIME)</div>
+<div class="line"><span class="lineno">  679</span>                PD_vars.next_state = PathDirector.WAIT</div>
+<div class="line"><span class="lineno">  680</span> </div>
+<div class="line"><span class="lineno">  681</span>            <span class="comment"># -------------------------------------------------------- End of Path for final course -------------------------------------------------------- #</span></div>
+<div class="line"><span class="lineno">  682</span>            <span class="keywordflow">yield</span> self.state</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_path___director_8py_source.html#l00110">bump_stop</a>, <a class="el" href="_path___director_8py_source.html#l00111">bump_wall</a>, <a class="el" href="_path___director_8py_source.html#l00109">bumped</a>, <a class="el" href="_path___director_8py_source.html#l00112">bumptimer</a>, <a class="el" href="_path___director_8py_source.html#l00129">distance</a>, <a class="el" href="_path___director_8py_source.html#l00130">end_point</a>, <a class="el" href="_path___director_8py_source.html#l00100">Heading_CLC</a>, <a class="el" href="_observer_8py_source.html#l00024">Observer.Observer.IMU</a>, <a class="el" href="_path___director_8py_source.html#l00099">IMU</a>, <a class="el" href="_path___director_8py_source.html#l00092">Line_CLC</a>, <a class="el" href="_path___director_8py_source.html#l00091">line_sensor</a>, <a class="el" href="_path___director_8py_source.html#l00089">seg_start_time</a>, <a class="el" href="_path___director_8py_source.html#l00088">segment_set</a>, <a class="el" href="_path___director_8py_source.html#l00087">state</a>, <a class="el" href="_observer_8py_source.html#l00038">Observer.Observer.uart</a>, and <a class="el" href="_path___director_8py_source.html#l00108">uart</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>Lab Final/Files On Romi/<a class="el" href="_path___director_8py_source.html">Path_Director.py</a></li>
 </ul>
 </div><!-- contents -->

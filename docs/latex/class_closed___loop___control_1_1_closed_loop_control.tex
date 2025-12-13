@@ -12,6 +12,8 @@ A class implementing a closed-\/loop control algorithm.
 \begin{DoxyCompactList}\small\item\em Constructor for the closed-\/loop controller. \end{DoxyCompactList}\item 
 None \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_afa1f942294a85e304bf8d73279a80e02}{reset}} (self)
 \begin{DoxyCompactList}\small\item\em Reset the controller. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_acb83cff298fec33e438a5e9d3292de88}{reset\+\_\+num\+\_\+corrections}} (self)
+\begin{DoxyCompactList}\small\item\em Reset the ramping counter used for soft-\/start reference slew. \end{DoxyCompactList}\item 
 None \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_aebb3d324c6fade3ecffb58764d6f52fb}{set\+\_\+ref}} (self, speed)
 \begin{DoxyCompactList}\small\item\em Set the controller reference (setpoint). \end{DoxyCompactList}\item 
 \Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a2058e62e1b3f8f85b526ed66463d5ba4}\label{class_closed___loop___control_1_1_closed_loop_control_a2058e62e1b3f8f85b526ed66463d5ba4} 
@@ -19,7 +21,7 @@ None {\bfseries disable} (self)
 \begin{DoxyCompactList}\small\item\em Disable the controller (output will remain zero). \end{DoxyCompactList}\item 
 \Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a1035044a2b4ce0d9a0f43168c22548d6}\label{class_closed___loop___control_1_1_closed_loop_control_a1035044a2b4ce0d9a0f43168c22548d6} 
 None {\bfseries enable} (self)
-\begin{DoxyCompactList}\small\item\em Enable the controller. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Enable the controller so {\ttfamily \doxylink{class_closed___loop___control_1_1_closed_loop_control_a53878544c99ca0962748a1b88101db3c}{run()}} produces actuation commands. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a95aa8ea640bd1a855a21b43d69f888fd}{gain\+\_\+update}} (self, float Kp=0, float Ki=0, float Kd=0, float Kw=0, float Kff=0, float PWM\+\_\+start=0)
 \begin{DoxyCompactList}\small\item\em Update controller gains. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_closed___loop___control_1_1_closed_loop_control_a53878544c99ca0962748a1b88101db3c}{run}} (self)
@@ -77,37 +79,37 @@ Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00041}{
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00052\ \ \ \ \ ):}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ self.sensor\ =\ sensor}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ self.max\_min\ =\ max\_min}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ self.battery\ =\ battery}
-\DoxyCodeLine{00056\ }
-\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ @brief\ Gains}}
-\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ self.Kp\ =\ Kp}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ self.Ki\ =\ Ki}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ self.Kd\ =\ Kd}
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ self.Kw\ =\ Kw}
-\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ self.Kff\ =\ Kff}
-\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ self.PWM\_start\ =\ PWM\_start}
-\DoxyCodeLine{00064\ }
-\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Inputs\ \&\ Outputs}}
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ self.r\ =\ 0\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reference\ /\ setpoint}}
-\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ self.x\_h\ =\ 0\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Measured\ value}}
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ self.a\ =\ 0\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Raw\ actuation\ value}}
-\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ self.astar\ =\ 0\ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Saturated\ actuation\ value}}
-\DoxyCodeLine{00070\ }
-\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Internal\ controller\ states}}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ self.e\ =\ 0\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Error}}
-\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ self.prev\_error\ =\ 0\ \ \ \textcolor{comment}{\#\ Previous\ cycle\ error}}
-\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ self.integral\ =\ 0\ \ \ \ \ \textcolor{comment}{\#\ Integral\ accumulator}}
-\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ self.derivative\ =\ 0\ \ \ \textcolor{comment}{\#\ Derivative\ term}}
-\DoxyCodeLine{00076\ }
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Soft-\/start\ ramping}}
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ self.on\ =\ \textcolor{keyword}{True}}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ self.first\_run\ =\ \textcolor{keyword}{True}}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ self.num\_corrections\ =\ 75}
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ self.total\_num\_corrections\ =\ 200}
-\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00052\ \ \ \ \ ): }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ self.sensor\ =\ sensor }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ self.max\_min\ =\ max\_min }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ self.battery\ =\ battery }
+\DoxyCodeLine{00056\  }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ @brief\ Gains }}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ self.Kp\ =\ Kp }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ self.Ki\ =\ Ki }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ self.Kd\ =\ Kd }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ self.Kw\ =\ Kw }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ self.Kff\ =\ Kff }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ self.PWM\_start\ =\ PWM\_start }
+\DoxyCodeLine{00064\  }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Inputs\ \&\ Outputs }}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ self.r\ =\ 0\ \ \textcolor{comment}{\#\ Reference\ /\ setpoint }}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ self.x\_h\ =\ 0\ \ \textcolor{comment}{\#\ Measured\ value }}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ self.a\ =\ 0\ \ \textcolor{comment}{\#\ Raw\ actuation\ value }}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ self.astar\ =\ 0\ \ \textcolor{comment}{\#\ Saturated\ actuation\ value }}
+\DoxyCodeLine{00070\  }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Internal\ controller\ states }}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ self.e\ =\ 0\ \ \textcolor{comment}{\#\ Error }}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ self.prev\_error\ =\ 0\ \ \textcolor{comment}{\#\ Previous\ cycle\ error }}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ self.integral\ =\ 0\ \ \textcolor{comment}{\#\ Integral\ accumulator }}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ self.derivative\ =\ 0\ \ \textcolor{comment}{\#\ Derivative\ term }}
+\DoxyCodeLine{00076\  }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Soft-\/start\ ramping }}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ self.on\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ self.first\_run\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ self.num\_corrections\ =\ 0 }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ self.total\_num\_corrections\ =\ 200 }
+\DoxyCodeLine{00082\  }
 
 \end{DoxyCode}
 
@@ -148,18 +150,18 @@ Allows runtime tuning of control gains and feed-\/forward.
 \end{DoxyParams}
 
 
-Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00119}{119}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00124}{124}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00127\ \ \ \ \ ):}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ self.Kp\ =\ Kp}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ self.Ki\ =\ Ki}
-\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ self.Kd\ =\ Kd}
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ self.Kw\ =\ Kw}
-\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ self.Kff\ =\ Kff}
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ self.PWM\_start\ =\ PWM\_start}
-\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00132\ \ \ \ \ ): }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ self.Kp\ =\ Kp }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ self.Ki\ =\ Ki }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ self.Kd\ =\ Kd }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ self.Kw\ =\ Kw }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ self.Kff\ =\ Kff }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ self.PWM\_start\ =\ PWM\_start }
+\DoxyCodeLine{00139\  }
 
 \end{DoxyCode}
 
@@ -182,20 +184,44 @@ Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00086}{
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{def\ }reset(self)\ -\/>\ None:}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ self.r\ =\ 0}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ self.e\ =\ 0}
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ self.prev\_error\ =\ 0}
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ self.integral\ =\ 0}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ self.derivative\ =\ 0}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ self.first\_run\ =\ \textcolor{keyword}{True}}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ self.num\_corrections\ =\ 75}
-\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{def\ }reset(self)\ -\/>\ None: }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ self.r\ =\ 0 }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ self.e\ =\ 0 }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ self.prev\_error\ =\ 0 }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ self.integral\ =\ 0 }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ self.derivative\ =\ 0 }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ self.first\_run\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00093\  }
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{_closed___loop___control_8py_source_l00075}{derivative}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00072}{e}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00079}{first\+\_\+run}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00074}{integral}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00080}{num\+\_\+corrections}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00073}{prev\+\_\+error}}, and \mbox{\hyperlink{_closed___loop___control_8py_source_l00066}{r}}.
+References \mbox{\hyperlink{_closed___loop___control_8py_source_l00075}{derivative}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00072}{e}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00079}{first\+\_\+run}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00074}{integral}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00073}{prev\+\_\+error}}, and \mbox{\hyperlink{_closed___loop___control_8py_source_l00066}{r}}.
+
+\Hypertarget{class_closed___loop___control_1_1_closed_loop_control_acb83cff298fec33e438a5e9d3292de88}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!reset\_num\_corrections@{reset\_num\_corrections}}
+\index{reset\_num\_corrections@{reset\_num\_corrections}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
+\doxysubsubsection{\texorpdfstring{reset\_num\_corrections()}{reset\_num\_corrections()}}
+{\footnotesize\ttfamily \label{class_closed___loop___control_1_1_closed_loop_control_acb83cff298fec33e438a5e9d3292de88} 
+Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+reset\+\_\+num\+\_\+corrections (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Reset the ramping counter used for soft-\/start reference slew. 
+
+This shortens the ramp so that the reference reaches its target sooner. 
+
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00097}{97}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{def\ }reset\_num\_corrections(self): }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ self.num\_corrections\ =\ 75 }
+\DoxyCodeLine{00099\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_closed___loop___control_8py_source_l00080}{num\+\_\+corrections}}.
 
 \Hypertarget{class_closed___loop___control_1_1_closed_loop_control_a53878544c99ca0962748a1b88101db3c}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!run@{run}}
 \index{run@{run}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
@@ -223,67 +249,66 @@ The saturated actuation command to send to hardware.
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00148}{148}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00153}{153}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{def\ }run(self):}
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.on:}
-\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0}
-\DoxyCodeLine{00151\ }
-\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Soft-\/start\ reference\ ramping}}
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.num\_corrections\ >\ 0:}
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ self.r\_u\ =\ self.r\ *\ ((self.total\_num\_corrections\ -\/\ self.num\_corrections)}
-\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /\ self.total\_num\_corrections)}
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ self.num\_corrections\ -\/=\ 1}
-\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
-\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ self.r\_u\ =\ self.r}
-\DoxyCodeLine{00159\ }
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Get\ current\ measured\ value}}
-\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ self.x\_h\ =\ self.sensor.get\_data()}
-\DoxyCodeLine{00162\ }
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Error\ update}}
-\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ self.prev\_error\ =\ self.e}
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ self.e\ =\ self.r\_u\ -\/\ self.x\_h}
-\DoxyCodeLine{00166\ }
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Compute\ timing\ delta\ in\ seconds}}
-\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ time\_delta\ =\ self.sensor.dt\ /\ 1e6}
-\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.first\_run:}
-\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ time\_delta\ =\ 0.020\ \ \ \textcolor{comment}{\#\ Approx.\ first-\/cycle\ assumption}}
-\DoxyCodeLine{00171\ }
-\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Integral\ and\ derivative\ updates}}
-\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.Ki:}
-\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ self.integral\ +=\ self.e\ *\ time\_delta}
-\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.Kd:}
-\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ self.derivative\ =\ (self.e\ -\/\ self.prev\_error)\ /\ time\_delta}
-\DoxyCodeLine{00177\ }
-\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Battery\ droop\ compensation}}
-\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.battery\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
-\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ Kdroop\ =\ 1\ /\ self.battery.get\_cur\_perc()}
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
-\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ Kdroop\ =\ 1}
-\DoxyCodeLine{00183\ }
-\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Controller\ output}}
-\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ self.a\ =\ Kdroop\ *\ (}
-\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ (self.Kp\ *\ self.e)\ +}
-\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ (self.integral\ *\ self.Ki)\ +}
-\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ (self.derivative\ *\ self.Kd)\ +}
-\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ ((self.r\_u\ *\ self.Kff)\ +\ copysign(1,\ self.r)\ *\ self.PWM\_start)}
-\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ )}
-\DoxyCodeLine{00191\ }
-\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Saturation}}
-\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ self.astar\ =\ min(self.max\_min,\ max(-\/self.max\_min,\ self.a))}
-\DoxyCodeLine{00194\ }
-\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Anti-\/windup\ correction}}
-\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.Kw:}
-\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ self.integral\ -\/=\ (self.a\ -\/\ self.astar)\ *\ self.Kw}
-\DoxyCodeLine{00198\ }
-\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.astar}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keyword}{def\ }run(self): }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.on: }
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0 }
+\DoxyCodeLine{00156\  }
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Soft-\/start\ reference\ ramping }}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.num\_corrections\ >\ 0: }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ self.r\_u\ =\ self.r\ *\ ((self.total\_num\_corrections\ -\/\ self.num\_corrections)\ /\ self.total\_num\_corrections) }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ self.num\_corrections\ -\/=\ 1 }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ self.r\_u\ =\ self.r }
+\DoxyCodeLine{00163\  }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Get\ current\ measured\ value }}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ self.x\_h\ =\ self.sensor.get\_data() }
+\DoxyCodeLine{00166\  }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Error\ update }}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ self.prev\_error\ =\ self.e }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ self.e\ =\ self.r\_u\ -\/\ self.x\_h }
+\DoxyCodeLine{00170\  }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Compute\ timing\ delta\ in\ seconds }}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ time\_delta\ =\ self.sensor.dt\ /\ 1e6 }
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.first\_run: }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ time\_delta\ =\ 0.020\ \ \textcolor{comment}{\#\ Approx.\ first-\/cycle\ assumption }}
+\DoxyCodeLine{00175\  }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Integral\ and\ derivative\ updates }}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.Ki: }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ self.integral\ +=\ self.e\ *\ time\_delta }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.Kd: }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ self.derivative\ =\ (self.e\ -\/\ self.prev\_error)\ /\ time\_delta }
+\DoxyCodeLine{00181\  }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Battery\ droop\ compensation }}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.battery\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}: }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ Kdroop\ =\ 1\ /\ self.battery.get\_cur\_perc() }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ Kdroop\ =\ 1 }
+\DoxyCodeLine{00187\  }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Controller\ output }}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ self.a\ =\ Kdroop\ *\ ( }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ (self.Kp\ *\ self.e) }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ +\ (self.integral\ *\ self.Ki) }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ +\ (self.derivative\ *\ self.Kd) }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ +\ ((self.r\_u\ *\ self.Kff)\ +\ copysign(1,\ self.r)\ *\ self.PWM\_start) }
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ ) }
+\DoxyCodeLine{00195\  }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Saturation }}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ self.astar\ =\ min(self.max\_min,\ max(-\/self.max\_min,\ self.a)) }
+\DoxyCodeLine{00198\  }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Anti-\/windup\ correction }}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.Kw: }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ self.integral\ -\/=\ (self.a\ -\/\ self.astar)\ *\ self.Kw }
+\DoxyCodeLine{00202\  }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.astar }
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{_closed___loop___control_8py_source_l00068}{a}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00069}{astar}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00055}{battery}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00075}{derivative}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00072}{e}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00079}{first\+\_\+run}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00074}{integral}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00060}{Kd}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00062}{Kff}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00059}{Ki}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00058}{Kp}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00061}{Kw}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00054}{max\+\_\+min}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00080}{num\+\_\+corrections}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00078}{on}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00073}{prev\+\_\+error}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00063}{PWM\+\_\+start}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00066}{r}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00154}{r\+\_\+u}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00053}{sensor}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00081}{total\+\_\+num\+\_\+corrections}}, and \mbox{\hyperlink{_closed___loop___control_8py_source_l00067}{x\+\_\+h}}.
+References \mbox{\hyperlink{_closed___loop___control_8py_source_l00068}{a}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00069}{astar}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00055}{battery}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00075}{derivative}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00072}{e}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00079}{first\+\_\+run}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00074}{integral}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00060}{Kd}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00062}{Kff}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00059}{Ki}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00058}{Kp}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00061}{Kw}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00054}{max\+\_\+min}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00080}{num\+\_\+corrections}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00078}{on}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00073}{prev\+\_\+error}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00063}{PWM\+\_\+start}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00066}{r}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00159}{r\+\_\+u}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00053}{sensor}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00081}{total\+\_\+num\+\_\+corrections}}, and \mbox{\hyperlink{_closed___loop___control_8py_source_l00067}{x\+\_\+h}}.
 
 \Hypertarget{class_closed___loop___control_1_1_closed_loop_control_aebb3d324c6fade3ecffb58764d6f52fb}\index{Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}!set\_ref@{set\_ref}}
 \index{set\_ref@{set\_ref}!Closed\_Loop\_Control.ClosedLoopControl@{Closed\_Loop\_Control.ClosedLoopControl}}
@@ -302,13 +327,13 @@ Set the controller reference (setpoint).
 \end{DoxyParams}
 
 
-Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00098}{98}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
+Definition at line \mbox{\hyperlink{_closed___loop___control_8py_source_l00103}{103}} of file \mbox{\hyperlink{_closed___loop___control_8py_source}{Closed\+\_\+\+Loop\+\_\+\+Control.\+py}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{def\ }set\_ref(self,\ speed)\ -\/>\ None:}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ self.r\ =\ speed}
-\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{def\ }set\_ref(self,\ speed)\ -\/>\ None: }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ self.r\ =\ speed }
+\DoxyCodeLine{00105\  }
 
 \end{DoxyCode}
 

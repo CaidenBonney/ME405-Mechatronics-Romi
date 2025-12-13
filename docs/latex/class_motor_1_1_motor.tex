@@ -2,13 +2,81 @@
 \hypertarget{class_motor_1_1_motor}{}\label{class_motor_1_1_motor}\index{Motor.Motor@{Motor.Motor}}
 
 
+\doxylink{class_motor_1_1_motor}{Motor} driver abstraction using PWM and direction pins.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_motor_1_1_motor_aa6bdf6efc1bca5b775473a43dd2eabf1}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, PWM\+\_\+pin, DIR\+\_\+pin, n\+SLP\+\_\+pin, Timer tim, int PWM\+\_\+ch\+\_\+num)
+\begin{DoxyCompactList}\small\item\em Initialize a motor driver. \end{DoxyCompactList}\item 
+\Hypertarget{class_motor_1_1_motor_aab5e27f0b78b7adb47a417958dd04ddb}\label{class_motor_1_1_motor_aab5e27f0b78b7adb47a417958dd04ddb} 
+{\bfseries set\+\_\+effort} (self, float value)
+\begin{DoxyCompactList}\small\item\em Set motor effort as a percentage (-\/100..100). \end{DoxyCompactList}\item 
+\Hypertarget{class_motor_1_1_motor_a9dd93a3dedf447781a501c90cf853139}\label{class_motor_1_1_motor_a9dd93a3dedf447781a501c90cf853139} 
+{\bfseries enable} (self)
+\begin{DoxyCompactList}\small\item\em Enable the motor driver (wakes from sleep). \end{DoxyCompactList}\item 
+\Hypertarget{class_motor_1_1_motor_abd3d4107db4e3a2737529b42ab65d684}\label{class_motor_1_1_motor_abd3d4107db4e3a2737529b42ab65d684} 
+{\bfseries disable} (self)
+\begin{DoxyCompactList}\small\item\em Disable the motor driver (sleep mode). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
 \doxysubsection{Detailed Description}
+\doxylink{class_motor_1_1_motor}{Motor} driver abstraction using PWM and direction pins. 
+
+Definition at line \mbox{\hyperlink{_motor_8py_source_l00013}{13}} of file \mbox{\hyperlink{_motor_8py_source}{Motor.\+py}}.
 
 
-Definition at line \mbox{\hyperlink{_motor_8py_source_l00007}{7}} of file \mbox{\hyperlink{_motor_8py_source}{Motor.\+py}}.
+
+\label{doc-constructors}
+\Hypertarget{class_motor_1_1_motor_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_motor_1_1_motor_aa6bdf6efc1bca5b775473a43dd2eabf1}\index{Motor.Motor@{Motor.Motor}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!Motor.Motor@{Motor.Motor}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_motor_1_1_motor_aa6bdf6efc1bca5b775473a43dd2eabf1} 
+Motor.\+Motor.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{PWM\+\_\+pin}{, }\item[{}]{DIR\+\_\+pin}{, }\item[{}]{n\+SLP\+\_\+pin}{, }\item[{Timer}]{tim}{, }\item[{int}]{PWM\+\_\+ch\+\_\+num}{}\end{DoxyParamCaption})}
+
+
+
+Initialize a motor driver. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em PWM\+\_\+pin} & PWM pin used for speed control \\
+\hline
+{\em DIR\+\_\+pin} & Direction pin \\
+\hline
+{\em n\+SLP\+\_\+pin} & Sleep pin (active low) \\
+\hline
+{\em tim} & Timer configured for PWM output \\
+\hline
+{\em PWM\+\_\+ch\+\_\+num} & Timer channel number for PWM \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_motor_8py_source_l00022}{22}} of file \mbox{\hyperlink{_motor_8py_source}{Motor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ PWM\_pin,\ DIR\_pin,\ nSLP\_pin,\ tim:\ Timer,\ PWM\_ch\_num:\ int): }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ self.nSLP\_pin\ =\ Pin(nSLP\_pin,\ mode=Pin.OUT\_PP) }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ self.PWM\_pin\ =\ Pin(PWM\_pin,\ mode=Pin.ANALOG) }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ self.DIR\_pin\ =\ Pin(DIR\_pin,\ mode=Pin.OUT\_PP) }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ self.PWM\_ch\ =\ tim.channel(PWM\_ch\_num,\ pin=self.PWM\_pin,\ mode=Timer.PWM) }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.PWM\_ch\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}: }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Invalid\ PWM\ channel\ number\ for\ the\ given\ timer"{}}) }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ self.disable()\ \ \textcolor{comment}{\#\ Start\ with\ motor\ disabled }}
+\DoxyCodeLine{00030\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_motor_8py_source_l00025}{DIR\+\_\+pin}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00107}{Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+disable()}}, \mbox{\hyperlink{_motor_8py_source_l00050}{disable()}}, \mbox{\hyperlink{_motor_8py_source_l00023}{n\+SLP\+\_\+pin}}, \mbox{\hyperlink{_motor_8py_source_l00026}{PWM\+\_\+ch}}, and \mbox{\hyperlink{_motor_8py_source_l00024}{PWM\+\_\+pin}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-Lab Final/\+Files On Romi/Motor.\+py\end{DoxyCompactItemize}
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_motor_8py}{Motor.\+py}}\end{DoxyCompactItemize}

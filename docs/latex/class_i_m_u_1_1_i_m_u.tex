@@ -1,5 +1,10 @@
 \doxysection{IMU.\+IMU Class Reference}
 \hypertarget{class_i_m_u_1_1_i_m_u}{}\label{class_i_m_u_1_1_i_m_u}\index{IMU.IMU@{IMU.IMU}}
+
+
+BNO055 \doxylink{class_i_m_u_1_1_i_m_u}{IMU} interface with heading and calibration support.  
+
+
 Inheritance diagram for IMU.\+IMU\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -11,15 +16,361 @@ Inheritance diagram for IMU.\+IMU\+:\begin{figure}[H]
 \item 
 class \mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg}{reg}}
 \end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a4d3c99d26d97ade52feda999b8fc6774}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, I2C i2c\+\_\+object, Pin reset\+\_\+pin)
+\begin{DoxyCompactList}\small\item\em Initialize the \doxylink{class_i_m_u_1_1_i_m_u}{IMU} driver and perform reset/config. \end{DoxyCompactList}\item 
+\Hypertarget{class_i_m_u_1_1_i_m_u_a87f4effea9ff9d9719f6af72c29e4736}\label{class_i_m_u_1_1_i_m_u_a87f4effea9ff9d9719f6af72c29e4736} 
+{\bfseries reset} (self)
+\begin{DoxyCompactList}\small\item\em Hardware reset and base configuration of the \doxylink{class_i_m_u_1_1_i_m_u}{IMU}. \end{DoxyCompactList}\item 
+\Hypertarget{class_i_m_u_1_1_i_m_u_afa673c8e8d1af1635c95e0b88f97a3df}\label{class_i_m_u_1_1_i_m_u_afa673c8e8d1af1635c95e0b88f97a3df} 
+float {\bfseries get\+\_\+data} (self)
+\begin{DoxyCompactList}\small\item\em Override parent class method to expose heading. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a1fae52205ccb543d7970d07a84039bf4}{set\+\_\+mode}} (self, int mode)
+\begin{DoxyCompactList}\small\item\em Change the \doxylink{class_i_m_u_1_1_i_m_u}{IMU} operating mode (fusion/\+IMU/compass/etc.). \end{DoxyCompactList}\item 
+\Hypertarget{class_i_m_u_1_1_i_m_u_a12cc159581e5321d3578d30b00b58545}\label{class_i_m_u_1_1_i_m_u_a12cc159581e5321d3578d30b00b58545} 
+tuple {\bfseries get\+\_\+calibration\+\_\+status} (self)
+\begin{DoxyCompactList}\small\item\em Get the current calibration status bits. \end{DoxyCompactList}\item 
+\Hypertarget{class_i_m_u_1_1_i_m_u_a9776efd9662932ca4bf25020856e1388}\label{class_i_m_u_1_1_i_m_u_a9776efd9662932ca4bf25020856e1388} 
+tuple {\bfseries get\+\_\+calibration\+\_\+coefficients} (self)
+\begin{DoxyCompactList}\small\item\em Read the calibration coefficients from \doxylink{class_i_m_u_1_1_i_m_u}{IMU} registers. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_i_m_u_1_1_i_m_u_ab61c540c7fb19e614f4849953d3cce9b}{calibrate}} (self)
+\begin{DoxyCompactList}\small\item\em Run calibration or load saved coefficients from file. \end{DoxyCompactList}\item 
+\Hypertarget{class_i_m_u_1_1_i_m_u_a6b23b1ea019404b97af99ded7302643a}\label{class_i_m_u_1_1_i_m_u_a6b23b1ea019404b97af99ded7302643a} 
+tuple\mbox{[}float, float, float\mbox{]} {\bfseries get\+\_\+euler\+\_\+angles} (self)
+\begin{DoxyCompactList}\small\item\em Return Euler angles (heading, roll, pitch) in radians. \end{DoxyCompactList}\item 
+\Hypertarget{class_i_m_u_1_1_i_m_u_a442b3240c60e395e44a7bdb30716d5da}\label{class_i_m_u_1_1_i_m_u_a442b3240c60e395e44a7bdb30716d5da} 
+float {\bfseries get\+\_\+imu\+\_\+heading} (self)
+\begin{DoxyCompactList}\small\item\em Get raw heading directly from \doxylink{class_i_m_u_1_1_i_m_u}{IMU} registers (radians). \end{DoxyCompactList}\item 
+\Hypertarget{class_i_m_u_1_1_i_m_u_aaee0a7c4f9f8350803f0c74f8920ebb5}\label{class_i_m_u_1_1_i_m_u_aaee0a7c4f9f8350803f0c74f8920ebb5} 
+float {\bfseries get\+\_\+heading} (self)
+\begin{DoxyCompactList}\small\item\em Get integrated heading with wrap-\/around handling. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a88a839d16b9a2d1929da05460724193a}{set\+\_\+heading}} (self, float heading)
+\begin{DoxyCompactList}\small\item\em Manually set the integrated heading reference. \end{DoxyCompactList}\item 
+\Hypertarget{class_i_m_u_1_1_i_m_u_af328315b50e7ec6bbb8abf8a4b615a9a}\label{class_i_m_u_1_1_i_m_u_af328315b50e7ec6bbb8abf8a4b615a9a} 
+float {\bfseries get\+\_\+yaw\+\_\+rate} (self)
+\begin{DoxyCompactList}\small\item\em Get yaw rate (rad/s) from gyro Z-\/axis. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_sensor_1_1_sensor}{Sensor.\+Sensor}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sensor_1_1_sensor_abdd7ecd205bec477ec349a8221a86fc9}{set\+\_\+attr}} (cls, K="{}Kp"{}, value=0.\+0)
+\begin{DoxyCompactList}\small\item\em Set a class-\/level gain attribute. \end{DoxyCompactList}\item 
+None {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em Initialize timing variables for dt computation. \end{DoxyCompactList}\item 
+None \mbox{\hyperlink{class_sensor_1_1_sensor_a49cdbda3f5a9c633664e069b976be896}{update\+\_\+dt}} (self)
+\begin{DoxyCompactList}\small\item\em Refresh the stored time differential for subclasses. \end{DoxyCompactList}\item 
+None {\bfseries reset\+\_\+timing} (self)
+\begin{DoxyCompactList}\small\item\em Reset the timing history used for dt calculations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a23a76edd38d3a81b4ea53b25474aa344}{\+\_\+read\+\_\+reg}} (self, tuple \mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg}{reg}})
+\begin{DoxyCompactList}\small\item\em Read bytes from an \doxylink{class_i_m_u_1_1_i_m_u}{IMU} register tuple. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}{\+\_\+write\+\_\+reg}} (self, tuple \mbox{\hyperlink{class_i_m_u_1_1_i_m_u_1_1reg}{reg}}, str input)
+\begin{DoxyCompactList}\small\item\em Write masked bits to an \doxylink{class_i_m_u_1_1_i_m_u}{IMU} register. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
+BNO055 \doxylink{class_i_m_u_1_1_i_m_u}{IMU} interface with heading and calibration support. 
+
+Provides heading, yaw-\/rate, and Euler angles and persists calibration coefficients to {\ttfamily IMU\+\_\+cal.\+txt} when available. 
+
+Definition at line \mbox{\hyperlink{_i_m_u_8py_source_l00021}{21}} of file \mbox{\hyperlink{_i_m_u_8py_source}{IMU.\+py}}.
 
 
-Definition at line \mbox{\hyperlink{_i_m_u_8py_source_l00009}{9}} of file \mbox{\hyperlink{_i_m_u_8py_source}{IMU.\+py}}.
+
+\label{doc-constructors}
+\Hypertarget{class_i_m_u_1_1_i_m_u_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_i_m_u_1_1_i_m_u_a4d3c99d26d97ade52feda999b8fc6774}\index{IMU.IMU@{IMU.IMU}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!IMU.IMU@{IMU.IMU}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_i_m_u_1_1_i_m_u_a4d3c99d26d97ade52feda999b8fc6774} 
+IMU.\+IMU.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{I2C}]{i2c\+\_\+object}{, }\item[{Pin}]{reset\+\_\+pin}{}\end{DoxyParamCaption})}
+
+
+
+Initialize the \doxylink{class_i_m_u_1_1_i_m_u}{IMU} driver and perform reset/config. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i2c\+\_\+object} & Configured I2C controller object \\
+\hline
+{\em reset\+\_\+pin} & Pin used to toggle the \doxylink{class_i_m_u_1_1_i_m_u}{IMU} reset line \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_i_m_u_8py_source_l00072}{72}} of file \mbox{\hyperlink{_i_m_u_8py_source}{IMU.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ i2c\_object:\ I2C,\ reset\_pin:\ Pin): }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ super().\_\_init\_\_() }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ self.i2c\ =\ i2c\_object\ \ \textcolor{comment}{\#\ the\ pyb\ board\ is\ the\ controller,\ meaning\ the\ IMU\ is\ the\ peripheral }}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ self.reset\_pin\ =\ reset\_pin }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ self.\_buf\ =\ bytearray((0\ \textcolor{keywordflow}{for}\ \_\ \textcolor{keywordflow}{in}\ range(22)))\ \ \textcolor{comment}{\#\ buffer\ for\ unpacking.\ Each\ element\ is\ a\ byte }}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ self.calibrated\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ self.convert\_reg\_to\_rad\ =\ 900 }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ self.prev\_imu\_heading\ =\ 0 }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ self.heading\ =\ 0 }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ self.ar\ =\ 2\ *\ pi }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ self.reset() }
+\DoxyCodeLine{00083\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_i_m_u_8py_source_l00072}{\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{_i_m_u_8py_source_l00076}{\+\_\+buf}}, \mbox{\hyperlink{_encoder_8py_source_l00057}{Encoder.\+Encoder.\+ar}}, \mbox{\hyperlink{_i_m_u_8py_source_l00081}{ar}}, \mbox{\hyperlink{_i_m_u_8py_source_l00077}{calibrated}}, \mbox{\hyperlink{_i_m_u_8py_source_l00078}{convert\+\_\+reg\+\_\+to\+\_\+rad}}, \mbox{\hyperlink{_i_m_u_8py_source_l00080}{heading}}, \mbox{\hyperlink{_i_m_u_8py_source_l00074}{i2c}}, \mbox{\hyperlink{_i_m_u_8py_source_l00079}{prev\+\_\+imu\+\_\+heading}}, \mbox{\hyperlink{_closed___loop___control_8py_source_l00086}{Closed\+\_\+\+Loop\+\_\+\+Control.\+Closed\+Loop\+Control.\+reset()}}, \mbox{\hyperlink{_i_m_u_8py_source_l00085}{reset()}}, and \mbox{\hyperlink{_i_m_u_8py_source_l00075}{reset\+\_\+pin}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_i_m_u_1_1_i_m_u_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_i_m_u_1_1_i_m_u_a23a76edd38d3a81b4ea53b25474aa344}\index{IMU.IMU@{IMU.IMU}!\_read\_reg@{\_read\_reg}}
+\index{\_read\_reg@{\_read\_reg}!IMU.IMU@{IMU.IMU}}
+\doxysubsubsection{\texorpdfstring{\_read\_reg()}{\_read\_reg()}}
+{\footnotesize\ttfamily \label{class_i_m_u_1_1_i_m_u_a23a76edd38d3a81b4ea53b25474aa344} 
+IMU.\+IMU.\+\_\+read\+\_\+reg (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{tuple}]{reg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Read bytes from an \doxylink{class_i_m_u_1_1_i_m_u}{IMU} register tuple. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg} & (address, struct-\/format) tuple \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Unpacked data from the register 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_i_m_u_8py_source_l00102}{102}} of file \mbox{\hyperlink{_i_m_u_8py_source}{IMU.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{def\ }\_read\_reg(self,\ reg:\ tuple): }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ determine\ number\ of\ bytes\ from\ reg\ read\ code }}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ length\ =\ calcsize(reg[1]) }
+\DoxyCodeLine{00105\  }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Create\ a\ memoryview\ object\ of\ the\ right\ size }}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ buf\ =\ memoryview(self.\_buf)[:length] }
+\DoxyCodeLine{00108\  }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Read\ the\ the\ I2C\ bytes\ into\ memoryview }}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ self.i2c.mem\_read(buf,\ self.DEV\_ADDR,\ reg[0]) }
+\DoxyCodeLine{00111\  }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ unpack\_from(reg[1],\ buf) }
+\DoxyCodeLine{00113\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_i_m_u_8py_source_l00076}{\+\_\+buf}}, \mbox{\hyperlink{_i_m_u_8py_source_l00023}{DEV\+\_\+\+ADDR}}, and \mbox{\hyperlink{_i_m_u_8py_source_l00074}{i2c}}.
+
+\Hypertarget{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4}\index{IMU.IMU@{IMU.IMU}!\_write\_reg@{\_write\_reg}}
+\index{\_write\_reg@{\_write\_reg}!IMU.IMU@{IMU.IMU}}
+\doxysubsubsection{\texorpdfstring{\_write\_reg()}{\_write\_reg()}}
+{\footnotesize\ttfamily \label{class_i_m_u_1_1_i_m_u_a29d08d955469bde7bd10ac779c65c9d4} 
+IMU.\+IMU.\+\_\+write\+\_\+reg (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{tuple}]{reg}{, }\item[{str}]{input}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Write masked bits to an \doxylink{class_i_m_u_1_1_i_m_u}{IMU} register. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg} & (address, struct-\/format) tuple \\
+\hline
+{\em input} & String of \textquotesingle{}0\textquotesingle{},\textquotesingle{}1\textquotesingle{},\textquotesingle{}x\textquotesingle{} specifying bit masks \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_i_m_u_8py_source_l00118}{118}} of file \mbox{\hyperlink{_i_m_u_8py_source}{IMU.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{def\ }\_write\_reg(self,\ reg:\ tuple,\ input:\ str): }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Writes\ a\ string\ input\ to\ the\ IMU:\ ie\ input\ =\ '01110xxx' }}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ This\ write\ functionality\ can\ work\ on\ 8\ or\ 16\ bits }}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ ASSUMED\ THAT\ CONFIGMODE\ IS\ SET\ APPROPRIATELY\ BEFORE\ CALLING\ THIS\ FUNCTION }}
+\DoxyCodeLine{00122\  }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ determine\ number\ of\ bytes\ in\ register\ location }}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ length\ =\ calcsize(reg[1]) }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ length\ >\ 2\ \textcolor{keywordflow}{or}\ len(input)\ //\ 8\ !=\ length: }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Write\ to\ register\ is\ not\ the\ correct\ length"{}}) }
+\DoxyCodeLine{00127\  }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Create\ and\ mask\ and\ or\ mask }}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ and\_mask\ =\ 0b1111\_1111\ \textcolor{keywordflow}{if}\ length\ ==\ 1\ \textcolor{keywordflow}{else}\ 0b1111\_1111\_1111\_1111 }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ or\_mask\ =\ 0b0000\_0000\ \textcolor{keywordflow}{if}\ length\ ==\ 1\ \textcolor{keywordflow}{else}\ 0b0000\_0000\_0000\_0000 }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ char\_index\ \textcolor{keywordflow}{in}\ range(len(input)): }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ char\ =\ input[-\/char\_index\ -\/\ 1] }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ char\ ==\ \textcolor{stringliteral}{"{}x"{}}\ \textcolor{keywordflow}{or}\ char\ ==\ \textcolor{stringliteral}{"{}X"{}}: }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}\ \ \textcolor{comment}{\#\ and\ mask\ is\ already\ set,\ or\ mask\ is\ already\ cleared }}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ char\ ==\ \textcolor{stringliteral}{"{}0"{}}: }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ and\_mask\ \&=\ \string~(1\ <<\ (char\_index))\ \ \textcolor{comment}{\#\ clear\ the\ and\ bit }}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ char\ ==\ \textcolor{stringliteral}{"{}1"{}}: }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ and\_mask\ \&=\ \string~(1\ <<\ (char\_index))\ \ \textcolor{comment}{\#\ clear\ the\ and\ bit }}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ or\_mask\ |=\ 1\ <<\ (char\_index)\ \ \textcolor{comment}{\#\ set\ the\ or\ bit }}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}mask\ chars\ must\ be\ '0','1','x',\ or\ 'X'"{}}) }
+\DoxyCodeLine{00142\  }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ self.i2c.mem\_write( }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ ((self.\_read\_reg(reg)[0]\ \&\ and\_mask)\ |\ or\_mask), }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ self.DEV\_ADDR, }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ reg[0], }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ addr\_size=(8\ \textcolor{keywordflow}{if}\ length\ ==\ 1\ \textcolor{keywordflow}{else}\ 16), }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ ) }
+\DoxyCodeLine{00149\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_i_m_u_8py_source_l00102}{\+\_\+read\+\_\+reg()}}, \mbox{\hyperlink{_i_m_u_8py_source_l00023}{DEV\+\_\+\+ADDR}}, and \mbox{\hyperlink{_i_m_u_8py_source_l00074}{i2c}}.
+
+\Hypertarget{class_i_m_u_1_1_i_m_u_ab61c540c7fb19e614f4849953d3cce9b}\index{IMU.IMU@{IMU.IMU}!calibrate@{calibrate}}
+\index{calibrate@{calibrate}!IMU.IMU@{IMU.IMU}}
+\doxysubsubsection{\texorpdfstring{calibrate()}{calibrate()}}
+{\footnotesize\ttfamily \label{class_i_m_u_1_1_i_m_u_ab61c540c7fb19e614f4849953d3cce9b} 
+ bool IMU.\+IMU.\+calibrate (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Run calibration or load saved coefficients from file. 
+
+If {\ttfamily IMU\+\_\+cal.\+txt} exists, coefficients are loaded; otherwise calibration runs until gyro and mag are calibrated, then saves to file. 
+
+Definition at line \mbox{\hyperlink{_i_m_u_8py_source_l00185}{185}} of file \mbox{\hyperlink{_i_m_u_8py_source}{IMU.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keyword}{def\ }calibrate(self)\ -\/>\ bool: }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{"{}IMU\_cal.txt"{}}\ \textcolor{keywordflow}{in}\ listdir(): }
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calibration\ data\ is\ present }}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ self.set\_mode(0) }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Found\ IMU\ calibration\ data,\ skipping\ calibration"{}}) }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{"{}IMU\_cal.txt"{}},\ \textcolor{stringliteral}{"{}r"{}})\ \textcolor{keyword}{as}\ file: }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ entries\ =\ file.readline().strip().split(\textcolor{stringliteral}{"{},"{}}) }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ len(entries)\ !=\ 11: }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Calibration\ data\ length\ !=\ expected\ length"{}}) }
+\DoxyCodeLine{00194\  }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ idx,\ coeff\_reg\ \textcolor{keywordflow}{in}\ enumerate(IMU.reg.calibration\_coefficients): }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\_write\_reg(coeff\_reg,\ entries[idx]) }
+\DoxyCodeLine{00197\  }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.calibrated\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.set\_mode(IMU.default\_mode\_set) }
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}No\ IMU\ calibration\ data\ found"{}}) }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ self.set\_mode(5)\ \ \textcolor{comment}{\#\ set\ to\ NDOF\ mode\ for\ calibration }}
+\DoxyCodeLine{00204\  }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ prev\_cal\ =\ cur\_cal\ =\ 0 }
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keywordflow}{not}\ (cur\_cal\ \&\ 0b0011\_0011\ ==\ 0b0011\_0011):\ \ \textcolor{comment}{\#\ only\ check\ GYR\ and\ MAG\ calibration }}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ prev\_cal\ !=\ cur\_cal: }
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}\{cur\_cal:08b\}"{}}) }
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prev\_cal\ =\ cur\_cal }
+\DoxyCodeLine{00210\  }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cur\_cal\ =\ self.get\_calibration\_status()[0]\ \ \textcolor{comment}{\#\ Update\ cur\_cal\ before\ checking }}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ cur\_cal\ \&\ 0b0011\_0011\ ==\ 0b0011\_0011: }
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.set\_mode(0) }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{"{}IMU\_cal.txt"{}},\ \textcolor{stringliteral}{"{}w"{}})\ \textcolor{keyword}{as}\ f: }
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ coefs\ =\ \textcolor{stringliteral}{"{},"{}}.join(f\textcolor{stringliteral}{"{}\{s\ \&\ 0xFFFF:016b\}"{}}\ \textcolor{keywordflow}{for}\ s\ \textcolor{keywordflow}{in}\ self.get\_calibration\_coefficients()) }
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f.write(f\textcolor{stringliteral}{"{}\{coefs\}\(\backslash\)n"{}}) }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}\{coefs\}"{}}) }
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}IMU\ Calibration\ Coefficients\ Saved"{}}) }
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.calibrated\ =\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.set\_mode(IMU.default\_mode\_set) }
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ delay(100)\ \ \textcolor{comment}{\#\ delay(ms)\ to\ allow\ IMU\ to\ settle }}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00224\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_i_m_u_8py_source_l00118}{\+\_\+write\+\_\+reg()}}, \mbox{\hyperlink{_i_m_u_8py_source_l00077}{calibrated}}, \mbox{\hyperlink{_i_m_u_8py_source_l00178}{get\+\_\+calibration\+\_\+coefficients()}}, \mbox{\hyperlink{_i_m_u_8py_source_l00174}{get\+\_\+calibration\+\_\+status()}}, and \mbox{\hyperlink{_i_m_u_8py_source_l00157}{set\+\_\+mode()}}.
+
+\Hypertarget{class_i_m_u_1_1_i_m_u_a88a839d16b9a2d1929da05460724193a}\index{IMU.IMU@{IMU.IMU}!set\_heading@{set\_heading}}
+\index{set\_heading@{set\_heading}!IMU.IMU@{IMU.IMU}}
+\doxysubsubsection{\texorpdfstring{set\_heading()}{set\_heading()}}
+{\footnotesize\ttfamily \label{class_i_m_u_1_1_i_m_u_a88a839d16b9a2d1929da05460724193a} 
+IMU.\+IMU.\+set\+\_\+heading (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{float}]{heading}{}\end{DoxyParamCaption})}
+
+
+
+Manually set the integrated heading reference. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em heading} & New heading in radians \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_i_m_u_8py_source_l00253}{253}} of file \mbox{\hyperlink{_i_m_u_8py_source}{IMU.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keyword}{def\ }set\_heading(self,\ heading:\ float): }
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ self.heading\ =\ heading }
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ self.prev\_imu\_heading\ =\ self.get\_imu\_heading() }
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ self.delta\ =\ 0 }
+\DoxyCodeLine{00257\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_encoder_8py_source_l00055}{Encoder.\+Encoder.\+delta}}, \mbox{\hyperlink{_i_m_u_8py_source_l00236}{delta}}, \mbox{\hyperlink{_i_m_u_8py_source_l00231}{get\+\_\+imu\+\_\+heading()}}, \mbox{\hyperlink{_i_m_u_8py_source_l00080}{heading}}, and \mbox{\hyperlink{_i_m_u_8py_source_l00079}{prev\+\_\+imu\+\_\+heading}}.
+
+\Hypertarget{class_i_m_u_1_1_i_m_u_a1fae52205ccb543d7970d07a84039bf4}\index{IMU.IMU@{IMU.IMU}!set\_mode@{set\_mode}}
+\index{set\_mode@{set\_mode}!IMU.IMU@{IMU.IMU}}
+\doxysubsubsection{\texorpdfstring{set\_mode()}{set\_mode()}}
+{\footnotesize\ttfamily \label{class_i_m_u_1_1_i_m_u_a1fae52205ccb543d7970d07a84039bf4} 
+IMU.\+IMU.\+set\+\_\+mode (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{int}]{mode}{}\end{DoxyParamCaption})}
+
+
+
+Change the \doxylink{class_i_m_u_1_1_i_m_u}{IMU} operating mode (fusion/\+IMU/compass/etc.). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & Mode number per BNO055 datasheet \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_i_m_u_8py_source_l00157}{157}} of file \mbox{\hyperlink{_i_m_u_8py_source}{IMU.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keyword}{def\ }set\_mode(self,\ mode:\ int): }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ mode\ ==\ 0: }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_write\_reg(IMU.reg.OPR\_MODE,\ \textcolor{stringliteral}{"{}xxxx0000"{}})\ \ \textcolor{comment}{\#\ 0:\ CONFIGMODE }}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ mode\ ==\ 1: }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_write\_reg(IMU.reg.OPR\_MODE,\ \textcolor{stringliteral}{"{}xxxx1000"{}})\ \ \textcolor{comment}{\#\ 1:\ IMU }}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ mode\ ==\ 2: }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_write\_reg(IMU.reg.OPR\_MODE,\ \textcolor{stringliteral}{"{}xxxx1001"{}})\ \ \textcolor{comment}{\#\ 2:\ COMPASS }}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ mode\ ==\ 3: }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_write\_reg(IMU.reg.OPR\_MODE,\ \textcolor{stringliteral}{"{}xxxx1010"{}})\ \ \textcolor{comment}{\#\ 3:\ M4G }}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ mode\ ==\ 4: }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_write\_reg(IMU.reg.OPR\_MODE,\ \textcolor{stringliteral}{"{}xxxx1011"{}})\ \ \textcolor{comment}{\#\ 4:\ NDOF\_FMC\_OFF }}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ mode\ ==\ 5: }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ self.\_write\_reg(IMU.reg.OPR\_MODE,\ \textcolor{stringliteral}{"{}xxxx1100"{}})\ \ \textcolor{comment}{\#\ 5:\ NDOF }}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Invalid\ mode"{}}) }
+\DoxyCodeLine{00172\  }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_i_m_u_8py_source_l00118}{\+\_\+write\+\_\+reg()}}.
 
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-Lab Final/\+Files On Romi/IMU.\+py\end{DoxyCompactItemize}
+Lab Final/\+Files On Romi/\mbox{\hyperlink{_i_m_u_8py}{IMU.\+py}}\end{DoxyCompactItemize}

@@ -98,10 +98,50 @@ $(function(){initNavTree('class_garbage___collector_1_1_garbage_collector.html',
   <div class="headertitle"><div class="title">Garbage_Collector.GarbageCollector Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Task wrapper that invokes <code>gc.collect()</code> on a cooperative schedule.  
+ <a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aa232eeb65988a03c389cee49aa41a901" id="r_aa232eeb65988a03c389cee49aa41a901"><td class="memItemLeft" align="right" valign="top"><a id="aa232eeb65988a03c389cee49aa41a901" name="aa232eeb65988a03c389cee49aa41a901"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self)</td></tr>
+<tr class="memdesc:aa232eeb65988a03c389cee49aa41a901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the garbage collector task. <br /></td></tr>
+<tr class="memitem:a34ccea8ebe8e46142e818b1716334037" id="r_a34ccea8ebe8e46142e818b1716334037"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34ccea8ebe8e46142e818b1716334037">run</a> (self)</td></tr>
+<tr class="memdesc:a34ccea8ebe8e46142e818b1716334037"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generator that runs garbage collection each time it's scheduled.  <br /></td></tr>
+</table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_garbage___collector_8py_source.html#l00004">4</a> of file <a class="el" href="_garbage___collector_8py_source.html">Garbage_Collector.py</a>.</p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Task wrapper that invokes <code>gc.collect()</code> on a cooperative schedule. </p>
+
+<p class="definition">Definition at line <a class="el" href="_garbage___collector_8py_source.html#l00014">14</a> of file <a class="el" href="_garbage___collector_8py_source.html">Garbage_Collector.py</a>.</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a34ccea8ebe8e46142e818b1716334037" name="a34ccea8ebe8e46142e818b1716334037"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34ccea8ebe8e46142e818b1716334037">&#9670;&#160;</a></span>run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Garbage_Collector.GarbageCollector.run </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generator that runs garbage collection each time it's scheduled. </p>
+<p>Yields after collecting so the scheduler can continue running other tasks. </p>
+
+<p class="definition">Definition at line <a class="el" href="_garbage___collector_8py_source.html#l00022">22</a> of file <a class="el" href="_garbage___collector_8py_source.html">Garbage_Collector.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   22</span>    <span class="keyword">def </span>run(self):</div>
+<div class="line"><span class="lineno">   23</span>        <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
+<div class="line"><span class="lineno">   24</span>            collect()</div>
+<div class="line"><span class="lineno">   25</span>            <span class="keywordflow">yield</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>Lab Final/Files On Romi/<a class="el" href="_garbage___collector_8py_source.html">Garbage_Collector.py</a></li>
 </ul>
 </div><!-- contents -->

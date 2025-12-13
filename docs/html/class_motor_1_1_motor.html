@@ -98,10 +98,96 @@ $(function(){initNavTree('class_motor_1_1_motor.html','','class_motor_1_1_motor-
   <div class="headertitle"><div class="title">Motor.Motor Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="class_motor_1_1_motor.html" title="Motor driver abstraction using PWM and direction pins.">Motor</a> driver abstraction using PWM and direction pins.  
+ <a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aa6bdf6efc1bca5b775473a43dd2eabf1" id="r_aa6bdf6efc1bca5b775473a43dd2eabf1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6bdf6efc1bca5b775473a43dd2eabf1">__init__</a> (self, PWM_pin, DIR_pin, nSLP_pin, Timer tim, int PWM_ch_num)</td></tr>
+<tr class="memdesc:aa6bdf6efc1bca5b775473a43dd2eabf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a motor driver.  <br /></td></tr>
+<tr class="memitem:aab5e27f0b78b7adb47a417958dd04ddb" id="r_aab5e27f0b78b7adb47a417958dd04ddb"><td class="memItemLeft" align="right" valign="top"><a id="aab5e27f0b78b7adb47a417958dd04ddb" name="aab5e27f0b78b7adb47a417958dd04ddb"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>set_effort</b> (self, float value)</td></tr>
+<tr class="memdesc:aab5e27f0b78b7adb47a417958dd04ddb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set motor effort as a percentage (-100..100). <br /></td></tr>
+<tr class="memitem:a9dd93a3dedf447781a501c90cf853139" id="r_a9dd93a3dedf447781a501c90cf853139"><td class="memItemLeft" align="right" valign="top"><a id="a9dd93a3dedf447781a501c90cf853139" name="a9dd93a3dedf447781a501c90cf853139"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>enable</b> (self)</td></tr>
+<tr class="memdesc:a9dd93a3dedf447781a501c90cf853139"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the motor driver (wakes from sleep). <br /></td></tr>
+<tr class="memitem:abd3d4107db4e3a2737529b42ab65d684" id="r_abd3d4107db4e3a2737529b42ab65d684"><td class="memItemLeft" align="right" valign="top"><a id="abd3d4107db4e3a2737529b42ab65d684" name="abd3d4107db4e3a2737529b42ab65d684"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>disable</b> (self)</td></tr>
+<tr class="memdesc:abd3d4107db4e3a2737529b42ab65d684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the motor driver (sleep mode). <br /></td></tr>
+</table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_motor_8py_source.html#l00007">7</a> of file <a class="el" href="_motor_8py_source.html">Motor.py</a>.</p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p><a class="el" href="class_motor_1_1_motor.html" title="Motor driver abstraction using PWM and direction pins.">Motor</a> driver abstraction using PWM and direction pins. </p>
+
+<p class="definition">Definition at line <a class="el" href="_motor_8py_source.html#l00013">13</a> of file <a class="el" href="_motor_8py_source.html">Motor.py</a>.</p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aa6bdf6efc1bca5b775473a43dd2eabf1" name="aa6bdf6efc1bca5b775473a43dd2eabf1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6bdf6efc1bca5b775473a43dd2eabf1">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Motor.Motor.__init__ </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>PWM_pin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>DIR_pin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>nSLP_pin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Timer</td>          <td class="paramname"><span class="paramname"><em>tim</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>PWM_ch_num</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize a motor driver. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">PWM_pin</td><td>PWM pin used for speed control </td></tr>
+    <tr><td class="paramname">DIR_pin</td><td>Direction pin </td></tr>
+    <tr><td class="paramname">nSLP_pin</td><td>Sleep pin (active low) </td></tr>
+    <tr><td class="paramname">tim</td><td>Timer configured for PWM output </td></tr>
+    <tr><td class="paramname">PWM_ch_num</td><td>Timer channel number for PWM </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_motor_8py_source.html#l00022">22</a> of file <a class="el" href="_motor_8py_source.html">Motor.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   22</span>    <span class="keyword">def </span>__init__(self, PWM_pin, DIR_pin, nSLP_pin, tim: Timer, PWM_ch_num: int):</div>
+<div class="line"><span class="lineno">   23</span>        self.nSLP_pin = Pin(nSLP_pin, mode=Pin.OUT_PP)</div>
+<div class="line"><span class="lineno">   24</span>        self.PWM_pin = Pin(PWM_pin, mode=Pin.ANALOG)</div>
+<div class="line"><span class="lineno">   25</span>        self.DIR_pin = Pin(DIR_pin, mode=Pin.OUT_PP)</div>
+<div class="line"><span class="lineno">   26</span>        self.PWM_ch = tim.channel(PWM_ch_num, pin=self.PWM_pin, mode=Timer.PWM)</div>
+<div class="line"><span class="lineno">   27</span>        <span class="keywordflow">if</span> self.PWM_ch <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   28</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Invalid PWM channel number for the given timer&quot;</span>)</div>
+<div class="line"><span class="lineno">   29</span>        self.disable()  <span class="comment"># Start with motor disabled</span></div>
+<div class="line"><span class="lineno">   30</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_motor_8py_source.html#l00025">DIR_pin</a>, <a class="el" href="_closed___loop___control_8py_source.html#l00107">Closed_Loop_Control.ClosedLoopControl.disable()</a>, <a class="el" href="_motor_8py_source.html#l00050">disable()</a>, <a class="el" href="_motor_8py_source.html#l00023">nSLP_pin</a>, <a class="el" href="_motor_8py_source.html#l00026">PWM_ch</a>, and <a class="el" href="_motor_8py_source.html#l00024">PWM_pin</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>Lab Final/Files On Romi/<a class="el" href="_motor_8py_source.html">Motor.py</a></li>
 </ul>
 </div><!-- contents -->

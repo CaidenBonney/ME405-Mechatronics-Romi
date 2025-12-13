@@ -99,7 +99,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"12_803_825_01_0d3_800pm_2_plot___data_8py_source.html"
+"_battery_8py.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';
