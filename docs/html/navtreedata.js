@@ -31,7 +31,7 @@ var NAVTREE =
       [ "Chassis and Boards", "index.html#autotoc_md3", [
         [ "Romi Chassis", "index.html#autotoc_md4", null ],
         [ "Power Distribution Board", "index.html#autotoc_md5", null ],
-        [ "Shoe of Brain", "index.html#autotoc_md6", null ],
+        [ "Shoe of Brian", "index.html#autotoc_md6", null ],
         [ "Nucleo Board", "index.html#autotoc_md7", null ]
       ] ],
       [ "Motor", "index.html#autotoc_md8", null ],

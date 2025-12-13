@@ -3,61 +3,76 @@
 # Project Overview
 The Romi project is part of California Polytechnic State University San Luis Obispo's Mechanical Engineering Course ME405 Mechatronics. The project entails the design and implementation of a robotic vehicle named Romi, which is a two-wheeled robot constructed from component sourced from Pololu Robotics and Electronics.
 
-Romi’s objective is to traverse a predefined course with speed and precision, using integrated sensor feedback and actuator control. The course is defined by a series of waypoints, and Romi must navigate from one waypoint to the next following the class-defined rules. The robot's sensors include a line sensor made from several infrared (IR) sensors, bumps sensors to detect wall collisions, an inertial measurement unit (IMU) to measure orientation with resepct to Earth's magnetic north, and a quadrature encoder to measure the angular displacement of each wheel. Using information from these sensors, a State Observer is constructed to estimate the robot's current state, which importantly includes its current global position and orientation. Utilizing the Observer's estimations, the robot follows a path director and explores the course in order to reach the next waypoint.
+Romi’s objective is to traverse a predefined course with speed and precision, using integrated sensor feedback and actuator control. The course is defined by a series of waypoints, and Romi must navigate from one waypoint to the next following the class-defined rules. The robot's sensors include a line sensor made from several infrared (IR) sensors, bumps sensors to detect wall collisions, an inertial measurement unit (IMU) to measure orientation with respect to Earth's magnetic north, and quadrature encoders to measure the angular displacement of each wheel. Using information from these sensors, a State Observer is constructed to estimate the robot's current state, which importantly includes its current global position and orientation. Utilizing the Observer's estimations, the robot follows a path director and explores the course in order to reach the next waypoint. 
 
 @image html Romi_isometric.jpeg "Figure XXX: Romi Isometric" width=450
 
-
-
 # Final Romi Performance
-HES not GIGA AS FUCK BOI -----
-
-<!-- <video width="640" controls>
-  <source src="assets/videos/best.mov" type="video/quicktime">
-</video> -->
-
+<video width="640" controls>
+  <source src="../assets/videos/best.mp4" type="video/mp4" />
+  <source src="../assets/videos/best.mov" type="video/quicktime" />
+</video>
 
 
 # Hardware
 ## Chassis and Boards
 ### Romi Chassis
------Words-----
+Romi's chassis is a component purchased from Pololu Robotics and Electronics. The chassis is a 2-wheeled robot with a center of gravity located at the center of the robot.
+
+The chassis can be purchased at https://www.pololu.com/product/3509 with additional components available at https://www.pololu.com/category/204/romi-chassis-components
 
 ### Power Distribution Board
------Words-----
+Romi's power distribution board is a component purchased from Pololu Robotics and Electronics. The board is used to power Romi's motors and other peripherals. 
 
-### Shoe of Brain
------Words-----
+The power distribution board can be purchased at https://www.pololu.com/product/3543.
+
+### Shoe of Brian
+Shoe of Brian was provided by ME405 Lab Instructor Charlie Refvem it is an open source board that can be used to interface iwth the Nucleo board. This shoe allows for uploading of code through the USB port. The Shoe of Brian also ensures that any USB devices connected are not powered by the Romi's battery which could damage the connected device. 
+
+A Shoe of Brian control board can be purchased at https://oshpark.com/shared_projects/e6X6OnYK and https://spluttflob.github.io/ME405-Support/shoe_info.html details the steps to build one including additional components required. 
 
 ### Nucleo Board
------Words-----
+The Nucleo board was also provided by our ME405 Lab Instructor Charlie Refvem. The Shoe of Brian is built to be directly compatible with the Nucleo board. 
+
+We used the ST NUCLEO-L476RG, which integrates the STM32L476RG MCU plus an on-board ST-LINK/V2-1 debugger/programmer, user LEDs, and a user button. In code, hardware timers are configured in `main.py` and consumed by `Motor.py`/`Motor_Controller.py` for PWM drive and by `Encoder.py` for quadrature capture. The I2C peripheral is used in `IMU.py`, ADC channels in `Battery.py` and `IR_Sensor.py`, UART in `User_Input.py`, and GPIO interrupts for bump sensors in `Path_Director.py`. The Shoe of Brian exposes the CN7/CN10 Morpho headers and Arduino headers so these peripherals can be wired cleanly to the Romi.
+
+The Nucleo Board can be purchased directly from https://estore.st.com/en/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-l476rg.html or from the same source as the datasheet https://os.mbed.com/platforms/ST-Nucleo-L476RG/.
 
 ## Motor
-Both wheels are driven by a Texas Instruments DRV8833 low-voltage H-bridge motor driver. Each motor shaft is equipped with an encoder (discussed below) and coupled to a gearbox that provides a 119.7576:1 reduction between the motor shaft and the wheel.
+Both wheels are driven by a Texas Instruments DRV8833 low-voltage H-bridge motor driver. Each motor shaft is equipped with an encoder (discussed below) and coupled to a gearbox that provides a 119.7576:1 reduction between the motor shaft and the wheel. In code, PWM drive and direction control are wrapped in `Motor.py`, while `Motor_Controller.py` runs a closed-loop controller (`Closed_Loop_Control.py`) using encoder feedback from `Encoder.py` to set motor effort. Higher-level speed commands come from `Path_Director.py`, and hardware timers are configured in `main.py`.
 
 @image html Motors.png "Figure XXX: Texas Instruments DRV8833 Motor Drive with gearbox and Encoder" width=350
 
- The motors follow the logic table below for its three input pins: nSLEEP, PH, and EN. nSLEEP acts as an on/off switch, PH acts as a direction switch, and EN acts as a drive/brake switch which is manipulated via pulse width modulation (PWM).
+ The motors follow the logic table below for its three input pins: nSLEEP, PH, and EN. nSLEEP acts as an on/off switch, PH acts as a direction switch, and EN acts as a drive/brake switch, which is manipulated via pulse width modulation (PWM).
+
+ The motor can be purchased directly from https://www.pololu.com/product/1520.
 
 @image html MotorLogicTable.png "Figure XXX: DRV8833 Motor Logic Table" width=900
 
 
 ## Quadrature Incremental Encoder
-Each motor shaft is instrumented with a quadrature incremental encoder that measures the shaft’s angular displacement. These encoders employ two Hall-effect sensors that detect changes in the magnetic field produced by rotating permanent magnets. The corresponding magnet geometry and representative encoder waveform are shown below. The encoders used on the Romi utilize the same three pole-pair magnet configuration illustrated.
+Each motor shaft is instrumented with a quadrature incremental encoder that measures the shaft’s angular displacement. These encoders employ two Hall-effect sensors that detect changes in the magnetic field produced by rotating permanent magnets. The corresponding magnet geometry and representative encoder waveform are shown below. The encoders used on the Romi utilize the same three-pole-pair magnet configuration illustrated.
 
 @image html Quad_Enc_3PP.png "Figure XXX: Quadrature Output for Encoder with 3 Pole-Pair Magnets" width=450
 
 
-By capturing the number of encoder ticks that occur across a measured time interval, the average angular velocity each shaft can be calculated. Utilizing this information in conjunction with the motor's gear ratio and wheel radii, the linear velocity of each wheel can be calculated. These linear velocities are used to both close loop control Romi's behavior and to estimate its current state. 
+By capturing the number of encoder ticks that occur across a measured time interval, the average angular velocity of each shaft can be calculated. Utilizing this information in conjunction with the motor's gear ratio and wheel radii, the linear velocity of each wheel can be calculated. These linear velocities are used to both close loop control Romi's behavior and to estimate its current state. 
+
+The encoder can be purchased directly from https://www.pololu.com/product/3542.
 
 ## Line Sensor
-In order to follow the 1/2 inch black lines on the course, Romi utilizes Pololu's line sensor composed of 13 infrared (IR) sensors. The line sensor if -----
+In order to follow the 1/2 inch black lines on the course, Romi utilizes Pololu's line sensor composed of 13 infrared (IR) sensors. The line sensor 
+array is aggregated in `Line_Sensor.py`, which normalizes each IR reading (via `IR_Sensor.py`) and computes the centroid of the detected line for feedback. The line-following closed-loop controller in `Closed_Loop_Control.py` uses this centroid error in `Path_Director.py` to steer Romi along the course. Calibration (white/black) can be triggered through `User_Input.py` and is persisted by `Line_Sensor.py` when flags are set from the task shares.
 
 ### Mounting
------Words-----
+The line sensor is mounted on the underside of the chassis using 3D-printed standoffs. The standoffs set the sensor height so the bump sensors contact obstacles first, protecting the board. Mounting holes were drilled out to fit the hardware available in the lab's donated parts bin. The SolidWorks part model for these standoffs lives in the `Mounting Bracket/` folder. Note that two of these standoffs are required to mount the line sensor.
+
+@image html linesensorbracket.png "Figure XXX: Line sensor standoff bracket" width=350
 
 ## IMU
------Words-----
+Romi uses an Adafruit BNO055 9-DOF absolute orientation sensor for heading and yaw-rate feedback. The breakout board includes an onboard microcontroller that fuses accelerometer, gyroscope, and magnetometer data to provide stable Euler angles without heavy processing on the Nucleo. The BNO055 breakout can be purchased at https://www.adafruit.com/product/2472.
+
+In code, the IMU is driven over I2C in `IMU.py`, which handles initialization, calibration loading/saving, and exposes heading/yaw-rate via `get_heading()` and `get_yaw_rate()`. The heading controller in `Closed_Loop_Control.py` uses these readings inside `Path_Director.py` to align the robot for turns and point-to-point moves, and the `Observer.py` task fuses IMU yaw data with encoder motion to estimate pose.
 
 
 
@@ -74,12 +89,12 @@ Within this framework, the system is organized into discrete tasks (@c cotask.Ta
 As mentioned above, each task has a @c run() method that is responsible for performing its specific behavior. If it is desired to communicate information between tasks, a task can use @c task_share.py's @c task_share.Share or @c task_share.Queue objects. These objects are used to transfer data between tasks with protection against data corruption by interrupts, among other features.
 
 ### Task Diagram
-Below is a diagram of each @c cotask.Task in Romi's system. The @c period and @c priority of each task is specified as well as each @c task_share.Share and @c task_share.Queue that it uses.
+Below is a diagram of each @c cotask.Task in Romi's system. The @c period and @c priority of each task is specified, as well as each @c task_share.Share and @c task_share.Queue that it uses.
 
 @image html Task_Diagram.png "Figure XXX: Romi's Task Diagram" width=800
 
 ### User Input
-The user input (@c User_Input.py) task is responsible for receiving commands from the user and actualizing them into physical outputs. User input processes the single character commmands from both the USB and Bluetooth interfaces into values that are placed in shares. Those shares then trigger other tasks to perform their respective functions.
+The user input (@c User_Input.py) task is responsible for receiving commands from the user and actualizing them into physical outputs. User input processes the single-character commands from both the USB and Bluetooth interfaces into values that are placed in shares. Those shares then trigger other tasks to perform their respective functions.
 
 @image html User_Input.png "Figure XXX: User Input Task Logic Diagram" width=500
 
@@ -95,7 +110,7 @@ The motor controller (@c Motor_Controller.py) task is responsible for controllin
 @image html Motor_Controller.png "Figure XXX: Motor Controller Task Logic Diagram" width=500
 
 ## State Observer
-Using the data from Romi's sensors, the state observer (@c Observer.py) estimates Romi’s current state such that behavioral decisions can be made based on Romi’s current position and orientation. To obtain state estimation, two approaches were considered: the fourth-order Runge-Kutta solver or descretizing Romi’s state space. The Runge-Kutta method was not chosen since it was determined that the frequency at which it would have to run would impose too significant of a computational load on the Romi's multitasking system. Instead, Romi’s state space was discretized using control theory techniques and Matlab’s @c c2d() functionality. Further elaboration on the discretization process can be found in the Analysis section.
+Using the data from Romi's sensors, the state observer (@c Observer.py) estimates Romi’s current state such that behavioral decisions can be made based on Romi’s current position and orientation. To obtain state estimation, two approaches were considered: the fourth-order Runge-Kutta solver or discretizing Romi’s state space. The Runge-Kutta method was not chosen since it was determined that the frequency at which it would have to run would impose too significant of a computational load on Romi's multitasking system. Instead, Romi’s state space was discretized using control theory techniques and Matlab’s @c c2d() functionality. Further elaboration on the discretization process can be found in the Analysis section.
 
 @image html Observer.png "Figure XXX: Observer Task Logic Diagram" width=500
 
@@ -104,8 +119,6 @@ Using the data from Romi's sensors, the state observer (@c Observer.py) estimate
 The garbage collector (@c Garbage_Collector.py) task is responsible for managing Romi's memory. Upon each iteration of the garbage collector, the task garbage collects and removes any memory that is no longer in use.
 
 @image html Garbage_Collector.png "Figure XXX: Garbage Collector Task Logic Diagram" width=500
-
-
 
 ## Closed Loop Control
 Romi’s motion accuracy relies heavily on the versatile and robust closed loop controller implemented in @c Closed_Loop_Control.py. This controller provides a unified framework for regulating motor speed or heading and supports a wide range of classical control features, making it adaptable to all dynamic behaviors required by the robot.
@@ -246,13 +259,14 @@ Using the classical second-order relationships:
 t_s \approx \frac{3}{\zeta\omega_n},
 \f]
 
-the desired damping ratio, 𝜁, and natural frequency, 𝜔<sub>n</sub>, were computed from the specified overshoot and settling-time requirements. Substituting 
-𝜁 and 𝜔<sub>n</sub> into the second-order characteristic equation,
+the desired damping ratio, 𝜁, and natural frequency, 𝜔<sub>n</sub>, were computed from the specified overshoot and settling-time requirements. Substituting 𝜁 and 𝜔<sub>n</sub> into the second-order characteristic equation,
 
 \f[
 s^2 + 2\zeta\omega_n s + \omega_n^2 = 0,
 \f]
+
 produced the first two poles for the observer. Two additional poles were then selected at large negative real values (e.g., 
+
 𝑠
 =
 −
@@ -320,9 +334,3 @@ If any efforts are made to emulate the Romi setup, the following wiring diagram 
 @image html wiring_cn7.png "Figure XXX: Wiring Diagram for Romi's C7 Morpho Headers" width=1000
 
 @image html wiring_cn10.png "Figure XXX: Wiring Diagram for Romi's C10 Morpho Headers" width=1000
-
-
-
-
-
-

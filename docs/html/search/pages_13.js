@@ -4,7 +4,7 @@ var searchData=
   ['selecting_20observer_20dynamics_20and_20constructing_20the_20continuous_20model_1',['Selecting Observer Dynamics and Constructing the Continuous Model',['../index.html#autotoc_md40',1,'']]],
   ['sensor_2',['Line Sensor',['../index.html#autotoc_md10',1,'']]],
   ['setup_3',['Hardware Setup',['../index.html#autotoc_md44',1,'']]],
-  ['shoe_20of_20brain_4',['Shoe of Brain',['../index.html#autotoc_md6',1,'']]],
+  ['shoe_20of_20brian_4',['Shoe of Brian',['../index.html#autotoc_md6',1,'']]],
   ['soft_20start_20reference_20ramping_3a_5',['Soft-Start Reference Ramping:',['../index.html#autotoc_md26',1,'']]],
   ['start_20reference_20ramping_3a_6',['Soft-Start Reference Ramping:',['../index.html#autotoc_md26',1,'']]],
   ['state_20observer_7',['State Observer',['../index.html#autotoc_md19',1,'State Observer'],['../index.html#autotoc_md39',1,'State Observer']]],

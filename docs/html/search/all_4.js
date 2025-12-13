@@ -8,5 +8,5 @@ var searchData=
   ['bd_20from_20the_20continuous_20model_5',['Computing A&lt;sub&gt;d&lt;/sub&gt; and B&lt;sub&gt;d&lt;/sub&gt; from the Continuous Model',['../index.html#autotoc_md41',1,'']]],
   ['board_6',['Board',['../index.html#autotoc_md7',1,'Nucleo Board'],['../index.html#autotoc_md5',1,'Power Distribution Board']]],
   ['boards_7',['Chassis and Boards',['../index.html#autotoc_md3',1,'']]],
-  ['brain_8',['Shoe of Brain',['../index.html#autotoc_md6',1,'']]]
+  ['brian_8',['Shoe of Brian',['../index.html#autotoc_md6',1,'']]]
 ];

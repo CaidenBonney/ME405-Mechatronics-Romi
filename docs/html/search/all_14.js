@@ -15,7 +15,7 @@ var searchData=
   ['setup_12',['Hardware Setup',['../index.html#autotoc_md44',1,'']]],
   ['share_13',['Share',['../classtask__share_1_1_share.html',1,'task_share']]],
   ['share_5flist_14',['share_list',['../task__share_8py.html#a75818e5b662453e3723d0f234c85e519',1,'task_share']]],
-  ['shoe_20of_20brain_15',['Shoe of Brain',['../index.html#autotoc_md6',1,'']]],
+  ['shoe_20of_20brian_15',['Shoe of Brian',['../index.html#autotoc_md6',1,'']]],
   ['show_5fall_16',['show_all',['../task__share_8py.html#ad6aea1db68be1a10f72039a5ac9e9dd4',1,'task_share']]],
   ['soft_20start_20reference_20ramping_3a_17',['Soft-Start Reference Ramping:',['../index.html#autotoc_md26',1,'']]],
   ['start_20reference_20ramping_3a_18',['Soft-Start Reference Ramping:',['../index.html#autotoc_md26',1,'']]],
