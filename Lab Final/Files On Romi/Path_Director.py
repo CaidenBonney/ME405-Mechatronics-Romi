@@ -11,7 +11,6 @@ class PathDirector:
     WAIT = 0
     CALIBRATE = 1
     FOLLOW_LINE = 2
-    FIXED_FORWARD = 3
 
     ST_B4_FOLLOW_LINE = 4
     FOLLOW_LINE_B4_FORK = 5
@@ -43,8 +42,9 @@ class PathDirector:
 
     # function states: Third digit is the number of inputs required
     # One Input: 100-199
-    TURN_ANGLE = 101  #            var1 = angle,  var2 = -----, var3 = ----
-    FOLLOW_LINE_4_TIME = 102  #    var1 = durration [us]
+    FIXED_FORWARD = 101  #         self.distance = distance [mm]
+    TURN_ANGLE = 102  #            var1 = angle,  var2 = -----, var3 = ----
+    FOLLOW_LINE_4_TIME = 103  #    var1 = durration [us]
     # Two Inputs: 200-299
     # Three Inputs: 300-399
     # Four Inputs: 400-499
@@ -246,6 +246,8 @@ class PathDirector:
 
                 update_motors_CLC(self.Line_CLC)
 
+            # -------------------------------------------------------- Start of Functions -------------------------------------------------------- #
+
             elif self.state == PathDirector.FIXED_FORWARD:
                 # Fixed Forward Distance Segment
                 if not self.segment_set:  # ran once per segment
@@ -270,7 +272,6 @@ class PathDirector:
                     self.uart.write(f"Y: {obsd_Y_s.get()}\r\n".encode("utf-8"))
                     set_state(PD_vars.next_state)
 
-            # -------------------------------------------------------- Start of Functions -------------------------------------------------------- #
             elif self.state == PathDirector.TURN_ANGLE:
                 # Turn In Place Segment
                 # var1 = angle [deg], var2 = ----, var3 = ----
@@ -485,7 +486,6 @@ class PathDirector:
                 obsd_X_s.put(1400)
                 obsd_Y_s.put(800)
                 PD_vars.var_1 = 400_000
-                # PD_vars.var_1 = 5500_000
                 set_state(PathDirector.FOLLOW_LINE_4_TIME)
                 PD_vars.next_state = PathDirector.TURN_2_LINE_B4_CP3
 
@@ -513,19 +513,7 @@ class PathDirector:
                 set_state(PathDirector.TURN_ANGLE)
                 PD_vars.next_state = PathDirector.GO_2_LINE_B4_CP4
 
-            # elif self.state == PathDirector.GO_2_CP3:
-            #     self.IMU.set_heading(-pi)
-            #     # obsd_X_s.put(1350)
-            #     # obsd_Y_s.put(100)
-            #     PD_vars.var_1 = 100_000
-            #     set_state(PathDirector.FOLLOW_LINE_4_TIME)
-            #     PD_vars.next_state = PathDirector.GO_2_LINE_B4_CP4
-
             elif self.state == PathDirector.GO_2_LINE_B4_CP4:
-                # obsd_X_s.put(1350)
-                # obsd_Y_s.put(100)
-                # self.IMU.set_heading(-pi)
-
                 self.uart.write(f"X, Y: {obsd_X_s.get()}, {obsd_Y_s.get()}\r\n".encode("utf-8"))
                 self.uart.write(f"dist yaw: {dist_yaw_s.get()}\r\n".encode("utf-8"))
 
@@ -539,10 +527,6 @@ class PathDirector:
                 set_state(PathDirector.GO_2_POINT)
                 PD_vars.next_state = PathDirector.FOLLOW_LINE_2_CP4
 
-                # self.distance = 400
-                # set_state(PathDirector.FIXED_FORWARD)
-                # PD_vars.next_state = PathDirector.FOLLOW_LINE_2_CP4
-
             elif self.state == PathDirector.FOLLOW_LINE_2_CP4:
                 self.bump_stop = False
                 PD_vars.var_1 = 900
@@ -551,10 +535,6 @@ class PathDirector:
                 PD_vars.var_4 = True
                 set_state(PathDirector.FOLLOW_LINE_2_POINT)
                 PD_vars.next_state = PathDirector.TURN_4_GARAGE
-
-                # PD_vars.var_1 = 800_000
-                # set_state(PathDirector.FOLLOW_LINE_4_TIME)
-                # PD_vars.next_state = PathDirector.TURN_4_GARAGE
 
             elif self.state == PathDirector.TURN_4_GARAGE:
                 obsd_X_s.put(800)
@@ -565,8 +545,6 @@ class PathDirector:
 
             elif self.state == PathDirector.MOVE_IN_GARAGE:
                 self.uart.write(f"dist, head: {dist_yaw_s.get()}, {self.IMU.heading}\r\n".encode("utf-8"))
-                # self.distance = 625
-                # set_state(PathDirector.FIXED_FORWARD)
                 self.IMU.set_heading(-pi)
                 PD_vars.var_1 = 160
                 PD_vars.var_2 = 150
@@ -595,10 +573,6 @@ class PathDirector:
                 PD_vars.next_state = PathDirector.FOLLOW_LINE_2_CP4
 
             elif self.state == PathDirector.FOLLOW_LINE_2_WALL:
-                # PD_vars.var_1 = 175
-                # PD_vars.var_2 = 1000
-                # PD_vars.var_3 = False
-                # PD_vars.var_4 = True
                 PD_vars.v_ref = 100
                 self.bump_wall = True
                 PD_vars.var_1 = 2_000_000

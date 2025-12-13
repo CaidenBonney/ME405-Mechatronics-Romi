@@ -63,16 +63,16 @@ class ClosedLoopControl:
         self.PWM_start = PWM_start
 
         # Inputs & Outputs
-        self.r = 0            # Reference / setpoint
-        self.x_h = 0          # Measured value
-        self.a = 0            # Raw actuation value
-        self.astar = 0        # Saturated actuation value
+        self.r = 0  # Reference / setpoint
+        self.x_h = 0  # Measured value
+        self.a = 0  # Raw actuation value
+        self.astar = 0  # Saturated actuation value
 
         # Internal controller states
-        self.e = 0            # Error
-        self.prev_error = 0   # Previous cycle error
-        self.integral = 0     # Integral accumulator
-        self.derivative = 0   # Derivative term
+        self.e = 0  # Error
+        self.prev_error = 0  # Previous cycle error
+        self.integral = 0  # Integral accumulator
+        self.derivative = 0  # Derivative term
 
         # Soft-start ramping
         self.on = True
@@ -90,7 +90,7 @@ class ClosedLoopControl:
         self.integral = 0
         self.derivative = 0
         self.first_run = True
-    
+
     def reset_num_corrections(self):
         self.num_corrections = 75
 
@@ -153,8 +153,7 @@ class ClosedLoopControl:
 
         # Soft-start reference ramping
         if self.num_corrections > 0:
-            self.r_u = self.r * ((self.total_num_corrections - self.num_corrections)
-                                 / self.total_num_corrections)
+            self.r_u = self.r * ((self.total_num_corrections - self.num_corrections) / self.total_num_corrections)
             self.num_corrections -= 1
         else:
             self.r_u = self.r
@@ -169,7 +168,7 @@ class ClosedLoopControl:
         # Compute timing delta in seconds
         time_delta = self.sensor.dt / 1e6
         if self.first_run:
-            time_delta = 0.020   # Approx. first-cycle assumption
+            time_delta = 0.020  # Approx. first-cycle assumption
 
         # Integral and derivative updates
         if self.Ki:
@@ -185,10 +184,10 @@ class ClosedLoopControl:
 
         # Controller output
         self.a = Kdroop * (
-            (self.Kp * self.e) +
-            (self.integral * self.Ki) +
-            (self.derivative * self.Kd) +
-            ((self.r_u * self.Kff) + copysign(1, self.r) * self.PWM_start)
+            (self.Kp * self.e)
+            + (self.integral * self.Ki)
+            + (self.derivative * self.Kd)
+            + ((self.r_u * self.Kff) + copysign(1, self.r) * self.PWM_start)
         )
 
         # Saturation

@@ -11,8 +11,8 @@
 #  - Computes velocity in mm/s (using @c dt from Sensor)
 #  - Supports resetting via @c zero()
 #
-#  @authors 
-#      Antonio Ventimiglia  
+#  @authors
+#      Antonio Ventimiglia
 #      Caiden Bonney
 #  @date 2025-Dec-11
 
@@ -50,11 +50,11 @@ class Encoder(Sensor):
         super().__init__()
 
         self.motor = motor
-        self._position = 0          # Accumulated wheel position (rad)
-        self.prev_count = 0         # Last timer count
-        self.delta = 0              # Tick difference between updates
+        self._position = 0  # Accumulated wheel position (rad)
+        self.prev_count = 0  # Last timer count
+        self.delta = 0  # Tick difference between updates
 
-        self.ar = tim.period()      # Auto-reload value
+        self.ar = tim.period()  # Auto-reload value
         self.tim = tim
 
         # Configure pins and timer channels
@@ -90,11 +90,11 @@ class Encoder(Sensor):
 
     ## Update encoder position and velocity.
     #
-    #  - Reads timer counter  
-    #  - Computes tick difference with wrap-around handling  
-    #  - Converts ticks to radians  
-    #  - Updates total position  
-    #  - Updates @c dt for timing  
+    #  - Reads timer counter
+    #  - Computes tick difference with wrap-around handling
+    #  - Converts ticks to radians
+    #  - Updates total position
+    #  - Updates @c dt for timing
     def update(self) -> None:
         count = self.tim.counter()
         self.delta = count - self.prev_count

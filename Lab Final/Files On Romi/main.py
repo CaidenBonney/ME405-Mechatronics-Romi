@@ -109,6 +109,7 @@ if __name__ == "__main__":
     # print("Allocated:", mem_alloc())
 
     from Path_Director import PathDirector
+
     collect()
 
     # Task object imports
