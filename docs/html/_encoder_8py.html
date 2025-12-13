@@ -108,19 +108,15 @@ $(function(){initNavTree('_encoder_8py.html','',''); });
 Classes</h2></td></tr>
 <tr class="memitem:Encoder_2EEncoder" id="r_Encoder_2EEncoder"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_encoder_1_1_encoder.html">Encoder.Encoder</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A quadrature encoder class for position and velocity measurement.  <a href="class_encoder_1_1_encoder.html#details">More...</a><br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:Encoder" id="r_Encoder"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_encoder.html">Encoder</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file implements a quadrature encoder interface for the Romi robot. </p>
-<p>The encoder uses a hardware timer in <code>Timer.ENC_AB</code> mode to measure wheel rotation and compute velocity. The class inherits from <code><a class="el" href="namespace_sensor.html">Sensor</a></code> so timing and velocity updates integrate cleanly with the controllers.</p>
+<p>The encoder uses a hardware timer in <code>Timer.ENC_AB</code> mode to measure wheel rotation and compute velocity. The class inherits from <code>Sensor</code> so timing and velocity updates integrate cleanly with the controllers.</p>
 <p>Features:</p><ul>
 <li>Reads incremental wheel motion from a hardware timer</li>
 <li>Converts tick differences into wheel radians</li>
 <li>Accumulates total wheel displacement</li>
-<li>Computes velocity in mm/s (using <code>dt</code> from <a class="el" href="namespace_sensor.html">Sensor</a>)</li>
+<li>Computes velocity in mm/s (using <code>dt</code> from Sensor)</li>
 <li>Supports resetting via <code>zero()</code> </li>
 </ul>
 <dl class="section author"><dt>Authors</dt><dd>Antonio Ventimiglia <br  />

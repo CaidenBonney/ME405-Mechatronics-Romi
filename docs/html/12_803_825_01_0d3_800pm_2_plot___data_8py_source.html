@@ -91,13 +91,12 @@ $(function(){initNavTree('12_803_825_01_0d3_800pm_2_plot___data_8py_source.html'
   <div class="headertitle"><div class="title">Plot_Data.py</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="12_803_825_01_0d3_800pm_2_plot___data_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespace_plot___data.html">    1</a></span><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">import</span> csv</div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="foldopen" id="foldopen00006" data-start="" data-end="">
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="namespace_plot___data.html#af85fe34dcd491706587a0d42765ad8a4">    6</a></span><span class="keyword">def </span><a class="code hl_function" href="namespace_plot___data.html#af85fe34dcd491706587a0d42765ad8a4">plot_pairs</a>(file_path, svg_folder, pairs, delineator):</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">def </span>plot_pairs(file_path, svg_folder, pairs, delineator):</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <span class="stringliteral">&quot;&quot;&quot;Plot multiple x/y pairs; None means use row index for that axis.&quot;&quot;&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keyword">with</span> open(file_path, newline=<span class="stringliteral">&quot;&quot;</span>) <span class="keyword">as</span> f:</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>        reader = csv.DictReader(f)</div>
@@ -161,9 +160,7 @@ $(function(){initNavTree('12_803_825_01_0d3_800pm_2_plot___data_8py_source.html'
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="comment"># plt.show()</span></div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-</div>
-<div class="foldopen" id="foldopen00070" data-start="" data-end="">
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="namespace_plot___data.html#a68af483569aad45b51ee248a9d645975">   70</a></span><span class="keyword">def </span><a class="code hl_function" href="namespace_plot___data.html#a68af483569aad45b51ee248a9d645975">main</a>():</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="keyword">def </span><a class="code hl_namespace" href="namespacemain.html">main</a>():</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    svg_folder = Path(__file__).resolve().parent / <span class="stringliteral">&quot;plotted_data&quot;</span></div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    svg_folder.mkdir(parents=<span class="keyword">True</span>, exist_ok=<span class="keyword">True</span>)  <span class="comment"># creates it and any missing parents; no error if it exists</span></div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    file_name = Path(__file__).resolve().parent / <span class="stringliteral">&quot;dist500 spd200.csv&quot;</span></div>
@@ -172,14 +169,11 @@ $(function(){initNavTree('12_803_825_01_0d3_800pm_2_plot___data_8py_source.html'
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        ((<span class="keywordtype">None</span>, <span class="stringliteral">&quot;v&quot;</span>), (<span class="stringliteral">&quot;i&quot;</span>, <span class="stringliteral">&quot;v&quot;</span>), (<span class="stringliteral">&quot;-&quot;</span>, <span class="stringliteral">&quot;mm/s&quot;</span>), <span class="keyword">False</span>),</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        ((<span class="keywordtype">None</span>, <span class="stringliteral">&quot;v_avg&quot;</span>), (<span class="stringliteral">&quot;i&quot;</span>, <span class="stringliteral">&quot;v_avg&quot;</span>), (<span class="stringliteral">&quot;-&quot;</span>, <span class="stringliteral">&quot;mm/s&quot;</span>), <span class="keyword">False</span>),</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    ]</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <a class="code hl_function" href="namespace_plot___data.html#af85fe34dcd491706587a0d42765ad8a4">plot_pairs</a>(file_name, svg_folder, pairs, <span class="stringliteral">&quot;dist500 spd200&quot;</span>)</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    plot_pairs(file_name, svg_folder, pairs, <span class="stringliteral">&quot;dist500 spd200&quot;</span>)</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <a class="code hl_namespace" href="namespacemain.html">main</a>()</div>
-<div class="ttc" id="anamespace_plot___data_html_a68af483569aad45b51ee248a9d645975"><div class="ttname"><a href="namespace_plot___data.html#a68af483569aad45b51ee248a9d645975">Plot_Data.main</a></div><div class="ttdeci">main()</div><div class="ttdef"><b>Definition</b> <a href="#l00070">Plot_Data.py:70</a></div></div>
-<div class="ttc" id="anamespace_plot___data_html_af85fe34dcd491706587a0d42765ad8a4"><div class="ttname"><a href="namespace_plot___data.html#af85fe34dcd491706587a0d42765ad8a4">Plot_Data.plot_pairs</a></div><div class="ttdeci">plot_pairs(file_path, svg_folder, pairs, delineator)</div><div class="ttdef"><b>Definition</b> <a href="#l00006">Plot_Data.py:6</a></div></div>
 <div class="ttc" id="anamespacemain_html"><div class="ttname"><a href="namespacemain.html">main</a></div><div class="ttdef"><b>Definition</b> <a href="main_8py_source.html#l00001">main.py:1</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -187,7 +181,7 @@ $(function(){initNavTree('12_803_825_01_0d3_800pm_2_plot___data_8py_source.html'
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_170f7b92e3f60ce52e1b92c96bff1631.html">Lab Final</a></li><li class="navelem"><a href="dir_6435d13053a66483fea7a2409c6222c8.html">Results</a></li><li class="navelem"><a href="dir_a6c626094a38e8982df876fb30a18e71.html">State Estimator Data</a></li><li class="navelem"><a href="dir_87d7fb53f8d5da5fa87f843bc009efb9.html">Straight Line</a></li><li class="navelem"><a href="dir_7873766bc1650df049b261e6e6a304ac.html">12.03.25 @3.00pm</a></li><li class="navelem"><a href="12_803_825_01_0d3_800pm_2_plot___data_8py.html">Plot_Data.py</a></li>
+    <li class="navelem"><a href="dir_170f7b92e3f60ce52e1b92c96bff1631.html">Lab Final</a></li><li class="navelem"><b>Results</b></li><li class="navelem"><b>State Estimator Data</b></li><li class="navelem"><b>Straight Line</b></li><li class="navelem"><b>12.03.25 @3.00pm</b></li><li class="navelem"><b>Plot_Data.py</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>
