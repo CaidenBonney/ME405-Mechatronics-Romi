@@ -1,3 +1,11 @@
+## @file main.py
+#  Entry point for Romi control firmware. Configures hardware, initializes
+#  sensors/actuators, creates cooperative tasks, and starts the scheduler.
+#  @author Antonio Ventimiglia
+#  @author Caiden Bonney
+#  @date   2025-Dec-12
+#  @copyright GPLv3
+
 from pyb import Pin, Timer, ADC, I2C, UART  # pyright: ignore
 import cotask
 import task_share
@@ -31,7 +39,7 @@ if __name__ == "__main__":
     tim4 = Timer(4, freq=20_000)
 
     # Create motors
-    l_motor = Motor(Pin.cpu.B7, Pin.cpu.H1, Pin.cpu.H0, tim4, 2)  # type: ignore
+    l_motor = Motor(Pin.cpu.B7, Pin.cpu.H1, Pin.cpu.H0, tim4, 2)
     r_motor = Motor(Pin.cpu.B6, Pin.cpu.A7, Pin.cpu.A6, tim4, 1)
 
     # Create encoders and their respective timers for counting pulses
@@ -104,12 +112,7 @@ if __name__ == "__main__":
     ## Create objects of each task for the Task objects
     # Collect garbage data for defragmentation before large imports and object creation
     collect()
-    # from gc import mem_alloc, mem_free
-    # print("Free:", mem_free())
-    # print("Allocated:", mem_alloc())
-
     from Path_Director import PathDirector
-
     collect()
 
     # Task object imports
@@ -242,6 +245,8 @@ if __name__ == "__main__":
             cotask.task_list.pri_sched()
         except BaseException as e:
             uart = UART(5, 115200)
+            
+            # If the error is an OSError, print notify the user and soft reset
             if isinstance(e, OSError):
                 print(f"OSError: {e}")
                 uart.write(f"OSError: {e}\r\n".encode("utf-8"))
@@ -268,7 +273,9 @@ if __name__ == "__main__":
             # print(task_Garbage_Collection.get_trace())
             # print("")
 
+            # Print the current battery voltage and percentage after every error including keyboard interrupts
             print(f"Battery - %:{Battery_obj.get_cur_perc()}, V:{Battery_obj.get_cur_volt()}\n")
 
+            # Write the error type and message to the UART when only bluetooth is connected
             uart.write(f"Error: {type(e)} - {e}\r\n".encode("utf-8"))
             raise e

@@ -1,3 +1,12 @@
+## @file IMU.py
+#  Driver for the BNO055 IMU on the Romi. Handles initialization,
+#  calibration persistence, heading/yaw-rate reads, and exposes @c get_data()
+#  for use in controllers.
+#  @author Antonio Ventimiglia
+#  @author Caiden Bonney
+#  @date   2025-Dec-12
+#  @copyright GPLv3
+
 from pyb import I2C, Pin, delay  # pyright: ignore
 from struct import calcsize, unpack_from
 from micropython import const  # pyright: ignore
@@ -6,6 +15,9 @@ from Sensor import Sensor
 from math import pi
 
 
+## BNO055 IMU interface with heading and calibration support.
+#  Provides heading, yaw-rate, and Euler angles and persists calibration
+#  coefficients to @c IMU_cal.txt when available.
 class IMU(Sensor):
 
     DEV_ADDR = 0x28
@@ -53,6 +65,10 @@ class IMU(Sensor):
             (const(0x69), b"<h"),  # MAG_RADIUS
         )
 
+    ## Initialize the IMU driver and perform reset/config.
+    #
+    #  @param i2c_object Configured I2C controller object
+    #  @param reset_pin  Pin used to toggle the IMU reset line
     def __init__(self, i2c_object: I2C, reset_pin: Pin):
         super().__init__()
         self.i2c = i2c_object  # the pyb board is the controller, meaning the IMU is the peripheral
@@ -65,6 +81,7 @@ class IMU(Sensor):
         self.ar = 2 * pi
         self.reset()
 
+    ## Hardware reset and base configuration of the IMU.
     def reset(self):
         self.reset_pin.value(0)
         self.reset_pin.value(1)
@@ -74,10 +91,14 @@ class IMU(Sensor):
         self._write_reg(IMU.reg.AXIS_REMAP_SIGN, "xxxxxx10")
         self._write_reg(IMU.reg.UNIT_SEL, "xxx1x110")  # degF, rads, rad/s, m/s^2
 
-    # "override" parent class method
+    ## Override parent class method to expose heading.
     def get_data(self) -> float:
         return self.get_heading()
 
+    ## Read bytes from an IMU register tuple.
+    #
+    #  @param reg (address, struct-format) tuple
+    #  @return Unpacked data from the register
     def _read_reg(self, reg: tuple):
         # determine number of bytes from reg read code
         length = calcsize(reg[1])
@@ -90,6 +111,10 @@ class IMU(Sensor):
 
         return unpack_from(reg[1], buf)
 
+    ## Write masked bits to an IMU register.
+    #
+    #  @param reg (address, struct-format) tuple
+    #  @param input String of '0','1','x' specifying bit masks
     def _write_reg(self, reg: tuple, input: str):
         # Writes a string input to the IMU: ie input = '01110xxx'
         # This write functionality can work on 8 or 16 bits
@@ -126,6 +151,9 @@ class IMU(Sensor):
     # from the BNO055.
     # operating modes available: (page 20), fusion modes available: (page 21)
     # [OPR_MODE] address = 0x3D (page 70)
+    ## Change the IMU operating mode (fusion/IMU/compass/etc.).
+    #
+    #  @param mode Mode number per BNO055 datasheet
     def set_mode(self, mode: int):
         if mode == 0:
             self._write_reg(IMU.reg.OPR_MODE, "xxxx0000")  # 0: CONFIGMODE
@@ -142,12 +170,18 @@ class IMU(Sensor):
         else:
             raise ValueError("Invalid mode")
 
+    ## Get the current calibration status bits.
     def get_calibration_status(self) -> tuple:
         return self._read_reg(IMU.reg.CALIB_STAT)
 
+    ## Read the calibration coefficients from IMU registers.
     def get_calibration_coefficients(self) -> tuple:
         return tuple(self._read_reg(coeff_reg)[0] for coeff_reg in IMU.reg.calibration_coefficients)
 
+    ## Run calibration or load saved coefficients from file.
+    #
+    #  If @c IMU_cal.txt exists, coefficients are loaded; otherwise calibration
+    #  runs until gyro and mag are calibrated, then saves to file.
     def calibrate(self) -> bool:
         if "IMU_cal.txt" in listdir():
             # Calibration data is present
@@ -188,13 +222,16 @@ class IMU(Sensor):
                 delay(100)  # delay(ms) to allow IMU to settle
         return False
 
+    ## Return Euler angles (heading, roll, pitch) in radians.
     def get_euler_angles(self) -> tuple[float, float, float]:
         # order: head, rolled, pitched
         return tuple(x / -self.convert_reg_to_rad for x in self._read_reg(IMU.reg.EUL_DATA_ALL))
 
+    ## Get raw heading directly from IMU registers (radians).
     def get_imu_heading(self) -> float:
         return -self._read_reg(IMU.reg.EUL_HEADING)[0] / self.convert_reg_to_rad
 
+    ## Get integrated heading with wrap-around handling.
     def get_heading(self) -> float:
         self.delta = self.get_imu_heading() - self.prev_imu_heading
         self.prev_imu_heading = self.get_imu_heading()
@@ -210,10 +247,14 @@ class IMU(Sensor):
 
         return self.heading
 
+    ## Manually set the integrated heading reference.
+    #
+    #  @param heading New heading in radians
     def set_heading(self, heading: float):
         self.heading = heading
         self.prev_imu_heading = self.get_imu_heading()
         self.delta = 0
 
+    ## Get yaw rate (rad/s) from gyro Z-axis.
     def get_yaw_rate(self) -> float:
         return self._read_reg(IMU.reg.GYRO_DATA_Z)[0] / self.convert_reg_to_rad

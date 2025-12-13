@@ -1,14 +1,14 @@
 ## @file Battery.py
-#  This file contains a helper class for monitoring the battery voltage
-#  on the Romi robot. It reads an ADC channel and converts that reading
-#  into an estimated battery percentage and voltage.
+#  Helper class for monitoring the battery voltage on the Romi robot.
+#  Reads an ADC channel and converts the raw reading into an estimated
+#  battery percentage and voltage using nominal calibration values.
 #
 #  The class wraps a @c pyb.ADC instance and uses calibrated nominal
 #  readings to estimate actual battery values.
 #
 #  @author Antonio Ventimiglia
 #  @author Caiden Bonney
-#  @date   2025-Dec-11
+#  @date   2025-Dec-12
 #  @copyright GPLv3
 
 from pyb import ADC  # pyright: ignore
@@ -21,7 +21,6 @@ from pyb import ADC  # pyright: ignore
 #  into a normalized percentage of charge and an estimated voltage
 #  using nominal calibration constants.
 class Battery:
-
     ## Create a battery monitor object.
     #
     #  Optionally an ADC channel may be passed in; if not, it must be
@@ -41,9 +40,9 @@ class Battery:
     #
     #  Reads the ADC and returns the ratio of the current reading to the
     #  nominal calibrated value. The returned number is a decimal between
-    #  approximately 0 and 1.
+    #  approximately 0 and 1. Raises @c ValueError if no ADC is configured.
     #
-    #  @return A float representing battery charge percentage (0–1).
+    #  @return A float representing battery charge percentage (0..1).
     def get_cur_perc(self):
         if self.battery_ADC is None:
             raise ValueError("Battery ADC is not set")

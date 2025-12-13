@@ -1,10 +1,25 @@
+## @file Observer.py
+#  State observer for the Romi. Uses encoder, IMU, and motor inputs to estimate
+#  wheel positions, heading, and pose, publishing results to shared variables.
+#  @author Antonio Ventimiglia
+#  @author Caiden Bonney
+#  @date   2025-Dec-12
+#  @copyright GPLv3
+
 from ulab import numpy as np  # pyright: ignore
 from Romi_Props import RomiProps
 from math import pi
 
 
+## Luenberger-style observer that estimates pose from sensors and inputs.
 class Observer:
 
+    ## Initialize the observer with required sensor references.
+    #
+    #  @param IMU       IMU object for heading/yaw rate
+    #  @param l_encoder Left encoder instance
+    #  @param r_encoder Right encoder instance
+    #  @param battery   Battery monitor for voltage scaling
     def __init__(self, IMU, l_encoder, r_encoder, battery):
         self.IMU = IMU
         self.tstep = 0.020  # must assume constant timestep for observer to function
@@ -22,6 +37,12 @@ class Observer:
 
         self.uart = UART(5, 115200)
 
+    ## Generator that updates state estimates and publishes to shares.
+    #
+    #  Uses discrete system matrices to propagate the state and updates pose
+    #  accumulators. Yields after each update for cooperative scheduling.
+    #
+    #  @param shares Tuple of @c task_share variables for observed states
     def run(self, shares):
         # Seperating the shares
         (
@@ -65,7 +86,7 @@ class Observer:
 
         # Preallocate state and input vectors
         x_k = np.zeros((4, 1))
-        ustar = np.zeros((6, 1))  #  # real-time input vector and real-time output vector concatenated
+        ustar = np.zeros((6, 1))  # real-time input vector and real-time output vector concatenated
         y_k = np.zeros((4, 1))  # calculated output vector
 
         prev_c = 0

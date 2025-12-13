@@ -1,14 +1,27 @@
+## @file Line_Sensor.py
+#  Aggregates an array of IR sensors and computes line centroid position.
+#  Handles white/black calibration loading/saving and normalization of sensor
+#  readings to support closed-loop line following.
+#  @author Antonio Ventimiglia
+#  @author Caiden Bonney
+#  @date   2025-Dec-12
+#  @copyright GPLv3
+
 from Sensor import Sensor
 from array import array
 from os import listdir
 
 
+## Line sensor array with calibration and centroid computation.
 class LineSensor(Sensor):
     # Sensor Gains
     Kp = 0.05  # Proportional gain
     Ki = 0.05  # Integral gain
     Kd = 0.00  # Derivative gain
 
+    ## Initialize the line sensor array.
+    #
+    #  @param list_of_IR_Sensors List of @c IRSensor objects
     def __init__(self, list_of_IR_Sensors):
         super().__init__()
         self.list_IR_Sensors = list_of_IR_Sensors
@@ -25,7 +38,7 @@ class LineSensor(Sensor):
         else:
             raise ValueError("Line sensor array is empty.")
 
-    # Return the centroid position computed from the IR sensor array.
+    ## Return the centroid position computed from the IR sensor array.
     def get_data(self) -> float:
         # If no sensors, data can't be gotten
         if not self.list_IR_Sensors:
@@ -49,6 +62,12 @@ class LineSensor(Sensor):
 
         return sum_pos_val / sum_val
 
+    ## Calibrate the line sensor (load from file or capture new data).
+    #
+    #  Loads @c IR_cal.txt if @c use_cal is @c True; otherwise captures white
+    #  and black references when flags are set and saves to file.
+    #
+    #  @return @c True when calibration is complete
     def calibrate(self) -> bool:
         if self.use_cal and "IR_cal.txt" in listdir():
             # Calibration data is present

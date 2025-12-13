@@ -1,3 +1,14 @@
+## @file Path_Director.py
+#  High-level state machine for directing the Romi through the course.
+#  Uses line sensor, IMU, bump sensors, and closed-loop controllers to
+#  execute motion segments (line following, point-to-point moves, turns,
+#  and special course maneuvers).
+#
+#  @author Antonio Ventimiglia
+#  @author Caiden Bonney
+#  @date   2025-Dec-12
+#  @copyright GPLv3
+
 from pyb import UART  # pyright: ignore
 from time import ticks_diff, ticks_us  # pyright: ignore
 from math import pi, atan2
@@ -7,7 +18,15 @@ from Romi_Props import RomiProps
 from Path_Director_vars import PD_vars
 
 
+## Task-level controller that sequences Romi through predefined path states.
+#
+#  This class wraps the motion logic for each segment of the course, sharing
+#  data with other tasks via @c task_share queues and using closed-loop
+#  controllers for heading and line tracking. States are defined as integers
+#  and executed inside the generator @c run().
 class PathDirector:
+
+    # Segment states
     WAIT = 0
     CALIBRATE = 1
     FOLLOW_LINE = 2
@@ -51,6 +70,14 @@ class PathDirector:
     GO_2_POINT = 401  #            var1 = X,      var2 = Y,      var3 = Skip_x,      var4 = Skip_y
     FOLLOW_LINE_2_POINT = 402  #   var1 = X,      var2 = Y,      var3 = Skip_x,      var4 = Skip_y
 
+    ## Initialize the path director.
+    #
+    #  Sets up closed-loop controllers, UART telemetry, bump callbacks, and
+    #  initializes path state variables.
+    #
+    #  @param line_sensor Calibrated line sensor instance
+    #  @param IMU_obj IMU instance providing heading and calibration
+    #  @param bump_sensors Tuple of bumper pins for collision detection
     def __init__(self, line_sensor, IMU_obj, bump_sensors: tuple):
         collect()
         from Closed_Loop_Control import ClosedLoopControl
@@ -102,6 +129,14 @@ class PathDirector:
         self.distance = 1000  # mm
         self.end_point = 0  # mm
 
+    ## Generator implementing the state machine for path execution.
+    #
+    #  Pulls data from shared variables, updates control references, and
+    #  sequences through segments such as calibration, line following, turns,
+    #  and point-to-point navigation. Yields the current state each loop to
+    #  cooperate with the scheduler.
+    #
+    #  @param shares Tuple of task_share queues used for inter-task comms
     def run(self, shares):
         # Seperating the shares
         (
@@ -130,7 +165,7 @@ class PathDirector:
             set_seg_s.put(new_state)
             self.segment_set = False
 
-            # tell motors previous segment is complete
+            # notify motors previous segment is complete
             test_complete_s.put(1)
 
         def update_motors_CLC(CLC_obj):

@@ -1,11 +1,27 @@
+## @file Motor_Controller.py
+#  Cooperative task that applies closed-loop control to a motor using encoder
+#  feedback. Handles segment starts, gain updates, and data transfer hooks.
+#  @author Antonio Ventimiglia
+#  @author Caiden Bonney
+#  @date   2025-Dec-12
+#  @copyright GPLv3
+
 from Encoder import Encoder
 from time import ticks_us, ticks_diff  # pyright: ignore
 from Closed_Loop_Control import ClosedLoopControl
 
 
+## Closed-loop motor controller task for one motor.
 class MotorController:
     time_start = None
 
+    ## Initialize the motor controller.
+    #
+    #  @param motor     Motor driver instance
+    #  @param encoder   Encoder instance paired with the motor
+    #  @param battery   Battery monitor for droop compensation
+    #  @param side      @c False for left, @c True for right motor
+    #  @param duration  Optional test duration in seconds (0 = continuous)
     def __init__(self, motor, encoder, battery, side: bool, duration: int = 0):
         self.motor = motor
         self.encoder = encoder
@@ -33,6 +49,13 @@ class MotorController:
             battery=battery,
         )
 
+    ## Generator task that drives the motor under closed-loop control.
+    #
+    #  Responds to flag and speed shares, manages segment starts, updates
+    #  gains, and writes efforts to the motor driver.
+    #
+    #  @param shares Tuple of @c task_share variables for flags, speed,
+    #                data transfer and test completion signaling
     def run(self, shares):
         # Seperating the shares
         (
@@ -95,6 +118,8 @@ class MotorController:
 
                     # if no time limit -> always run ; if time limit -> check if less than duration
                     if self.duration <= 0 or ticks_diff(ticks_us(), self.test_start) <= self.duration * 1e6:
+                        # Original queues were removed for memory management but were used during data collection in prior labs
+
                         #     # if queues are currently full, then set test complete, stop motors and zero encoders
                         #     if time_q.full() or pos_q.full() or vel_q.full():
                         #         self.queues_were_full = True

@@ -10,7 +10,7 @@
 #
 #  @author Antonio Ventimiglia
 #  @author Caiden Bonney
-#  @date   2025-Dec-11
+#  @date   2025-Dec-12
 #  @copyright GPLv3
 
 from math import copysign
@@ -91,6 +91,9 @@ class ClosedLoopControl:
         self.derivative = 0
         self.first_run = True
 
+    ## Reset the ramping counter used for soft-start reference slew.
+    #
+    #  This shortens the ramp so that the reference reaches its target sooner.
     def reset_num_corrections(self):
         self.num_corrections = 75
 
@@ -104,7 +107,7 @@ class ClosedLoopControl:
     def disable(self) -> None:
         self.on = False
 
-    ## Enable the controller.
+    ## Enable the controller so @c run() produces actuation commands.
     def enable(self) -> None:
         self.on = True
 
