@@ -40,7 +40,7 @@ A Shoe of Brian control board can be purchased at https://oshpark.com/shared_pro
 ### Nucleo Board
 The Nucleo board was also provided by our ME405 Lab Instructor Charlie Refvem. The Shoe of Brian is built to be directly compatible with the Nucleo board. 
 
-We used the ST NUCLEO-L476RG, which integrates the STM32L476RG MCU plus an on-board ST-LINK/V2-1 debugger/programmer, user LEDs, and a user button. In code, hardware timers are configured in `main.py` and consumed by `Motor.py`/`Motor_Controller.py` for PWM drive and by `Encoder.py` for quadrature capture. The I2C peripheral is used in `IMU.py`, ADC channels in `Battery.py` and `IR_Sensor.py`, UART in `User_Input.py`, and GPIO interrupts for bump sensors in `Path_Director.py`. The Shoe of Brian exposes the CN7/CN10 Morpho headers and Arduino headers so these peripherals can be wired cleanly to the Romi.
+We used the ST NUCLEO-L476RG, which integrates the STM32L476RG MCU plus an on-board ST-LINK/V2-1 debugger/programmer, user LEDs, and a user button. In code, hardware timers are configured in `main.py` and used by `Motor.py`/`Motor_Controller.py` for PWM drive and by `Encoder.py` for quadrature capture. The I2C peripheral is used in `IMU.py`, ADC channels in `Battery.py` and `IR_Sensor.py`, UART in `User_Input.py`, and GPIO interrupts for bump sensors in `Path_Director.py`. The Shoe of Brian exposes the CN7/CN10 Morpho headers and Arduino headers so these peripherals can be wired cleanly to the Romi.
 
 The Nucleo Board can be purchased directly from https://estore.st.com/en/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-l476rg.html or from the same source as the datasheet https://os.mbed.com/platforms/ST-Nucleo-L476RG/.
 

@@ -3,7 +3,7 @@ California Polytechnic State University San Luis Obispo Mechanical Engineering C
 This repository holds code used in the ME405 course at Cal Poly.
 
 ## Webpage
-[View Webpage] (https://caidenbonney.github.io/ME405-Mechatronics-Romi/html/index.html)
+https://caidenbonney.github.io/ME405-Mechatronics-Romi/html/index.html
 
 ## Firmware Files
 The firmware files are located in the `Full Reset Firmware` folder. This firmware file was provided by... This firmware allows the user to upload files to the Shoe of Brain and then run the code on the Romi.
