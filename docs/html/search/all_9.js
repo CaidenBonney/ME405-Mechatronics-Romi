@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['gain_20tuning_0',['Closed Loop Control Gain Tuning',['../index.html#autotoc_md32',1,'']]],
+  ['gain_20tuning_0',['Closed Loop Control Gain Tuning',['../index.html#autotoc_md33',1,'']]],
   ['gain_5fupdate_1',['gain_update',['../class_closed___loop___control_1_1_closed_loop_control.html#a95aa8ea640bd1a855a21b43d69f888fd',1,'Closed_Loop_Control::ClosedLoopControl']]],
-  ['garbage_20collector_2',['Garbage Collector',['../index.html#autotoc_md20',1,'']]],
+  ['garbage_20collector_2',['Garbage Collector',['../index.html#autotoc_md21',1,'']]],
   ['garbage_5fcollector_2epy_3',['Garbage_Collector.py',['../_garbage___collector_8py.html',1,'']]],
   ['garbagecollector_4',['GarbageCollector',['../class_garbage___collector_1_1_garbage_collector.html',1,'Garbage_Collector']]],
   ['gear_5fratio_5',['gear_ratio',['../class_romi___props_1_1_romi_props.html#a8332bae4721a7a917f5d8c2a4eee0136',1,'Romi_Props::RomiProps']]],

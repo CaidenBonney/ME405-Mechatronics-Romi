@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['saturation_3a_0',['Output Saturation:',['../index.html#autotoc_md27',1,'']]],
+  ['saturation_3a_0',['Output Saturation:',['../index.html#autotoc_md28',1,'']]],
   ['schedule_1',['schedule',['../classcotask_1_1_task.html#af60def0ed4a1bc5fec32f3cf8b8a90c8',1,'cotask::Task']]],
-  ['selecting_20observer_20dynamics_20and_20constructing_20the_20continuous_20model_2',['Selecting Observer Dynamics and Constructing the Continuous Model',['../index.html#autotoc_md40',1,'']]],
-  ['sensor_3',['Sensor',['../index.html#autotoc_md10',1,'Line Sensor'],['../class_sensor_1_1_sensor.html',1,'Sensor.Sensor']]],
+  ['selecting_20observer_20dynamics_20and_20constructing_20the_20continuous_20model_2',['Selecting Observer Dynamics and Constructing the Continuous Model',['../index.html#autotoc_md41',1,'']]],
+  ['sensor_3',['Sensor',['../index.html#autotoc_md11',1,'Line Sensor'],['../class_sensor_1_1_sensor.html',1,'Sensor.Sensor']]],
   ['sensor_2epy_4',['Sensor.py',['../_sensor_8py.html',1,'']]],
   ['ser_5fnum_5',['ser_num',['../classtask__share_1_1_queue.html#a6f9d87b116eb16dba0867d3746af9f5f',1,'task_share.Queue.ser_num'],['../classtask__share_1_1_share.html#a2e8df029af46fbfd44ef0c2e7e8c7af6',1,'task_share.Share.ser_num']]],
   ['set_5fattr_6',['set_attr',['../class_sensor_1_1_sensor.html#abdd7ecd205bec477ec349a8221a86fc9',1,'Sensor::Sensor']]],
@@ -12,15 +12,15 @@ var searchData=
   ['set_5fmode_9',['set_mode',['../class_i_m_u_1_1_i_m_u.html#a1fae52205ccb543d7970d07a84039bf4',1,'IMU::IMU']]],
   ['set_5fperiod_10',['set_period',['../classcotask_1_1_task.html#a0fcee5beb8b2fed77e5125c58ba35c26',1,'cotask::Task']]],
   ['set_5fref_11',['set_ref',['../class_closed___loop___control_1_1_closed_loop_control.html#aebb3d324c6fade3ecffb58764d6f52fb',1,'Closed_Loop_Control::ClosedLoopControl']]],
-  ['setup_12',['Hardware Setup',['../index.html#autotoc_md44',1,'']]],
+  ['setup_12',['Hardware Setup',['../index.html#autotoc_md45',1,'']]],
   ['share_13',['Share',['../classtask__share_1_1_share.html',1,'task_share']]],
   ['share_5flist_14',['share_list',['../task__share_8py.html#a75818e5b662453e3723d0f234c85e519',1,'task_share']]],
-  ['shoe_20of_20brian_15',['Shoe of Brian',['../index.html#autotoc_md6',1,'']]],
+  ['shoe_20of_20brian_15',['Shoe of Brian',['../index.html#autotoc_md7',1,'']]],
   ['show_5fall_16',['show_all',['../task__share_8py.html#ad6aea1db68be1a10f72039a5ac9e9dd4',1,'task_share']]],
-  ['soft_20start_20reference_20ramping_3a_17',['Soft-Start Reference Ramping:',['../index.html#autotoc_md26',1,'']]],
-  ['start_20reference_20ramping_3a_18',['Soft-Start Reference Ramping:',['../index.html#autotoc_md26',1,'']]],
-  ['state_20observer_19',['State Observer',['../index.html#autotoc_md19',1,'State Observer'],['../index.html#autotoc_md39',1,'State Observer']]],
-  ['step_201_20—_20forming_20the_20continuous_20augmented_20system_20',['Step 1 — Forming the Continuous Augmented System',['../index.html#autotoc_md42',1,'']]],
-  ['step_202_20—_20using_20matlab’s_20c2d_20function_21',['Step 2 — Using MATLAB’s c2d Function',['../index.html#autotoc_md43',1,'']]],
-  ['system_22',['Step 1 — Forming the Continuous Augmented System',['../index.html#autotoc_md42',1,'']]]
+  ['soft_20start_20reference_20ramping_3a_17',['Soft-Start Reference Ramping:',['../index.html#autotoc_md27',1,'']]],
+  ['start_20reference_20ramping_3a_18',['Soft-Start Reference Ramping:',['../index.html#autotoc_md27',1,'']]],
+  ['state_20observer_19',['State Observer',['../index.html#autotoc_md20',1,'State Observer'],['../index.html#autotoc_md40',1,'State Observer']]],
+  ['step_201_20—_20forming_20the_20continuous_20augmented_20system_20',['Step 1 — Forming the Continuous Augmented System',['../index.html#autotoc_md43',1,'']]],
+  ['step_202_20—_20using_20matlab’s_20c2d_20function_21',['Step 2 — Using MATLAB’s c2d Function',['../index.html#autotoc_md44',1,'']]],
+  ['system_22',['Step 1 — Forming the Continuous Augmented System',['../index.html#autotoc_md43',1,'']]]
 ];
