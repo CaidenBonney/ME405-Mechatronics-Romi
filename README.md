@@ -4,7 +4,7 @@ California Polytechnic State University San Luis Obispo Mechanical Engineering C
 https://caidenbonney.github.io/ME405-Mechatronics-Romi/html/index.html
 
 ## Firmware Files
-The firmware files are located in the `Full Reset Firmware` folder. This firmware file was provided by... This firmware allows the user to upload files to the Shoe of Brain and then run the code on the Romi.
+The firmware files are located in the `Full Reset Firmware` folder. This firmware file was provided by our ME405 Lab Instructor Charlie Refvem. This firmware allows the user to upload files to the Shoe of Brain and then run the code on the Romi.
 
 ## Runtime Code Overview
 Core files that run on the Romi live in `Lab Final/Files On Romi/`:
